@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers
 {
