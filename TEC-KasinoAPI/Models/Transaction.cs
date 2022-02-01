@@ -5,9 +5,9 @@ namespace TEC_KasinoAPI.Models
 {
 	public class Transaction
 	{
-		[Key]
+		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int TransactionID { get; set; }
-		public AccountBalance BalanceID { get; set; }
+		public AccountBalance Balance { get; set; }
 		public DateTime TransactionDate { get; set; }
 		public double Amount { get; set; }
 		public double CurrentBalance { get; set; }

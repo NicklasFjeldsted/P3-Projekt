@@ -7,11 +7,8 @@ namespace TEC_KasinoAPI.Models
 	{
 		[Key]
 		public int GenderID { get; set; }
-		public GenderName Gender { get; set; }
-	}
+		public string GenderName { get; set; }
 
-	public enum GenderName
-	{
-		Male, Female
+		public ICollection<Customer> Customers { get; set; }
 	}
 }

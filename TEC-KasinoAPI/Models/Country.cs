@@ -5,12 +5,10 @@ namespace TEC_KasinoAPI.Models
 {
 	public class Country
 	{
-		[Key]
+		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int CountryID { get; set; }
-		public Countries CountryName { get; set; }
-	}
+		public string CountryName { get; set; }
 
-	public enum Countries { 
-		Denmark, Sweden, Norway
+		public ICollection<Customer> Customers { get; set; }
 	}
 }
