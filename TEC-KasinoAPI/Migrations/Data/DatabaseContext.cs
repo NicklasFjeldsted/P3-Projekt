@@ -26,7 +26,10 @@ namespace TEC_KasinoAPI.Data
 
 			builder.Entity<Customer>(entity => // Configures a model 
 			{
-				entity.HasIndex(e => new { e.Email, e.PhoneNumber, e.CPRNumber }).IsUnique(); // Create unique indexes for columns
+				// Create unique indexes for columns
+				entity.HasIndex(e => e.Email).IsUnique();
+				entity.HasIndex(e => e.PhoneNumber).IsUnique();
+				entity.HasIndex(e => e.CPRNumber).IsUnique();
 				entity.HasOne(e => e.Acc_balance).WithOne(e => e.Customer).HasForeignKey<AccountBalance>(e => e.CustomerID); // Configures a one to one relationship between AccBalanace and Customer
 				entity.Property(e => e.RegisterDate).HasDefaultValueSql("getdate()"); // Sets RegisterDate default value to SqlCommand 'GetDate()'
 			});

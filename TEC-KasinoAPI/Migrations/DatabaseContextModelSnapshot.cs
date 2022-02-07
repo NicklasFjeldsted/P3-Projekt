@@ -88,9 +88,10 @@ namespace TEC_KasinoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CPRNumber")
-                        .HasMaxLength(10)
-                        .HasColumnType("int");
+                    b.Property<string>("CPRNumber")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -132,11 +133,17 @@ namespace TEC_KasinoAPI.Migrations
 
                     b.HasKey("CustomerID");
 
+                    b.HasIndex("CPRNumber")
+                        .IsUnique();
+
                     b.HasIndex("CountryID");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("GenderID");
 
-                    b.HasIndex("Email", "PhoneNumber", "CPRNumber")
+                    b.HasIndex("PhoneNumber")
                         .IsUnique();
 
                     b.ToTable("Customers");
