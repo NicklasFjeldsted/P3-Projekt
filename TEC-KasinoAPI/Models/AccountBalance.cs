@@ -13,3 +13,5 @@ namespace TEC_KasinoAPI.Models
 		public ICollection<Transaction> Transactions { get; set; }
 	}
 }
+
+

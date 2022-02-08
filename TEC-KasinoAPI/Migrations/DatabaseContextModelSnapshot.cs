@@ -90,12 +90,8 @@ namespace TEC_KasinoAPI.Migrations
 
                     b.Property<string>("CPRNumber")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
 
                     b.Property<int>("CountryID")
                         .HasColumnType("int");
@@ -123,13 +119,13 @@ namespace TEC_KasinoAPI.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("int");
 
-                    b.Property<int>("PostCode")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("RegisterDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("getdate()");
+
+                    b.Property<int>("ZipCodeID")
+                        .HasColumnType("int");
 
                     b.HasKey("CustomerID");
 
@@ -146,6 +142,8 @@ namespace TEC_KasinoAPI.Migrations
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
 
+                    b.HasIndex("ZipCodeID");
+
                     b.ToTable("Customers");
                 });
 
@@ -157,8 +155,8 @@ namespace TEC_KasinoAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TransactionID"), 1L, 1);
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("float");
+                    b.Property<string>("Amount")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("BalanceID")
                         .HasColumnType("int");
@@ -174,6 +172,22 @@ namespace TEC_KasinoAPI.Migrations
                     b.HasIndex("BalanceID");
 
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("TEC_KasinoAPI.Models.ZipCode", b =>
+                {
+                    b.Property<int>("ZipCodeID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZipCodeID"), 1L, 1);
+
+                    b.Property<string>("ZipCodeName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ZipCodeID");
+
+                    b.ToTable("ZipCode");
                 });
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
@@ -201,9 +215,17 @@ namespace TEC_KasinoAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TEC_KasinoAPI.Models.ZipCode", "ZipCode")
+                        .WithMany("Customers")
+                        .HasForeignKey("ZipCodeID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Country");
 
                     b.Navigation("Gender");
+
+                    b.Navigation("ZipCode");
                 });
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.Transaction", b =>
@@ -233,6 +255,11 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.Customer", b =>
                 {
                     b.Navigation("Acc_balance");
+                });
+
+            modelBuilder.Entity("TEC_KasinoAPI.Models.ZipCode", b =>
+                {
+                    b.Navigation("Customers");
                 });
 #pragma warning restore 612, 618
         }

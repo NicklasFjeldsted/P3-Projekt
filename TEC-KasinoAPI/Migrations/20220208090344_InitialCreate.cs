@@ -36,6 +36,19 @@ namespace TEC_KasinoAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ZipCode",
+                columns: table => new
+                {
+                    ZipCodeID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ZipCodeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ZipCode", x => x.ZipCodeID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
@@ -45,12 +58,11 @@ namespace TEC_KasinoAPI.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CountryID = table.Column<int>(type: "int", nullable: false),
                     PhoneNumber = table.Column<int>(type: "int", maxLength: 8, nullable: false),
-                    CPRNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CPRNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PostCode = table.Column<int>(type: "int", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ZipCodeID = table.Column<int>(type: "int", nullable: false),
                     GenderID = table.Column<int>(type: "int", nullable: false),
                     RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()")
                 },
@@ -68,6 +80,12 @@ namespace TEC_KasinoAPI.Migrations
                         column: x => x.CountryID,
                         principalTable: "Countries",
                         principalColumn: "CountryID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Customers_ZipCode_ZipCodeID",
+                        column: x => x.ZipCodeID,
+                        principalTable: "ZipCode",
+                        principalColumn: "ZipCodeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -99,7 +117,7 @@ namespace TEC_KasinoAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     BalanceID = table.Column<int>(type: "int", nullable: true),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<double>(type: "float", nullable: false),
+                    Amount = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CurrentBalance = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -147,6 +165,11 @@ namespace TEC_KasinoAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_ZipCodeID",
+                table: "Customers",
+                column: "ZipCodeID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Transactions_BalanceID",
                 table: "Transactions",
                 column: "BalanceID");
@@ -168,6 +191,9 @@ namespace TEC_KasinoAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "ZipCode");
         }
     }
 }

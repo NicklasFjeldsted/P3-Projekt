@@ -45,6 +45,10 @@ namespace TEC_KasinoAPI.Data
 			builder.Entity<Country>() // Same applies here
 				.HasMany(e => e.Customers)
 				.WithOne(e => e.Country);
+
+			builder.Entity<ZipCode>() // Same applies here
+			.HasMany(e => e.Customers)
+			.WithOne(e => e.ZipCode);
 		}
 	}
 }

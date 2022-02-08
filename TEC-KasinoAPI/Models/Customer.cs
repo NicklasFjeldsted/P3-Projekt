@@ -33,11 +33,8 @@ namespace TEC_KasinoAPI.Models
 		[Required(ErrorMessage = "Field cannot be empty")]
 		public string Address { get; set; }
 
-		[Required(ErrorMessage = "Field cannot be empty"), DataType(DataType.PostalCode)]
-		public int PostCode { get; set; }
-
 		[Required(ErrorMessage = "Field cannot be empty")]
-		public string City	{ get; set; } 
+		public ZipCode ZipCode { get; set; }
 
 		[Required]
 		public AccountGender Gender { get; set; }

@@ -9,7 +9,7 @@ namespace TEC_KasinoAPI.Models
 		public int TransactionID { get; set; }
 		public AccountBalance Balance { get; set; }
 		public DateTime TransactionDate { get; set; }
-		public double Amount { get; set; }
+		public string Amount { get; set; }
 		public double CurrentBalance { get; set; }
 	}
 }
