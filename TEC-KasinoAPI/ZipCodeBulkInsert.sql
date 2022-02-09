@@ -1,0 +1,13 @@
+USE [TEC-KasinoDB]
+GO
+
+BULK INSERT ZipCode
+FROM 'ZipCodes.csv'
+WITH
+(
+    CODEPAGE = '65001',
+    FIRSTROW = 2,
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    TABLOCK
+)
