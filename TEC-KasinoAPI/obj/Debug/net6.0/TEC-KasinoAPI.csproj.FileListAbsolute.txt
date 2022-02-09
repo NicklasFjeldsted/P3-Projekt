@@ -270,12 +270,6 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\zh-Hans\Micro
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\angular.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\package-lock.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\package.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\tsconfig.app.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\tsconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\tsconfig.spec.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\angular.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\package-lock.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AngularUI\Angular\package.json

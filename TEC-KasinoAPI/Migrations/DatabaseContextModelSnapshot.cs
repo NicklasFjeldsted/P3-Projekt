@@ -36,6 +36,9 @@ namespace TEC_KasinoAPI.Migrations
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
+                    b.Property<int>("DepositLimit")
+                        .HasColumnType("int");
+
                     b.HasKey("BalanceID");
 
                     b.HasIndex("CustomerID")
@@ -177,10 +180,7 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.ZipCode", b =>
                 {
                     b.Property<int>("ZipCodeID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZipCodeID"), 1L, 1);
 
                     b.Property<string>("ZipCodeName")
                         .HasColumnType("nvarchar(max)");

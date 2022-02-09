@@ -11,6 +11,7 @@ namespace TEC_KasinoAPI.Models
 		public Customer Customer { get; set; }
 		public double Balance { get; set; }
 		public ICollection<Transaction> Transactions { get; set; }
+		public int DepositLimit { get; set; }
 	}
 }
 

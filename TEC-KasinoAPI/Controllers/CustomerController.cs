@@ -31,7 +31,7 @@ namespace TEC_KasinoAPI.Controllers
 		}
 
 		[HttpPost]
-		public JsonResult CreateCustomer(Customer custom)
+		public JsonResult CreateCustomer(Customer Custom)
 		{
 			return null;
 		}

@@ -12,7 +12,7 @@ using TEC_KasinoAPI.Data;
 namespace TEC_KasinoAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220208090344_InitialCreate")]
+    [Migration("20220209093950_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,6 +36,9 @@ namespace TEC_KasinoAPI.Migrations
                         .HasColumnType("float");
 
                     b.Property<int>("CustomerID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DepositLimit")
                         .HasColumnType("int");
 
                     b.HasKey("BalanceID");
@@ -179,10 +182,7 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.ZipCode", b =>
                 {
                     b.Property<int>("ZipCodeID")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ZipCodeID"), 1L, 1);
 
                     b.Property<string>("ZipCodeName")
                         .HasColumnType("nvarchar(max)");

@@ -40,7 +40,7 @@ namespace TEC_KasinoAPI.Migrations
                 columns: table => new
                 {
                     ZipCodeID = table.Column<int>(type: "int", nullable: false),
-                    ZipCodeName = table.Column<string>(type: "nchar(200)", nullable: true)
+                    ZipCodeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -95,7 +95,8 @@ namespace TEC_KasinoAPI.Migrations
                     BalanceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerID = table.Column<int>(type: "int", nullable: false),
-                    Balance = table.Column<double>(type: "float", nullable: false)
+                    Balance = table.Column<double>(type: "float", nullable: false),
+                    DepositLimit = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
