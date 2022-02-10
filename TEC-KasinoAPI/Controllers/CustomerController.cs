@@ -14,13 +14,15 @@ namespace TEC_KasinoAPI.Controllers
 	{
 		private readonly IConfiguration _configuration;
 		private readonly DatabaseContext _context;
-		private readonly IWebHostEnvironment _env;
+		private readonly string conString;
+		private SqlConnection con;
+		private SqlCommand cmd;
 
 		public CustomerController(IConfiguration configuration, DatabaseContext context)
 		{
 			_configuration = configuration;
 			_context = context;
-			
+			conString = _configuration.GetConnectionString("DefaultConnection");
 		}
 
 		[HttpGet]
@@ -34,51 +36,44 @@ namespace TEC_KasinoAPI.Controllers
 			return new JsonResult(customer);
 		}
 
-		/// <summary>
-		/// Creates a customer.
-		/// </summary>
-		/// <remarks>
-		/// Sample request:
-		///
-		///     POST api/Customer/CreateCustomer
-		///     {
-		///        "Email":
-		///        "Password":
-		///        "Country":
-		///        "PhoneNumber":
-		///        "CPRNumber":
-		///        "FirstName":
-		///        "LastName":
-		///        "Address":
-		///        "ZipCode":
-		///        "Gender": 
-		///     }
-		///
-		/// </remarks>
-		/// <param name="item"></param>
-		/// <response code="201">Returns the newly created item</response>
-		/// <response code="400">If the item is null</response>  
 
 		[HttpPost]
 		[Route("CreateCustomer")]
 		[Produces("application/json")]
 		public JsonResult CreateCustomer(CustomerModel Custom)
 		{
-			var paraReturnValue = new SqlParameter{ ParameterName = "@ReturnValue", SqlDbType = SqlDbType.NVarChar, Direction = ParameterDirection.Output};
-			try
+			using (con = new (conString))
+			using (cmd = new ("sp_create_customer"))
 			{
-				var httpRequest = Request.Form;
-				var cust = _context.Customers
-					.FromSqlRaw($"spCreateCustomer {Custom.Email}, {Custom.Password}, {Custom.Country}, " +
-					$"{Custom.PhoneNumber}, {Custom.CPRNumber}, {Custom.FirstName}, {Custom.LastName}, " +
-					$"{Custom.Address}, {Custom.ZipCode}, {Custom.Gender}, {paraReturnValue}");
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
+				
+				// Stored Procedure Parameters
+				cmd.Parameters.AddWithValue("@Email", Custom.Email);
+				cmd.Parameters.AddWithValue("@Password", Custom.Password);
+				cmd.Parameters.AddWithValue("@Country", Custom.Country);
+				cmd.Parameters.AddWithValue("@Phone", Custom.PhoneNumber);
+				cmd.Parameters.AddWithValue("@CPR", Custom.CPRNumber);
+				cmd.Parameters.AddWithValue("@FirstName", Custom.FirstName);
+				cmd.Parameters.AddWithValue("@LastName", Custom.LastName);
+				cmd.Parameters.AddWithValue("@Address", Custom.Address);
+				cmd.Parameters.AddWithValue("@ZipCode", Custom.ZipCode);
+				cmd.Parameters.AddWithValue("@Gender", Custom.Gender);
+				cmd.Parameters.Add("@returnValue", SqlDbType.NVarChar).Direction = ParameterDirection.Output;
 
-				return new JsonResult((string)paraReturnValue.Value);
+				var result = cmd.Parameters["@returnValue"].Value.ToString();
+
+				con.Open();
+				try
+				{
+					cmd.ExecuteNonQuery();
+					return new JsonResult(result);
+				}
+				catch (Exception ex)
+				{
+					return new JsonResult(result + " " +  ex);
+				}
 			}
-			catch (Exception)
-			{
-				return new JsonResult((string)paraReturnValue.Value);
-			}
+			//FromSqlRaw($"spCreateCustomer {Custom.Email}, {Custom.Password}, {Custom.Country} {Custom.PhoneNumber}, {Custom.CPRNumber}, {Custom.FirstName}, {Custom.LastName}, {Custom.Address}, {Custom.ZipCode}, {Custom.Gender}");
 		}
 	}
 
@@ -86,27 +81,18 @@ namespace TEC_KasinoAPI.Controllers
 	{
 
 		public string Email { get; set; }
-
 		public string Password { get; set; }
-
 		public int Country { get; set; }
-
 		public int PhoneNumber { get; set; }
-
 		public string CPRNumber { get; set; }
-
 		public string FirstName { get; set; }
-
 		public string LastName { get; set; }
-
 		public string Address { get; set; }
-
 		public int ZipCode { get; set; }
-
 		public int Gender { get; set; }
 
 	}
-//	  "email": "nicklas4@gmail.com",
+//	"email": "nicklas4@gmail.com",
 //  "password": "Nicklas",
 //  "country": 1,
 //  "phoneNumber": 29854367,

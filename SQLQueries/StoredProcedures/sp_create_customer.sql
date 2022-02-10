@@ -14,7 +14,8 @@ CREATE PROCEDURE [sp_create_customer] /* CREATE Customer */
 	@LastName nvarchar(255), 
 	@Address nvarchar(255), 
 	@ZipCode int, 
-	@Gender int
+	@Gender int,
+	@returnValue nvarchar(max) OUTPUT
 AS 
 	BEGIN
 		SET NOCOUNT ON;
@@ -28,11 +29,11 @@ AS
 				INSERT INTO AccountBalances(CustomerID)
 				VALUES(@newID)
 
-				PRINT @Email + 'has been registered successfully!';
+				SET @returnValue = @Email + ' has been registered successfully!';
 			END
 		ELSE
 			BEGIN
-				PRINT @Email + 'is already registered';
+				SET @returnValue =  @Email + ' is already registered';
 			END
 	END
 GO
