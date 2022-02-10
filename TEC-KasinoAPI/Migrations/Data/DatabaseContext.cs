@@ -42,9 +42,12 @@ namespace TEC_KasinoAPI.Data
 				.HasMany(e => e.Customers)
 				.WithOne(e => e.Gender);
 
-			builder.Entity<Country>() // Same applies here
-				.HasMany(e => e.Customers)
-				.WithOne(e => e.Country);
+			builder.Entity<Country>(e => // Same applies here
+			{ 
+				e.HasMany(e => e.Customers).WithOne(e => e.Country);
+				e.HasIndex(e => e.CountryName).IsUnique();
+
+			});
 
 			builder.Entity<ZipCode>() // Same applies here
 			.HasMany(e => e.Customers)

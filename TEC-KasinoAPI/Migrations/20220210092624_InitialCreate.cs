@@ -28,7 +28,7 @@ namespace TEC_KasinoAPI.Migrations
                 {
                     CountryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CountryName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CountryName = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -96,7 +96,7 @@ namespace TEC_KasinoAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerID = table.Column<int>(type: "int", nullable: false),
                     Balance = table.Column<double>(type: "float", nullable: false),
-                    DepositLimit = table.Column<int>(type: "int", nullable: false)
+                    DepositLimit = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,6 +135,13 @@ namespace TEC_KasinoAPI.Migrations
                 table: "AccountBalances",
                 column: "CustomerID",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Countries_CountryName",
+                table: "Countries",
+                column: "CountryName",
+                unique: true,
+                filter: "[CountryName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_CountryID",

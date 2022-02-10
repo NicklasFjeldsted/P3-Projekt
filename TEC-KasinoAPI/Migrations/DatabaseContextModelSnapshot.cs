@@ -72,9 +72,13 @@ namespace TEC_KasinoAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryID"), 1L, 1);
 
                     b.Property<string>("CountryName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CountryID");
+
+                    b.HasIndex("CountryName")
+                        .IsUnique()
+                        .HasFilter("[CountryName] IS NOT NULL");
 
                     b.ToTable("Countries");
                 });

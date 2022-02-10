@@ -12,7 +12,7 @@ using TEC_KasinoAPI.Data;
 namespace TEC_KasinoAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220209093950_InitialCreate")]
+    [Migration("20220210092624_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,9 +74,13 @@ namespace TEC_KasinoAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryID"), 1L, 1);
 
                     b.Property<string>("CountryName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CountryID");
+
+                    b.HasIndex("CountryName")
+                        .IsUnique()
+                        .HasFilter("[CountryName] IS NOT NULL");
 
                     b.ToTable("Countries");
                 });

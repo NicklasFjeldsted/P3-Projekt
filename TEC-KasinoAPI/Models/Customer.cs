@@ -21,8 +21,8 @@ namespace TEC_KasinoAPI.Models
 		[Required(ErrorMessage = "Phone number must be 8 digits"), DataType(DataType.PhoneNumber), StringLength(8, MinimumLength = 8)]
 		public int PhoneNumber { get; set; }
 
-		[Required(ErrorMessage = "Personal number must be 10 digits"), StringLength(11, MinimumLength = 10)]
-		public char CPRNumber { get; set; }
+		[Required(ErrorMessage = "Personal number must be 10 digits"), StringLength(11, MinimumLength = 10), ]
+		public string CPRNumber { get; set; }
 
 		[Required(ErrorMessage = "Field cannot be empty")]
 		public string FirstName { get; set; }
