@@ -16,7 +16,7 @@ BEGIN
 	Countries.CountryName, Customers.PhoneNumber, Customers.CPRNumber,
 	Customers.FirstName, Customers.LastName, Customers.Address, Customers.ZipCodeID,
 	ZipCode.ZipCodeName, Customers.GenderID, AccountGenders.GenderName,
-	Customers.RegisterDate, AccountBalances.BalanceID, AccountBalances.Balance
+	Customers.RegisterDate, AccountBalances.BalanceID, AccountBalances.Balance, AccountBalances.DepositLimit
 	FROM Customers
 	INNER JOIN Countries ON Customers.CountryID=Countries.CountryID
 	INNER JOIN ZipCode ON Customers.ZipCodeID=ZipCode.ZipCodeID
