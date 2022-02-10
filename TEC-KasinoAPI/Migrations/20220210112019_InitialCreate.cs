@@ -28,11 +28,12 @@ namespace TEC_KasinoAPI.Migrations
                 {
                     CountryID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CountryName = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    CountryName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Countries", x => x.CountryID);
+                    table.UniqueConstraint("UN_Countries_CountryName", x => x.CountryName);
                 });
 
             migrationBuilder.CreateTable(
@@ -68,6 +69,9 @@ namespace TEC_KasinoAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerID);
+                    table.UniqueConstraint("UN_Customers_CPRNumber", x => x.CPRNumber);
+                    table.UniqueConstraint("UN_Customers_Email", x => x.Email);
+                    table.UniqueConstraint("UN_Customers_PhoneNumber", x => x.PhoneNumber);
                     table.ForeignKey(
                         name: "FK_Customers_AccountGenders_GenderID",
                         column: x => x.GenderID,
@@ -95,8 +99,8 @@ namespace TEC_KasinoAPI.Migrations
                     BalanceID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerID = table.Column<int>(type: "int", nullable: false),
-                    Balance = table.Column<double>(type: "float", nullable: false),
-                    DepositLimit = table.Column<int>(type: "int", nullable: true)
+                    Balance = table.Column<double>(type: "float", nullable: false, defaultValueSql: "0"),
+                    DepositLimit = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1000")
                 },
                 constraints: table =>
                 {
@@ -137,39 +141,14 @@ namespace TEC_KasinoAPI.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Countries_CountryName",
-                table: "Countries",
-                column: "CountryName",
-                unique: true,
-                filter: "[CountryName] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Customers_CountryID",
                 table: "Customers",
                 column: "CountryID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Customers_CPRNumber",
-                table: "Customers",
-                column: "CPRNumber",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_Email",
-                table: "Customers",
-                column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Customers_GenderID",
                 table: "Customers",
                 column: "GenderID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Customers_PhoneNumber",
-                table: "Customers",
-                column: "PhoneNumber",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_ZipCodeID",

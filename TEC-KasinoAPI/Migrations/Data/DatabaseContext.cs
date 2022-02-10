@@ -27,16 +27,19 @@ namespace TEC_KasinoAPI.Data
 			builder.Entity<Customer>(entity => // Configures a model 
 			{
 				// Create unique indexes for columns
-				entity.HasIndex(e => e.Email).IsUnique();
-				entity.HasIndex(e => e.PhoneNumber).IsUnique();
-				entity.HasIndex(e => e.CPRNumber).IsUnique();
+				entity.HasAlternateKey(e => e.Email).HasName("UN_Customers_Email");
+				entity.HasAlternateKey(e => e.PhoneNumber).HasName("UN_Customers_PhoneNumber");
+				entity.HasAlternateKey(e => e.CPRNumber).HasName("UN_Customers_CPRNumber");
 				entity.HasOne(e => e.Acc_balance).WithOne(e => e.Customer).HasForeignKey<AccountBalance>(e => e.CustomerID); // Configures a one to one relationship between AccBalanace and Customer
 				entity.Property(e => e.RegisterDate).HasDefaultValueSql("getdate()"); // Sets RegisterDate default value to SqlCommand 'GetDate()'
 			});
 
-			builder.Entity<AccountBalance>() // Configures relationship so that AccountBalance has many transactions but Transactions only has one balance
-				.HasMany(c => c.Transactions)
-				.WithOne(e => e.Balance);
+			builder.Entity<AccountBalance>(entity =>
+			{
+				entity.HasMany(e => e.Transactions).WithOne(e => e.Balance); // Configures relationship so that AccountBalance has many transactions but Transactions only has one balance
+				entity.Property(e => e.Balance).HasDefaultValueSql("0");
+				entity.Property(e => e.DepositLimit).HasDefaultValueSql("1000");
+			});
 
 			builder.Entity<AccountGender>() // Configures relationship so that AccountGender has many customers but a customer can only have one AccountGender
 				.HasMany(e => e.Customers)
@@ -45,8 +48,7 @@ namespace TEC_KasinoAPI.Data
 			builder.Entity<Country>(e => // Same applies here
 			{ 
 				e.HasMany(e => e.Customers).WithOne(e => e.Country);
-				e.HasIndex(e => e.CountryName).IsUnique();
-
+				e.HasAlternateKey(e => e.CountryName).HasName("UN_Countries_CountryName");
 			});
 
 			builder.Entity<ZipCode>() // Same applies here

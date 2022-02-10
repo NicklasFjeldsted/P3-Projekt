@@ -12,7 +12,7 @@ using TEC_KasinoAPI.Data;
 namespace TEC_KasinoAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220210092624_InitialCreate")]
+    [Migration("20220210112019_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,13 +33,17 @@ namespace TEC_KasinoAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BalanceID"), 1L, 1);
 
                     b.Property<double>("Balance")
-                        .HasColumnType("float");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("float")
+                        .HasDefaultValueSql("0");
 
                     b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
                     b.Property<int>("DepositLimit")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("1000");
 
                     b.HasKey("BalanceID");
 
@@ -74,13 +78,13 @@ namespace TEC_KasinoAPI.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CountryID"), 1L, 1);
 
                     b.Property<string>("CountryName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("CountryID");
 
-                    b.HasIndex("CountryName")
-                        .IsUnique()
-                        .HasFilter("[CountryName] IS NOT NULL");
+                    b.HasAlternateKey("CountryName")
+                        .HasName("UN_Countries_CountryName");
 
                     b.ToTable("Countries");
                 });
@@ -138,18 +142,18 @@ namespace TEC_KasinoAPI.Migrations
 
                     b.HasKey("CustomerID");
 
-                    b.HasIndex("CPRNumber")
-                        .IsUnique();
+                    b.HasAlternateKey("CPRNumber")
+                        .HasName("UN_Customers_CPRNumber");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("UN_Customers_Email");
+
+                    b.HasAlternateKey("PhoneNumber")
+                        .HasName("UN_Customers_PhoneNumber");
 
                     b.HasIndex("CountryID");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
                     b.HasIndex("GenderID");
-
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique();
 
                     b.HasIndex("ZipCodeID");
 
