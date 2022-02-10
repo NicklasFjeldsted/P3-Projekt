@@ -5,7 +5,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE sp_save_deposit_limit
-	@NewLimit FLOAT,
+	@NewLimit INT,
 	@BalanceID INT
 AS
 BEGIN
