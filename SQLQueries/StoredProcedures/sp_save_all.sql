@@ -17,20 +17,22 @@ CREATE PROCEDURE sp_save_all
 	@LastName NVARCHAR(MAX),
 	@Address NVARCHAR(MAX),
 	@ZipCodeID INT,
-	@GenderID INT,
+	@GenderName NVARCHAR(MAX),
 	@Balance FLOAT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @TempCountryID INT;
+	DECLARE @TempGenderID INT;
 
 	SELECT @TempCountryID = CountryID FROM Countries WHERE CountryName = @CountryName;
+	SELECT @TempGenderID = GenderID FROM AccountGenders WHERE GenderName = @GenderName;
 
 	UPDATE Customers
 	SET Email = @Email, CountryID = @TempCountryID, PhoneNumber = @PhoneNumber,
 	CPRNumber = @CPRNumber, FirstName = @FirstName, LastName = @LastName,
-	Address = @Address, ZipCodeID = @ZipCodeID, GenderID = @GenderID
+	Address = @Address, ZipCodeID = @ZipCodeID, GenderID = @TempGenderID
 	WHERE CustomerID = @CustomerID;
 
 	UPDATE AccountBalances
