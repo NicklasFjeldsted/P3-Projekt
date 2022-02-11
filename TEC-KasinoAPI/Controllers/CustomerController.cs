@@ -52,7 +52,7 @@ namespace TEC_KasinoAPI.Controllers
 		public JsonResult GetAllCustomer(string email)
 		{
 			_context.Customers.Include(e => e.Country).ToList();
-			_context.Customers.AsNoTracking().Include(e => e.ZipCode).ToList();
+			_context.Customers.Include(e => e.ZipCode).ToList();
 			_context.Customers.Include(e => e.Acc_balance).ToList();
 			_context.Customers.Include(e => e.Gender).ToList();
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
@@ -72,19 +72,23 @@ namespace TEC_KasinoAPI.Controllers
 				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
 
 				// Stored Procedure Parameters
-				cmd.Parameters.AddWithValue("@Email", Custom.Email);
-				cmd.Parameters.AddWithValue("@Password", Custom.Password);
-				cmd.Parameters.AddWithValue("@Country", Custom.Country);
-				cmd.Parameters.AddWithValue("@Phone", Custom.PhoneNumber);
-				cmd.Parameters.AddWithValue("@CPR", Custom.CPRNumber);
-				cmd.Parameters.AddWithValue("@FirstName", Custom.FirstName);
-				cmd.Parameters.AddWithValue("@LastName", Custom.LastName);
-				cmd.Parameters.AddWithValue("@Address", Custom.Address);
-				cmd.Parameters.AddWithValue("@ZipCode", Custom.ZipCode);
-				cmd.Parameters.AddWithValue("@Gender", Custom.Gender);
-				cmd.Parameters.Add("@returnValue", SqlDbType.NVarChar, 100).Direction = ParameterDirection.Output;
+
+				cmd.Parameters.AddRange(new []
+				{
+					new SqlParameter("@Email", Custom.Email),
+					new SqlParameter("@Password", Custom.Password),
+					new SqlParameter("@Country", Custom.Country),
+					new SqlParameter("@Phone", Custom.PhoneNumber),
+					new SqlParameter("@CPR", Custom.CPRNumber),
+					new SqlParameter("@FirstName", Custom.FirstName),
+					new SqlParameter("@LastName", Custom.LastName),
+					new SqlParameter("@Address", Custom.Address),
+					new SqlParameter("@ZipCode", Custom.ZipCode),
+					new SqlParameter("@Gender", Custom.Gender),
+					new SqlParameter("@returnValue", SqlDbType.NVarChar, 100){Direction = ParameterDirection.Output }
+				}); // Parameter Range containing all parameters for SQL Query
 				var result = "Something went wrong";
-				con.Open();
+				con.Open(); // Opening 
 				try
 				{
 					cmd.ExecuteNonQuery();
