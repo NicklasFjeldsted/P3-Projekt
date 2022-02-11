@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TEC_KasinoAPI.Models;
 using TEC_KasinoAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Data.SqlClient;
+using System.Data.SqlClient;
 using System.Data;
 
 namespace TEC_KasinoAPI.Controllers
@@ -17,8 +17,6 @@ namespace TEC_KasinoAPI.Controllers
 		private readonly string conString;
 		private SqlConnection con;
 		private SqlCommand cmd;
-
-		private Customer customer;
 
 		public CustomerController(IConfiguration configuration, DatabaseContext context)
 		{
@@ -60,74 +58,6 @@ namespace TEC_KasinoAPI.Controllers
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
 			
 			return new JsonResult(customer);
-		}
-
-		[HttpPut]
-		[Route("AddBalance")]
-		public JsonResult AddBalance(double amount, int balanceID)
-        {
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_balance_add", con))
-			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
-
-				cmd.Parameters.AddWithValue("@InputValue", amount);
-				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
-				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-				con.Open();
-
-                try
-                {
-					cmd.ExecuteNonQuery();
-					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
-					result = $"Successfully added: {amount} to the account. New balance: {newBalance}";
-				}
-				catch(Exception ex)
-                {
-					result = "Error: " + ex.Message;
-                }
-
-				con.Close();
-			}
-
-			return new JsonResult(result);
-        }
-
-		[HttpPut]
-		[Route("SubtractBalance")]
-		public JsonResult SubtractBalance(double amount, int balanceID)
-		{
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_balance_subtract", con))
-			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
-
-				cmd.Parameters.AddWithValue("@InputValue", amount);
-				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
-				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-				con.Open();
-
-				try
-				{
-					cmd.ExecuteNonQuery();
-					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
-					result = $"Successfully removed: {amount} from the account. New balance: {newBalance}";
-				}
-				catch (Exception ex)
-				{
-					result = "Error: " + ex.Message;
-				}
-
-				con.Close();
-			}
-
-			return new JsonResult(result);
 		}
 
 		[HttpPost]
