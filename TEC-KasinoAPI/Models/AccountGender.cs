@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TEC_KasinoAPI.Models
@@ -9,6 +10,7 @@ namespace TEC_KasinoAPI.Models
 		public int GenderID { get; set; }
 		public string GenderName { get; set; }
 
-		public virtual ICollection<Customer> Customers { get; set; }
+		//[HiddenInput(DisplayValue = false)]
+		//public virtual ICollection<Customer> Customers { get; set; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TEC_KasinoAPI.Models
@@ -10,7 +11,8 @@ namespace TEC_KasinoAPI.Models
 		public int CustomerID { get; set; }
 		public virtual Customer Customer { get; set; }
 		public double Balance { get; set; }
-		public virtual ICollection<Transaction> Transactions { get; set; }
+		//[HiddenInput(DisplayValue = false)]
+		//public virtual ICollection<Transaction> Transactions { get; set; }
 		public int DepositLimit { get; set; }
 	}
 }

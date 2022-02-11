@@ -54,10 +54,9 @@ namespace TEC_KasinoAPI.Controllers
 		public JsonResult GetAllCustomer(string email)
 		{
 			_context.Customers.Include(e => e.Country).ToList();
-			_context.Customers.Include(e => e.ZipCode).ToList();
+			_context.Customers.AsNoTracking().Include(e => e.ZipCode).ToList();
 			_context.Customers.Include(e => e.Acc_balance).ToList();
 			_context.Customers.Include(e => e.Gender).ToList();
-			_context.AccountBalances.Include(e => e.Transactions).ToList();
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
 			
 
@@ -75,7 +74,7 @@ namespace TEC_KasinoAPI.Controllers
 			{
 				Response.ContentType = "application/json";
 				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
-				
+
 				// Stored Procedure Parameters
 				cmd.Parameters.AddWithValue("@Email", Custom.Email);
 				cmd.Parameters.AddWithValue("@Password", Custom.Password);
@@ -101,10 +100,10 @@ namespace TEC_KasinoAPI.Controllers
 					return new JsonResult(result + " " +  ex);
 				}
 			}
-			//FromSqlRaw($"spCreateCustomer {Custom.Email}, {Custom.Password}, {Custom.Country} {Custom.PhoneNumber}, {Custom.CPRNumber}, {Custom.FirstName}, {Custom.LastName}, {Custom.Address}, {Custom.ZipCode}, {Custom.Gender}");
 		}
 	}
 
+	//Customer model for 
 	public class CustomerModel
 	{
 

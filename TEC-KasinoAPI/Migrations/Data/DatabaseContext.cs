@@ -36,24 +36,25 @@ namespace TEC_KasinoAPI.Data
 
 			builder.Entity<AccountBalance>(entity =>
 			{
-				entity.HasMany(e => e.Transactions).WithOne(e => e.Balance); // Configures relationship so that AccountBalance has many transactions but Transactions only has one balance
+				/*entity.HasMany(e => e.Transactions).WithOne(e => e.Balance);*/ // Configures relationship so that AccountBalance has many transactions but Transactions only has one balance
 				entity.Property(e => e.Balance).HasDefaultValueSql("0");
 				entity.Property(e => e.DepositLimit).HasDefaultValueSql("1000");
 			});
 
-			builder.Entity<AccountGender>() // Configures relationship so that AccountGender has many customers but a customer can only have one AccountGender
-				.HasMany(e => e.Customers)
-				.WithOne(e => e.Gender);
+			/*builder.Entity<AccountGender>() */// Configures relationship so that AccountGender has many customers but a customer can only have one AccountGender
+				//.HasMany(e => e.Customers)
+				//.WithOne(e => e.Gender);
 
 			builder.Entity<Country>(e => // Same applies here
 			{ 
-				e.HasMany(e => e.Customers).WithOne(e => e.Country);
+				//e.HasMany(e => e.Customers).WithOne(e => e.Country);
 				e.HasAlternateKey(e => e.CountryName).HasName("UN_Countries_CountryName");
 			});
 
-			builder.Entity<ZipCode>() // Same applies here
-			.HasMany(e => e.Customers)
-			.WithOne(e => e.ZipCode);
+			//builder.Entity<ZipCode>() // Same applies here
+			//.HasMany(e => e.Customers)
+			//.WithOne(e => e.ZipCode);
+
 		}
 	}
 }

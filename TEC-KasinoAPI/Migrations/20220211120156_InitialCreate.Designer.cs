@@ -12,7 +12,7 @@ using TEC_KasinoAPI.Data;
 namespace TEC_KasinoAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220210112019_InitialCreate")]
+    [Migration("20220211120156_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,19 +214,19 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.Customer", b =>
                 {
                     b.HasOne("TEC_KasinoAPI.Models.Country", "Country")
-                        .WithMany("Customers")
+                        .WithMany()
                         .HasForeignKey("CountryID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TEC_KasinoAPI.Models.AccountGender", "Gender")
-                        .WithMany("Customers")
+                        .WithMany()
                         .HasForeignKey("GenderID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TEC_KasinoAPI.Models.ZipCode", "ZipCode")
-                        .WithMany("Customers")
+                        .WithMany()
                         .HasForeignKey("ZipCodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -241,35 +241,15 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.Transaction", b =>
                 {
                     b.HasOne("TEC_KasinoAPI.Models.AccountBalance", "Balance")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("BalanceID");
 
                     b.Navigation("Balance");
                 });
 
-            modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
-                {
-                    b.Navigation("Transactions");
-                });
-
-            modelBuilder.Entity("TEC_KasinoAPI.Models.AccountGender", b =>
-                {
-                    b.Navigation("Customers");
-                });
-
-            modelBuilder.Entity("TEC_KasinoAPI.Models.Country", b =>
-                {
-                    b.Navigation("Customers");
-                });
-
             modelBuilder.Entity("TEC_KasinoAPI.Models.Customer", b =>
                 {
                     b.Navigation("Acc_balance");
-                });
-
-            modelBuilder.Entity("TEC_KasinoAPI.Models.ZipCode", b =>
-                {
-                    b.Navigation("Customers");
                 });
 #pragma warning restore 612, 618
         }
