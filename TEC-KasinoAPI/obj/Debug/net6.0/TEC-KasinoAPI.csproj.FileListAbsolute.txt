@@ -544,3 +544,6 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TE
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.genruntimeconfig.cache
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
