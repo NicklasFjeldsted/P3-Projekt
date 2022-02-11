@@ -543,3 +543,4 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\re
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.pdb
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.genruntimeconfig.cache
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll

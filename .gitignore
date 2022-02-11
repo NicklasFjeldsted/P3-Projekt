@@ -4,3 +4,4 @@
 *.props
 *.json
 *.editorconfig
+*.pdb
