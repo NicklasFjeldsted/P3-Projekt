@@ -97,9 +97,70 @@ namespace TEC_KasinoAPI.Controllers
 			return new JsonResult(result);
 		}
 
-		private bool AccountBalanceExists(int id)
-        {
-            return _context.AccountBalances.Any(e => e.BalanceID == id);
-        }
-    }
+		[HttpPut]
+		[Route("UpdateDepositLimit")]
+		public JsonResult UpdateDepositLimit(int newLimit, int balanceID)
+		{
+			string result = "Something went wrong!";
+			using (con = new(conString))
+			using (cmd = new("sp_save_deposit_limit", con))
+			{
+				Response.ContentType = "application/json";
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				cmd.Parameters.AddWithValue("@NewLimit", newLimit);
+				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
+
+				con.Open();
+
+				try
+				{
+					cmd.ExecuteNonQuery();
+					result = $"Successfully updated the new deposit limit to: {newLimit}";
+				}
+				catch (Exception ex)
+				{
+					result = "Error: " + ex.Message;
+				}
+
+				con.Close();
+			}
+
+			return new JsonResult(result);
+		}
+
+		[HttpGet]
+		[Route("Login")]
+		public JsonResult Login(string email, string password)
+		{
+			string result = "Something went wrong!";
+			using (con = new(conString))
+			using (cmd = new("sp_login", con))
+			{
+				Response.ContentType = "application/json";
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				cmd.Parameters.AddWithValue("@Email", email);
+				cmd.Parameters.AddWithValue("@Password", password);
+				cmd.Parameters.Add("@Count", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+				con.Open();
+
+				try
+				{
+					cmd.ExecuteNonQuery();
+
+					result = cmd.Parameters["@Count"].Value.ToString();
+				}
+				catch (Exception ex)
+				{
+					result = "Error: " + ex.Message;
+				}
+
+				con.Close();
+			}
+
+			return new JsonResult(result);
+		}
+	}
 }
