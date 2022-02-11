@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TEC_KasinoAPI.Data;
 using TEC_KasinoAPI.Models;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace TEC_KasinoAPI.Controllers
 {
@@ -14,93 +16,88 @@ namespace TEC_KasinoAPI.Controllers
     [ApiController]
     public class AccountBalancesController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+		private readonly IConfiguration _configuration;
+		private readonly DatabaseContext _context;
+		private readonly string conString;
+		private SqlConnection con;
+		private SqlCommand cmd;
 
-        public AccountBalancesController(DatabaseContext context)
-        {
-            _context = context;
-        }
+		public AccountBalancesController(IConfiguration configuration, DatabaseContext context)
+		{
+			_configuration = configuration;
+			_context = context;
+			conString = _configuration.GetConnectionString("DefaultConnection");
+		}
 
-        // GET: api/AccountBalances
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<AccountBalance>>> GetAccountBalances()
-        {
-            return await _context.AccountBalances.ToListAsync();
-        }
+		[HttpPut]
+		[Route("AddBalance")]
+		public JsonResult AddBalance(double amount, int balanceID)
+		{
+			string result = "Something went wrong!";
+			using (con = new(conString))
+			using (cmd = new("sp_balance_add", con))
+			{
+				Response.ContentType = "application/json";
+				cmd.CommandType = CommandType.StoredProcedure;
 
-        // GET: api/AccountBalances/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AccountBalance>> GetAccountBalance(int id)
-        {
-            var accountBalance = await _context.AccountBalances.FindAsync(id);
+				cmd.Parameters.AddWithValue("@InputValue", amount);
+				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
+				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-            if (accountBalance == null)
-            {
-                return NotFound();
-            }
+				con.Open();
 
-            return accountBalance;
-        }
+				try
+				{
+					cmd.ExecuteNonQuery();
+					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
+					result = $"Successfully added: {amount} to the account. New balance: {newBalance}";
+				}
+				catch (Exception ex)
+				{
+					result = "Error: " + ex.Message;
+				}
 
-        // PUT: api/AccountBalances/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutAccountBalance(int id, AccountBalance accountBalance)
-        {
-            if (id != accountBalance.BalanceID)
-            {
-                return BadRequest();
-            }
+				con.Close();
+			}
 
-            _context.Entry(accountBalance).State = EntityState.Modified;
+			return new JsonResult(result);
+		}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AccountBalanceExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+		[HttpPut]
+		[Route("SubtractBalance")]
+		public JsonResult SubtractBalance(double amount, int balanceID)
+		{
+			string result = "Something went wrong!";
+			using (con = new(conString))
+			using (cmd = new("sp_balance_subtract", con))
+			{
+				Response.ContentType = "application/json";
+				cmd.CommandType = CommandType.StoredProcedure;
 
-            return NoContent();
-        }
+				cmd.Parameters.AddWithValue("@InputValue", amount);
+				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
+				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
 
-        // POST: api/AccountBalances
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<AccountBalance>> PostAccountBalance(AccountBalance accountBalance)
-        {
-            _context.AccountBalances.Add(accountBalance);
-            await _context.SaveChangesAsync();
+				con.Open();
 
-            return CreatedAtAction("GetAccountBalance", new { id = accountBalance.BalanceID }, accountBalance);
-        }
+				try
+				{
+					cmd.ExecuteNonQuery();
+					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
+					result = $"Successfully removed: {amount} from the account. New balance: {newBalance}";
+				}
+				catch (Exception ex)
+				{
+					result = "Error: " + ex.Message;
+				}
 
-        // DELETE: api/AccountBalances/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAccountBalance(int id)
-        {
-            var accountBalance = await _context.AccountBalances.FindAsync(id);
-            if (accountBalance == null)
-            {
-                return NotFound();
-            }
+				con.Close();
+			}
 
-            _context.AccountBalances.Remove(accountBalance);
-            await _context.SaveChangesAsync();
+			return new JsonResult(result);
+		}
 
-            return NoContent();
-        }
-
-        private bool AccountBalanceExists(int id)
+		private bool AccountBalanceExists(int id)
         {
             return _context.AccountBalances.Any(e => e.BalanceID == id);
         }

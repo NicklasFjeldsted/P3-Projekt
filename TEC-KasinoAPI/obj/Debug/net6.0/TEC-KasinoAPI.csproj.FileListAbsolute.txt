@@ -270,8 +270,6 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\zh-Hans\Micro
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.MSBuild.resources.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
-C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\appsettings.Development.json
-C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\appsettings.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\TEC-KasinoAPI.exe
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\TEC-KasinoAPI.deps.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\TEC-KasinoAPI.runtimeconfig.json
@@ -544,3 +542,9 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TE
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.genruntimeconfig.cache
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\System.Data.SqlClient.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
