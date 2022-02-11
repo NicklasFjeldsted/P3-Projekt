@@ -83,7 +83,7 @@ namespace TEC_KasinoAPI.Controllers
 
 		[HttpGet]
 		[Route("GetAllCustomer")]
-		public JsonResult GetAllCustomer(string email)
+		public JsonResult GetAllCustomer(string email) 
 		{
 			_context.Customers.Include(e => e.Country).ToList();
 			_context.Customers.Include(e => e.ZipCode).ToList();
