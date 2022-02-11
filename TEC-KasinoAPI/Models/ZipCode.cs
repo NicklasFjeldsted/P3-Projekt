@@ -8,6 +8,6 @@ namespace TEC_KasinoAPI.Models
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int ZipCodeID { get; set; }
 		public string ZipCodeName { get; set; }
-		public ICollection<Customer> Customers { get; set; }
+		public virtual ICollection<Customer> Customers { get; set; }
 	}
 }

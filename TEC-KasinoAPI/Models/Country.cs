@@ -9,6 +9,6 @@ namespace TEC_KasinoAPI.Models
 		public int CountryID { get; set; }
 		public string CountryName { get; set; }
 
-		public ICollection<Customer> Customers { get; set; }
+		public virtual ICollection<Customer> Customers { get; set; }
 	}
 }

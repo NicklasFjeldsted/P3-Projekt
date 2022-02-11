@@ -8,9 +8,9 @@ namespace TEC_KasinoAPI.Models
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int BalanceID { get; set; }
 		public int CustomerID { get; set; }
-		public Customer Customer { get; set; }
+		public virtual Customer Customer { get; set; }
 		public double Balance { get; set; }
-		public ICollection<Transaction> Transactions { get; set; }
+		public virtual ICollection<Transaction> Transactions { get; set; }
 		public int DepositLimit { get; set; }
 	}
 }

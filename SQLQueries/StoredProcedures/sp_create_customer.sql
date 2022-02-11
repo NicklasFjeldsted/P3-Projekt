@@ -24,7 +24,7 @@ AS
 			BEGIN
 				DECLARE @newID int;
 				INSERT INTO Customers(Email, [Password], CountryID, PhoneNumber, CPRNumber, FirstName, LastName, Address, ZipCodeID, GenderID)
-				VALUES(@Email, @Password, @Country, @Phone, @CPR, @FirstName, @LastName, @Address, @ZipCode, @Gender)
+				VALUES(@Email, HASHBYTES('SHA2_512', @Password), @Country, @Phone, @CPR, @FirstName, @LastName, @Address, @ZipCode, @Gender)
 				SET @newID = SCOPE_IDENTITY()
 				INSERT INTO AccountBalances(CustomerID)
 				VALUES(@newID)
@@ -37,3 +37,10 @@ AS
 			END
 	END
 GO
+  CREATE PROCEDURE [sp_read_customer] /* READ */
+	@Email NVARCHAR(255) 
+	AS 
+		BEGIN 
+			SELECT Email, Password, CountryID, PhoneNumber, CPRNumber, FirstName, LastName, Address, ZipCodeID, GenderID, RegisterDate From Customers Where Email = @Email
+		END;
+	GO

@@ -16,7 +16,7 @@ namespace TEC_KasinoAPI.Models
 		public string Password { get; set; }
 		
 		[Required(ErrorMessage = "Field cannot be empty")]
-		public Country Country { get; set; } 
+		public virtual Country Country { get; set; } 
 
 		[Required(ErrorMessage = "Phone number must be 8 digits"), DataType(DataType.PhoneNumber), StringLength(8, MinimumLength = 8)]
 		public int PhoneNumber { get; set; }
@@ -34,12 +34,12 @@ namespace TEC_KasinoAPI.Models
 		public string Address { get; set; }
 
 		[Required(ErrorMessage = "Field cannot be empty")]
-		public ZipCode ZipCode { get; set; }
+		public virtual ZipCode ZipCode { get; set; }
 
 		[Required]
-		public AccountGender Gender { get; set; }
+		public virtual AccountGender Gender { get; set; }
 
-		public AccountBalance Acc_balance { get; set; }
+		public virtual AccountBalance Acc_balance { get; set; }
 
 		public DateTime RegisterDate { get; set; }
 	}

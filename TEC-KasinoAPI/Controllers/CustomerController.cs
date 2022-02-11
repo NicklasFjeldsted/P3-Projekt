@@ -18,6 +18,8 @@ namespace TEC_KasinoAPI.Controllers
 		private SqlConnection con;
 		private SqlCommand cmd;
 
+		private Customer customer;
+
 		public CustomerController(IConfiguration configuration, DatabaseContext context)
 		{
 			_configuration = configuration;
@@ -26,12 +28,38 @@ namespace TEC_KasinoAPI.Controllers
 		}
 
 		[HttpGet]
+		[Route("GetCustomer")]
 		public JsonResult GetCustomer(string email)
 		{
-			var customer = _context.Customers
-				.FromSqlRaw("spReadCustomer {0}", email)
-				.ToList()
-				.FirstOrDefault();
+			string query = $"sp_read_customer @email = '{email}'";
+			DataTable dt = new DataTable();
+			SqlDataReader rd;
+			using (con = new(conString))
+			using (cmd = new(query, con))
+			{
+				con.Open();
+				rd = cmd.ExecuteReader();
+
+				dt.Load(rd);
+
+				rd.Close();
+				con.Close();
+
+			}
+			return new JsonResult(dt);
+		}
+
+		[HttpGet]
+		[Route("GetAllCustomer")]
+		public JsonResult GetAllCustomer(string email)
+		{
+			_context.Customers.Include(e => e.Country).ToList();
+			_context.Customers.Include(e => e.ZipCode).ToList();
+			_context.Customers.Include(e => e.Acc_balance).ToList();
+			_context.Customers.Include(e => e.Gender).ToList();
+			_context.AccountBalances.Include(e => e.Transactions).ToList();
+			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
+			
 
 			return new JsonResult(customer);
 		}
@@ -40,11 +68,12 @@ namespace TEC_KasinoAPI.Controllers
 		[HttpPost]
 		[Route("CreateCustomer")]
 		[Produces("application/json")]
-		public JsonResult CreateCustomer(CustomerModel Custom)
+		public JsonResult CreateCustomer([FromBody]CustomerModel Custom)
 		{
 			using (con = new (conString))
-			using (cmd = new ("sp_create_customer"))
+			using (cmd = new ("sp_create_customer", con))
 			{
+				Response.ContentType = "application/json";
 				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
 				
 				// Stored Procedure Parameters
@@ -58,14 +87,13 @@ namespace TEC_KasinoAPI.Controllers
 				cmd.Parameters.AddWithValue("@Address", Custom.Address);
 				cmd.Parameters.AddWithValue("@ZipCode", Custom.ZipCode);
 				cmd.Parameters.AddWithValue("@Gender", Custom.Gender);
-				cmd.Parameters.Add("@returnValue", SqlDbType.NVarChar).Direction = ParameterDirection.Output;
-
-				var result = cmd.Parameters["@returnValue"].Value.ToString();
-
+				cmd.Parameters.Add("@returnValue", SqlDbType.NVarChar, 100).Direction = ParameterDirection.Output;
+				var result = "Something went wrong";
 				con.Open();
 				try
 				{
 					cmd.ExecuteNonQuery();
+					result = cmd.Parameters["@returnValue"].Value.ToString();
 					return new JsonResult(result);
 				}
 				catch (Exception ex)
