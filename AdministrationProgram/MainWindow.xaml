@@ -1,0 +1,59 @@
+﻿<Window x:Class="AdministratorProgram.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AdministratorProgram"
+        mc:Ignorable="d"
+        Title="Bruger Administration" Height="400" Width="800" HorizontalAlignment="Left" ResizeMode="NoResize">
+    <Grid>
+        <TextBox x:Name="searchBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="185" Height="35"/>
+        <TextBlock IsHitTestVisible="False" Text="Søg efter email.." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,13,0,0" Foreground="DarkGray" Width="139" Height="19">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=searchBox}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+
+        <Button x:Name="searchButton" Content="Søg" HorizontalAlignment="Left" Margin="195,10,0,0" VerticalAlignment="Top" Width="43" MinWidth="40" MinHeight="20" Height="35" Click="searchButton_Click"/>
+
+        <TextBox x:Name="amountBox" HorizontalAlignment="Left" Margin="10,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Height="35"/>
+        <TextBlock IsHitTestVisible="False" Text="Indtast beløb.." VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15,144,0,0" Foreground="DarkGray" Width="123" Height="19">
+            <TextBlock.Style>
+                <Style TargetType="{x:Type TextBlock}">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Text, ElementName=amountBox}" Value="">
+                            <Setter Property="Visibility" Value="Visible"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+        <Button x:Name="addButton" Content="Tilføj" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top" Height="35" Width="98" Click="addButton_Click"/>
+        <Button x:Name="removeButton" Content="Fjern" HorizontalAlignment="Left" Margin="140,181,0,0" VerticalAlignment="Top" Height="35" Width="98" Click="removeButton_Click"/>
+        <Button x:Name="openTransactions" Content="Se transaktioner" HorizontalAlignment="Left" Margin="10,277,0,0" VerticalAlignment="Top" Height="59" Width="228" Click="openTransactions_Click"/>
+        <TextBox x:Name="balanceBox" HorizontalAlignment="Left" Margin="10,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" Height="35" TextAlignment="Center" IsReadOnly="True"/>
+        <Label x:Name="userInformationHeader" Content="Brugeroplysninger" HorizontalAlignment="Left" Margin="386,10,0,0" VerticalAlignment="Top" FontSize="24" Height="49"/>
+        <TextBox x:Name="emailBox" HorizontalAlignment="Left" Margin="256,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="35" TextChanged="emailBox_TextChanged"/>
+        <Label x:Name="emailLabel" Content="E-mail:" HorizontalAlignment="Left" Margin="256,67,0,0" VerticalAlignment="Top" FontSize="14" Width="58" Height="34"/>
+        <Label x:Name="passwordLabel" Content="Adgangskode:" HorizontalAlignment="Left" Margin="512,67,0,0" VerticalAlignment="Top" FontSize="14" Height="34"/>
+        <Button x:Name="resetPasswordButton" Content="Reset Password" HorizontalAlignment="Left" Margin="512,101,0,0" VerticalAlignment="Top" Width="259" Height="35" Click="resetPasswordButton_Click"/>
+        <TextBox x:Name="landBox" HorizontalAlignment="Left" Margin="256,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="251" Height="35" TextChanged="landBox_TextChanged"/>
+        <Label x:Name="landLabel" Content="Land:" HorizontalAlignment="Left" Margin="256,149,0,0" VerticalAlignment="Top" FontSize="14" Width="48" Height="34"/>
+        <TextBox x:Name="phoneBox" HorizontalAlignment="Left" Margin="512,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="259" Height="35" TextChanged="phoneBox_TextChanged"/>
+        <Label x:Name="phoneLabel" Content="Mobilnummer:" HorizontalAlignment="Left" Margin="512,149,0,0" VerticalAlignment="Top" FontSize="14" Height="34"/>
+        <TextBox x:Name="limitBox" HorizontalAlignment="Left" Margin="256,277,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" Height="59" FontSize="36" TextAlignment="Center" />
+        <Button x:Name="limitSaveButton" Content="Gem" HorizontalAlignment="Left" Margin="450,277,0,0" VerticalAlignment="Top" Height="59" Width="57" Click="limitSaveButton_Click"/>
+        <Label x:Name="limitLabel" Content="Sæt indbetalingsgrænse:" HorizontalAlignment="Left" Margin="256,244,0,0" VerticalAlignment="Top" FontSize="14" Width="182" Height="32"/>
+        <Button x:Name="detailsButton" Content="Se detaljer" HorizontalAlignment="Left" Margin="512,277,0,0" VerticalAlignment="Top" Height="59" Width="94" Click="detailsButton_Click"/>
+        <Button x:Name="cancelButton" Content="Annuller" HorizontalAlignment="Left" Margin="695,277,0,0" VerticalAlignment="Top" Height="59" Width="76" Click="cancelButton_Click"/>
+        <Button x:Name="saveAllButton" Content="Gem alt" HorizontalAlignment="Left" Margin="611,277,0,0" VerticalAlignment="Top" Height="59" Width="79" Click="saveAllButton_Click"/>
+    </Grid>
+</Window>
