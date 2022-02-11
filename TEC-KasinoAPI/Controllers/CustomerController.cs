@@ -60,7 +60,6 @@ namespace TEC_KasinoAPI.Controllers
 			_context.AccountBalances.Include(e => e.Transactions).ToList();
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
 			
-
 			return new JsonResult(customer);
 		}
 
