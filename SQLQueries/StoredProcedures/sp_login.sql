@@ -1,0 +1,18 @@
+USE [TEC-KasinoDB];
+GO
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+IF OBJECT_ID('sp_login', 'P') IS NOT NULL
+	DROP PROC sp_login
+GO
+CREATE PROCEDURE sp_login
+	@Email NVARCHAR(450),
+	@Password NVARCHAR(MAX),
+	@Count INT OUTPUT
+AS
+BEGIN
+	SELECT CustomerID FROM Customers WHERE Email = @Email AND Password = HASHBYTES('SHA2_512', @Password);
+	SET @Count = @@ROWCOUNT;
+END

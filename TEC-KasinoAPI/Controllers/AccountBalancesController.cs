@@ -97,9 +97,37 @@ namespace TEC_KasinoAPI.Controllers
 			return new JsonResult(result);
 		}
 
-		private bool AccountBalanceExists(int id)
-        {
-            return _context.AccountBalances.Any(e => e.BalanceID == id);
-        }
-    }
+		[HttpPut]
+		[Route("UpdateDepositLimit")]
+		public JsonResult UpdateDepositLimit(int newLimit, int balanceID)
+		{
+			string result = "Something went wrong!";
+			using (con = new(conString))
+			using (cmd = new("sp_save_deposit_limit", con))
+			{
+				Response.ContentType = "application/json";
+				cmd.CommandType = CommandType.StoredProcedure;
+
+				cmd.Parameters.AddWithValue("@NewLimit", newLimit);
+				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
+
+				con.Open();
+
+				try
+				{
+					cmd.ExecuteNonQuery();
+					result = $"Successfully updated the new deposit limit to: {newLimit}";
+				}
+				catch (Exception ex)
+				{
+					result = "Error: " + ex.Message;
+				}
+
+				con.Close();
+			}
+
+			return new JsonResult(result);
+		}
+
+	}
 }

@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using TEC_KasinoAPI.Models;
 
-
 namespace TEC_KasinoAPI.Data
 {
 	public class DatabaseContext : DbContext

@@ -25,5 +25,3 @@ BEGIN
 	INNER JOIN AccountGenders ON Customers.GenderID=AccountGenders.GenderID
 	WHERE Customers.Email=@Email;
 END
-
-exec sp_email_search @Email = 'alexanderv.eriksen@gmail.com'
