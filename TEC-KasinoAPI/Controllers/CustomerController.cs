@@ -57,15 +57,7 @@ namespace TEC_KasinoAPI.Controllers
 			_context.Customers.AsNoTracking().Include(e => e.ZipCode).ToList();
 			_context.Customers.Include(e => e.Acc_balance).ToList();
 			_context.Customers.Include(e => e.Gender).ToList();
-<<<<<<< HEAD
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
-=======
-			_context.AccountBalances.Include(e => e.Transactions).ToList();
-			var customer = _context.Customers
-				.FromSqlRaw("sp_email_search @email = {0}", email)
-				.ToList()
-				.FirstOrDefault();
->>>>>>> f59a8e84f7501f07facbf40323a6c603f8141445
 			
 			return new JsonResult(customer);
 		}
