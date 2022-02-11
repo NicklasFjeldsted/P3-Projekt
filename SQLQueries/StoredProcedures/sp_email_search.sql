@@ -13,12 +13,11 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT Customers.CustomerID, Customers.Email, Customers.CountryID,
+	SELECT Customers.CustomerID, Customers.Email, Customers.Password, Customers.CountryID,
 	Countries.CountryName, Customers.PhoneNumber, Customers.CPRNumber,
 	Customers.FirstName, Customers.LastName, Customers.Address, Customers.ZipCodeID,
 	ZipCode.ZipCodeName, Customers.GenderID, AccountGenders.GenderName,
-	Customers.RegisterDate, AccountBalances.BalanceID, AccountBalances.Balance, AccountBalances.DepositLimit,
-	Customers.Password
+	Customers.RegisterDate, AccountBalances.BalanceID, AccountBalances.Balance, AccountBalances.DepositLimit
 	FROM Customers
 	INNER JOIN Countries ON Customers.CountryID=Countries.CountryID
 	INNER JOIN ZipCode ON Customers.ZipCodeID=ZipCode.ZipCodeID
@@ -26,3 +25,5 @@ BEGIN
 	INNER JOIN AccountGenders ON Customers.GenderID=AccountGenders.GenderID
 	WHERE Customers.Email=@Email;
 END
+
+exec sp_email_search @Email = 'alexanderv.eriksen@gmail.com'
