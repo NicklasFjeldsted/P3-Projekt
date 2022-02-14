@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\disi\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj": {}
+    "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\disi\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj": {
+    "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\disi\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
         "projectName": "TEC-KasinoAPI",
-        "projectPath": "C:\\Users\\disi\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
-        "packagesPath": "C:\\Users\\disi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\disi\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
+        "projectPath": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+        "packagesPath": "C:\\Users\\Matthias\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\disi\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Matthias\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
