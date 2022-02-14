@@ -10,7 +10,7 @@ namespace AdministratorProgram
 {
     internal static class DatabaseHandler
     {
-        public static readonly string CONN_STRING = @"Data Source=192.168.2.4;Initial Catalog=TEC-KasinoDB;Persist Security Info=True;User ID=sa;Password=1234";
+        public static readonly string CONN_STRING = @"Data Source=10.0.6.2;Initial Catalog=TEC-KasinoDB;Persist Security Info=True;User ID=sa;Password=1234";
 
         public static CustomerDataObject Search(string email)
         {

@@ -63,11 +63,10 @@ namespace TEC_KasinoAPI.Controllers
 		[Route("GetCustomer")]
 		public JsonResult GetCustomer(string email)
 		{
-			string query = $"sp_read_customer @email = '{email}'";
 			DataTable dt = new DataTable();
 			SqlDataReader rd;
 			using (con = new(conString))
-			using (cmd = new(query, con))
+			using (cmd = new($"sp_read_customer @email = '{email}'", con))
 			{
 				con.Open();
 				rd = cmd.ExecuteReader();
