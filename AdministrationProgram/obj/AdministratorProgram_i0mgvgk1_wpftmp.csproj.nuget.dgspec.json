@@ -1,41 +1,23 @@
 {
   "format": 1,
   "restore": {
-<<<<<<< HEAD
-    "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj": {}
+    "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj": {
+    "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
+        "projectUniqueName": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj",
         "projectName": "AdministratorProgram",
-        "projectPath": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
-        "packagesPath": "C:\\Users\\Nicklas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\AdministrationProgram\\obj\\",
-=======
-    "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj": {}
-  },
-  "projects": {
-    "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
-        "projectName": "AdministratorProgram",
-        "projectPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
+        "projectPath": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj",
         "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\obj\\",
->>>>>>> ce6a8aca00796f1d612723fe7c3d19137d634dea
+        "outputPath": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-<<<<<<< HEAD
-          "C:\\Users\\Nicklas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-=======
           "C:\\Users\\Alexander\\AppData\\Roaming\\NuGet\\NuGet.Config",
->>>>>>> ce6a8aca00796f1d612723fe7c3d19137d634dea
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -62,10 +44,6 @@
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
           "dependencies": {
-            "Syncfusion.Shared.WPF": {
-              "target": "Package",
-              "version": "[19.4.0.50, )"
-            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.3, )"

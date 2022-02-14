@@ -5,6 +5,14 @@
       "ProjectGuid": "4ac1fa40-cd5f-48c5-b288-10a741742e5b",
       "DisplayName": "AdministratorProgram",
       "ColorIndex": 0
+<<<<<<< HEAD
+=======
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+>>>>>>> ce6a8aca00796f1d612723fe7c3d19137d634dea
     }
   },
   "NextColorIndex": 1

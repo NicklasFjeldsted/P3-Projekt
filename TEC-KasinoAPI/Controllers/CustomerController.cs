@@ -84,10 +84,10 @@ namespace TEC_KasinoAPI.Controllers
 		[Route("GetAllCustomer")]
 		public JsonResult GetAllCustomer(string email) 
 		{
-			_context.Customers.Include(e => e.Country).ToList();
-			_context.Customers.Include(e => e.ZipCode).ToList();
-			_context.Customers.Include(e => e.Acc_balance).ToList();
-			_context.Customers.Include(e => e.Gender).ToList();
+			_context.Customers.Include(e => e.Country);
+			_context.Customers.Include(e => e.ZipCode);
+			_context.Customers.Include(e => e.Acc_balance);
+			_context.Customers.Include(e => e.Gender);
 			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
 			
 			return new JsonResult(customer);
