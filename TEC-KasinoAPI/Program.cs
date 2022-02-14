@@ -4,6 +4,14 @@ using TEC_KasinoAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//var host = new WebHostBuilder()
+//	.UseKestrel()
+//	.UseContentRoot(Directory.GetCurrentDirectory())
+//	.UseIISIntegration()
+//	.UseStartup<WebHostBuilder>()
+//	.Build();
+//host.Run();
+
 // Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -31,7 +39,8 @@ builder.Services.AddControllersWithViews()
 var app = builder.Build();
 app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
-
+app.UseSwagger();
+app.UseSwaggerUI();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
