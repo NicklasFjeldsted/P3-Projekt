@@ -571,11 +571,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj",
+      "projectUniqueName": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
       "projectName": "AdministratorProgram",
-      "projectPath": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\AdministratorProgram.csproj",
+      "projectPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\AdministratorProgram.csproj",
       "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alexander\\source\\repos\\AdministratorProgram\\obj\\",
+      "outputPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\AdministrationProgram\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
