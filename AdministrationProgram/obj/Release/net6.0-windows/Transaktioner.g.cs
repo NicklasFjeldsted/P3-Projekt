@@ -61,7 +61,7 @@ namespace AdministratorProgram {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/AdministratorProgram;V1.0.0.0;component/transaktioner.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/AdministratorProgram;component/transaktioner.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Transaktioner.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

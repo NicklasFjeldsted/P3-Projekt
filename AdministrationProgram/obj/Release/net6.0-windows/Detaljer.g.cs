@@ -165,7 +165,7 @@ namespace AdministratorProgram {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/AdministratorProgram;V1.0.0.0;component/detaljer.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/AdministratorProgram;component/detaljer.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Detaljer.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

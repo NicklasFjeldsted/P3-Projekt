@@ -103,3 +103,6 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\AdministrationProgram\obj\Debug\n
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\AdministrationProgram\obj\Debug\net6.0-windows\AdministratorProgram.pdb
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\AdministrationProgram\obj\Debug\net6.0-windows\AdministratorProgram.genruntimeconfig.cache
 >>>>>>> ce6a8aca00796f1d612723fe7c3d19137d634dea
+C:\Users\disi\Desktop\P3-Projekt\AdministrationProgram\obj\Debug\net6.0-windows\AdministratorProgram.dll
+C:\Users\disi\Desktop\P3-Projekt\AdministrationProgram\obj\Debug\net6.0-windows\ref\AdministratorProgram.dll
+C:\Users\disi\Desktop\P3-Projekt\AdministrationProgram\obj\Debug\net6.0-windows\AdministratorProgram.pdb
