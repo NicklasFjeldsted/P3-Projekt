@@ -9,92 +9,41 @@
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
 <body>
-    
-    <div class="container">
-        <div class="row">
-          <div class="column left">
-            <span class="dot" style="background:#ED594A;"></span>
-            <span class="dot" style="background:#FDD800;"></span>
-            <span class="dot" style="background:#5AC05A;"></span>
-          </div>
-          <div class="column middle">
-              <h10>Site Title</h10>
-          </div>
-          <br> 
-          <br>
-        </div>
-        <div class="columnTec">
-            <tr>
-             <th>TEC</th>
-             <th> <i class='far'>&#xf2bd; </i></th>
-             <br> 
-            </tr>
-           <!-- nav button -->
-        <br> 
-        <br>
-      
-      <div class="icons">
-          <tr> 
-              <th><i class="fa">&#xf0d6;</i> </th>
-              <th><i class="fa fa-bitcoin"></i></th>
-              <th><i class="fa fa-gbp"></i></th>
-              <th><i class="fa fa-dollar"></i> </th>
-          </tr>
-
-         <tr>
-            <td><i class="txt">Blackjack?</i></td>
-            <td><i class="txt">Roulette?</i></td>
-            <td><i class="txt">Slots?</i></td>
-            <td><i class="txt">Poker?</i></td>
-
-         </tr>
-    
+  <div class="container">
+    <div class="row">
+      <h1>TEC Kasino</h1>
     </div>
-    
-    </div>
-     <br><br> <br>
-    <!-- here i create Tilmed form -->
+  </div>
 
-
-    <div class="Tilmed">  
+  <div class="Tilmed">  
     <h1> Min konto</h1>
-     <p> Fornavn Mellemnavn Efternavn </p> 
+    <p> Fornavn Mellemnavn Efternavn </p> 
+    <tr> 
+      <th><button type="submit" name="Indbetal" id="Indbetal" ><a href="Indbetal.html">Indbetal</a></button></th>
+      <th><button type="submit" name="Udbetal" id="Udbetal" ><a href="Udbetal.html">Udbetal</a></button></th>
+      <th><button type="submit" name="LogUd" id="LogUd" ><a href= "Web.html">Log ud</a></button></th>
+    </tr>
 
-   <tr> 
-    
-    
-    <th><button type="submit" name="log" id="log" ><a href="Indbetal.html">Indbetal</a></button></th>
-    <th><button type="submit" name="log" id="logs" ><a href="Udbetal.html">Ubetal</a></button></th>
-    <th> <button type="submit" name="log" id="loge" ><a href= "Web.html">Log ud</a></button></th>
-   </tr>
-  
- 
- 
+    <p>Balance</p>
 
-     <p> Balance</p>
-    <i class="fa">&#xf0d6;</i> 
+    <input type="text" id="Box" placeholder="0" readonly>
 
     <P>Dine kontooplysninger </P>
-
     <label for="name"> Name</label>
-   
-    <input type="text" id="name" name="firstname" placeholder="Dine full name..">
-    
-
+  
+    <input type="text" id="Box" name="Fornavn" placeholder="Dit fulde navn">
+  
     <label for="phone">Mobilnummer:</label>
-    <input type="tel" id="phone" name="phone" placeholder="123-45-678" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}">
-   
-
+    <input type="text" id="Box" name="Telefonnummer" placeholder="12-34-56-67">
+  
     <label for="adress"> Adresse</label>
+
+    <input type="text" id="Box" name="Adresse" placeholder="Din adresse">
   
-    <input type="text" id="adress" name="Adresse" placeholder="Dine full adress..">
-    
+    <td><button type="submit" name="LogUd" id="LogUd1"><a href= "Web.html"> Log ud </a></button></td>
   
-    
-    <td><button type="submit" name="log" id="logg"><a href= "Web.html"> Log ud </a></button></td>
-    
-    <td> <button type="submit" name="deaktiver" id="loggs" ><a href="Deaktiver.html"> Deaktiver konto</a></button> </td>
-</div>
+    <td> <button type="submit" name="Deaktiver" id="Deaktiver" ><a href="Deaktiver.html"> Deaktiver konto</a></button> </td>
+  </div>
     
 </body>
 </html>
