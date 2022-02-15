@@ -561,9 +561,6 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\EntityFramework.SqlServer.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\EntityFramework.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\System.CodeDom.dll
 C:\Users\disi\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\disi\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\appsettings.json
 C:\Users\disi\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\TEC-KasinoAPI.exe
