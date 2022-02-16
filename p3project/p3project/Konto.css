@@ -49,8 +49,9 @@ p{
   border-radius: 30px;  
   padding-left: 8px;
   margin-top: 10px;
-   background-color: rgb(218, 129, 14);
+  background-color: rgb(218, 129, 14);
 }
+
 #Udbetal{
   width: 100px;  
   height: 30px;  
@@ -62,6 +63,7 @@ p{
   color: green;
   border-color: green;
 }
+
 #LogUd{
   width: 100px;  
   height: 30px;  
@@ -71,6 +73,7 @@ p{
   margin-top: 10px;
   background-color: green;
 }
+
 #LogUd1{
   width: 300px;  
   height: 30px;  
@@ -81,6 +84,7 @@ p{
   background-color: green;
 
 }
+
 #Deaktiver{
   width: 300px;  
   height: 30px;  
