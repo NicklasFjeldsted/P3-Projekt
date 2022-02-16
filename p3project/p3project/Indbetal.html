@@ -1,40 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="Indbetal.css">
     <title>Indbetal</title>
-    
-</head>
-<body>
+  </head>
+  <body>
     <div class="columnTec">
-      <div>
-            <h1>Indbetal</h1>
+      <h1>Indbetal</h1>
+  
+      <p> Indtast venligst dine kort detaljer</p>
+  
+      <input type="text" id="kort" name="kort" placeholder="Kortnummer fx 0000 0000 0000 0000">
+      <th><input type="text" id="kt" name="kort" placeholder="Udløbsdato  fx 12/12"> </th>
+      <th><input type="text" id="kt" name="kort" placeholder="Kontrolcifre fx 123"> </th>
+  
+      <input type="text" id="amount" name="amount" placeholder="0 kr.">
+      <span>&#36;</span>
         
-            <p> Indtast venligst dine kort detaljer</p>
-        
-            <input type="text" id="kort" name="kort">
-            <th><input type="text" id="kt" name="kort"> </th>
-            <th><input type="text" id="kt" name="kort"> </th>
-       
-            <input type="text" id="amount" name="amount">
-
-            <span>&#36;</span>
-        
-        <div class="num"> 
-            <th> <button type="submit" id="numbers">25  </button></th>
-            <th> <button type="submit" id="numbers">50  </button></th>
-            <th> <button type="submit" id="numbers">100 </button></th>
-            <br>
-            <th> <button type="submit" id="numbers">250 </button></th>
-            <th> <button type="submit" id="numbers" >500 </button></th>
-            <th> <button type="submit" id="numbers">1000</button></th>
-        </div>
-            <button type="submit" name="log" id="log" > Indbetal *beløb*</button>
-            <button type="submit" name="deaktiver" id="ind" >Indstil indbetalingsgrænse </button>
-        </div>
-    </div>     
-</body>
+      <div class="num"> 
+        <th> <button type="submit" id="numbersBn">25  </button></th>
+        <th> <button type="submit" id="numbersBn">50  </button></th>
+        <th> <button type="submit" id="numbersBn">100 </button></th>
+        <br>
+        <th> <button type="submit" id="numbersBn">250 </button></th>
+        <th> <button type="submit" id="numbersBn" >500 </button></th>
+        <th> <button type="submit" id="numbersBn">1000</button></th>
+      </div>
+      <button type="submit" name="IndbetalBn" id="IndbetalBn" > Indbetal *beløb*</button>
+      <button type="submit" name="BeløbsGrænseBn" id="BeløbsGrænseBn" >Indstil indbetalingsgrænse </button>
+    </div>
+  </body>
 </html>

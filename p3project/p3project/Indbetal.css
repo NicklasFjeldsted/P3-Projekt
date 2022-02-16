@@ -1,50 +1,48 @@
-
 body{
-    text-align: center;
-    box-sizing: content-box;  
-    width: 400px;
-    height: 600px;
-    padding: 0px;  
-    border: 2px solid black;
+  text-align: center;
+  box-sizing: content-box;  
+  width: 400px;
+  height: 600px;
+  padding: 0px;  
+  border: 2px solid black;
 }
 
 body{
-    position: fixed;
-    top: 15%;
-    left: 35%;
+  position: fixed;
+  top: 15%;
+  left: 35%;
 }
 
 h1{
-    font-size: 30px;
-    margin-top: 0px;
-    font: bold;
-    background-color: green;
-   
+  font-size: 30px;
+  margin-top: 0px;
+  font: bold;
+  background-color: green;
 }
 
 p{
-    color: black;
-    margin: auto;
-    width: 50%;
-    padding: 10px;
+  color: black;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
 }
 
 #kort{
-    width: 300px;  
-    height: 30px;  
-    border-width: 1px;  
-    border-radius: 3px;  
-    padding-left: 8px;
-    margin-top: 0px;
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 0px;
 }
 
 #kt{
-    width: 141px;
-    height: 30px;  
-    border-width: 1px;  
-    border-radius: 3px;  
-    padding-left: 8px;
-    margin-top: 20px;
+  width: 141px;
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
 }
 
 span{
@@ -52,52 +50,51 @@ span{
 }
 
 #amount{
-    width: 150px;
-    height: 60px;
-    border-width: 1px;  
-    border-radius: 3px;  
-    padding-left: 8px;
-    margin-top: 20px;
+  width: 150px;
+  height: 60px;
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
 }
 
 .num{
-    border-radius: 900px;
-
-    width: 100%;
-    height: 20;
-    display:inline-block;
-    box-sizing: border-box;
-    border:1px;
-    cursor: pointer;
-    text-align: center;
-    margin-top: 30px;
+  border-radius: 900px;
+  width: 100%;
+  height: 20;
+  display:inline-block;
+  box-sizing: border-box;
+  border:1px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 30px;
 }
 
-#numbers{
-    width: 80px;  
-    height: 30px;  
-    border-width: 1px;  
-    border-radius: 30px;  
-    padding-left: 8px;
-    margin-top: 10px; 
-    border-color: green;
+#numbersBn{
+  width: 80px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px; 
+  border-color: green;
 }
 
-#log{
-    color: brown;
-    background-color: rgb(228, 116, 11);
-    border-radius: 80px;
-    width: 250px;
-    height: 35px;
-    margin-top: 50px;
+#IndbetalBn{
+  color: brown;
+  background-color: rgb(228, 116, 11);
+  border-radius: 80px;
+  width: 250px;
+  height: 35px;
+  margin-top: 50px;
 }
 
-#ind{
-    color: brown;
-    background-color: white;
-    border-color: green;
-    border-radius: 80px;
-    width: 250px;
-    height: 35px;
-    margin-top: 20px;
+#BeløbsGrænseBn{
+  color: brown;
+  background-color: white;
+  border-color: green;
+  border-radius: 80px;
+  width: 250px;
+  height: 35px;
+  margin-top: 20px;
 }
