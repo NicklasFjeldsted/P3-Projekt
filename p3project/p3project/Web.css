@@ -1,71 +1,23 @@
-
 /* Container for columns and the top "toolbar" */
-.row {
+.row{
   padding: 0px;
   margin-top: 1px;
   margin-right: 0px;
-  margin-left: 0px;
   height: 40px;
   background: darkgray;
 }
 
-/* Create three unequal columns that floats next to each other */
-/* .column {
-  float: left; 
-}
-
-.left {
-  width: 50%;
-} */
-
-
-/* Clear floats after the columns */
-/* .row::before {
-  content: "";
-  display: table;
-  clear: both;
-} */
-
-/* Three dots */
-.dot {
-  margin-top: 4px;
-  height: 12px;
-  width: 12px;
- /* background-color: #bbb;*/
-  border-radius: 50%;
-  display: inline-block;
-  /*background:#ED594A;
-  background:#FDD800;
-  background:#5AC05A;*/
-}
 .heading{
   text-align: center;
-  font-size: 20px;
-margin-left: 42%;
 }
-
-/* css code for menue row */
-
-
 
 h1{
   text-align: center;
-  font-size: 20px;
+  font-size: 35px;
  margin-top: 5px;
 }
 
-/* Three bars (hamburger menu) */
-/* .bar {
-  width: 25px;
-  height: 4px;
-  background-color: darkgray;
-  margin: 6px 0;
-  display: block;
- 
-} */
-
-/* dropdowm menue */
-.bar {
+.bar{
   background-color: rgb(165, 16, 16);
   color: rgb(156, 19, 19);
   padding: 2px;
@@ -76,16 +28,14 @@ h1{
   width: 25px;
   height: 4px;
   margin-top: 0px;
-  
 }
 
-.dropdown {
+.dropdown{
   position: relative;
   display: inline-block;
-  margin-top: 0px;
 }
 
-.dropdown-content {
+.dropdown-content{
   display: none;
   position: absolute;
   background-color: #f1f1f1;
@@ -94,7 +44,7 @@ h1{
   z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content a{
   color: black;
   padding: 12px 16px;
   text-decoration: none;
@@ -108,57 +58,38 @@ h1{
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
 
 /* Page content */
-.content {
+.content{
   padding: 10px;
   border-bottom: 1px solid black;
- 
-  
-
 }
 /* Set a style for all buttons */
-.btn {
-
+.btn{
   display:inline-block;
   color:white;
   padding: 5px 1px;
-  /* we can use margin distance like  margin: 3px 0; */
   border: none;
   cursor: pointer;
   text-align: center;
   margin-top: 10px;
- 
 }
 
-.btn {
+.btn{
   float: right;
   width: 8%
-  
 }
 
- /* css for images */
-
-* {
+*{
   box-sizing: border-box;
 }
 
-.column2 {
+.column2{
   float: left;
   width:33.33%;
   padding: 5px;
   margin-top:60px;
 }
 
-
-/* Clearfix (clear floats) */
-/* .row2::after {
-  content: "";
-  clear: both;
-  display: table;
-
-  
-} */
 .buttom{
-  
   font-weight: bold;
   text-align: center;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -169,29 +100,16 @@ h1{
   width: 320px;
   padding: 10px;
   border: 3px solid black;
-  margin: 0;
   width: 100%;
 }
 /* message below login and tilmed button */
 .txt{
- 
-
   padding: 10px 1px;
   border: 1px solid black;
-  margin: 0;
   width: 10%;
   text-align: center;
   display:inline-block;
- 
- 
 }
-
-.txt{
-   float:right;
-}
- 
-
-
 
 /* try new button in all images */
 .column2 {
@@ -220,4 +138,3 @@ h1{
   border-radius: 75px;
   text-align: center;
 }
-
