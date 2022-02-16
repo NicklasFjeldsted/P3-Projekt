@@ -22,112 +22,119 @@ namespace TEC_KasinoAPI.Controllers
 		private SqlConnection con;
 		private SqlCommand cmd;
 
-		public AccountBalancesController(IConfiguration configuration, DatabaseContext context)
+		public AccountBalancesController(IConfiguration configuration, DatabaseContext context) // Constructor
 		{
 			_configuration = configuration;
 			_context = context;
 			conString = _configuration.GetConnectionString("DefaultConnection");
 		}
 
+
+		//Update balance on AccountBalance (addition input amount on balance)
 		[HttpPut]
 		[Route("AddBalance")]
-		public JsonResult AddBalance(double amount, int balanceID)
+		public JsonResult AddBalance([FromBody]AccountBalanceModel acc, double amount)
 		{
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_balance_add", con))
+			using (con = new(conString)) // SQL connection
+			using (cmd = new("sp_balance_add", con)) // SQL query
 			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
+				cmd.Parameters.AddRange(new[]
+				{
+					new SqlParameter("@InputValue", amount),
+					new SqlParameter("@BalanceID", acc.BalanceID),
+					new SqlParameter("@Balance", SqlDbType.Int){Direction = ParameterDirection.Output }
+				}); // All parameters of the stored procedure stored in a array
 
-				cmd.Parameters.AddWithValue("@InputValue", amount);
-				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
-				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
-
-				con.Open();
+				con.Open(); // Opening connection to the database
 
 				try
 				{
-					cmd.ExecuteNonQuery();
-					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
-					result = $"Successfully added: {amount} to the account. New balance: {newBalance}";
+					cmd.ExecuteNonQuery(); // Executes query
+					int newBalance = (int)cmd.Parameters["@Balance"].Value; // Takes output parameter and converts its value into a readable integer
+					return new JsonResult($"Successfully added: {amount} to the account. New balance: {newBalance}"); 
 				}
 				catch (Exception ex)
 				{
-					result = "Error: " + ex.Message;
+					return new JsonResult("Error: " + ex.Message); // Error message
 				}
-
-				con.Close();
 			}
 
-			return new JsonResult(result);
 		}
 
+
+		//Update balance on AccountBalance (subtract input amount from balance)
 		[HttpPut]
-		[Route("SubtractBalance")]
-		public JsonResult SubtractBalance(double amount, int balanceID)
+		[Route("SubBalance")]
+		public JsonResult SubtractBalance([FromBody]AccountBalanceModel acc, double amount)
 		{
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_balance_subtract", con))
+			using (con = new(conString)) // SQL connection
+			using (cmd = new("sp_balance_subtract", con)) // SQL query
 			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
 
-				cmd.Parameters.AddWithValue("@InputValue", amount);
-				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
-				cmd.Parameters.Add("@Balance", SqlDbType.Int).Direction = ParameterDirection.Output;
+				cmd.Parameters.AddRange(new[]
+				{
+					new SqlParameter("@InputValue", amount),
+					new SqlParameter("@BalanceID", acc.BalanceID),
+					new SqlParameter("@Balance", SqlDbType.Int){Direction = ParameterDirection.Output }
+				}); // All parameters of the stored procedure stored in a array
 
-				con.Open();
+				con.Open(); // Opening connection to the database
 
 				try
 				{
-					cmd.ExecuteNonQuery();
-					int newBalance = Convert.ToInt32(cmd.Parameters["@Balance"].Value);
-					result = $"Successfully removed: {amount} from the account. New balance: {newBalance}";
+					cmd.ExecuteNonQuery(); // Executes query
+					int newBalance = (int)cmd.Parameters["@Balance"].Value; // Takes output parameters value and converts it into a readable integer
+					return new JsonResult($"Successfully removed: {amount} from the account. New balance: {newBalance}"); 
 				}
 				catch (Exception ex)
 				{
-					result = "Error: " + ex.Message;
+					return new JsonResult("Error: " + ex.Message); 
 				}
-
-				con.Close();
 			}
-
-			return new JsonResult(result);
 		}
 
+
+		//Update deposit limit on AccountBalance
 		[HttpPut]
-		[Route("UpdateDepositLimit")]
-		public JsonResult UpdateDepositLimit(int newLimit, int balanceID)
+		[Route("UpdateLimit")] 
+		public JsonResult UpdateLimit([FromBody]AccountBalanceModel acc)
 		{
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_save_deposit_limit", con))
+			using (con = new(conString)) // SQL connection
+			using (cmd = new("sp_save_deposit_limit", con)) // SQL query
 			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
 
-				cmd.Parameters.AddWithValue("@NewLimit", newLimit);
-				cmd.Parameters.AddWithValue("@BalanceID", balanceID);
+				cmd.Parameters.AddRange(new []
+				{
+					new SqlParameter("@BalanceID", acc.BalanceID),
+					new SqlParameter("@InputValue", acc.DepositLimit)
+				}); // All parameters of the stored procedure stored in a array
 
-				con.Open();
-
+				con.Open(); // Opening connection to the database
 				try
 				{
-					cmd.ExecuteNonQuery();
-					result = $"Successfully updated the new deposit limit to: {newLimit}";
+					cmd.ExecuteNonQuery(); // Executes query
+					return new JsonResult($"Updated deposit limit to {acc.DepositLimit} on AccountBalance: {acc.BalanceID}.");
 				}
 				catch (Exception ex)
 				{
-					result = "Error: " + ex.Message;
+					return new JsonResult($"Failed to update deposit limit to {acc.DepositLimit} on AccountBalance: {acc.BalanceID}. Error: {ex.Message}");
 				}
-
-				con.Close();
 			}
-
-			return new JsonResult(result);
 		}
 
+	}
+
+	public class AccountBalanceModel
+	{
+		public int BalanceID { get; set; }
+		public int CustomerID { get; set; }
+		public double Balance { get; set; }
+		public int DepositLimit { get; set; }
 	}
 }

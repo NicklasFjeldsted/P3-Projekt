@@ -18,93 +18,87 @@ namespace TEC_KasinoAPI.Controllers
 		private SqlConnection con;
 		private SqlCommand cmd;
 
-		public CustomerController(IConfiguration configuration, DatabaseContext context)
+		public CustomerController(IConfiguration configuration, DatabaseContext context) // Constructor
 		{
 			_configuration = configuration;
 			_context = context;
 			conString = _configuration.GetConnectionString("DefaultConnection");
 		}
-
-		[HttpGet]
+		// Customer login using POST to avoid showing login information inside of the URL
+		[HttpPost]
 		[Route("Login")]
-		public JsonResult Login(string email, string password)
+		public JsonResult Login([FromBody]CustomerModel custom)
 		{
-			string result = "Something went wrong!";
-			using (con = new(conString))
-			using (cmd = new("sp_login", con))
+			using (con = new(conString)) // SQL connection
+			using (cmd = new("sp_login", con)) // SQL query
 			{
-				Response.ContentType = "application/json";
-				cmd.CommandType = CommandType.StoredProcedure;
+				string result = String.Empty; // Empty string for response
 
-				cmd.Parameters.AddWithValue("@Email", email);
-				cmd.Parameters.AddWithValue("@Password", password);
-				cmd.Parameters.Add("@Count", SqlDbType.Int).Direction = ParameterDirection.Output;
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
 
-				con.Open();
+				cmd.Parameters.AddRange(new[]
+				{
+					new SqlParameter("@Email", custom.Email),
+					new SqlParameter("@Password", custom.Password),
+					new SqlParameter("@Output", SqlDbType.NVarChar, -1){ Direction = ParameterDirection.Output }
+				}); // All parameters of the stored procedure stored in a array
 
+				con.Open(); // Opening connection to the database
 				try
 				{
-					cmd.ExecuteNonQuery();
-
-					result = cmd.Parameters["@Count"].Value.ToString();
+					cmd.ExecuteNonQuery(); // Executes the query
+					result = cmd.Parameters["@Output"].Value.ToString(); // Takes output parameter and converts its value into a string
+					RedirectToAction("index.html");
+					return new JsonResult(result);  
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
-					result = "Error: " + ex.Message;
+					return new JsonResult(result); // Error message
 				}
-
-				con.Close();
 			}
-
-			return new JsonResult(result);
 		}
 
 		[HttpGet]
 		[Route("GetCustomer")]
 		public JsonResult GetCustomer(string email)
 		{
-			DataTable dt = new DataTable();
-			SqlDataReader rd;
-			using (con = new(conString))
-			using (cmd = new($"sp_read_customer @email = '{email}'", con))
+			using (con = new(conString)) //SQL connection
+			using (cmd = new($"sp_read_customer", con)) // SQL query
 			{
-				con.Open();
-				rd = cmd.ExecuteReader();
+				var dt = new DataTable();
+				SqlDataReader rd;
 
-				dt.Load(rd);
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
+				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
 
-				rd.Close();
-				con.Close();
+				cmd.Parameters.AddWithValue("@email", email); // SQL parameter
 
+				con.Open(); // Opening connection to the database
+				try
+				{
+					using (rd = cmd.ExecuteReader()) // Reads rows from query
+					{
+						dt.Load(rd); // Fills datatable with data from corresponding rows
+						return new JsonResult(dt); // Returns the data
+					}
+				}
+				catch(Exception ex)
+				{
+					return new JsonResult("Error: " + ex.Message); // Error message
+				}
 			}
-			return new JsonResult(dt);
-		}
-
-		[HttpGet]
-		[Route("GetAllCustomer")]
-		public JsonResult GetAllCustomer(string email) 
-		{
-			_context.Customers.Include(e => e.Country);
-			_context.Customers.Include(e => e.ZipCode);
-			_context.Customers.Include(e => e.Acc_balance);
-			_context.Customers.Include(e => e.Gender);
-			var customer = _context.Customers.FromSqlRaw("sp_email_search @email = {0}", email).ToList().FirstOrDefault();
-			
-			return new JsonResult(customer);
 		}
 
 		[HttpPost]
 		[Route("CreateCustomer")]
-		[Produces("application/json")]
 		public JsonResult CreateCustomer([FromBody]CustomerModel Custom)
 		{
-			using (con = new (conString))
-			using (cmd = new ("sp_create_customer", con))
+			using (con = new (conString)) // SQL connection
+			using (cmd = new ("sp_create_customer", con)) // SQL query
 			{
-				Response.ContentType = "application/json";
+				Response.ContentType = "application/json"; // Declaring the response header's content-type
 				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
-
-				// Stored Procedure Parameters
 
 				cmd.Parameters.AddRange(new []
 				{
@@ -119,27 +113,25 @@ namespace TEC_KasinoAPI.Controllers
 					new SqlParameter("@ZipCode", Custom.ZipCode),
 					new SqlParameter("@Gender", Custom.Gender),
 					new SqlParameter("@returnValue", SqlDbType.NVarChar, 100){Direction = ParameterDirection.Output }
-				}); // Parameter Range containing all parameters for SQL Query
-				var result = "Something went wrong";
-				con.Open(); // Opening 
+				}); // All parameters of the stored procedure stored in a array
+
+				con.Open(); // Opening connection to the database
 				try
 				{
-					cmd.ExecuteNonQuery();
-					result = cmd.Parameters["@returnValue"].Value.ToString();
+					cmd.ExecuteNonQuery(); // Executes query
+					string result = cmd.Parameters["@returnValue"].Value.ToString(); // Takes output parameter and converts its value into a string
 					return new JsonResult(result);
 				}
 				catch (Exception ex)
 				{
-					return new JsonResult(result + " " +  ex);
+					return new JsonResult("Error: " + ex.Message); // Error message
 				}
 			}
 		}
 	}
 
-	//Customer model for 
 	public class CustomerModel
 	{
-
 		public string Email { get; set; }
 		public string Password { get; set; }
 		public int Country { get; set; }
@@ -150,16 +142,5 @@ namespace TEC_KasinoAPI.Controllers
 		public string Address { get; set; }
 		public int ZipCode { get; set; }
 		public int Gender { get; set; }
-
 	}
-//	"email": "nicklas4@gmail.com",
-//  "password": "Nicklas",
-//  "country": 1,
-//  "phoneNumber": 29854367,
-//  "cprNumber": "1234567890",
-//  "firstName": "Nicklas",
-//  "lastName": "Fjeldsted",
-//  "address": "Brøndbyvestervej 17, 2th",
-//  "zipCode": 2600,
-//  "gender": 1
 }

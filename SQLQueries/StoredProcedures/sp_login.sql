@@ -10,9 +10,18 @@ GO
 CREATE PROCEDURE sp_login
 	@Email NVARCHAR(450),
 	@Password NVARCHAR(MAX),
-	@Count INT OUTPUT
+	@Output NVARCHAR(MAX) OUTPUT
 AS
-BEGIN
-	SELECT CustomerID FROM Customers WHERE Email = @Email AND Password = HASHBYTES('SHA2_512', @Password);
-	SET @Count = @@ROWCOUNT;
-END
+	BEGIN
+		IF EXISTS(SELECT CustomerID FROM Customers WHERE Email = @Email AND Password = HASHBYTES('SHA2_512', @Password))
+			BEGIN
+				SET @output = 'Logged in successfully';
+			END
+		ELSE
+			BEGIN
+				SET @output = 'Login Failed: Email and password do not match!';
+			END
+		END
+	
+GO
+
