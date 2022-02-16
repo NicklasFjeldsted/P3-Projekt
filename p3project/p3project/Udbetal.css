@@ -1,135 +1,86 @@
-
 body{
-       
-    text-align: center;
-    box-sizing: content-box;  
-    width: 400px;
-    height: 600px;
-    padding: 0px;  
-    border: 2px solid black;
-   }
-body{
-position: fixed;
-top: 15%;
-left: 35%;
+  text-align: center;
+  box-sizing: content-box;  
+  width: 400px;
+  height: 600px;
+  padding: 0px;  
+  border: 2px solid black;
+  position: fixed;
+  top: 15%;
+  left: 35%;
 }
+
 h1{
-font-size: 30px;
-margin-top: 0px;
-font: bold;
-background-color: green;
-
+  font-size: 30px;
+  margin-top: 0px;
+  font: bold;
+  background-color: green;
 }
+
 p{
-color: black;
-float: left;
-margin-left: 40px;
-}
-/* body{
-text-align: center;  
-}        */
-#kort{
-width: 300px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 3px;  
-padding-left: 8px;
-margin-top: 0px;
-}
-#kt{
-width: 141px;
-height: 30px;  
-border-width: 1px;  
-border-radius: 3px;  
-padding-left: 8px;
-margin-top: 20px;
+  color: black;
+  float: left;
+  margin-left: 40px;
 }
 
-span {
-content: "\0024";
+#kort{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 0px;
 }
+
+#kt{
+  width: 141px;
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
+}
+
+span{
+  content: "\0024";
+}
+
 #amount{
-width: 150px;
-height: 60px;
-border-width: 1px;  
-border-radius: 3px;  
-padding-left: 8px;
-margin-top: 20px;
+  width: 150px;
+  height: 60px;
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
 }
 
 .num{
-border-radius: 900px;
+  border-radius: 900px;
+  width: 100%;
+  height: 20;
+  display:inline-block;
+  box-sizing: border-box;
+  border:1px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 30px;
+}
 
-width: 100%;
-height: 20;
-display:inline-block;
-/* padding: 40px 1px; */
-box-sizing: border-box;
-border:1px;
-cursor: pointer;
-text-align: center;
-margin-top: 30px;
+#number{
+  width: 80px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px; 
+  border-color: green;
 }
-#num1{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green;
-}
-#num2{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green;
-}
-#num3{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green;
-}
-#num4{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green;
-}
-#num5{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green; 
-}
-#num6{
-width: 80px;  
-height: 30px;  
-border-width: 1px;  
-border-radius: 30px;  
-padding-left: 8px;
-margin-top: 10px; 
-border-color: green;
-}
+
 #log{
-color: brown;
-background-color: rgb(228, 116, 11);
-border-radius: 80px;
-width: 250px;
-height: 35px;
-margin-top: 50px;
+  color: lightgray;
+  background-color: green;
+  border-radius: 80px;
+  width: 250px;
+  height: 35px;
+  margin-top: 50px;
 }
-
