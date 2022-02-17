@@ -1,24 +1,38 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
+
+  <!-- Top row on the page. -->
   <div class="row">
+
+    <!-- Left empty column for correct positioning of other columns. -->
     <div class="column">
     </div>
 
+    <!-- Center column storing the title of the website. -->
     <div class="column">
+
       <h2>TEC</h2>
+
     </div>
 
-    <!-- nav buttons -->
+    <!-- Right column storing our navbar. -->
     <div class="column right">
+
       <nav>
-        <button type="submit" ><a href="TilmedForm.html">Tilmeld</a></button>
-        <button type="submit" ><a href="loginPage.html">Login</a></button>
+        <button type="submit" ><a href="#">Tilmeld</a></button>
+        <button type="submit" ><a href="#">Login</a></button>
       </nav>
+
     </div>
+
   </div>
 
+  <!-- Second row of the page. -->
   <div class="row">
-    <div class="column-row">
+
+    <!-- Creates a row that is in the horizontal center of the screen. -->
+    <div class="center-row">
+
       <div class="column">
         <p class="fa">&#xf0d6;<br>Blackjack</p>
       </div>
@@ -31,20 +45,31 @@
       <div class="column">
         <p class="fa fa-dollar"><br>Poker</p>
       </div>
+
     </div>
+
   </div>
 
-  <!-- here i create Login form -->
+  <!-- Third row of the page this one fills out the rest of the containers height. -->
   <div class="fill-row">
-    <form id="login" method="get" class="login center middle">
+
+    <!-- Login form for calling the API. -->
+    <form id="login" method="post" class="login v-center h-center">
+
+      <!-- Lady on the left of the login form. -->
       <img src="../../../assets/media/pig.png" class="ll-img" />
+
+      <!-- A single column where its content flows down instead of sideways. -->
       <div class="column flow-down">
-        <input type="text" name="E-mail" id="E-mail" class="form-input" placeholder="@ E-mail" />
-        <input type="Password" name="Pass" id="Pass" class="form-input" placeholder=" @ Password" />
-        <button type="submit" name="log" id="log" class="form-submit">Log ind</button>
+        <input type="text" name="email" id="email" class="form-input" placeholder="@ E-mail" />
+        <input type="password" name="password" id="password" class="form-input" placeholder=" @ Password" />
+        <button type="submit" name="login" id="login" class="form-submit">Log ind</button>
         <a href="#">Glemt Adgangskode</a>
         <a href="TilmedForm.html">Opret Konto</a>
       </div>
+
     </form>
+
   </div>
+
 </div>
