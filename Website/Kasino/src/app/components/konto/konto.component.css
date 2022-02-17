@@ -1,0 +1,14 @@
+:host
+{
+  height: 100%;
+  width: 100%;
+}
+
+.form-control{
+  max-height: 500px;
+}
+
+.form-submit
+{
+  margin: 0;
+}
