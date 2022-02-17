@@ -99,3 +99,19 @@ body
   width: 100%;
   text-align: center;
 }
+
+/* Defines the behaviour of all a elements. */
+a
+{
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Defines the behaviour of all button elements.  */
+button
+{
+  margin: 1em;
+  padding: .5em 1em;
+  cursor: pointer;
+}
