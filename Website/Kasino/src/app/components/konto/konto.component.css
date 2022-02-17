@@ -5,7 +5,7 @@
 }
 
 .form-control{
-  max-height: 600px;
+  max-height: 650px;
   height: 100%;
 }
 
@@ -29,15 +29,32 @@
   background-color: green;
 }
 
-.p{
-  font-size: 18px;
+.row{
+  margin: 10px;
+  max-height: 80px;
+  height: 100%;
+}
+
+h1{
+  margin: 5px;
+}
+
+p{
   margin-top: 20px;
 }
 
-.row{
-  margin: 5px;
-  max-height: 80px;
-  height: 100%;
+.form-input{
+  margin: 10px;
+}
+
+label{
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+.bot{
+  width: 300px;
+  margin-top: 20px;
 }
 
 

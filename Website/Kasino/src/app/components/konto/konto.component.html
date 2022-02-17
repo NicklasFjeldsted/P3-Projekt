@@ -1,57 +1,35 @@
+<!-- Linksne virker ikke -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<!-- <div class="column flow-down">  
-  <h1> Min konto</h1>
-  <p> Fornavn Mellemnavn Efternavn </p> 
-  <tr> 
-    <th><button type="submit" name="Indbetal" id="Indbetal" ><a href="Indbetal.html">Indbetal</a></button></th>
-    <th><button type="submit" name="Udbetal" id="Udbetal" ><a href="Udbetal.html">Udbetal</a></button></th>
-    <th><button type="submit" name="LogUd" id="LogUd" ><a href= "Web.html">Log ud</a></button></th>
-  </tr>
-
-  <p>Balance</p>
-
-  <input type="text" id="Box" placeholder="0" readonly>
-
-  <P>Dine kontooplysninger </P>
-  <label for="name"> Name</label>
-
-  <input type="text" id="Box" name="Fornavn" placeholder="Dit fulde navn">
-
-  <label for="phone">Mobilnummer:</label>
-  <input type="text" id="Box" name="Telefonnummer" placeholder="12-34-56-67">
-
-  <label for="adress"> Adresse</label>
-
-  <input type="text" id="Box" name="Adresse" placeholder="Din adresse">
-
-  <td><button type="submit" name="LogUd" id="LogUd1"><a href= "Web.html"> Log ud </a></button></td>
-
-  <td> <button type="submit" name="Deaktiver" id="Deaktiver" ><a href="Deaktiver.html"> Deaktiver konto</a></button> </td>
-</div> -->
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <form id="login" method="get" class="form-control v-center h-center">
-    <div class="column flow-down">
-      <h2>Min Konto</h2>
-      <div class="row">
-        <div class="column">
-          <button type="submit" name="indbetal" id="indbetal" class="form-submit orange"><a href="Indbetal.html">Indbetal</a></button>
-        </div>
-
-        <div class="column">
-          <button type="submit" name="udbetal" id="udbetal" class="form-submit white"><a href="Udbetal.html">Udbetal</a></button>
-        </div>
-  
-        <div class="column">
-          <button type="submit" name="logUd" id="logUd" class="form-submit green"><a href= "Web.html">Log ud</a></button>
-        </div>
+<form id="login" method="get" class="form-control v-center h-center">
+  <div class="column flow-down">
+    <h1>Min Konto</h1>
+    <p class="self-left">Fornavn Mellemnavn Efternavn</p>
+    <div class="row">
+      <div class="column">
+        <button type="submit" name="indbetal" id="indbetal" class="form-submit orange"><a href="Indbetal.html">Indbetal</a></button>
       </div>
-      <p class="self-left">Balance</p>
-      <input type="text" name="balance" id="balance" class="form-input" placeholder=" 0" readonly/>
-      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Udløbsdato  fx 12/12"/>
-      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kontrolcifre fx 123"/>
-      <input type="text" name="amount" id="amount" class="form-input" placeholder=" Beløb"/>
-      <button type="submit" name="log" id="log" class="form-submit">Bekraft</button>
+      <div class="column">
+        <button type="submit" name="udbetal" id="udbetal" class="form-submit white"><a href="Udbetal.html">Udbetal</a></button>
+      </div>
+
+      <div class="column">
+        <button type="submit" name="logUd" id="logUd" class="form-submit green"><a href= "Web.html">Log ud</a></button>
+      </div>
     </div>
-  </form>
+    <p class="self-left">Balance</p>
+    <input type="text" name="balance" id="balance" class="form-input" placeholder=" 0" readonly/>
+    
+    <p class="self-left">Dine kontooplysninger</p>
+    <label for="navn" class="self-left">Navn</label>
+    <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder=" Dit fulde navn"/>
+
+    <label for="telefonnummer" class="self-left">Telefonnummer</label>
+    <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" 12-34-56-67"/>
+
+    <label for="adresse" class="self-left">Adresse</label>
+    <input type="text" name="adresse" id="adresse" class="form-input" placeholder=" Din adresse"/>
+
+    <button type="submit" name="logUd" id="logUd" class="form-submit bot green"><a href= "">Log ud</a></button>
+    <button type="submit" name="logUd" id="logUd" class="form-submit bot orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
+  </div>
+</form>
