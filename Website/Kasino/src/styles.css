@@ -7,6 +7,12 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+/* Makes the background green. */
+.bg-green
+{
+  background-color: green;
+}
+
 /* Makes the body equal to the device's screen width and height. */
 body
 {
@@ -58,35 +64,15 @@ body
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 100%;
+  flex: 1;
   height: 100%;
   position: relative;
   text-align: center;
 }
 
-/* Defines the behaviour of a form. */
-.form-control
+.center
 {
-  width: 75%;
-  height: 50%;
-  max-width: 312px;
-  max-height: 275px;
-  overflow: hidden;
-  padding: 30px;
-  border-radius: 5px ;
-  border: 3px solid black;
-  text-align: center;
-  background-color: lightgrey;
-}
-
-.self-left
-{
-  align-self: flex-start;
-}
-
-.self-right
-{
-  align-self: flex-end;
+  justify-content: center;
 }
 
 /* Makes the content of the element start from the right. */
@@ -150,10 +136,24 @@ button
   cursor: pointer;
 }
 
+/* Defines the behaviour of a form. */
+.form-control
+{
+  width: 75%;
+  height: 75%;
+  max-width: 400px;
+  max-height: 800px;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 3px solid black;
+  text-align: center;
+  background-color: lightgrey;
+}
+
 /* Defines the behaviour of form inputs. */
 .form-input
 {
-  width: 100%;
+  width: 90%;
   height: 30px!important;
   max-width: 300px;
   border: none;
@@ -166,7 +166,7 @@ button
 /* Defines the behaviour of form submits. */
 .form-submit
 {
-  width: 100%;
+  width: 90%;
   height: 100%;
   max-width: 310px;
   max-height: 40px;
@@ -175,6 +175,18 @@ button
   color: black;
   font-size: large;
   font-size: bold;
+}
+
+/* Define a form header. */
+.form-header
+{
+  position: relative;
+  border-bottom: 2px solid black;
+  height: 60px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 40px;
 }
 
 /* Defines the behaviour of all form's a elements. */
