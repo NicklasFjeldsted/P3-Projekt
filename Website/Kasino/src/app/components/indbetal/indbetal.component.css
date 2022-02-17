@@ -1,0 +1,12 @@
+:host
+{
+  height: 100%;
+}
+
+/* border-radius has used to give shape of box */
+button
+{
+  margin: 1em;
+  padding: .5em 1em;
+  cursor: pointer;
+}

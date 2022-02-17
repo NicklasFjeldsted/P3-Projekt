@@ -1,3 +1,124 @@
+.container
+{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width: 100%;
+  height: 100%
+}
+
+/* Container for columns */
+.row
+{
+  position: relative;
+  border-bottom: 2px solid lightgray;
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+
+.fill-row
+{
+  position: relative;
+  height: 100%;
+  display: flexbox;
+}
+
+.column
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.right
+{
+  justify-content: end;
+}
+
+.left
+{
+  justify-content: start;
+}
+
+.flow-down
+{
+  flex-direction: column;
+}
+
+.center
+{
+  position: relative!important;
+  top: 50%!important;
+  transform: translateY(-50%)!important;
+}
+
+.middle
+{
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.icons
+{
+  font-size: 25px;
+  line-height: 5%;
+}
+
+.fa
+{
+  text-align: center;
+}
+
+.login
+{
+  width: 75%;
+  height: 50%;
+  max-width: 312px;
+  max-height: 275px;
+  overflow: hidden;
+  padding: 30px;
+  border-radius: 5px ;
+  border: 3px solid black;
+  text-align: center;
+  background-color: lightgrey;
+}
+
+/* border-radius has used to give shape of box */
+
+.form-input
+{
+  width: 100%;
+  height: 30px!important;
+  max-width: 300px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: black 0px 0px 3px;
+  padding: 2px 8px;
+  margin-bottom: 10px;
+}
+
+.form-submit
+{
+  width: 100%;
+  height: 100%;
+  max-width: 310px;
+  max-height: 40px;
+  border: none;
+  border-radius: 17px;
+  color: black;
+  font-size: large;
+  font-size: bold;
+  background-color: green;
+}
+
+/*
 body{
   text-align: center;
   box-sizing: content-box;  
@@ -5,9 +126,6 @@ body{
   height: 600px;
   padding: 0px;  
   border: 2px solid black;
-}
-
-body{
   position: fixed;
   top: 15%;
   left: 35%;
@@ -98,3 +216,4 @@ span{
   height: 35px;
   margin-top: 20px;
 }
+*/
