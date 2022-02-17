@@ -34,26 +34,24 @@
   <form id="login" method="get" class="form-control v-center h-center">
     <div class="column flow-down">
       <h2>Min Konto</h2>
-
       <div class="row">
         <div class="column">
-          <button type="submit" name="Indbetal" id="Indbetal" class="form-submit"><a href="Indbetal.html">Indbetal</a></button>
+          <button type="submit" name="indbetal" id="indbetal" class="form-submit orange"><a href="Indbetal.html">Indbetal</a></button>
         </div>
 
         <div class="column">
-          <button type="submit" name="Udbetal" id="Udbetal" class="form-submit"><a href="Udbetal.html">Udbetal</a></button>
+          <button type="submit" name="udbetal" id="udbetal" class="form-submit white"><a href="Udbetal.html">Udbetal</a></button>
         </div>
   
         <div class="column">
-          <button type="submit" name="LogUd" id="LogUd" class="form-submit"><a href= "Web.html">Log ud</a></button>
+          <button type="submit" name="logUd" id="logUd" class="form-submit green"><a href= "Web.html">Log ud</a></button>
         </div>
-
       </div>
-
-      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kortnummer fx 0000 0000 0000 0000" />
-      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Udløbsdato  fx 12/12" />
-      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kontrolcifre fx 123" />
-      <input type="text" name="amount" id="amount" class="form-input" placeholder=" Beløb" />
+      <p class="self-left">Balance</p>
+      <input type="text" name="balance" id="balance" class="form-input" placeholder=" 0" readonly/>
+      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Udløbsdato  fx 12/12"/>
+      <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kontrolcifre fx 123"/>
+      <input type="text" name="amount" id="amount" class="form-input" placeholder=" Beløb"/>
       <button type="submit" name="log" id="log" class="form-submit">Bekraft</button>
     </div>
   </form>

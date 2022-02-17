@@ -79,6 +79,16 @@ body
   background-color: lightgrey;
 }
 
+.self-left
+{
+  align-self: flex-start;
+}
+
+.self-right
+{
+  align-self: flex-end;
+}
+
 /* Makes the content of the element start from the right. */
 .right
 {
