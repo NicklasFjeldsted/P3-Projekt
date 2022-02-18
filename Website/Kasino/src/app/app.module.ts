@@ -9,6 +9,7 @@ import { IndbetalComponent } from './components/indbetal/indbetal.component';
 import { KontoComponent } from './components/konto/konto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UdbetalComponent } from './components/udbetal/udbetal.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { UdbetalComponent } from './components/udbetal/udbetal.component';
     HeaderComponent,
     IndbetalComponent,
     KontoComponent,
-    UdbetalComponent
+    UdbetalComponent,
+    HomeComponent
+
   ],
   imports: [
     BrowserModule,
