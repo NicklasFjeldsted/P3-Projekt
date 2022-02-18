@@ -41,6 +41,12 @@ body
   width: 100%;
 }
 
+.fit
+{
+  height: fit-content;
+  padding: 10px 0px;
+}
+
 /* Create a row in the center of the screen. */
 .center-row
 {
@@ -67,6 +73,7 @@ body
   height: 100%;
   position: relative;
   text-align: center;
+  border: 2px transparent;
 }
 
 /* Makes the content of the element start from the center. */
@@ -153,6 +160,16 @@ a
 {
   border: solid black 2px;
   background-color: transparent;
+}
+
+.btn-solid
+{
+  background-color: black;
+}
+
+.btn-solid a
+{
+  color: white;
 }
 
 /* Defines the behaviour of a form. */
