@@ -11,3 +11,9 @@
   border: 1px solid gray;
   border-radius: 15px;
 }
+
+.form-control
+{
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
