@@ -3,7 +3,6 @@
 {
   margin: 0;
   padding: 0;
-  white-space: nowrap;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
@@ -70,6 +69,7 @@ body
   text-align: center;
 }
 
+/* Makes the content of the element start from the center. */
 .center
 {
   justify-content: center;
@@ -128,12 +128,31 @@ a
   text-decoration: none;
 }
 
-/* Defines the behaviour of all button elements.  */
-button
+/* Standard button style. */
+.btn
 {
-  margin: 0 1em;
+  color: black;
+  height: 100%;
+  max-width: 310px;
+  max-height: 40px;
+  border: none;
+  border-radius: 17px;
+  font-size: 16px;
+  font-style: bold;
+  margin: 0 .5em;
   padding: .5em 1em;
   cursor: pointer;
+}
+
+.btn:hover
+{
+  box-shadow: 0px 0px 10px green;
+}
+
+.btn-secondary
+{
+  border: solid black 2px;
+  background-color: transparent;
 }
 
 /* Defines the behaviour of a form. */
@@ -167,14 +186,11 @@ button
 .form-submit
 {
   width: 90%;
-  height: 100%;
-  max-width: 310px;
-  max-height: 40px;
   border: none;
   border-radius: 17px;
-  color: black;
   font-size: large;
   font-size: bold;
+  cursor: pointer;
 }
 
 /* Define a form header. */
