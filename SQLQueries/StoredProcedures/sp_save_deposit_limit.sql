@@ -8,11 +8,11 @@ IF OBJECT_ID('sp_save_deposit_limit', 'P') IS NOT NULL
 	DROP PROC sp_save_deposit_limit
 GO
 CREATE PROCEDURE sp_save_deposit_limit
-	@NewLimit INT,
+	@InputValue INT,
 	@BalanceID INT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
-	UPDATE AccountBalances SET DepositLimit = @NewLimit WHERE BalanceID = @BalanceID;
+	UPDATE AccountBalances SET DepositLimit = @InputValue WHERE BalanceID = @BalanceID;
 END

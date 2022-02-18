@@ -1,0 +1,42 @@
+/* Gets the angular component element in the DOM and defines the behaviour of it. */
+:host
+{
+  height: 100%;
+  width: 100%;
+}
+
+/* Defines the behaviour of the Lady Image. */
+.ll-img
+{
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -257px;
+  display: block;
+}
+
+.form-control
+{
+  max-height: 415px;
+  max-width: 400px;
+  overflow: visible;
+}
+
+.form-header
+{
+  border-bottom: none;
+}
+
+.column *
+{
+  margin-bottom: 20px;
+}
+
+/* Only applies if the device's screen width is less than 600px. */
+@media only screen and (max-width: 600px)
+{
+  .ll-img
+  {
+    display: none;
+  }
+}
