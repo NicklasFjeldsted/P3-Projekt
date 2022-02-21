@@ -8,11 +8,11 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './guards/auth-guard.services';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: 'login', component: LoginComponent },
   {path: 'indbetal', component: IndbetalComponent, canActivate: [AuthGuard] },
   {path: 'udbetal', component: UdbetalComponent },
   {path: 'konto', component: KontoComponent },
-  {path: 'home', component: HomeComponent}
+  {path: '', component: HomeComponent}
 
 ];
 
