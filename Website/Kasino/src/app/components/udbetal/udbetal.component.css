@@ -8,9 +8,20 @@
 {
   border-top-left-radius: 25px;
   border-top-right-radius: 25px;
+  max-width: 400px;
+  max-height: 650px;
 }
 
 .row
 {
   border-bottom: none;
+}
+
+@media only screen and (max-width: 600px)
+{
+  .form-control
+  {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+  }
 }
