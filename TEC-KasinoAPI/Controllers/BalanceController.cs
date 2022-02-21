@@ -14,15 +14,17 @@ namespace TEC_KasinoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountBalancesController : ControllerBase
+    public class BalanceController : ControllerBase
     {
+		// private variables
+
 		private readonly IConfiguration _configuration;
 		private readonly DatabaseContext _context;
 		private readonly string conString;
 		private SqlConnection con;
 		private SqlCommand cmd;
 
-		public AccountBalancesController(IConfiguration configuration, DatabaseContext context) // Constructor
+		public BalanceController(IConfiguration configuration, DatabaseContext context) // Constructor
 		{
 			_configuration = configuration;
 			_context = context;
@@ -128,13 +130,5 @@ namespace TEC_KasinoAPI.Controllers
 			}
 		}
 
-	}
-
-	public class AccountBalanceModel
-	{
-		public int BalanceID { get; set; }
-		public int CustomerID { get; set; }
-		public double Balance { get; set; }
-		public int DepositLimit { get; set; }
 	}
 }
