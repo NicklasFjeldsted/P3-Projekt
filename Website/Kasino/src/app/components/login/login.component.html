@@ -9,16 +9,10 @@
   <img src="../../../assets/media/pig.png" class="ll-img" />
   <!-- A single column where its content flows down instead of sideways. -->
   <div class="column flow-down">
-<<<<<<< Updated upstream
-    <input type="text" name="email" id="email" class="form-input" placeholder="@ E-mail" />
-    <input type="password" name="password" id="password" class="form-input" placeholder=" @ Password" />
-    <button type="submit" name="login" id="login" class="btn form-submit">Log ind</button>
-=======
     <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password</div>
     <input type="text" name="email" id="email" class="form-input" placeholder="@ E-mail" ngModel required autofocus/>
     <input type="password" name="password" id="password" class="form-input" placeholder=" @ Password" ngModel required autofocus />
     <button type="submit" name="login" id="login" class="form-submit">Log ind</button>
->>>>>>> Stashed changes
     <a href="#">Glemt Adgangskode</a>
     <a href="TilmedForm.html">Opret Konto</a>
   </div>
