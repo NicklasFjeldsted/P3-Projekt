@@ -17,13 +17,19 @@ export class LoginComponent {
       "password": form.value.password
     }
 
-    this.loginService.login(credentials).subscribe( (response) => {
-      const token = response;
-      localStorage.setItem("token", token);
-      this.invalidLogin = false;
-      this.router.navigate(["/"]);
+    this.loginService.login(credentials).subscribe({
+      next: (res) => {
+        const token = res;
+        localStorage.setItem("token", token);
+        this.invalidLogin = false;
+        this.router.navigate([""]);
+      },
+      error: (err) => {
+        this.invalidLogin = true;
+      }
     })
   }
+
 
 
 }
