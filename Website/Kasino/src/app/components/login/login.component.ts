@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -9,9 +8,9 @@ import { LoginService } from 'src/app/services/login.service';
   templateUrl: './login.component.html',
   styleUrls: [ './login.component.css' ]
 })
-export class LoginComponent   {
-  invalidLogin = true;
-  constructor(private router: Router, private http: HttpClient, private loginService: LoginService) { }
+export class LoginComponent {
+  constructor(private router: Router, private loginService: LoginService) { }
+  invalidLogin: boolean = false;
   login(form: NgForm) {
     const credentials = {
       "email": form.value.email,
