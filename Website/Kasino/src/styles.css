@@ -112,27 +112,29 @@ body
 /* Makes the content of the element start from the right. */
 .right
 {
-  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 /* Makes the content of the element start from the left. */
 .left
 {
-  align-items: flex-start;
+  justify-content: flex-start;
 }
 
 /* Makes the content of the element flow down instead of sideways. */
 .flow-down
 {
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 /* Makes the content of the element flow up instead of sideways. */
 .flow-up
 {
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 
@@ -228,13 +230,19 @@ a
 {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .form-row .form-input
 {
   align-self: center;
   width: 100vw;
+}
+
+.form-row label
+{
+  align-self: flex-start;
 }
 
 /* Defines the behaviour of form submits. */
