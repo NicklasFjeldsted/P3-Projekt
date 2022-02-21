@@ -38,9 +38,10 @@ AS
 	END
 GO
   CREATE PROCEDURE [sp_read_customer] /* READ */
-	@Email NVARCHAR(255) 
+	@Email NVARCHAR(max),
+	@Password NVARCHAR(max) 
 	AS 
 		BEGIN 
-			SELECT Email, Password, CountryID, PhoneNumber, CPRNumber, FirstName, LastName, Address, ZipCodeID, GenderID, RegisterDate From Customers Where Email = @Email
+			SELECT Email, Password, CountryID, PhoneNumber, CPRNumber, FirstName, LastName, Address, ZipCodeID, GenderID, RegisterDate From Customers Where Email = @Email AND Password = HASHBYTES('SHA2_512', @Password)
 		END;
 	GO

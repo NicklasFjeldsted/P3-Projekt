@@ -5,6 +5,14 @@ using TEC_KasinoAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using System.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
+using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TEC_KasinoAPI.Controllers
 {
@@ -24,6 +32,7 @@ namespace TEC_KasinoAPI.Controllers
 			_context = context;
 			conString = _configuration.GetConnectionString("DefaultConnection");
 		}
+
 		// Customer login using POST to avoid showing login information inside of the URL
 		[HttpPost]
 		[Route("Login")]
@@ -61,10 +70,10 @@ namespace TEC_KasinoAPI.Controllers
 
 		[HttpGet]
 		[Route("GetCustomer")]
-		public JsonResult GetCustomer(string email)
+		public JsonResult GetCustomer(string email, string password)
 		{
 			using (con = new(conString)) //SQL connection
-			using (cmd = new($"sp_read_customer", con)) // SQL query
+			using (cmd = new($"sp_login", con)) // SQL query
 			{
 				var dt = new DataTable();
 				SqlDataReader rd;
@@ -72,7 +81,8 @@ namespace TEC_KasinoAPI.Controllers
 				Response.ContentType = "application/json"; // Declaring the response header's content-type
 				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command to be a Stored Procedure
 
-				cmd.Parameters.AddWithValue("@email", email); // SQL parameter
+				cmd.Parameters.AddWithValue("@Email", email); // SQL parameter
+				cmd.Parameters.AddWithValue("@Password", password); // SQL parameter
 
 				con.Open(); // Opening connection to the database
 				try
@@ -85,7 +95,7 @@ namespace TEC_KasinoAPI.Controllers
 				}
 				catch(Exception ex)
 				{
-					return new JsonResult("Error: " + ex.Message); // Error message
+					return new JsonResult(ex.Message); // Error message
 				}
 			}
 		}
@@ -128,6 +138,50 @@ namespace TEC_KasinoAPI.Controllers
 				}
 			}
 		}
+
+		[HttpGet("Public")]
+		public IActionResult Public()
+		{
+			return Ok("Hi, you're on public property!");
+		}
+
+		[HttpGet("Admins"), Authorize(Roles = "Customer")] 
+		public IActionResult AdminsEndPoint()
+		{
+			var currentUser = GetCurrentCustomer();
+			System.Diagnostics.Debug.WriteLine("hello" + currentUser.Email);
+			return Ok($"Hi, {currentUser.FirstName}");
+		}
+
+		private CustomerModel GetCurrentCustomer()
+		{
+			var identity = HttpContext.User.Identity as ClaimsIdentity;
+
+			if(identity != null)
+			{
+				System.Diagnostics.Debug.WriteLine("Identity is not null!");
+				var userClaims = identity.Claims;
+				return new CustomerModel
+				{
+					Email = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value,
+					FirstName = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value,
+					Role = userClaims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value
+				};
+
+			}
+			System.Diagnostics.Debug.WriteLine("Is null");
+			return null;
+		}
+
+		[HttpGet]
+		public async Task<ActionResult<List<Customer>>> Get(int userID)
+		{
+			var user = await _context.Customers
+				.Where(x => x.CustomerID == userID)
+				.ToListAsync();
+
+			return user;
+		}
 	}
 
 	public class CustomerModel
@@ -142,5 +196,6 @@ namespace TEC_KasinoAPI.Controllers
 		public string Address { get; set; }
 		public int ZipCode { get; set; }
 		public int Gender { get; set; }
+		public string Role { get; set; }
 	}
 }
