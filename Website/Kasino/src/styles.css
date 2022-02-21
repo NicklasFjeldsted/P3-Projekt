@@ -11,6 +11,15 @@
 {
   background-color: green;
 }
+.bg-orange
+{
+  background-color: orange;
+}
+.bg-white
+{
+  background-color: white;
+}
+
 
 /* Makes the body equal to the device's screen width and height. */
 body
@@ -45,7 +54,7 @@ body
 {
   position: relative;
   display: flex;
-  
+
 }
 
 .fit
@@ -57,6 +66,7 @@ body
 /* Create a row in the center of the screen. */
 .center-row
 {
+  position: relative;
   display: flex;
   width: 50%;
   margin: 0 auto;
@@ -102,13 +112,13 @@ body
 /* Makes the content of the element start from the right. */
 .right
 {
-  justify-content: end;
+  align-items: flex-end;
 }
 
 /* Makes the content of the element start from the left. */
 .left
 {
-  justify-content: start;
+  align-items: flex-start;
 }
 
 /* Makes the content of the element flow down instead of sideways. */
@@ -216,6 +226,19 @@ a
   margin-bottom: 10px;
 }
 
+.form-row
+{
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+}
+
+.form-row .form-input
+{
+  align-self: center;
+  width: 100vw;
+}
+
 /* Defines the behaviour of form submits. */
 .form-submit
 {
@@ -243,4 +266,17 @@ a
 form a
 {
   margin-bottom: 10px;
+}
+
+@media only screen and (max-width: 600px)
+{
+  .form-control
+  {
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    height: 100%;
+    max-height: 100%!important;
+    max-width: 100%!important;
+  }
 }

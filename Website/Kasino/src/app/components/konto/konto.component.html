@@ -2,37 +2,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <form id="login" method="get" class="form-control v-center h-center">
   <div class="column flow-down">
-    <h1>Min Konto</h1>
-    <p class="self-left">Fornavn Mellemnavn Efternavn</p>
+    <div class="form-header">
+      <h1>Min Konto</h1>
+    </div>
     <div class="row">
       <div class="column">
-        <button type="submit" name="indbetal" id="indbetal" class="form-submit orange"><a href="Indbetal.html">Indbetal</a></button>
+        <button type="submit" name="indbetal" id="indbetal" class="form-submit bg-orange"><a href="Indbetal.html">Indbetal</a></button>
       </div>
       <div class="column">
-        <button type="submit" name="udbetal" id="udbetal" class="form-submit white"><a href="Udbetal.html">Udbetal</a></button>
+        <button type="submit" name="udbetal" id="udbetal" class="form-submit bg-white"><a href="Udbetal.html">Udbetal</a></button>
       </div>
 
       <div class="column">
-        <button type="submit" name="logUd" id="logUd" class="form-submit green"><a href= "Web.html">Log ud</a></button>
+        <button type="submit" name="logUd" id="logUd" class="form-submit bg-green"><a href= "Web.html">Log ud</a></button>
       </div>
     </div>
 
-    <div class="row flow-down center">
-      <p class="self-left">Balance</p> 
-      <input type="text" name="balance" id="balance" class="form-input " placeholder=" 0" readonly/>
+    <div class="form-row flow-down">
+      <label for="balance">Balance</label>
+      <input type="text" name="balance" id="balance" class="form-input " placeholder="0" readonly/>
     </div>
-    
-    <p class="self-left">Dine kontooplysninger</p>
-    <label for="navn" class="self-left">Navn</label>
-    <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder=" Dit fulde navn"/>
 
-    <label for="telefonnummer" class="self-left">Telefonnummer</label>
-    <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" 12-34-56-67"/>
 
-    <label for="adresse" class="self-left">Adresse</label>
-    <input type="text" name="adresse" id="adresse" class="form-input" placeholder=" Din adresse"/>
+    <div class="row">
+      <div class="column">
+        <h4>Dine kontooplysninger</h4>
+      </div>
+    </div>
 
-    <button type="submit" name="logUd" id="logUd" class="form-submit bot green"><a href= "">Log ud</a></button>
-    <button type="submit" name="logUd" id="logUd" class="form-submit bot orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
+    <div class="form-row flow-down">
+        <label for="fuldeNavn">Navn</label>
+        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder="Dit fulde navn"/>
+    </div>
+
+
+    <div class="form-row flow-down">
+      <label for="tlf">Telefonnummer</label>
+      <input type="text" name="tlf" id="tlf" class="form-input" placeholder="12-34-56-67"/>
+    </div>
+
+    <div class="form-row flow-down">
+      <label for="adresse">Adresse</label>
+      <input type="text" name="adresse" id="adresse" class="form-input" placeholder="Din adresse"/>
+    </div>
+
+    <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-green"><a href= "">Log ud</a></button>
+    <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
   </div>
 </form>

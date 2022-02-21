@@ -4,7 +4,8 @@
   width: 100%;
 }
 
-.form-control{
+.form-control
+{
   max-height: 650px;
   height: 100%;
 }
@@ -17,47 +18,16 @@
   height: 30px;
 }
 
-.orange{
-  background-color: orange;
-}
-
-.white{
-  background-color: white;
-}
-
-.green{
-  background-color: green;
-}
-
-.row{
-  margin: auto;
+.row
+{
+  margin: 0 auto;
   max-height: 200px;
-  height: 100%;
   right: 0;
   left: 0;
 }
 
-h1{
-  margin: 5px;
-}
-
-p{
-  margin-top: 20px;
-}
-
-.form-input{
-  margin: 10px;
-}
-
-label{
-  margin-top: 10px;
-  font-size: 15px;
-}
-
-.bot{
+.bot
+{
   width: 300px;
   margin-top: 20px;
 }
-
-
-
