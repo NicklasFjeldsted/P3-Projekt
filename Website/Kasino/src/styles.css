@@ -125,14 +125,16 @@ body
 .flow-down
 {
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 /* Makes the content of the element flow up instead of sideways. */
 .flow-up
 {
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 
