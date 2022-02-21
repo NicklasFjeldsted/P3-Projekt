@@ -41,6 +41,13 @@ body
   width: 100%;
 }
 
+.test-row
+{
+  position: relative;
+  display: flex;
+  
+}
+
 .fit
 {
   height: fit-content;

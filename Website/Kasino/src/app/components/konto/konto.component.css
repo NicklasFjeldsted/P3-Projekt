@@ -30,9 +30,11 @@
 }
 
 .row{
-  margin: 10px;
-  max-height: 80px;
+  margin: auto;
+  max-height: 200px;
   height: 100%;
+  right: 0;
+  left: 0;
 }
 
 h1{
@@ -56,5 +58,6 @@ label{
   width: 300px;
   margin-top: 20px;
 }
+
 
 
