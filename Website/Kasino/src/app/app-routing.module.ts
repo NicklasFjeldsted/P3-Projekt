@@ -12,7 +12,7 @@ const routes: Routes = [
   {path: 'indbetal', component: IndbetalComponent, canActivate: [AuthGuard] },
   {path: 'udbetal', component: UdbetalComponent },
   {path: 'konto', component: KontoComponent },
-  {path: '', component: HomeComponent}
+  {path: 'l', component: HomeComponent}
 
 ];
 
