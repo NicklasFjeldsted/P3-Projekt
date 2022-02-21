@@ -10,12 +10,15 @@ import { LoginService } from '../../services/login.service';
 })
 export class LoginComponent {
   constructor(private router: Router, private loginService: LoginService) { }
+
   invalidLogin: boolean = false;
-  login(form: NgForm) {
+
+  loginForm(form: NgForm) {
     const credentials = {
       "email": form.value.email,
       "password": form.value.password
     }
+  }
 
     this.loginService.login(credentials).subscribe({
       next: (res) => {
@@ -28,7 +31,6 @@ export class LoginComponent {
         this.invalidLogin = true;
       }
     })
-  }
 
 
 

@@ -6,8 +6,6 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.pdb
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Azure.Core.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Azure.Identity.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\EntityFramework.SqlServer.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\EntityFramework.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Humanizer.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\MessagePack.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\MessagePack.Annotations.dll
@@ -15,6 +13,7 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Net.Http.Formatting.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Web.Http.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Web.Http.Cors.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.AspNetCore.Razor.Language.dll
@@ -42,6 +41,7 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.EntityFrameworkCore.Relational.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.EntityFrameworkCore.SqlServer.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.Identity.Client.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.Identity.Client.Extensions.Msal.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Microsoft.IdentityModel.JsonWebTokens.dll
@@ -73,17 +73,18 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\NuGet.Protocol.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\NuGet.Versioning.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Owin.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Scrutor.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Filters.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Filters.Abstractions.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Swashbuckle.AspNetCore.SwaggerUI.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.CodeDom.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Composition.AttributedModel.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Composition.Convention.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Composition.Hosting.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Composition.Runtime.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Composition.TypedParts.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Configuration.ConfigurationManager.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Data.SqlClient.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Drawing.Common.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\System.Runtime.Caching.dll
@@ -255,11 +256,6 @@ C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win-arm64\native\sni.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win-x64\native\sni.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win-x86\native\sni.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
