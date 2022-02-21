@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const AUTH_API = 'http://localhost:5001/api/auth/';
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+const AUTH_API = 'https://localhost:5001/api/Auth/';
+const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
 const baseURL = '';
 
 @Injectable({
@@ -16,16 +15,13 @@ export class LoginService
 {
   constructor(private http: HttpClient) { }
   login(credentials: any): Observable<any> {
-    return this.http.post(AUTH_API + 'login', {
-      username: credentials.username,
-      password: credentials.password
-    }, httpOptions);
+    return this.http.post(AUTH_API + 'Login',
+    { email: credentials.email, password: credentials.password },
+    { headers, responseType: 'text'})
   }
   register(user: any): Observable<any> {
-    return this.http.post(AUTH_API + 'register', {
-      username: user.username,
-      email: user.email,
-      password: user.password
-    }, httpOptions);
+    return this.http.post(AUTH_API + 'Login',
+    { email: user.email, password: user.password },
+    { headers, responseType: 'text'})
   }
 }

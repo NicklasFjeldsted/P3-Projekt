@@ -13,9 +13,10 @@ import { UdbetalComponent } from './components/udbetal/udbetal.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuard } from './guards/auth-guard.services';
 
 export function tokenGetter() {
-  return localStorage.getItem("jwt");
+  return localStorage.getItem("token");
 }
 
 
@@ -43,7 +44,7 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

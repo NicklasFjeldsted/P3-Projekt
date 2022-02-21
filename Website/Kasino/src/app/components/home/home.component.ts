@@ -12,7 +12,7 @@ export class HomeComponent {
   constructor(private router: Router, private jwtHelper: JwtHelperService) { }
 
   isUserAuthenticated() {
-    const token: string | null = localStorage.getItem("jwt");
+    const token: string | null = localStorage.getItem("token");
     if(token && !this.jwtHelper.isTokenExpired(token)) {
       return true;
     }

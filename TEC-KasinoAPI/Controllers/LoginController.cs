@@ -30,14 +30,16 @@ namespace TEC_KasinoAPI.Controllers
 		[Route("Login")]
 		public IActionResult Login([FromBody] CustomerLogin login)
 		{
+			System.Diagnostics.Debug.WriteLine("Method loading");
 			var user = Authenticate(login);
 
 			if (user != null)
 			{
+				System.Diagnostics.Debug.WriteLine("Found");
 				var token = Generate(user);
 				return Ok(token);
 			}
-
+			System.Diagnostics.Debug.WriteLine("Not Found");
 			return NotFound("User not found");
 		}
 

@@ -8,9 +8,9 @@ export class AuthGuard implements CanActivate {
 	constructor(private router: Router, private jwtHelper: JwtHelperService) { }
 
 	canActivate() {
-		const token = localStorage.getItem("jwt");
+		const token = localStorage.getItem("token");
 
-		if(token && !this.jwtHelper.isTokenExpired(token)) {
+		if(token != null && !this.jwtHelper.isTokenExpired(token)) {
 			return true;
 		}
 		this.router.navigate(["login"]);
