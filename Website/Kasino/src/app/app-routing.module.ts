@@ -5,10 +5,11 @@ import { IndbetalComponent } from './components/indbetal/indbetal.component';
 import { LoginComponent } from './components/login/login.component';
 import { KontoComponent } from './components/konto/konto.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from './guards/auth-guard.services';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  {path: 'indbetal', component: IndbetalComponent },
+  { path: 'login', component: LoginComponent },
+  {path: 'indbetal', component: IndbetalComponent, canActivate: [AuthGuard] },
   {path: 'udbetal', component: UdbetalComponent },
   {path: 'konto', component: KontoComponent },
   {path: 'home', component: HomeComponent}

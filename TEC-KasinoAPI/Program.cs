@@ -24,6 +24,16 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("EnableCORS", builder =>
+	{
+		builder.AllowAnyOrigin()
+		.AllowAnyHeader()
+		.AllowAnyMethod();
+	});
+});
+
 builder.Services.AddSwaggerGen(options => {
 	options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
 	{
@@ -73,6 +83,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("EnableCORS");
 
 app.UseStaticFiles();
 
