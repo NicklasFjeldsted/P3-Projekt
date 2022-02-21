@@ -1,36 +1,75 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="Indbetal.css">
-    <title>Indbetal</title>
-  </head>
-  <body>
-    <div class="columnTec">
-      <h1>Indbetal</h1>
-  
-      <p> Indtast venligst dine kort detaljer</p>
-  
-      <input type="text" id="kort" name="kort" placeholder="Kortnummer fx 0000 0000 0000 0000">
-      <th><input type="text" id="kt" name="kort" placeholder="Udløbsdato  fx 12/12"> </th>
-      <th><input type="text" id="kt" name="kort" placeholder="Kontrolcifre fx 123"> </th>
-  
-      <input type="text" id="amount" name="amount" placeholder="0 kr.">
-      <span>&#36;</span>
-        
-      <div class="num"> 
-        <th> <button type="submit" id="numbersBn">25  </button></th>
-        <th> <button type="submit" id="numbersBn">50  </button></th>
-        <th> <button type="submit" id="numbersBn">100 </button></th>
-        <br>
-        <th> <button type="submit" id="numbersBn">250 </button></th>
-        <th> <button type="submit" id="numbersBn" >500 </button></th>
-        <th> <button type="submit" id="numbersBn">1000</button></th>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="Indbetal.css">
+  <title>Indbetal</title>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="column">
       </div>
-      <button type="submit" name="IndbetalBn" id="IndbetalBn" > Indbetal *beløb*</button>
-      <button type="submit" name="BeløbsGrænseBn" id="BeløbsGrænseBn" >Indstil indbetalingsgrænse </button>
+  
+      <div class="column">
+        <h2>TEC-Kasino</h2>
+      </div>
+  
+      <!-- nav buttons -->
+      <div class="column right">
+        <nav>
+        </nav>
+      </div>
     </div>
-  </body>
-</html>
+  
+    <div class="row">
+      <div class="column">
+        <p class="fa">&#xf0d6;<br>Blackjack</p>
+      </div>
+      <div class="column">
+        <p class="fa fa-bitcoin"><br>Roulette</p>
+      </div>
+      <div class="column">
+        <p class="fa fa-gbp"><br>Slots</p>
+      </div>
+      <div class="column">
+        <p class="fa fa-dollar"><br>Poker</p>
+      </div>
+    </div>
+    <div class="fill-row">
+      <!-- <img src="../../../assets/media/pig.png" > -->
+      <form id="login" method="get" class="login center middle">
+        <div class="column flow-down">
+          <h2>Indbetaling</h2>
+          <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kortnummer fx 0000 0000 0000 0000" />
+          <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Udløbsdato  fx 12/12" />
+          <input type="text" name="kort" id="kortnummer" class="form-input" placeholder=" Kontrolcifre fx 123" />
+          <input type="text" name="amount" id="amount" class="form-input" placeholder=" Beløb" />
+          <button type="submit" name="log" id="log" class="form-submit">Bekraft</button>
+        </div>
+      </form>
+    </div>
+    <!--
+      <div class="columnTec">
+        <h1>Indbetal</h1>
+    
+        <p> Indtast venligst dine kort detaljer</p>
+    
+        <input type="text" id="kort" name="kort" placeholder="Kortnummer fx 0000 0000 0000 0000">
+        <th><input type="text" id="kt" name="kort" placeholder="Udløbsdato  fx 12/12"> </th>
+        <th><input type="text" id="kt" name="kort" placeholder="Kontrolcifre fx 123"> </th>
+    
+        <input type="text" id="amount" name="amount" placeholder="0 kr.">
+        <span>&#36;</span>
+          
+        <div class="num"> 
+          <th> <button type="submit" id="numbersBn">25  </button></th>
+          <th> <button type="submit" id="numbersBn">50  </button></th>
+          <th> <button type="submit" id="numbersBn">100 </button></th>
+          <br>
+          <th> <button type="submit" id="numbersBn">250 </button></th>
+          <th> <button type="submit" id="numbersBn" >500 </button></th>
+          <th> <button type="submit" id="numbersBn">1000</button></th>
+        </div>
+        <button type="submit" name="IndbetalBn" id="IndbetalBn" > Indbetal *beløb*</button>
+        <button type="submit" name="BeløbsGrænseBn" id="BeløbsGrænseBn" >Indstil indbetalingsgrænse </button>
+      </div>
+    -->
+  </div>
+</body>

@@ -1,0 +1,16 @@
+:host
+{
+  height: 100%;
+  width: 100%;
+}
+
+.form-control
+{
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+}
+
+.row
+{
+  border-bottom: none;
+}

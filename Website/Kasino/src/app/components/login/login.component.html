@@ -1,80 +1,16 @@
-<div class="container">
-    <div class="row">
+<!-- Login form for calling the API. -->
+<form id="login" method="post" class="form-control v-center h-center">
 
-      <div class="column left">
-        <span class="dot" style="background:#ED594A;"></span>
-        <span class="dot" style="background:#FDD800;"></span>
-        <span class="dot" style="background:#5AC05A;"></span>
-      </div>
+  <div class="form-header"></div>
 
-      <div class="column middle">
-          <h6>TEC-kasino/Login</h6>
-      </div>
-
-      <div>
-        <br>
-        <br>
-      </div>
-
-      <div class="columnTec">
-
-        <h6>TEC</h6>
-          <!-- nav button -->
-        <div class="btn">
-          <button type="submit" ><a href="TilmedForm.html">Tilmeld</a></button>
-          <button type="submit" ><a href="loginPage.html">Login</a></button>
-        </div>
-
-      </div>
-
-      <div>
-      <br>
-      <br>
-      </div>
-
-      <div class="icons">
-        <i class="fa">&#xf0d6;</i>
-        <i class="fa fa-bitcoin"></i>
-        <i class="fa fa-gbp"></i>
-        <i class="fa fa-dollar"></i>
-        <br>
-        <i class="txt">Blackjack?</i>
-        <i class="txt">Roulette?</i>
-        <i class="txt">Slots?</i>
-        <i class="txt">Poker?</i>
-      </div>
-
-    </div>
-
-    <div>
-    <br>
-    <br>
-    </div>
-    <!-- here i use br to break the line  -->
-    <br><br><br><br><br><br>
-    <!-- here i create Lonin form -->
-
-
-
-
-
-    <div class="login">
-      <img src="../../../assets/media/pig.png" >
-      <form id="login" method="get">
-          <label>
-          <input type="text" name="E-mail" id="E-mail" placeholder="@ E-mail">
-          <br><br>
-
-          </label>
-          <input type="Password" name="Pass" id="Pass" placeholder=" @ Password">
-          <br><br>
-          <!-- reamber to change type there should be submit button -->
-          <button type="submit" name="log" id="log" >Log ind</button>
-          <br><br>
-
-          <a href="#">glemt adgangskode</a>
-          <br><br>
-          <a href="TilmedForm.html">Opret Konto</a> <br><br>
-        </form>
-    </div>
-</div>
+  <!-- Lady on the left of the login form. -->
+  <img src="../../../assets/media/pig.png" class="ll-img" />
+  <!-- A single column where its content flows down instead of sideways. -->
+  <div class="column flow-down">
+    <input type="text" name="email" id="email" class="form-input" placeholder="@ E-mail" />
+    <input type="password" name="password" id="password" class="form-input" placeholder=" @ Password" />
+    <button type="submit" name="login" id="login" class="form-submit">Log ind</button>
+    <a href="#">Glemt Adgangskode</a>
+    <a href="TilmedForm.html">Opret Konto</a>
+  </div>
+</form>

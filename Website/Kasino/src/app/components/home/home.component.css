@@ -1,0 +1,15 @@
+:host
+{
+  height: 100%;
+  width: 100%;
+}
+
+img
+{
+  width: 75%;
+}
+
+p
+{
+  margin: auto;
+}
