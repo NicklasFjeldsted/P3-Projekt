@@ -13,21 +13,23 @@ export class LoginComponent {
 
   invalidLogin: boolean = false;
 
-  loginCredentials(form: NgForm) {
+  loginCredentials(form: NgForm)
+  {
     const credentials = {
       "email": form.value.email,
       "password": form.value.password
     }
 
-    this.loginService.login(credentials).subscribe({
-      next: (res) => {
-        const token = res;
-        localStorage.setItem("token", token);
-        this.invalidLogin = false;
-        this.router.navigate([""]);
-      },
-      error: (err) => {
-        this.invalidLogin = true;
-      }
-    })
+    this.loginService.login(credentials)
+      .subscribe({
+        next: (res) => {
+          const token = res;
+          localStorage.setItem("token", token);
+          this.invalidLogin = false;
+          this.router.navigate([""]);
+        },
+        error: (err) => {
+          this.invalidLogin = true;
+        }
+      })
   }}

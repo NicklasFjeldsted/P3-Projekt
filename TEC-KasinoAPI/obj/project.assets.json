@@ -10397,23 +10397,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Nicklas\\.nuget\\packages\\": {},
+    "C:\\Users\\Alexander\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
       "projectName": "TEC-KasinoAPI",
-      "projectPath": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
-      "packagesPath": "C:\\Users\\Nicklas\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
+      "projectPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+      "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Nicklas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Alexander\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

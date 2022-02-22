@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using TEC_KasinoAPI.Entities;
 using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Data

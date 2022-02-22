@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
+using System.Text.Json.Serialization;
+using TEC_KasinoAPI.Entities;
 
 namespace TEC_KasinoAPI.Models
 {
@@ -35,6 +36,11 @@ namespace TEC_KasinoAPI.Models
 
 		[Required(ErrorMessage = "Field cannot be empty")]
 		public virtual ZipCode ZipCode { get; set; }
+
+		public string Role { get; set; }
+
+		[JsonIgnore]
+		public List<RefreshToken> RefreshTokens { get; set; }
 
 		[Required]
 		public virtual AccountGender Gender { get; set; }

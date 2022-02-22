@@ -15,13 +15,15 @@ export class LoginService
 {
   constructor(private http: HttpClient) { }
 
-  login(credentials: any): Observable<any> {
+  login(credentials: any): Observable<any>
+  {
     return this.http.post(URL + 'Login',
     { email: credentials.email, password: credentials.password },
     { headers, responseType: 'text'});
   }
 
-  register(data: CustomerModel): Observable<CustomerModel> {
+  register(data: CustomerModel): Observable<CustomerModel>
+  {
     return this.http.post<CustomerModel>(URL + 'Login', data);
   }
 }
