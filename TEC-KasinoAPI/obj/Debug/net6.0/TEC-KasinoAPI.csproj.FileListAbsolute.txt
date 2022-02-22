@@ -1130,3 +1130,4 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Mi
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Scrutor.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll

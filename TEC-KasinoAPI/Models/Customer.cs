@@ -49,6 +49,11 @@ namespace TEC_KasinoAPI.Models
 		public virtual AccountBalance Acc_balance { get; set; }
 
 		public DateTime RegisterDate { get; set; }
+
+		public Customer(RegisterRequest request)
+        {
+			
+        }
 	}
 
 }

@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using TEC_KasinoAPI.Entities;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
+using BC = BCrypt.Net.BCrypt;
 
 namespace TEC_KasinoAPI.Services
 {
@@ -25,29 +26,40 @@ namespace TEC_KasinoAPI.Services
 
     public class UserService : IUserService
     {
-        private DatabaseContext _context;
+        private readonly DatabaseContext _context;
         private readonly AppSettings _appSettings;
+        private readonly IMapper _mapper;
 
-        public UserService(DatabaseContext context, IOptions<AppSettings> appSettings, IConfiguration configuration)
+        public UserService(DatabaseContext context, IOptions<AppSettings> appSettings, IConfiguration configuration, IMapper mapper)
         {
             _appSettings = appSettings.Value;
             _context = context;
+            _mapper = mapper;
+        }
+
+        public void Register([FromBody]RegisterRequest model)
+        {
+            if (_context.Customers.Any(x => x.Email == model.Email)) return;
+
+            var customer = _mapper
+
+            _context.Customers.Add(customer);
+            _context.SaveChanges();
         }
 
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
             // Find the customer that has both email and password
-            //////// Might not work because database passwords are hashed with SHA2_516 ////////
-            Customer customer = _context.Customers.SingleOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+            Customer customer = _context.Customers.SingleOrDefault(x => x.Email == model.Email);
 
-            // Return false if no user was found with the email and password
-            if (customer == null) return null;
+            // Return false if no user was found with the email or if the password doesnt match
+            if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
 
-            // authentication successful so generate jwt and refresh tokens
+            // Authentication successful so generate jwt and refresh tokens
             string jwtToken = GenerateJWTToken(customer);
             RefreshToken refreshToken = GenerateRefreshToken(ipAddress);
 
-            // Add the refresh token to the user object
+            // Add the refresh token to the customer object
             customer.RefreshTokens.Add(refreshToken);
 
             // Save the changes to the database
