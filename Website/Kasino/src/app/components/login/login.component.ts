@@ -13,12 +13,11 @@ export class LoginComponent {
 
   invalidLogin: boolean = false;
 
-  loginForm(form: NgForm) {
+  loginCredentials(form: NgForm) {
     const credentials = {
       "email": form.value.email,
       "password": form.value.password
     }
-  }
 
     this.loginService.login(credentials).subscribe({
       next: (res) => {
@@ -31,7 +30,4 @@ export class LoginComponent {
         this.invalidLogin = true;
       }
     })
-
-
-
-}
+  }}
