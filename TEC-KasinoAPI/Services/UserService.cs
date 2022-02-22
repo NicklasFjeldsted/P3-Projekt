@@ -144,9 +144,9 @@ namespace TEC_KasinoAPI.Services
         // Helper method
         private string GenerateJWTToken(Customer customer)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
@@ -155,16 +155,16 @@ namespace TEC_KasinoAPI.Services
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
 
         // Helper method
         private RefreshToken GenerateRefreshToken(string ipAddress)
         {
-            using (var randomNumberGenerator = RandomNumberGenerator.Create())
+            using (RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create())
             {
-                var randomBytes = new byte[64];
+                byte[] randomBytes = new byte[64];
                 randomNumberGenerator.GetBytes(randomBytes);
                 return new RefreshToken
                 {

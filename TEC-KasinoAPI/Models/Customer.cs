@@ -13,6 +13,7 @@ namespace TEC_KasinoAPI.Models
 		[Required(ErrorMessage = "Field cannot be empty"), DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
+		[JsonIgnore]
 		[Required (ErrorMessage = "Field cannot be empty"), DataType(DataType.Password), MinLength(8, ErrorMessage = "Password must be atleast 8 digits long")]
 		public string Password { get; set; }
 		

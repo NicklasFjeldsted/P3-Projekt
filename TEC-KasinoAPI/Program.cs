@@ -1,9 +1,12 @@
 global using Microsoft.EntityFrameworkCore;
-global using TEC_KasinoAPI.Models;
 global using Microsoft.Data.SqlClient;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
+global using TEC_KasinoAPI.Models;
 global using TEC_KasinoAPI.Data;
+global using TEC_KasinoAPI.Services;
+global using TEC_KasinoAPI.Helpers;
+global using TEC_KasinoAPI.Entities;
 global using System.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -11,16 +14,19 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddDbContext<DatabaseContext>(options => { 
-	options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+builder.Services.AddDbContext<DatabaseContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 }); // Configures DbContext to use SqlServer with the connection string inside appsettings.json
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
+IConfigurationSection appSettingsSection = builder.Configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettingsSection);
 
 builder.Services.AddEndpointsApiExplorer();
 
@@ -55,20 +61,45 @@ builder.Services.AddControllersWithViews()
 	= new DefaultContractResolver());
 
 
-// Jwt Authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddJwtBearer(options => {
-		options.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuerSigningKey = true,
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
-			ValidateIssuer = false,
-			ValidateAudience = false,
-			ValidateLifetime = true,
-		};
-	});
+AppSettings appSettings = appSettingsSection.Get<AppSettings>();
+byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
+builder.Services.AddAuthentication(x =>
+{
+	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+	x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(x =>
+{
+	x.RequireHttpsMetadata = false;
+	x.SaveToken = true;
+	x.TokenValidationParameters = new TokenValidationParameters
+	{
+		ValidateIssuerSigningKey = true,
+		IssuerSigningKey = new SymmetricSecurityKey(key),
+		ValidateIssuer = false,
+		ValidateAudience = false,
+		ClockSkew = TimeSpan.Zero
+	};
+});
 
-var app = builder.Build();
+builder.Services.AddScoped<IUserService, UserService>();
+
+// Jwt Authentication
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//	.AddJwtBearer(options => {
+//		options.TokenValidationParameters = new TokenValidationParameters
+//		{
+//			ValidateIssuerSigningKey = true,
+//			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:Key").Value)),
+//			ValidateIssuer = false,
+//			ValidateAudience = false,
+//			ValidateLifetime = true,
+//		};
+//	});
+
+WebApplication app = builder.Build();
+
+
 
 // Swagger
 app.UseSwagger();
@@ -84,7 +115,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors("EnableCORS");
+app.UseCors(x => x
+	.SetIsOriginAllowed(origin => true)
+	.AllowAnyMethod()
+	.AllowAnyHeader()
+	.AllowCredentials());
 
 app.UseStaticFiles();
 
@@ -94,6 +129,8 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseEndpoints(x => x.MapControllers());
+
+//app.MapControllers();
 
 app.Run();
