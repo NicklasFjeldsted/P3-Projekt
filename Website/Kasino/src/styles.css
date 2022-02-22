@@ -60,6 +60,7 @@ body
 .fit
 {
   height: fit-content;
+  width: fit-content;
   padding: 10px 0px;
 }
 
@@ -93,34 +94,6 @@ body
   border: 2px transparent;
 }
 
-/* Makes the content of the element start from the center. */
-.center
-{
-  justify-content: center;
-}
-
-.self-left
-{
-  align-self: flex-start;
-}
-
-.self-right
-{
-  align-self: flex-end;
-}
-
-/* Makes the content of the element start from the right. */
-.right
-{
-  justify-content: flex-end;
-}
-
-/* Makes the content of the element start from the left. */
-.left
-{
-  justify-content: flex-start;
-}
-
 /* Makes the content of the element flow down instead of sideways. */
 .flow-down
 {
@@ -137,6 +110,38 @@ body
   align-items: flex-end;
 }
 
+/* Makes the content of the element start from the center. */
+.center
+{
+  justify-content: center;
+}
+
+.self-left
+{
+  align-self: flex-start;
+}
+
+.self-right
+{
+  align-self: flex-end;
+}
+
+.self-center
+{
+  align-self: center;
+}
+
+/* Makes the content of the element start from the right. */
+.right
+{
+  justify-content: flex-end;
+}
+
+/* Makes the content of the element start from the left. */
+.left
+{
+  justify-content: flex-start;
+}
 
 /* Centers an element vertically within its parent. */
 .v-center

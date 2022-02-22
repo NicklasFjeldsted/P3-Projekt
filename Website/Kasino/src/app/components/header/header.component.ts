@@ -9,11 +9,10 @@ export class HeaderComponent implements OnInit {
 
   constructor(private auth: AuthGuard) { }
 
-  ngOnInit(): void {
-    this.auth.canActivate();
-  }
+  ngOnInit(): void { }
 
-  logOut() {
+  logOut()
+  {
     localStorage.removeItem("token");
   }
 
