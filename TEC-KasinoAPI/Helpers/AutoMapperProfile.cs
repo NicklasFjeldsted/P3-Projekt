@@ -23,12 +23,14 @@ namespace TEC_KasinoAPI.Helpers
             // Maps UpdateRequest -> Customer
             // This is configured to map in a certain way
             CreateMap<UpdateRequest, Customer>()
-                // Something about how it maps and when it maps
+
+                // Only maps properties that have a value
                 .ForAllMembers(x => x.Condition(
                     (src, dest, prop) =>
                     {
                         // Returns false if the properties are null
                         if (prop == null) return false;
+
                         // Returns false if the properties are empty
                         if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string)prop)) return false;
 

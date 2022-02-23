@@ -23,6 +23,9 @@ namespace TEC_KasinoAPI.Services
         bool RevokeToken(string token, string ipAddress);
         IEnumerable<Customer> GetAll();
         Customer GetById(int id);
+        void Register(RegisterRequest model);
+        void Update(int customerID, UpdateRequest model);
+        void Delete(int customerID);
     }
 
     public class UserService : IUserService
@@ -157,13 +160,13 @@ namespace TEC_KasinoAPI.Services
             // Find the customer that has the token parameter
             Customer customer = _context.Customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
-            // Return false if no user was found with the token
+            // Return null if no user was found with the token
             if (customer == null) return null;
 
             // Get a reference to that token instance
             RefreshToken refreshToken = customer.RefreshTokens.Single(x => x.Token == token);
 
-            // Return false if the token is not active
+            // Return null if the token is not active
             if (!refreshToken.IsActive) return null;
 
             // Generate a new refresh token
@@ -177,8 +180,13 @@ namespace TEC_KasinoAPI.Services
             // Add the new refresh token to the list of refresh tokens for that user
             customer.RefreshTokens.Add(newRefreshToken);
 
-            // Save the changes to the database
+            // Update the customer entity about the new changes
             _context.Update(customer);
+            
+            // Update the refresh token entity about the new changes
+            _context.Update(refreshToken);
+
+            // Save the changes to the database
             _context.SaveChanges();
 
             // Generate a new JWT Token

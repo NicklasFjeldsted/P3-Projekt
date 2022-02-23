@@ -6,13 +6,14 @@ namespace TEC_KasinoAPI.Models
     {
         public int CustomerID { get; set; }
         public string Email { get; set; }
-        public virtual Country Country { get; set; }
+        public int CountryID { get; set; }
         public int PhoneNumber { get; set; }
         public string CPRNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public virtual ZipCode ZipCode { get; set; }
+        public int ZipCodeID { get; set; }
+        public int GenderID { get; set; }
         public string JwtToken { get; set; }
 
         [JsonIgnore]
@@ -23,11 +24,13 @@ namespace TEC_KasinoAPI.Models
             CustomerID = customer.CustomerID;
             FirstName = customer.FirstName;
             LastName = customer.LastName;
+            CPRNumber = customer.CPRNumber;
             Email = customer.Email;
-            Country = customer.Country;
+            CountryID = customer.CountryID;
             PhoneNumber = customer.PhoneNumber;
             Address = customer.Address;
-            ZipCode = customer.ZipCode;
+            ZipCodeID = customer.ZipCodeID;
+            GenderID = customer.GenderID;
             JwtToken = jwtToken;
             RefreshToken = refreshToken;
         }

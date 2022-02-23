@@ -27,3 +27,18 @@ export class LoginService
     return this.http.post<CustomerModel>(URL + 'Login', data);
   }
 }
+
+/*
+{
+  "email": "te",
+  "password": "te",
+  "countryID": 1,
+  "phoneNumber": 123,
+  "cprNumber": "1231231234",
+  "firstName": "asd",
+  "lastName": "ng",
+  "address": "stasdaring",
+  "zipCodeID": 3300,
+  "genderID": 1
+}
+*/
