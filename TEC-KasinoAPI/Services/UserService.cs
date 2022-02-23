@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using AutoMapper;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TEC_KasinoAPI.Entities;
@@ -37,16 +38,91 @@ namespace TEC_KasinoAPI.Services
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Register a new customer to the database
+        /// </summary>
+        /// <param name="model"></param>
+        /// <exception cref="AppException"></exception>
         public void Register([FromBody]RegisterRequest model)
         {
-            if (_context.Customers.Any(x => x.Email == model.Email)) return;
+            // Check if the Email is already in use
+            if (_context.Customers.Any(x => x.Email == model.Email))
+            {
+                // Throw an Application specific exception if the email is taken
+                throw new AppException("Email '" + model.Email + "' is already taken.");
+            }
 
-            var customer = _mapper
+            // Map the model to a new customer object
+            Customer customer = _mapper.Map<Customer>(model);
 
+            // Hash the password from the model and insert the hashed password into the customer object
+            customer.Password = BC.HashPassword(model.Password);
+
+            // Add the new customer to the entity
             _context.Customers.Add(customer);
+
+            // Save changes to the database
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Update a customer's data
+        /// </summary>
+        /// <param name="customerid"></param>
+        /// <param name="model"></param>
+        /// <exception cref="AppException"></exception>
+        public void Update(int customerID, UpdateRequest model)
+        {
+            // Find the customer with the customerID paramter
+            Customer customer = GetById(customerID);
+
+            // Check if the Email is already in use
+            if (model.Email != customer.Email && _context.Customers.Any(x => x.Email == model.Email))
+            {
+                // Throw an Application specific exception if the email is taken
+                throw new AppException("Email '" + model.Email + "' is already taken.");
+            }
+
+            // Check if the Password is null or empty 
+            // I.E. If the Password was entered into the model
+            if(!string.IsNullOrEmpty(model.Password))
+            {
+                // Hash the password from the model and insert the hashed password into the customer object
+                customer.Password = BC.HashPassword(model.Password);
+            }
+
+            // Map the model parameter to the customer object
+            _mapper.Map(model, customer);
+
+            // Update the customers entity with the changes
+            _context.Customers.Update(customer);
+
+            // Save the changes to the database
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Delete a customer from the database
+        /// </summary>
+        /// <param name="customerID"></param>
+        public void Delete(int customerID)
+        {
+            // Find the customer with the customerID paramter
+            Customer customer = GetById(customerID);
+
+            // Remove the customer object from the customer entity
+            _context.Customers.Remove(customer);
+
+            // Save the changes to the database
+            _context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Authenticate a customer's credentials
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="ipAddress"></param>
+        /// <returns><see cref="AuthenticateResponse"/>: returns the customer object, a new Json Web Token (JWT), and a new refresh token</returns>
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
             // Find the customer that has both email and password
@@ -143,17 +219,33 @@ namespace TEC_KasinoAPI.Services
             return true;
         }
 
+        /// <summary>
+        /// Gets all customers in the database
+        /// </summary>
+        /// <returns><see cref="IEnumerable{T}"/> of type <see cref="Customer"/></returns>
         public IEnumerable<Customer> GetAll()
         {
             return _context.Customers;
         }
 
+        /// <summary>
+        /// Gets the customer with the <paramref name="id"/> from the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><see cref="Customer"/>: returns the customer with the <paramref name="id"/></returns>
+        /// <exception cref="KeyNotFoundException"></exception>
         public Customer GetById(int id)
         {
-            return _context.Customers.Find(id);
+            Customer customer = _context.Customers.Find(id);
+            if (customer == null) throw new KeyNotFoundException("Customer not found.");
+            return customer;
         }
 
-        // Helper method
+        /// <summary>
+        /// Genereates a Jason Web Token (JWT)
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns><see cref="string"/>: returns a newly generated Jason Web Token (JWT)</returns>
         private string GenerateJWTToken(Customer customer)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
@@ -171,7 +263,11 @@ namespace TEC_KasinoAPI.Services
             return tokenHandler.WriteToken(token);
         }
 
-        // Helper method
+        /// <summary>
+        /// Generate a new refresh token
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <returns><see cref="TEC_KasinoAPI.Entities.RefreshToken"/>: returns the newly generated refresh token</returns>
         private RefreshToken GenerateRefreshToken(string ipAddress)
         {
             using (RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create())
