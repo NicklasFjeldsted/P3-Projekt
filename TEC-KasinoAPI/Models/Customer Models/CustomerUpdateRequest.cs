@@ -1,6 +1,6 @@
 ﻿namespace TEC_KasinoAPI.Models
 {
-    public class UpdateRequest
+    public class CustomerUpdateRequest
     {
         public string Email { get; set; }
         public string Password { get; set; }

@@ -7,7 +7,6 @@ namespace TEC_KasinoAPI.Data
 {
 	public class DatabaseContext : DbContext
 	{
-
 		public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { } // Constructor
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
@@ -30,7 +29,7 @@ namespace TEC_KasinoAPI.Data
 				entity.HasAlternateKey(e => e.Email).HasName("UN_Customers_Email");
 				entity.HasAlternateKey(e => e.PhoneNumber).HasName("UN_Customers_PhoneNumber");
 				entity.HasAlternateKey(e => e.CPRNumber).HasName("UN_Customers_CPRNumber");
-				entity.HasOne(e => e.Acc_balance).WithOne(e => e.Customer).HasForeignKey<AccountBalance>(e => e.CustomerID); // Configures a one to one relationship between AccBalanace and Customer
+				//entity.HasOne(e => e.Acc_balance).WithOne(e => e.Customer).HasForeignKey<AccountBalance>(e => e.CustomerID); // Configures a one to one relationship between AccBalanace and Customer
 				entity.Property(e => e.RegisterDate).HasDefaultValueSql("getdate()"); // Sets RegisterDate default value to SqlCommand 'GetDate()'
 			});
 

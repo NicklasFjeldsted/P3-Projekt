@@ -1,134 +1,114 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TEC_KasinoAPI.Data;
+﻿using Microsoft.AspNetCore.Authorization;
 using TEC_KasinoAPI.Models;
-using System.Data.SqlClient;
-using System.Data;
+using TEC_KasinoAPI.Services;
 
 namespace TEC_KasinoAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BalanceController : ControllerBase
     {
-		// private variables
+        private IBalanceService _balanceService;
 
-		private readonly IConfiguration _configuration;
-		private readonly DatabaseContext _context;
-		private readonly string conString;
-		private SqlConnection con;
-		private SqlCommand cmd;
+        public BalanceController(IBalanceService balanceService)
+        {
+            _balanceService = balanceService;
+        }
 
-		public BalanceController(IConfiguration configuration, DatabaseContext context) // Constructor
-		{
-			_configuration = configuration;
-			_context = context;
-			conString = _configuration.GetConnectionString("DefaultConnection");
-		}
+        /// <summary>
+        /// Create a new account balance and set it to the <paramref name="customerID"/>.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        [HttpPost("create")]
+        public IActionResult Create(int customerID)
+        {
+            // Create the account balance.
+            _balanceService.Create(customerID);
 
+            // Return -> Code 200 and "Account balance created."
+            return Ok(new { message = "Account balance created." });
+        }
 
-		//Update balance on AccountBalance (addition input amount on balance)
-		[HttpPut]
-		[Route("AddBalance")]
-		public JsonResult AddBalance([FromBody]AccountBalanceModel acc, double amount)
-		{
-			using (con = new(conString)) // SQL connection
-			using (cmd = new("sp_balance_add", con)) // SQL query
-			{
-				Response.ContentType = "application/json"; // Declaring the response header's content-type
-				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
-				cmd.Parameters.AddRange(new[]
-				{
-					new SqlParameter("@InputValue", amount),
-					new SqlParameter("@BalanceID", acc.BalanceID),
-					new SqlParameter("@Balance", SqlDbType.Int){Direction = ParameterDirection.Output }
-				}); // All parameters of the stored procedure stored in a array
+        /// <summary>
+        /// Delete an account balance that has the <paramref name="customerID"/>.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        [HttpDelete("delete")]
+        public IActionResult Delete(int customerID)
+        {
+            // Delete the customer with the customerID parameter.
+            _balanceService.Delete(customerID);
 
-				con.Open(); // Opening connection to the database
+            // Return -> Code 200 and "The account balance was deleted."
+            return Ok(new { message = "The account balance was deleted." });
+        }
 
-				try
-				{
-					cmd.ExecuteNonQuery(); // Executes query
-					int newBalance = (int)cmd.Parameters["@Balance"].Value; // Takes output parameter and converts its value into a readable integer
-					return new JsonResult($"Successfully added: {amount} to the account. New balance: {newBalance}"); 
-				}
-				catch (Exception ex)
-				{
-					return new JsonResult("Error: " + ex.Message); // Error message
-				}
-			}
+        /// <summary>
+        /// Update the account balance with the <paramref name="customerID"/> with the new data of <paramref name="model"/>.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("update")]
+        public IActionResult Update(int customerID, [FromBody] BalanceUpdateRequest model)
+        {
+            // Update the account balance
+            _balanceService.Update(customerID, model);
 
-		}
+            // Return -> Code 200 and "Account balance was updated successfully."
+            return Ok(new { message = "Account balance was updated successfully." });
+        }
 
+        /// <summary>
+        /// Add balance to an account balance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("add-balance")]
+        public IActionResult AddBalance([FromBody] BalanceRequest model)
+        {
+            // Add the balance.
+            BalanceResponse response = _balanceService.AddBalance(model);
 
-		//Update balance on AccountBalance (subtract input amount from balance)
-		[HttpPut]
-		[Route("SubBalance")]
-		public JsonResult SubtractBalance([FromBody]AccountBalanceModel acc, double amount)
-		{
-			using (con = new(conString)) // SQL connection
-			using (cmd = new("sp_balance_subtract", con)) // SQL query
-			{
-				Response.ContentType = "application/json"; // Declaring the response header's content-type
-				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
+            // Return -> Code 200 and the balance response.
+            return Ok(response);
+        }
 
-				cmd.Parameters.AddRange(new[]
-				{
-					new SqlParameter("@InputValue", amount),
-					new SqlParameter("@BalanceID", acc.BalanceID),
-					new SqlParameter("@Balance", SqlDbType.Int){Direction = ParameterDirection.Output }
-				}); // All parameters of the stored procedure stored in a array
+        /// <summary>
+        /// Subtract balance from an account balance.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPut("subtract-balance")]
+        public IActionResult SubtractBalance([FromBody] BalanceRequest model)
+        {
+            // Subtract the balance.
+            BalanceResponse response = _balanceService.SubtractBalance(model);
 
-				con.Open(); // Opening connection to the database
+            // Return -> Code 200 and the balance response.
+            return Ok(response);
+        }
 
-				try
-				{
-					cmd.ExecuteNonQuery(); // Executes query
-					int newBalance = (int)cmd.Parameters["@Balance"].Value; // Takes output parameters value and converts it into a readable integer
-					return new JsonResult($"Successfully removed: {amount} from the account. New balance: {newBalance}"); 
-				}
-				catch (Exception ex)
-				{
-					return new JsonResult("Error: " + ex.Message); 
-				}
-			}
-		}
+        /// <summary>
+        /// Get an account balance by its <paramref name="customerID"/>.
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        [HttpGet("{customerID}")]
+        public IActionResult GetByID(int customerID)
+        {
+            // Find the account balance with the customerID parameter.
+            AccountBalance accountBalance = _balanceService.GetById(customerID);
 
+            // If the account balance wasnt found return -> Code 404
+            if(accountBalance == null) return NotFound();
 
-		//Update deposit limit on AccountBalance
-		[HttpPut]
-		[Route("UpdateLimit")] 
-		public JsonResult UpdateLimit([FromBody]AccountBalanceModel acc)
-		{
-			using (con = new(conString)) // SQL connection
-			using (cmd = new("sp_save_deposit_limit", con)) // SQL query
-			{
-				Response.ContentType = "application/json"; // Declaring the response header's content-type
-				cmd.CommandType = CommandType.StoredProcedure; // Declaring the command type of query
-
-				cmd.Parameters.AddRange(new []
-				{
-					new SqlParameter("@BalanceID", acc.BalanceID),
-					new SqlParameter("@InputValue", acc.DepositLimit)
-				}); // All parameters of the stored procedure stored in a array
-
-				con.Open(); // Opening connection to the database
-				try
-				{
-					cmd.ExecuteNonQuery(); // Executes query
-					return new JsonResult($"Updated deposit limit to {acc.DepositLimit} on AccountBalance: {acc.BalanceID}.");
-				}
-				catch (Exception ex)
-				{
-					return new JsonResult($"Failed to update deposit limit to {acc.DepositLimit} on AccountBalance: {acc.BalanceID}. Error: {ex.Message}");
-				}
-			}
-		}
-
-	}
+            // If the account balance was found return -> Code 200
+            // and respond with the account balance
+            return Ok(accountBalance);
+        }
+    }
 }

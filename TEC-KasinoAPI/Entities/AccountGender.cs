@@ -1,6 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace TEC_KasinoAPI.Models
 {
@@ -9,8 +8,5 @@ namespace TEC_KasinoAPI.Models
 		[Key]
 		public int GenderID { get; set; }
 		public string GenderName { get; set; }
-
-		//[HiddenInput(DisplayValue = false)]
-		//public virtual ICollection<Customer> Customers { get; set; }
 	}
 }

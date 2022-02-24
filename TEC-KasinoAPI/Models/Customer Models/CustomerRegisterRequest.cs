@@ -2,7 +2,7 @@
 
 namespace TEC_KasinoAPI.Models
 {
-    public class RegisterRequest
+    public class CustomerRegisterRequest
     {
         [Required]
         public string Email { get; set; }

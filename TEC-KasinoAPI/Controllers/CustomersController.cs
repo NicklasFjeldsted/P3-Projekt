@@ -1,20 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using TEC_KasinoAPI.Services;
 using TEC_KasinoAPI.Models;
-using Microsoft.AspNetCore.Http;
-using System;
 
 namespace TEC_KasinoAPI.Controllers
 {
     [Authorize] // Makes it so that the api is by default protected by authorization
     [ApiController]
     [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class CustomersController : ControllerBase
     {
-        private IUserService _userService;
+        private ICustomerService _userService;
 
-        public UsersController(IUserService userService)
+        public CustomersController(ICustomerService userService)
         {
             _userService = userService;
         }
@@ -26,7 +23,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <returns></returns>
         [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
         [HttpPost("register")]
-        public IActionResult Register(RegisterRequest model)
+        public IActionResult Register(CustomerRegisterRequest model)
         {
             // Register the new customer from the model parameter
             _userService.Register(model);
@@ -42,7 +39,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{customerID}")]
-        public IActionResult Update(int customerID, UpdateRequest model)
+        public IActionResult Update(int customerID, CustomerUpdateRequest model)
         {
             // Update the customer
             _userService.Update(customerID, model);

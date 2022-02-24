@@ -7,7 +7,10 @@ namespace TEC_KasinoAPI.Models
 	{
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int TransactionID { get; set; }
-		public virtual AccountBalance Balance { get; set; }
+
+		public int? CustomerID { get; set; }
+		public AccountBalance Balance { get; set; }
+
 		public DateTime TransactionDate { get; set; }
 		public string Amount { get; set; }
 		public double CurrentBalance { get; set; }

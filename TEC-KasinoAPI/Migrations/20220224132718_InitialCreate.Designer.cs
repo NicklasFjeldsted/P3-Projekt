@@ -12,7 +12,7 @@ using TEC_KasinoAPI.Data;
 namespace TEC_KasinoAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220222124317_InitialCreate")]
+    [Migration("20220224132718_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,29 +26,20 @@ namespace TEC_KasinoAPI.Migrations
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
                 {
-                    b.Property<int>("BalanceID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BalanceID"), 1L, 1);
 
                     b.Property<double>("Balance")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("float")
                         .HasDefaultValueSql("0");
 
-                    b.Property<int>("CustomerID")
-                        .HasColumnType("int");
-
                     b.Property<int>("DepositLimit")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasDefaultValueSql("1000");
 
-                    b.HasKey("BalanceID");
-
-                    b.HasIndex("CustomerID")
-                        .IsUnique();
+                    b.HasKey("CustomerID");
 
                     b.ToTable("AccountBalances");
                 });
@@ -106,7 +97,8 @@ namespace TEC_KasinoAPI.Migrations
                         .HasMaxLength(11)
                         .HasColumnType("nvarchar(11)");
 
-                    b.Property<int>("CountryID")
+                    b.Property<int?>("CountryID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
@@ -117,7 +109,8 @@ namespace TEC_KasinoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GenderID")
+                    b.Property<int?>("GenderID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<string>("LastName")
@@ -140,7 +133,8 @@ namespace TEC_KasinoAPI.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ZipCodeID")
+                    b.Property<int?>("ZipCodeID")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("CustomerID");
@@ -174,18 +168,21 @@ namespace TEC_KasinoAPI.Migrations
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BalanceID")
+                    b.Property<int?>("BalanceCustomerID")
                         .HasColumnType("int");
 
                     b.Property<double>("CurrentBalance")
                         .HasColumnType("float");
+
+                    b.Property<int?>("CustomerID")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("TransactionDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("TransactionID");
 
-                    b.HasIndex("BalanceID");
+                    b.HasIndex("BalanceCustomerID");
 
                     b.ToTable("Transactions");
                 });
@@ -205,13 +202,11 @@ namespace TEC_KasinoAPI.Migrations
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
                 {
-                    b.HasOne("TEC_KasinoAPI.Models.Customer", "Customer")
+                    b.HasOne("TEC_KasinoAPI.Models.Customer", null)
                         .WithOne("Acc_balance")
                         .HasForeignKey("TEC_KasinoAPI.Models.AccountBalance", "CustomerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.Customer", b =>
@@ -288,10 +283,15 @@ namespace TEC_KasinoAPI.Migrations
             modelBuilder.Entity("TEC_KasinoAPI.Models.Transaction", b =>
                 {
                     b.HasOne("TEC_KasinoAPI.Models.AccountBalance", "Balance")
-                        .WithMany()
-                        .HasForeignKey("BalanceID");
+                        .WithMany("Transactions")
+                        .HasForeignKey("BalanceCustomerID");
 
                     b.Navigation("Balance");
+                });
+
+            modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.Customer", b =>

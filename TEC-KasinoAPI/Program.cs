@@ -1,13 +1,9 @@
 global using Microsoft.EntityFrameworkCore;
-global using Microsoft.Data.SqlClient;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
-global using TEC_KasinoAPI.Models;
-global using TEC_KasinoAPI.Data;
-global using TEC_KasinoAPI.Services;
-global using TEC_KasinoAPI.Helpers;
-global using TEC_KasinoAPI.Entities;
-global using System.Data;
+using TEC_KasinoAPI.Data;
+using TEC_KasinoAPI.Services;
+using TEC_KasinoAPI.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -96,7 +92,8 @@ builder.Services.AddAuthentication(x =>
 #endregion
 
 // Not sure, but its something about adding the IUserService & UserService linked with each other
-builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IBalanceService, BalanceService>();
 
 // Build the web application
 WebApplication app = builder.Build();

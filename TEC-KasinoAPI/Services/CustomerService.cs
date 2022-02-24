@@ -11,33 +11,45 @@ using Microsoft.IdentityModel.Tokens;
 using TEC_KasinoAPI.Entities;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
+using TEC_KasinoAPI.Data;
 using BC = BCrypt.Net.BCrypt;
 
 namespace TEC_KasinoAPI.Services
 {
     // Define the UserService contract (interface)
-    public interface IUserService
+    public interface ICustomerService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
         AuthenticateResponse RefreshToken(string token, string ipAddress);
         bool RevokeToken(string token, string ipAddress);
         IEnumerable<Customer> GetAll();
         Customer GetById(int id);
-        void Register(RegisterRequest model);
-        void Update(int customerID, UpdateRequest model);
+        void Register(CustomerRegisterRequest model);
+        void Update(int customerID, CustomerUpdateRequest model);
         void Delete(int customerID);
     }
 
-    public class UserService : IUserService
+    public class CustomerService : ICustomerService
     {
+        private readonly List<Customer> _customers;
         private readonly DatabaseContext _context;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
 
-        public UserService(DatabaseContext context, IOptions<AppSettings> appSettings, IConfiguration configuration, IMapper mapper)
+        public CustomerService(DatabaseContext context, IOptions<AppSettings> appSettings, IMapper mapper)
         {
             _appSettings = appSettings.Value;
+
             _context = context;
+
+            // Set the _customers list equal to the database context of the Customers table.
+            // While doing so make sure that the Country-, Zipcode-, and AccountGender table are also tracked.
+            _customers = context.Customers
+                .Include(e => e.Country)
+                .Include(e => e.ZipCode)
+                .Include(e => e.Gender)
+                .ToList();
+
             _mapper = mapper;
         }
 
@@ -46,10 +58,10 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public void Register([FromBody]RegisterRequest model)
+        public void Register([FromBody]CustomerRegisterRequest model)
         {
             // Check if the Email is already in use
-            if (_context.Customers.Any(x => x.Email == model.Email))
+            if (_customers.Any(x => x.Email == model.Email))
             {
                 // Throw an Application specific exception if the email is taken
                 throw new AppException("Email '" + model.Email + "' is already taken.");
@@ -74,13 +86,13 @@ namespace TEC_KasinoAPI.Services
         /// <param name="customerid"></param>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public void Update(int customerID, UpdateRequest model)
+        public void Update(int customerID, CustomerUpdateRequest model)
         {
             // Find the customer with the customerID paramter
             Customer customer = GetById(customerID);
 
             // Check if the Email is already in use
-            if (model.Email != customer.Email && _context.Customers.Any(x => x.Email == model.Email))
+            if (model.Email != customer.Email && _customers.Any(x => x.Email == model.Email))
             {
                 // Throw an Application specific exception if the email is taken
                 throw new AppException("Email '" + model.Email + "' is already taken.");
@@ -129,7 +141,7 @@ namespace TEC_KasinoAPI.Services
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
             // Find the customer that has both email and password
-            Customer customer = _context.Customers.SingleOrDefault(x => x.Email == model.Email);
+            Customer customer = _customers.SingleOrDefault(x => x.Email == model.Email);
 
             // Return false if no user was found with the email or if the password doesnt match
             if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
@@ -158,7 +170,7 @@ namespace TEC_KasinoAPI.Services
         public AuthenticateResponse RefreshToken(string token, string ipAddress)
         {
             // Find the customer that has the token parameter
-            Customer customer = _context.Customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return null if no user was found with the token
             if (customer == null) return null;
@@ -182,7 +194,7 @@ namespace TEC_KasinoAPI.Services
 
             // Update the customer entity about the new changes
             _context.Update(customer);
-            
+
             // Update the refresh token entity about the new changes
             _context.Update(refreshToken);
 
@@ -205,7 +217,7 @@ namespace TEC_KasinoAPI.Services
         public bool RevokeToken(string token, string ipAddress)
         {
             // Find the user that has the token parameter.
-            Customer user = _context.Customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            Customer user = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return false if no user was found with the token
             if(user == null) return false;
@@ -233,7 +245,7 @@ namespace TEC_KasinoAPI.Services
         /// <returns><see cref="IEnumerable{T}"/> of type <see cref="Customer"/></returns>
         public IEnumerable<Customer> GetAll()
         {
-            return _context.Customers;
+            return _customers;
         }
 
         /// <summary>

@@ -10,16 +10,16 @@ namespace TEC_KasinoAPI.Models
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int CustomerID { get; set; } 
 
-		[Required(ErrorMessage = "Field cannot be empty"), DataType(DataType.EmailAddress)]
+		[Required, DataType(DataType.EmailAddress)]
 		public string Email { get; set; }
 
 		[JsonIgnore]
-		[Required (ErrorMessage = "Field cannot be empty"), DataType(DataType.Password), MinLength(8, ErrorMessage = "Password must be atleast 8 digits long")]
+		[Required, DataType(DataType.Password), MinLength(8, ErrorMessage = "Password must be atleast 8 digits long")]
 		public string Password { get; set; }
 		
-		[Required(ErrorMessage = "Field cannot be empty")]
-		public int CountryID { get; set; }
-		public virtual Country Country { get; set; } 
+		[Required]
+		public int? CountryID { get; set; }
+		public Country Country { get; set; }
 
 		[Required(ErrorMessage = "Phone number must be 8 digits"), DataType(DataType.PhoneNumber), StringLength(8, MinimumLength = 8)]
 		public int PhoneNumber { get; set; }
@@ -27,31 +27,32 @@ namespace TEC_KasinoAPI.Models
 		[Required(ErrorMessage = "Personal number must be 10 digits"), StringLength(11, MinimumLength = 10), ]
 		public string CPRNumber { get; set; }
 
-		[Required(ErrorMessage = "Field cannot be empty")]
+		[Required]
 		public string FirstName { get; set; }
 
-		[Required(ErrorMessage = "Field cannot be empty")]
+		[Required]
 		public string LastName { get; set; }
 
-		[Required(ErrorMessage = "Field cannot be empty")]
+		[Required]
 		public string Address { get; set; }
 
-		[Required(ErrorMessage = "Field cannot be empty")]
-		public int ZipCodeID { get; set; }
-		public virtual ZipCode ZipCode { get; set; }
+		[Required]
+		public int? ZipCodeID { get; set; }
+		public ZipCode ZipCode { get; set; }
 
 		public string Role { get; set; }
 
-		[JsonIgnore]
-		public List<RefreshToken> RefreshTokens { get; set; }
 
 		[Required]
-		public int GenderID { get; set; }
-		public virtual AccountGender Gender { get; set; }
+		public int? GenderID { get; set; }
+		public AccountGender Gender { get; set; }
 
-		public virtual AccountBalance Acc_balance { get; set; }
+		public AccountBalance Acc_balance { get; set; }
 
 		public DateTime RegisterDate { get; set; }
+
+		[JsonIgnore]
+		public List<RefreshToken> RefreshTokens { get; set; }
 	}
 
 }

@@ -6,14 +6,13 @@ namespace TEC_KasinoAPI.Models
 {
 	public class AccountBalance
 	{
-		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-		public int BalanceID { get; set; }
+		[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int CustomerID { get; set; }
-		public virtual Customer Customer { get; set; }
+
 		public double Balance { get; set; }
-		//[HiddenInput(DisplayValue = false)]
-		//public virtual ICollection<Transaction> Transactions { get; set; }
 		public int DepositLimit { get; set; }
+
+		public IList<Transaction> Transactions { get; } = new List<Transaction>();
 	}
 }
 

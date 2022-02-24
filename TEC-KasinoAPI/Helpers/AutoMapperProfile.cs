@@ -12,17 +12,18 @@ namespace TEC_KasinoAPI.Helpers
     {
         public AutoMapperProfile()
         {
+            #region Customer Maps
             // Maps Customer -> AuthenticateResponse
             // This is completely automatic
             CreateMap<Customer, AuthenticateResponse>();
 
             // Maps RegisterRequest -> Customer
             // This is completely automatic
-            CreateMap<RegisterRequest, Customer>();
+            CreateMap<CustomerRegisterRequest, Customer>();
 
             // Maps UpdateRequest -> Customer
             // This is configured to map in a certain way
-            CreateMap<UpdateRequest, Customer>()
+            CreateMap<CustomerUpdateRequest, Customer>()
 
                 // Only maps properties that have a value
                 .ForAllMembers(x => x.Condition(
@@ -38,6 +39,30 @@ namespace TEC_KasinoAPI.Helpers
                         return true;
                     }
                     ));
+            #endregion
+
+            #region Account Balance Maps
+            CreateMap<AccountBalance, BalanceResponse>();
+
+            // Maps BalanceUpdateRequest -> AccountBalance
+            // This is configured to map in a certain way
+            CreateMap<BalanceUpdateRequest, AccountBalance>()
+
+                // Only maps properties that have a value
+                .ForAllMembers(x => x.Condition(
+                    (src, dest, prop) =>
+                    {
+                        // Returns false if the properties are null
+                        if (prop == null) return false;
+
+                        // Return false if the CustomerID or DepositLimit value is less than 0
+                        if(int.Parse(prop.ToString()) < 0) return false;
+
+                        // Returns true if there is no issue
+                        return true;
+                    }
+                    ));
+            #endregion
         }
     }
 }
