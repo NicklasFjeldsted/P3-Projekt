@@ -83,10 +83,12 @@ builder.Services.AddAuthentication(x =>
 	x.SaveToken = true;
 	x.TokenValidationParameters = new TokenValidationParameters
 	{
-		ValidateIssuerSigningKey = true,
-		IssuerSigningKey = new SymmetricSecurityKey(key),
 		ValidateIssuer = false,
 		ValidateAudience = false,
+		ValidateLifetime = true,
+		ValidateIssuerSigningKey = true,
+
+		IssuerSigningKey = new SymmetricSecurityKey(key),
 		ClockSkew = TimeSpan.Zero
 	};
 });

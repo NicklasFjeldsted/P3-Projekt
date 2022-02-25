@@ -30,14 +30,14 @@ export class LoginService
 
 /*
 {
-  "email": "te",
-  "password": "te",
-  "countryID": 1,
-  "phoneNumber": 123,
-  "cprNumber": "1231231234",
-  "firstName": "asd",
-  "lastName": "ng",
-  "address": "stasdaring",
+  "email": "alexanderv.eriksen@gmail.com",
+  "password": "Passw0rd",
+  "countryID": 45,
+  "phoneNumber": 40306827,
+  "cprNumber": "2308011111",
+  "firstName": "Alexander",
+  "lastName": "Eriksen",
+  "address": "Auderød Byvej 12",
   "zipCodeID": 3300,
   "genderID": 1
 }

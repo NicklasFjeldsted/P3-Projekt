@@ -72,8 +72,17 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateRequest model)
         {
+            // Get the refresh token in the HttpRequest cookies.
+            string refreshToken = Request.Cookies["refreshToken"];
+
+            // If there is a refresh token in the HttpRequest cookies revoke that token.
+            if(!string.IsNullOrEmpty(refreshToken))
+            {
+                _userService.RevokeToken(refreshToken, IPAddress());
+            }
+
             // Do the actual authentication
-            // this also gives us a new refresh token along side a new access token
+            // this also gives us a new refresh token along side a new access token.
             AuthenticateResponse response = _userService.Authenticate(model, IPAddress());
 
             // Check if the response is null
@@ -83,10 +92,10 @@ namespace TEC_KasinoAPI.Controllers
                 return BadRequest(new { message = "Username or password is incorrect." });
             }
 
-            // Set the new refresh token in the cookies
+            // Set the new refresh token in the cookies.
             SetTokenCookie(response.RefreshToken);
 
-            // Return -> Code 200 and the customer, refresh token, and access token
+            // Return -> Code 200 and the customer, refresh token, and access token.
             return Ok(response);
         }
 

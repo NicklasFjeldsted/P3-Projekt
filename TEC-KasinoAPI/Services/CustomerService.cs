@@ -34,9 +34,10 @@ namespace TEC_KasinoAPI.Services
         private readonly List<Customer> _customers;
         private readonly DatabaseContext _context;
         private readonly AppSettings _appSettings;
+        private readonly IBalanceService _balanceService;
         private readonly IMapper _mapper;
 
-        public CustomerService(DatabaseContext context, IOptions<AppSettings> appSettings, IMapper mapper)
+        public CustomerService(DatabaseContext context, IOptions<AppSettings> appSettings, IMapper mapper, IBalanceService balanceService)
         {
             _appSettings = appSettings.Value;
 
@@ -51,6 +52,8 @@ namespace TEC_KasinoAPI.Services
                 .ToList();
 
             _mapper = mapper;
+
+            _balanceService = balanceService;
         }
 
         /// <summary>
@@ -78,6 +81,9 @@ namespace TEC_KasinoAPI.Services
 
             // Save changes to the database
             _context.SaveChanges();
+
+            // Create an account balance for the newly registered customer
+            _balanceService.Create(customer.CustomerID);
         }
 
         /// <summary>
@@ -122,13 +128,16 @@ namespace TEC_KasinoAPI.Services
         /// <param name="customerID"></param>
         public void Delete(int customerID)
         {
-            // Find the customer with the customerID paramter
+            // Find the customer with the customerID paramter.
             Customer customer = GetById(customerID);
 
-            // Remove the customer object from the customer entity
+            // Delete the account balance associated with the customer.
+            _balanceService.Delete(customerID);
+
+            // Remove the customer object from the customer entity.
             _context.Customers.Remove(customer);
 
-            // Save the changes to the database
+            // Save the changes to the database.
             _context.SaveChanges();
         }
 
@@ -140,25 +149,25 @@ namespace TEC_KasinoAPI.Services
         /// <returns><see cref="AuthenticateResponse"/>: returns the customer object, a new Json Web Token (JWT), and a new refresh token</returns>
         public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-            // Find the customer that has both email and password
+            // Find the customer that has both email and password.
             Customer customer = _customers.SingleOrDefault(x => x.Email == model.Email);
 
-            // Return false if no user was found with the email or if the password doesnt match
+            // Return false if no user was found with the email or if the password doesnt match.
             if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
-
-            // Authentication successful so generate jwt and refresh tokens
+            
+            // Authentication successful so generate jwt and refresh tokens.
             string jwtToken = GenerateJWTToken(customer);
             RefreshToken refreshToken = GenerateRefreshToken(ipAddress);
 
-            // Add the refresh token to the customer object
+            // Add the refresh token to the customer object.
             customer.RefreshTokens.Add(refreshToken);
 
-            // Save the changes to the database
+            // Save the changes to the database.
             _context.Update(customer);
             _context.SaveChanges();
 
-            // Return the the updated customer object with a new JWT Token and Refresh Token
-            return new AuthenticateResponse(customer, jwtToken, refreshToken.Token);
+            // Return the the updated customer object with a new JWT Token and Refresh Token.
+            return new AuthenticateResponse(jwtToken, refreshToken.Token);
         }
 
         /// <summary>
@@ -169,43 +178,40 @@ namespace TEC_KasinoAPI.Services
         /// <returns><see cref="AuthenticateResponse"/>: returns the newly updated customer object, with the new access token and refresh token.</returns>
         public AuthenticateResponse RefreshToken(string token, string ipAddress)
         {
-            // Find the customer that has the token parameter
+            // Find the customer that has the token parameter.
             Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
-            // Return null if no user was found with the token
+            // Return null if no user was found with the token.
             if (customer == null) return null;
 
-            // Get a reference to that token instance
+            // Get a reference to that token instance.
             RefreshToken refreshToken = customer.RefreshTokens.Single(x => x.Token == token);
 
-            // Return null if the token is not active
+            // Return null if the token is not active.
             if (!refreshToken.IsActive) return null;
 
-            // Generate a new refresh token
+            // Generate a new refresh token.
             RefreshToken newRefreshToken = GenerateRefreshToken(ipAddress);
 
-            // Revoke the old refresh token and set its properties
+            // Revoke the old refresh token and set its properties.
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
             refreshToken.ReplacedByToken = newRefreshToken.Token;
 
-            // Add the new refresh token to the list of refresh tokens for that user
+            // Add the new refresh token to the list of refresh tokens for that user.
             customer.RefreshTokens.Add(newRefreshToken);
 
-            // Update the customer entity about the new changes
+            // Update the database about the new changes surrounding the customer object.
             _context.Update(customer);
 
-            // Update the refresh token entity about the new changes
-            _context.Update(refreshToken);
-
-            // Save the changes to the database
+            // Save the changes to the database.
             _context.SaveChanges();
 
-            // Generate a new JWT Token
+            // Generate a new JWT Token.
             string jwtToken = GenerateJWTToken(customer);
 
-            // Return the the updated customer object with a new JWT Token and Refresh Token
-            return new AuthenticateResponse(customer, jwtToken, newRefreshToken.Token);
+            // Return the the updated customer object with a new JWT Token and Refresh Token.
+            return new AuthenticateResponse(jwtToken, newRefreshToken.Token);
         }
 
         /// <summary>
@@ -216,24 +222,26 @@ namespace TEC_KasinoAPI.Services
         /// <returns><see cref="bool"/>: returns true if the revoke was successfull otherwise returns false.</returns>
         public bool RevokeToken(string token, string ipAddress)
         {
-            // Find the user that has the token parameter.
-            Customer user = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            // Find the customer that has the token parameter.
+            Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
 
-            // Return false if no user was found with the token
-            if(user == null) return false;
+            // Return false if no customer was found with the token.
+            if(customer == null) return false;
 
-            // Get a reference to that token instance
-            RefreshToken refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+            // Get a reference to that token instance.
+            RefreshToken refreshToken = customer.RefreshTokens.Single(x => x.Token == token);
 
-            // Return false if the token is not active
+            // Return false if the token is not active.
             if (!refreshToken.IsActive) return false;
 
-            // Revoke the token and set properties
+            // Revoke the token and set properties.
             refreshToken.Revoked = DateTime.UtcNow;
             refreshToken.RevokedByIp = ipAddress;
 
+            // Update the database about the changes surrounding the customer object.
+            _context.Update(customer);
+
             // Save the changes to the database.
-            _context.Update(user);
             _context.SaveChanges();
 
             return true;
@@ -274,7 +282,10 @@ namespace TEC_KasinoAPI.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, customer.CustomerID.ToString())
+                    new Claim(ClaimTypes.Name, customer.CustomerID.ToString()),
+                    new Claim(ClaimTypes.Email, customer.Email),
+                    new Claim(ClaimTypes.GivenName, customer.FirstName),
+                    new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

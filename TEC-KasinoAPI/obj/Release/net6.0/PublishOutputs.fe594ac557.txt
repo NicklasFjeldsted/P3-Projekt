@@ -4,8 +4,11 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.runtimeconfig.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.pdb
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\AutoMapper.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Azure.Core.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Azure.Identity.dll
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\BCrypt.Net-Next.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\Humanizer.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\MessagePack.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\MessagePack.Annotations.dll
