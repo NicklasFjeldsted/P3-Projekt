@@ -1,1 +1,1 @@
-sqlcmd -S 10.0.6.2 -i data_snippet_alexander.sql -Usa -P1234 -f 65001
+sqlcmd -S 10.0.6.2 -i data_snippet.sql -Usa -P1234 -f 65001

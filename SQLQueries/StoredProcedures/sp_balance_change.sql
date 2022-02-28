@@ -9,15 +9,15 @@ IF OBJECT_ID('sp_balance_add', 'P') IS NOT NULL
 GO
 CREATE PROCEDURE sp_balance_add
 	@InputValue nvarchar(max),
-	@BalanceID int,
+	@CustomerID int,
 	@Balance int OUTPUT
 AS
 BEGIN
 	DECLARE @NewBalance FLOAT;
 
-	UPDATE AccountBalances SET @NewBalance = Balance = Balance + @InputValue WHERE BalanceID = @BalanceID;
+	UPDATE AccountBalances SET @NewBalance = Balance = Balance + @InputValue WHERE CustomerID = @CustomerID;
 
-	INSERT INTO Transactions (BalanceID, TransactionDate, Amount, CurrentBalance) VALUES (@BalanceID, GETDATE(), CONCAT('+',@InputValue), @NewBalance);
+	INSERT INTO Transactions (CustomerID, TransactionDate, Amount, CurrentBalance) VALUES (@CustomerID, GETDATE(), CONCAT('+',@InputValue), @NewBalance);
 
 	SELECT @Balance = @NewBalance;
 END
@@ -27,15 +27,15 @@ IF OBJECT_ID('sp_balance_subtract', 'P') IS NOT NULL
 GO
 CREATE PROCEDURE sp_balance_subtract
 	@InputValue nvarchar(max),
-	@BalanceID int,
+	@CustomerID int,
 	@Balance int OUTPUT
 AS
 BEGIN
 	DECLARE @NewBalance FLOAT;
 
-	UPDATE AccountBalances SET @NewBalance = Balance = Balance - @InputValue WHERE BalanceID = @BalanceID;
+	UPDATE AccountBalances SET @NewBalance = Balance = Balance - @InputValue WHERE CustomerID = @CustomerID;
 
-	INSERT INTO Transactions (BalanceID, TransactionDate, Amount, CurrentBalance) VALUES (@BalanceID, GETDATE(), CONCAT('-',@InputValue), @NewBalance);
+	INSERT INTO Transactions (CustomerID, TransactionDate, Amount, CurrentBalance) VALUES (@CustomerID, GETDATE(), CONCAT('-',@InputValue), @NewBalance);
 
 	SELECT @Balance = @NewBalance;
 END

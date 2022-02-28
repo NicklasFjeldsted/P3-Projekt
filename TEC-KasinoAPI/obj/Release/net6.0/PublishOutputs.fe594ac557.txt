@@ -1,6 +1,11 @@
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.exe
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\nuget.config
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\packages-local\microsoft.entityframeworkcore.tools\6.0.1\tools\netcoreapp2.0\any\ef.runtimeconfig.json
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\packages-local\microsoft.entityframeworkcore.tools\6.0.2\tools\netcoreapp2.0\any\ef.runtimeconfig.json
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\packages-local\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.1\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
+C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\packages-local\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.2\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.runtimeconfig.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\PubTmp\Out\TEC-KasinoAPI.pdb
