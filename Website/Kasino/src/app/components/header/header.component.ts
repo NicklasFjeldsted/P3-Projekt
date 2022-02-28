@@ -18,4 +18,9 @@ export class HeaderComponent implements OnInit
     this.customerService.deauthenticate();
   }
 
+  public getRefreshTokens(): void
+  {
+    this.customerService.refreshToken();
+  }
+
 }

@@ -12,8 +12,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UdbetalComponent } from './components/udbetal/udbetal.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
+import { AuthenticationInterceptorInterceptor } from './interceptors/authentication-interceptor.interceptor';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -44,7 +45,10 @@ export function tokenGetter() {
       }
     })
   ],
-  providers: [AuthenticationService],
+  providers: [
+    AuthenticationService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

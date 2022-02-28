@@ -14,19 +14,34 @@ export class CustomerService
 {
   constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
 
+  // Works
   public authenticate(credentials: any): void
   {
     this.authenticationService.authenticate(credentials.email, credentials.password);
   }
 
+  // Works
   public deauthenticate(): void
   {
     this.authenticationService.deauthenticate();
   }
 
+  // Might work
   public register(data: CustomerRegisterRequest): Observable<CustomerRegisterRequest>
   {
     return this.http.post<CustomerRegisterRequest>(URL + 'register', data);
+  }
+
+  // Doesnt work
+  public refreshToken(): void
+  {
+    this.http.post<any>(URL + 'refresh-token', null).subscribe(e => console.log(e));
+  }
+
+  // Doesnt work
+  public getRefreshTokens(): void
+  {
+    this.http.get<any>(URL + 3 + '/refresh-tokens').subscribe(e => console.log(e));
   }
 }
 
