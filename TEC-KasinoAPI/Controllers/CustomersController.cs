@@ -4,7 +4,7 @@ using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers
 {
-    [Authorize] // Makes it so that the api is by default protected by authorization
+    [Authorize(Roles = "Admin")] // Makes it so that the api is by default protected by authorization
     [ApiController]
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
@@ -38,7 +38,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("{customerID}")]
+        [HttpPut("{customerID}"), Authorize(Roles = "Customer")]
         public IActionResult Update(int customerID, CustomerUpdateRequest model)
         {
             // Update the customer
@@ -168,7 +168,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}")]
+        [HttpGet("{customerID}"), Authorize(Roles = "Customer")]
         public IActionResult GetByID(int customerID)
         {
             // Get the customer with the customerID parameter

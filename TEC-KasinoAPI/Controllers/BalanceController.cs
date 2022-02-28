@@ -4,7 +4,7 @@ using TEC_KasinoAPI.Services;
 
 namespace TEC_KasinoAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class BalanceController : ControllerBase
@@ -67,7 +67,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("add-balance")]
+        [HttpPut("add-balance"), Authorize(Roles = "Customer")]
         public IActionResult AddBalance([FromBody] BalanceRequest model)
         {
             // Add the balance.
@@ -82,7 +82,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("subtract-balance")]
+        [HttpPut("subtract-balance"), Authorize(Roles = "Customer")]
         public IActionResult SubtractBalance([FromBody] BalanceRequest model)
         {
             // Subtract the balance.
@@ -97,7 +97,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}")]
+        [HttpGet("{customerID}"), Authorize(Roles = "Customer")]
         public IActionResult GetByID(int customerID)
         {
             // Find the account balance with the customerID parameter.
