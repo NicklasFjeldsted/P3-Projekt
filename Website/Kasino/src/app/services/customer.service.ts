@@ -23,7 +23,6 @@ export class CustomerService
   // Works
   public deauthenticate(): void
   {
-    this.authenticationService.deauthenticate();
   }
 
   // Might work
