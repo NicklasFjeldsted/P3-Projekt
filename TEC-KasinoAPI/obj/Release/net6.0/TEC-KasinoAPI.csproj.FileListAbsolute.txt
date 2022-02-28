@@ -563,3 +563,6 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\obj\Release\net6.0\
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\AutoMapper.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\BCrypt.Net-Next.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\AutoMapper.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Release\net6.0\BCrypt.Net-Next.dll
