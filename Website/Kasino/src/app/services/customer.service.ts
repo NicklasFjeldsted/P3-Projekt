@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { mapTo, Observable, pipe, take } from 'rxjs';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 import { AuthenticationService } from './authentication.service';
 
@@ -23,7 +23,6 @@ export class CustomerService
   // Works
   public deauthenticate(): void
   {
-    this.authenticationService.deauthenticate();
   }
 
   // Might work

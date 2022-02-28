@@ -9,10 +9,10 @@ IF OBJECT_ID('sp_save_deposit_limit', 'P') IS NOT NULL
 GO
 CREATE PROCEDURE sp_save_deposit_limit
 	@InputValue INT,
-	@BalanceID INT
+	@CustomerID INT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
-	UPDATE AccountBalances SET DepositLimit = @InputValue WHERE BalanceID = @BalanceID;
+	UPDATE AccountBalances SET DepositLimit = @InputValue WHERE CustomerID = @CustomerID;
 END

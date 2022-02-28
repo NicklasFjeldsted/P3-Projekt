@@ -15,16 +15,21 @@ namespace TEC_KasinoAPI.Controllers
         {
             _userService = userService;
         }
-
+        
         /// <summary>
         /// Register a new customer from the <paramref name="model"/>.
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
-        [HttpPost("register")]
+        [AllowAnonymous, HttpPost("register")]
         public IActionResult Register(CustomerRegisterRequest model)
         {
+            // Validate the input.
+            if(!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Register the new customer from the model parameter
             _userService.Register(model);
 
@@ -53,7 +58,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpDelete("{customerID}")]
+        [HttpDelete("{customerID}"), Authorize(Roles = "Admin")]
         public IActionResult Delete(int customerID)
         {
             // Delete the customer
@@ -68,10 +73,15 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
-        [HttpPost("authenticate")]
+        [AllowAnonymous, HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Get the refresh token in the HttpRequest cookies.
             string refreshToken = Request.Cookies["refreshToken"];
 
@@ -103,8 +113,7 @@ namespace TEC_KasinoAPI.Controllers
         /// Refresh the current access token AND refresh token.
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
-        [HttpPost("refresh-token")]
+        [AllowAnonymous, HttpPost("refresh-token")]
         public IActionResult RefreshToken()
         {
             // Get the current refresh token from the Cookies
@@ -132,9 +141,15 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("revoke-token")]
+        [HttpPost("revoke-token"), Authorize(Roles = "Admin")]
         public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // If the model.Token is null get the Token from the Cookies instead
             string token = model.Token ?? Request.Cookies["refreshToken"];
 
@@ -153,7 +168,7 @@ namespace TEC_KasinoAPI.Controllers
         /// Get all the customers from the database.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult GetAll()
         {
             // Get all customers from the database
@@ -187,7 +202,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}/refresh-tokens")]
+        [HttpGet("{customerID}/refresh-tokens"), Authorize(Roles = "Admin")]
         public IActionResult GetRefreshTokens(int customerID)
         {
             // Get the customer with the customerID parameter

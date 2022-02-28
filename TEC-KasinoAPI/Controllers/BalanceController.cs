@@ -21,7 +21,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpPost("create")]
+        [HttpPost("create"), Authorize(Roles = "Admin")]
         public IActionResult Create(int customerID)
         {
             // Create the account balance.
@@ -36,7 +36,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpDelete("delete")]
+        [HttpDelete("delete"), Authorize(Roles = "Admin")]
         public IActionResult Delete(int customerID)
         {
             // Delete the customer with the customerID parameter.
@@ -52,9 +52,15 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("update")]
+        [HttpPut("update"), Authorize(Roles = "Admin")]
         public IActionResult Update(int customerID, [FromBody] BalanceUpdateRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Update the account balance
             _balanceService.Update(customerID, model);
 
@@ -70,6 +76,12 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPut("add-balance")]
         public IActionResult AddBalance([FromBody] BalanceRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Add the balance.
             BalanceResponse response = _balanceService.AddBalance(model);
 
@@ -85,6 +97,12 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPut("subtract-balance")]
         public IActionResult SubtractBalance([FromBody] BalanceRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Subtract the balance.
             BalanceResponse response = _balanceService.SubtractBalance(model);
 
