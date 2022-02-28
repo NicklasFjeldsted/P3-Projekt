@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CustomerModel } from '../interfaces/customer';
+import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 
 const URL = 'http://10.0.6.2/api/Auth/';
 
@@ -11,20 +11,20 @@ const headers = new HttpHeaders().set('Content-Type', 'application/json');
   providedIn: 'root'
 })
 
-export class LoginService
+export class CustomerService
 {
   constructor(private http: HttpClient) { }
 
-  login(credentials: any): Observable<any>
+  public login(credentials: any): Observable<any>
   {
     return this.http.post(URL + 'Login',
     { email: credentials.email, password: credentials.password },
     { headers, responseType: 'text'});
   }
 
-  register(data: CustomerModel): Observable<CustomerModel>
+  public register(data: CustomerRegisterRequest): Observable<CustomerRegisterRequest>
   {
-    return this.http.post<CustomerModel>(URL + 'Login', data);
+    return this.http.post<CustomerRegisterRequest>(URL + 'Login', data);
   }
 }
 

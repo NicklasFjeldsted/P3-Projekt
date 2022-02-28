@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { CustomerService } from '../../services/customer.service';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +9,7 @@ import { LoginService } from '../../services/login.service';
   styleUrls: [ './login.component.css' ]
 })
 export class LoginComponent {
-  constructor(private router: Router, private loginService: LoginService) { }
+  constructor(private router: Router, private customerService: CustomerService) { }
 
   invalidLogin: boolean = false;
 
@@ -20,11 +20,10 @@ export class LoginComponent {
       "password": form.value.password
     }
 
-    this.loginService.login(credentials)
+    this.customerService.login(credentials)
       .subscribe({
         next: (res) => {
           const token = res;
-          localStorage.setItem("token", token);
           this.invalidLogin = false;
           this.router.navigate([""]);
         },
