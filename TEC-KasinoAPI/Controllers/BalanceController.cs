@@ -55,6 +55,12 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPut("update")]
         public IActionResult Update(int customerID, [FromBody] BalanceUpdateRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Update the account balance
             _balanceService.Update(customerID, model);
 
@@ -70,6 +76,12 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPut("add-balance"), Authorize(Roles = "Customer")]
         public IActionResult AddBalance([FromBody] BalanceRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Add the balance.
             BalanceResponse response = _balanceService.AddBalance(model);
 
@@ -85,6 +97,12 @@ namespace TEC_KasinoAPI.Controllers
         [HttpPut("subtract-balance"), Authorize(Roles = "Customer")]
         public IActionResult SubtractBalance([FromBody] BalanceRequest model)
         {
+            // Validate the input.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Model:" + model);
+            }
+
             // Subtract the balance.
             BalanceResponse response = _balanceService.SubtractBalance(model);
 
