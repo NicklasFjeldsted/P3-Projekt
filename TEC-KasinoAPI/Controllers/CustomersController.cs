@@ -4,7 +4,7 @@ using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers
 {
-    [Authorize(Roles = "Admin")] // Makes it so that the api is by default protected by authorization
+    [Authorize] // Makes it so that the api is by default protected by authorization
     [ApiController]
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
@@ -43,7 +43,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("{customerID}"), Authorize(Roles = "Customer")]
+        [HttpPut("{customerID}")]
         public IActionResult Update(int customerID, CustomerUpdateRequest model)
         {
             // Update the customer
@@ -58,7 +58,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpDelete("{customerID}")]
+        [HttpDelete("{customerID}"), Authorize(Roles = "Admin")]
         public IActionResult Delete(int customerID)
         {
             // Delete the customer
@@ -73,8 +73,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
-        [HttpPost("authenticate")]
+        [AllowAnonymous, HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateRequest model)
         {
             // Validate the input.
@@ -114,8 +113,7 @@ namespace TEC_KasinoAPI.Controllers
         /// Refresh the current access token AND refresh token.
         /// </summary>
         /// <returns></returns>
-        [AllowAnonymous] // Makes this specific api call public to everyone I.E. no need for authorization
-        [HttpPost("refresh-token")]
+        [AllowAnonymous, HttpPost("refresh-token")]
         public IActionResult RefreshToken()
         {
             // Get the current refresh token from the Cookies
@@ -143,7 +141,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("revoke-token")]
+        [HttpPost("revoke-token"), Authorize(Roles = "Admin")]
         public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
         {
             // Validate the input.
@@ -170,7 +168,7 @@ namespace TEC_KasinoAPI.Controllers
         /// Get all the customers from the database.
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpGet, Authorize(Roles = "Admin")]
         public IActionResult GetAll()
         {
             // Get all customers from the database
@@ -185,7 +183,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}"), Authorize(Roles = "Customer")]
+        [HttpGet("{customerID}")]
         public IActionResult GetByID(int customerID)
         {
             // Get the customer with the customerID parameter
@@ -204,7 +202,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}/refresh-tokens")]
+        [HttpGet("{customerID}/refresh-tokens"), Authorize(Roles = "Admin")]
         public IActionResult GetRefreshTokens(int customerID)
         {
             // Get the customer with the customerID parameter

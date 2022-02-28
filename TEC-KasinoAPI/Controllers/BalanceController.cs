@@ -4,7 +4,7 @@ using TEC_KasinoAPI.Services;
 
 namespace TEC_KasinoAPI.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class BalanceController : ControllerBase
@@ -21,7 +21,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpPost("create")]
+        [HttpPost("create"), Authorize(Roles = "Admin")]
         public IActionResult Create(int customerID)
         {
             // Create the account balance.
@@ -36,7 +36,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpDelete("delete")]
+        [HttpDelete("delete"), Authorize(Roles = "Admin")]
         public IActionResult Delete(int customerID)
         {
             // Delete the customer with the customerID parameter.
@@ -52,7 +52,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("update")]
+        [HttpPut("update"), Authorize(Roles = "Admin")]
         public IActionResult Update(int customerID, [FromBody] BalanceUpdateRequest model)
         {
             // Validate the input.
@@ -73,7 +73,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("add-balance"), Authorize(Roles = "Customer")]
+        [HttpPut("add-balance")]
         public IActionResult AddBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
@@ -94,7 +94,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("subtract-balance"), Authorize(Roles = "Customer")]
+        [HttpPut("subtract-balance")]
         public IActionResult SubtractBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
@@ -115,7 +115,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}"), Authorize(Roles = "Customer")]
+        [HttpGet("{customerID}")]
         public IActionResult GetByID(int customerID)
         {
             // Find the account balance with the customerID parameter.
