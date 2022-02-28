@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import * as moment from "moment";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CanActivate, Router } from '@angular/router';
@@ -15,42 +15,31 @@ const URL = 'http://10.0.6.2/api/Customers/authenticate';
 })
 export class AuthenticationService implements CanActivate {
 
-  constructor(
-    private http: HttpClient,
-    private jwt: JwtHelperService,
-    private router: Router
-  ) { }
+  constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
 
   // Authenticates the given credentials.
   public authenticate(email: string, password: string): void
   {
-    this.http.post<AuthenticationResponse>(URL, { email, password }, { params: { responseType: 'text' } })
-    .subscribe(
-      {
-        next: value => { this.setSession(value.jwtToken); },
-        error: error => { console.error(error); },
-        complete: () => { this.router.navigate(['/']); }
-      }
-    );
+    // Returns the JWT access token.
+    const responseObservable: Observable<string> = this.http.post<string>(URL, { email, password });
+
+    // Call the setSession function and pass in the JWT token from the response.
+    responseObservable.subscribe(JWT => this.setSession);
   }
 
   // Sets a token to session storage and sets the expiration date of the token.
-  private setSession(token: string): boolean
+  private setSession(token: string): void
   {
     // Check if the token is there.
-    if (!token)
-    {
-      alert("No token!");
-      return false;
-    }
+    if (!token) alert("error");
 
     // Get the expiration moment.
     const expiresAt = moment().add(this.jwt.getTokenExpirationDate()?.getMilliseconds(), 'second');
+    console.log(expiresAt);
 
     // Set the tokens in the session storage.
     sessionStorage.setItem(TOKEN_KEY, token);
     sessionStorage.setItem(TOKEN_EXP, JSON.stringify(expiresAt.valueOf()));
-    return true;
   }
 
   // Check if we are logged in
@@ -72,10 +61,10 @@ export class AuthenticationService implements CanActivate {
     return moment(expiresAt);
   }
 
-  // Remove the I.E. Log out.
-  public deauthenticate(): void
+  // Remove the access token.
+  public removeJwtToken(): void
   {
-    sessionStorage.clear();
+    sessionStorage.removeItem(TOKEN_KEY);
   }
 
   // Get the access token.
@@ -86,7 +75,7 @@ export class AuthenticationService implements CanActivate {
 
   canActivate(): boolean
   {
-		const token = sessionStorage.getItem(TOKEN_KEY);
+	  const token = sessionStorage.getItem("token");
 
     if (token != null && !this.isExpired())
     {
@@ -96,4 +85,6 @@ export class AuthenticationService implements CanActivate {
 		this.router.navigate(["login"]);
 		return false;
 	}
+
+
 }
