@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Swashbuckle.AspNetCore.Filters</id>
+    <version>7.0.2</version>
+    <authors>Matt Frear</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters</projectUrl>
+    <description>Some additional useful filters for Swashbuckle.AspNetCore. This package replaces Swashbuckle.AspNetCore.Examples.</description>
+    <releaseNotes>Fix license expression</releaseNotes>
+    <copyright>2021</copyright>
+    <tags>Swagger Swashbuckle</tags>
+    <repository type="git" url="https://github.com/mattfrear/Swashbuckle.AspNetCore.Filters.git" commit="d164e9872be844445e27170970709fc3f5983ba6" />
+    <dependencies>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="Swashbuckle.AspNetCore.Filters.Abstractions" version="7.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.OpenApi" version="1.2.3" exclude="Build,Analyzers" />
+        <dependency id="Scrutor" version="3.3.0" exclude="Build,Analyzers" />
+        <dependency id="Swashbuckle.AspNetCore.SwaggerGen" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net5.0">
+        <dependency id="Swashbuckle.AspNetCore.Filters.Abstractions" version="7.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.OpenApi" version="1.2.3" exclude="Build,Analyzers" />
+        <dependency id="Scrutor" version="3.3.0" exclude="Build,Analyzers" />
+        <dependency id="Swashbuckle.AspNetCore.SwaggerGen" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="Swashbuckle.AspNetCore.Filters.Abstractions" version="7.0.2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="2.1.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.OpenApi" version="1.2.3" exclude="Build,Analyzers" />
+        <dependency id="Scrutor" version="3.3.0" exclude="Build,Analyzers" />
+        <dependency id="Swashbuckle.AspNetCore.SwaggerGen" version="5.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>
