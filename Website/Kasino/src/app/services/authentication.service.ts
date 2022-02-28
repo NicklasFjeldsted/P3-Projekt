@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import * as moment from "moment";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
+import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
 
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
@@ -14,31 +15,42 @@ const URL = 'http://10.0.6.2/api/Customers/authenticate';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private jwt: JwtHelperService,
+    private router: Router
+  ) { }
 
   // Authenticates the given credentials.
   public authenticate(email: string, password: string): void
   {
-    // Returns the JWT access token.
-    const responseObservable: Observable<string> = this.http.post<string>(URL, { email, password });
-
-    // Call the setSession function and pass in the JWT token from the response.
-    responseObservable.subscribe(JWT => this.setSession);
+    this.http.post<AuthenticationResponse>(URL, { email, password }, { params: { responseType: 'text' } })
+    .subscribe(
+      {
+        next: value => { this.setSession(value.jwtToken); },
+        error: error => { console.error(error); },
+        complete: () => { this.router.navigate(['/']); }
+      }
+    );
   }
 
   // Sets a token to session storage and sets the expiration date of the token.
-  private setSession(token: string): void
+  private setSession(token: string): boolean
   {
     // Check if the token is there.
-    if (!token) alert("error");
+    if (!token)
+    {
+      alert("No token!");
+      return false;
+    }
 
     // Get the expiration moment.
     const expiresAt = moment().add(this.jwt.getTokenExpirationDate()?.getMilliseconds(), 'second');
-    console.log(expiresAt);
 
     // Set the tokens in the session storage.
     sessionStorage.setItem(TOKEN_KEY, token);
     sessionStorage.setItem(TOKEN_EXP, JSON.stringify(expiresAt.valueOf()));
+    return true;
   }
 
   // Check if we are logged in
@@ -60,10 +72,10 @@ export class AuthenticationService {
     return moment(expiresAt);
   }
 
-  // Remove the access token.
-  public removeJwtToken(): void
+  // Remove the I.E. Log out.
+  public deauthenticate(): void
   {
-    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.clear();
   }
 
   // Get the access token.
@@ -74,7 +86,7 @@ export class AuthenticationService {
 
   canActivate(): boolean
   {
-		const token = sessionStorage.getItem("token");
+		const token = sessionStorage.getItem(TOKEN_KEY);
 
     if (token != null && !this.isExpired())
     {

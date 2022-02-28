@@ -13,22 +13,14 @@ export class LoginComponent {
 
   invalidLogin: boolean = false;
 
-  loginCredentials(form: NgForm)
+  login(form: NgForm)
   {
-    const credentials = {
+    const credentials =
+    {
       "email": form.value.email,
       "password": form.value.password
     }
 
-    this.customerService.login(credentials)
-      .subscribe({
-        next: (res) => {
-          const token = res;
-          this.invalidLogin = false;
-          this.router.navigate([""]);
-        },
-        error: (err) => {
-          this.invalidLogin = true;
-        }
-      })
-  }}
+    this.customerService.authenticate(credentials);
+  }
+}
