@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from "moment";
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Router } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
+import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
 
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
@@ -12,7 +13,7 @@ const URL = 'http://10.0.6.2/api/Customers/authenticate';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {
+export class AuthenticationService implements CanActivate {
 
   constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
 

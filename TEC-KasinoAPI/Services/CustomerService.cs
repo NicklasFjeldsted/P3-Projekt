@@ -76,6 +76,9 @@ namespace TEC_KasinoAPI.Services
             // Hash the password from the model and insert the hashed password into the customer object
             customer.Password = BC.HashPassword(model.Password);
 
+            // Defines the customers role within the backend.
+            customer.Role = "Customer";
+
             // Add the new customer to the entity
             _context.Customers.Add(customer);
 
@@ -285,7 +288,8 @@ namespace TEC_KasinoAPI.Services
                     new Claim(ClaimTypes.Name, customer.CustomerID.ToString()),
                     new Claim(ClaimTypes.Email, customer.Email),
                     new Claim(ClaimTypes.GivenName, customer.FirstName),
-                    new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber.ToString())
+                    new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber.ToString()),
+                    new Claim(ClaimTypes.Role, customer.Role)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

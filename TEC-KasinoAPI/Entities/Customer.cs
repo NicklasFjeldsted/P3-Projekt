@@ -10,21 +10,21 @@ namespace TEC_KasinoAPI.Models
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int CustomerID { get; set; } 
 
-		[Required, DataType(DataType.EmailAddress)]
+		[Required]
 		public string Email { get; set; }
 
 		[JsonIgnore]
-		[Required, DataType(DataType.Password), MinLength(8, ErrorMessage = "Password must be atleast 8 digits long")]
+		[Required]
 		public string Password { get; set; }
 		
 		[Required]
 		public int? CountryID { get; set; }
 		public Country Country { get; set; }
 
-		[Required(ErrorMessage = "Phone number must be 8 digits"), DataType(DataType.PhoneNumber), StringLength(8, MinimumLength = 8)]
+		[Required]
 		public int PhoneNumber { get; set; }
 
-		[Required(ErrorMessage = "Personal number must be 10 digits"), StringLength(11, MinimumLength = 10), ]
+		[Required]
 		public string CPRNumber { get; set; }
 
 		[Required]
