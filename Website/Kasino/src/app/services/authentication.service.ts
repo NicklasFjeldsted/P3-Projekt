@@ -8,7 +8,7 @@ import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
 
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
-const URL = 'http://10.0.6.2/api/Customers/authenticate';
+const URL = 'https://localhost:5001/api/Customers/authenticate';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,7 @@ export class AuthenticationService implements CanActivate {
   {
     // Returns the JWT access token.
     const responseObservable: Observable<string> = this.http.post<string>(URL, { email, password });
+    console.log(responseObservable);
 
     // Call the setSession function and pass in the JWT token from the response.
     responseObservable.subscribe(JWT => this.setSession);

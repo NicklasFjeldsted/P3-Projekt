@@ -10,6 +10,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json.Serialization;
+using TEC_KasinoAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,7 +40,7 @@ byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 // Exposes the API to the web application
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddSignalR();
 #region Add and configure CORS
 // CORS (Cross-Origin Resource Sharing) allows or denies access from frontend JavaScript.
 // CORS is used to create security around what JavaScript is allowed to access the web application.
@@ -130,7 +131,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // Set up the endpoints for the API using the controllers.
-app.UseEndpoints(x => x.MapControllers());
+app.UseEndpoints(x => {
+	x.MapControllers();
+	x.MapHub<BlackjackHub>("blackjack");
+	});
 
 // Run the web application.
 app.Run();
