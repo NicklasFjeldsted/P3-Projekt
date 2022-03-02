@@ -285,10 +285,9 @@ namespace TEC_KasinoAPI.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, customer.CustomerID.ToString()),
+                    new Claim(ClaimTypes.NameIdentifier, customer.CustomerID.ToString()),
                     new Claim(ClaimTypes.Email, customer.Email.ToString()),
-                    new Claim(ClaimTypes.GivenName, customer.FirstName.ToString()),
-                    new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber.ToString()),
+                    new Claim(ClaimTypes.GivenName, $"{customer.FirstName} {customer.LastName}"),
                     new Claim(ClaimTypes.Role, customer.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),

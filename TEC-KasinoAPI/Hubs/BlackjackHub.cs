@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
+using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Hubs
 {
 	public class BlackjackHub : Hub
 	{
-		public async Task JoinRoom(string user, string message)
+		public async Task JoinRoom(User user)
 		{
-			Debug.WriteLine("TEST");
-			await Clients.All.SendAsync("JoinRoomResponse", user + ": " + message);
+			await Clients.All.SendAsync("JoinRoomResponse", user);
 		}
 	}
 }

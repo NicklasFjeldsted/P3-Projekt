@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers
 {
@@ -8,15 +9,20 @@ namespace TEC_KasinoAPI.Controllers
 	[ApiController]
 	public class BlackjackController : ControllerBase
 	{
-		[HttpGet("GetEmail")]
-		public ActionResult GetEmail()
+		[HttpGet("GetUser")]
+		public ActionResult GetUser()
 		{
-			string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
-			if (!string.IsNullOrEmpty(email))
+			User user = new User
 			{
-				return Ok(new { email = email });
+				Email = HttpContext.User.FindFirst(ClaimTypes.Email).Value,
+				FullName = HttpContext.User.FindFirst(ClaimTypes.GivenName).Value
+			};
+
+			if (!string.IsNullOrEmpty(user.Email))
+			{
+				return Ok(user);
 			}
-			return BadRequest();
+			return BadRequest("Invalid user. " + user);
 		}
 	}
 }
