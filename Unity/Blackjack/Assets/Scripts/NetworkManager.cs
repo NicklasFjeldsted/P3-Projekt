@@ -1,38 +1,66 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using Microsoft.AspNetCore.SignalR.Client;
+using UnityEditor;
 
-public class NetworkManager
+public class NetworkManager : MonoBehaviour
 {
-    public Action<User> OnConnected;
-    private HubConnection _connection;
-
-    public async Task InitAsync()
+    private static NetworkManager _instance;
+    public static NetworkManager Instance
     {
-        _connection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:5001/Blackjack")
-            .Build();
-
-        _connection.On<string>("JoinRoomResponse", (email) =>
-        {
-            OnConnected?.Invoke(new User(email));
-        });
-
-        await StartConnectionAsync();
+        get { return _instance; }
     }
 
-    private async Task StartConnectionAsync()
+    private Connector _connector;
+
+    public List<User> users = new List<User>();
+
+    private void Awake()
     {
-        try
+        if(_instance != null && _instance != this)
         {
-            await _connection.StartAsync();
+            Destroy(this);
         }
-        catch (Exception ex)
+        else
         {
-            Debug.LogError(ex);
+            _instance = this;
         }
+    }
+
+    private void Start()
+    {
+        StartCoroutine("StartAsync");
+    }
+
+    public async Task StartAsync()
+    {
+        _connector = new Connector();
+        _connector.OnConnected += OnConnected;
+
+        await _connector.InitAsync();
+    }
+
+    public void OnConnected (User user)
+    {
+        Debug.Log($"{user.Email} just joined.");
+        users.Add(user);
     }
 }
+#if UNITY_EDITOR
+[CustomEditor(typeof(NetworkManager))]
+public class ObjectBuilderEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        DrawDefaultInspector();
+
+        NetworkManager myScript = (NetworkManager)target;
+        //if (GUILayout.Button("Start"))
+        //{
+        //    myScript.StartCoroutine("StartAsync");
+        //}
+    }
+}
+#endif

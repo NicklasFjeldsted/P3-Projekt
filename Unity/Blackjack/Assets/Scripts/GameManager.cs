@@ -1,20 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager _instance;
-    public static GameManager Instance
-    {
-        get { return _instance; }
-    }
-
-    private NetworkManager networkManager;
-
+    public static GameManager Instance { get { return _instance; } }
     private void Awake()
     {
         if(_instance != null && _instance != this)
@@ -27,38 +19,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private Connector _connector;
+
+    private void Start()
+    {
+        StartCoroutine("StartAsync");
+    }
+
     public async Task StartAsync()
     {
-        Debug.Log("Started Async");
-        networkManager = new NetworkManager();
-        networkManager.OnConnected += OnConnected;
+        _connector = new Connector();
+        _connector.OnDeal += OnDeal;
 
-        await networkManager.InitAsync();
+        await _connector.InitAsync();
     }
 
-    public void OnConnected (User user)
+    public void OnDeal()
     {
-        Debug.Log($"{user.Email} just joined.");
+
     }
 }
-#if UNITY_EDITOR
-[CustomEditor(typeof(GameManager))]
-public class ObjectBuilderEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
-
-        GameManager myScript = (GameManager)target;
-        if (GUILayout.Button("Start"))
-        {
-            myScript.StartCoroutine("StartAsync");
-        }
-
-        if (GUILayout.Button("Join"))
-        {
-            myScript.StartCoroutine("Join");
-        }
-    }
-}
-#endif
