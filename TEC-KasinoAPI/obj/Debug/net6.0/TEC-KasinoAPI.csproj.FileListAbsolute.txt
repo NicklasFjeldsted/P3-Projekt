@@ -1140,13 +1140,6 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.entityframeworkcore.tools\6.0.2\tools\netcoreapp2.0\any\ef.runtimeconfig.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.1\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
 C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.2\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.entityframeworkcore.tools\6.0.1\tools\netcoreapp2.0\any\ef.runtimeconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.entityframeworkcore.tools\6.0.2\tools\netcoreapp2.0\any\ef.runtimeconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.1\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\pl\microsoft.visualstudio.web.codegeneration.entityframeworkcore\6.0.2\lib\net6.0\Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.runtimeconfig.json
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\nuget.config
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.RazorAssemblyInfo.cache
-C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\obj\Debug\net6.0\TEC-KasinoAPI.RazorAssemblyInfo.cs

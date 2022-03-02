@@ -58,10 +58,6 @@
               "target": "Package",
               "version": "[4.0.2, )"
             },
-            "MessagePackAnalyzer": {
-              "target": "Package",
-              "version": "[2.3.85, )"
-            },
             "Microsoft.AspNet.WebApi.Cors": {
               "target": "Package",
               "version": "[5.2.7, )"
