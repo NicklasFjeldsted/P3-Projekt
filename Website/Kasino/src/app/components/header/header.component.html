@@ -14,7 +14,7 @@
   <!-- Center column storing the title of the website. -->
   <div class="column">
 
-    <h2>TEC-Kasino</h2>
+    <h2><a href="">TEC-Kasino</a></h2>
 
   </div>
 
@@ -23,7 +23,7 @@
 
     <nav>
       <button class="btn" (click)="logOut()"><a href="">Tilmeld</a></button>
-      <button class="btn" (click)="getRefreshTokens()"><a href="">Login</a></button>
+      <button class="btn"><a routerLink="login">Login</a></button>
     </nav>
 
   </div>
@@ -37,7 +37,7 @@
   <div class="center-row">
 
     <div class="column">
-      <p class="fa">&#xf0d6;<br>Blackjack</p>
+      <p class="fa">&#xf0d6;<br><a routerLink="blackjack">Blackjack</a></p>
     </div>
     <div class="column">
       <p class="fa fa-bitcoin"><br>Roulette</p>
