@@ -6,25 +6,9 @@ import { SignalrService } from './services/signalr.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit, OnDestroy
+export class AppComponent
 {
-  constructor(public signalrService: SignalrService) {}
+  constructor() {}
 
-  username = "";
-
-  ngOnInit(): void {
-      this.signalrService.StartConnection();
-
-      setTimeout(() => {
-        this.signalrService.JoinRoomResponse();
-        this.signalrService.GetEmail().subscribe(email => {
-          this.signalrService.JoinRoom(email.email);
-        });
-      }, 2000);
-  }
-
-  ngOnDestroy(): void {
-      this.signalrService.hubConnection.off("");
-  }
   title = 'Kasino';
 }

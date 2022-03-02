@@ -11,6 +11,7 @@
           "AutoMapper": "11.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "11.0.0",
           "BCrypt.Net-Next": "4.0.2",
+          "MessagePackAnalyzer": "2.3.85",
           "Microsoft.AspNet.WebApi.Cors": "5.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "6.0.2",
           "Microsoft.AspNetCore.Mvc.NewtonsoftJson": "6.0.2",
@@ -130,7 +131,7 @@
           }
         }
       },
-      "MessagePackAnalyzer/2.1.152": {},
+      "MessagePackAnalyzer/2.3.85": {},
       "Microsoft.AspNet.Cors/5.2.7": {
         "runtime": {
           "lib/net45/System.Web.Cors.dll": {
@@ -1282,7 +1283,7 @@
       "Microsoft.VisualStudio.Debugger.Contracts/17.2.0": {
         "dependencies": {
           "MessagePack": "2.1.152",
-          "MessagePackAnalyzer": "2.1.152",
+          "MessagePackAnalyzer": "2.3.85",
           "Microsoft.Bcl.AsyncInterfaces": "5.0.0",
           "System.Collections.Immutable": "6.0.0"
         },
@@ -2576,12 +2577,12 @@
       "path": "messagepack.annotations/2.1.152",
       "hashPath": "messagepack.annotations.2.1.152.nupkg.sha512"
     },
-    "MessagePackAnalyzer/2.1.152": {
+    "MessagePackAnalyzer/2.3.85": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-uJhZlGMkXDaFYsH8V9S6o1EyvsUqB9mpU4DVBXNr0DXZVzZMhuLP1IkLj5xK3EKlaAcvkFkZv3eSvuz360wb3Q==",
-      "path": "messagepackanalyzer/2.1.152",
-      "hashPath": "messagepackanalyzer.2.1.152.nupkg.sha512"
+      "sha512": "sha512-tsuQeEaAzUgvqCw1lU+LBlWQuHhL70SOAx9tDNfD8Ns5BIZdZyJ/nuLH1g8N3YPXsUtzX+CEbM+JpKvaaLszcw==",
+      "path": "messagepackanalyzer/2.3.85",
+      "hashPath": "messagepackanalyzer.2.3.85.nupkg.sha512"
     },
     "Microsoft.AspNet.Cors/5.2.7": {
       "type": "package",

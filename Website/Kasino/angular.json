@@ -17,15 +17,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kasino",
+            "outputPath": "//10.0.6.2/www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
               "src/styles.css"
@@ -34,6 +30,7 @@
           },
           "configurations": {
             "production": {
+              "assets": ["src/favicon.ico", "src/assets","src/web.config"],
               "budgets": [
                 {
                   "type": "initial",
@@ -55,6 +52,7 @@
               "outputHashing": "all"
             },
             "development": {
+              "assets": ["src/favicon.ico", "src/assets","src/web.config"],
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,

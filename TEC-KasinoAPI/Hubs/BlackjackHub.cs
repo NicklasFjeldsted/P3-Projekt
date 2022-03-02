@@ -10,5 +10,10 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			await Clients.All.SendAsync("JoinRoomResponse", user);
 		}
+		
+		public async Task SendMessage(string author, string message)
+		{
+			await Clients.All.SendAsync("UpdateMessage", author, message);
+		}
 	}
 }

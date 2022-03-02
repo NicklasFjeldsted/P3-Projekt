@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { Claims } from '../interfaces/claims';
+import { User } from '../interfaces/User';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,6 @@ export class SignalrService {
   URL:string = "https://localhost:5001/api/Blackjack/";
 
   constructor(private http: HttpClient, private jwt: JwtHelperService) { }
-
 
   hubConnection:signalR.HubConnection;
 
@@ -35,21 +34,9 @@ export class SignalrService {
     .catch(err => console.log("Error while starting connection" + err))
   }
 
-  JoinRoom(email: string): void
+  GetUser(): Observable<User>
   {
-    this.hubConnection.invoke("JoinRoom", email, "Hej med dig")
-    .catch(err => console.log(err))
-  }
-
-  JoinRoomResponse(): void {
-    this.hubConnection.on("JoinRoomResponse", (message) => {
-      console.log(message);
-    })
-  }
-
-  GetEmail(): Observable<Claims>
-  {
-    return this.http.get<Claims>(this.URL + "GetEmail");
+    return this.http.get<User>(this.URL + "GetUser");
   }
 
 }
