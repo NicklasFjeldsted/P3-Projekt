@@ -42,7 +42,7 @@ export class AuthenticationService implements CanActivate {
     sessionStorage.setItem(TOKEN_EXP, JSON.stringify(expiresAt.valueOf()));
   }
 
-  // Check if we are logged in
+  // Check if the access token is expired.
   public isExpired(): boolean
   {
     return moment().isBefore(this.getExpiration());
