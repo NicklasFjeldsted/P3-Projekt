@@ -22,7 +22,6 @@ export class AuthenticationService implements CanActivate {
   {
     // Returns the JWT access token.
     const responseObservable: Observable<AuthenticationResponse> = this.http.post<AuthenticationResponse>(URL, { email, password });
-    console.log(responseObservable);
 
     // Call the setSession function and pass in the JWT token from the response.
     responseObservable.subscribe(authenticationResponse => this.setSession(authenticationResponse.jwtToken));
