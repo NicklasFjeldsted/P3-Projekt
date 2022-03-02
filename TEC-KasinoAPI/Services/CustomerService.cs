@@ -286,10 +286,10 @@ namespace TEC_KasinoAPI.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, customer.CustomerID.ToString()),
-                    new Claim(ClaimTypes.Email, customer.Email),
-                    new Claim(ClaimTypes.GivenName, customer.FirstName),
+                    new Claim(ClaimTypes.Email, customer.Email.ToString()),
+                    new Claim(ClaimTypes.GivenName, customer.FirstName.ToString()),
                     new Claim(ClaimTypes.MobilePhone, customer.PhoneNumber.ToString()),
-                    new Claim(ClaimTypes.Role, customer.Role)
+                    new Claim(ClaimTypes.Role, customer.Role.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

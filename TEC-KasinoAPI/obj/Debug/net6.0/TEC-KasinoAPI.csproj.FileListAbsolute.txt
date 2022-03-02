@@ -1137,3 +1137,4 @@ C:\Users\Alexander\Documents\GitHub\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\nu
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AutoMapper.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\Nicklas\Desktop\P3-Projekt\TEC-KasinoAPI\bin\Debug\net6.0\NuGet.Config

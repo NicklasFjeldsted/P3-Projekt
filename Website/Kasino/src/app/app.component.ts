@@ -17,11 +17,10 @@ export class AppComponent implements OnInit, OnDestroy
 
       setTimeout(() => {
         this.signalrService.JoinRoomResponse();
-        this.signalrService.GetEmail().subscribe(e=> {
-          this.username = e;
-          this.signalrService.JoinRoom(e);
-        })
-      }, 2000)
+        this.signalrService.GetEmail().subscribe(email => {
+          this.signalrService.JoinRoom(email.email);
+        });
+      }, 2000);
   }
 
   ngOnDestroy(): void {

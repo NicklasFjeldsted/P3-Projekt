@@ -9,12 +9,12 @@ namespace TEC_KasinoAPI.Controllers
 	public class BlackjackController : ControllerBase
 	{
 		[HttpGet("GetEmail")]
-		public ActionResult<string> GetEmail()
+		public ActionResult GetEmail()
 		{
-			var identity = HttpContext.User.Identity as ClaimsIdentity;
-			if (identity != null)
+			string email = HttpContext.User.FindFirst(ClaimTypes.Email).Value;
+			if (!string.IsNullOrEmpty(email))
 			{
-				return identity.FindFirst("ClaimName").Value;
+				return Ok(new { email = email });
 			}
 			return BadRequest();
 		}

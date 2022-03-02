@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using System.Diagnostics;
 
 namespace TEC_KasinoAPI.Hubs
 {
@@ -6,6 +7,7 @@ namespace TEC_KasinoAPI.Hubs
 	{
 		public async Task JoinRoom(string user, string message)
 		{
+			Debug.WriteLine("TEST");
 			await Clients.All.SendAsync("JoinRoomResponse", user + ": " + message);
 		}
 	}

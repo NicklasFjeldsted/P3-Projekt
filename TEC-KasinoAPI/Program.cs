@@ -40,7 +40,12 @@ byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
 // Exposes the API to the web application
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSignalR();
+
+builder.Services.AddSignalR(options =>
+{
+	options.EnableDetailedErrors = true;
+});
+
 #region Add and configure CORS
 // CORS (Cross-Origin Resource Sharing) allows or denies access from frontend JavaScript.
 // CORS is used to create security around what JavaScript is allowed to access the web application.
@@ -133,7 +138,7 @@ app.UseAuthorization();
 // Set up the endpoints for the API using the controllers.
 app.UseEndpoints(x => {
 	x.MapControllers();
-	x.MapHub<BlackjackHub>("blackjack");
+	x.MapHub<BlackjackHub>("Blackjack");
 	});
 
 // Run the web application.
