@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationInterceptorInterceptor } from './interceptors/authentication-interceptor.interceptor';
 import { BlackjackComponent } from './components/blackjack/blackjack.component';
+import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -31,7 +32,8 @@ export function tokenGetter() {
     KontoComponent,
     UdbetalComponent,
     HomeComponent,
-    BlackjackComponent
+    BlackjackComponent,
+    TilmeldComponent
   ],
   imports: [
     BrowserModule,

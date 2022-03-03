@@ -1,0 +1,168 @@
+@media only screen and (max-width: 600px) {}
+* {
+	font-family: Montserrat,sans-serif;
+}
+
+form {
+	width: 50%;
+	top: 20%;
+	margin: auto;
+	left:25%;
+	position: fixed;
+	border: 1px solid #333;
+}
+.picture {
+	float:right;
+	width: 45%;
+}
+
+.info {
+	width: calc(100% - 16px);
+	padding: .5rem;
+	margin:auto;
+}
+
+#image {
+
+	width: 100%;
+	height: 150px;
+	border: 1px solid black;
+}
+
+/* Input */
+.data-input {
+	float:left;
+	width: 45%;
+}
+
+.card {
+	background-color: white;
+	padding: .5rem;
+	margin:auto;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: .5rem;
+	gap: .25em;
+	width: 100%;
+}
+
+.form-group:last-child{
+	margin: 0;
+}
+
+.form-group > label {
+	font-weight: bold;
+	font-size: .8em;
+	color: #333;
+}
+
+.form-group > input {
+	border: 1px solid #333;
+	border-radius: .25em;
+	font-size: 1rem;
+	padding: .25em;
+}
+.buttons button {
+	width: 100%;
+	height: 50px;
+	border-radius: 1rem;
+	background-color: orange;
+	border: 1px solid rgb(255, 174, 0);
+	margin: auto;
+}
+.step-title {
+	color: white;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	vertical-align: center;
+	font-size: 1.3em;
+	margin-bottom: 1rem;
+	background-color: #015536;
+	height: 40px;
+	padding-top: 20px;
+	border-bottom: 1px solid #015536;
+}
+.picture-title {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+    font-weight: 550;
+    display: block;
+	line-height: 1.5;
+	font-family: Montserrat,sans-serif;
+	margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+
+.multi-step-form {
+	overflow:hidden;
+}
+ p {
+	font-size: .8125rem;
+    font-weight: 300;
+    line-height: 1.5;
+	display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+ }
+
+li {
+    font-size: .8125rem;
+    font-weight: 300;
+    line-height: 1.5;
+	font-family: Montserrat,sans-serif;
+}
+
+.location {
+	display: flex;
+	flex-direction: row;
+}
+.location #Address {
+	width: 75%;
+	float:left;
+}
+.location #ZipCode {
+	width: 20%;
+	float:right;
+}
+.form-group .gender {
+	display: flex;
+	flex-direction: row;
+}
+.gender-buttons {
+	width: 100%;
+	margin-top: 10px;
+}
+.gender-buttons button{
+	width: 203px;
+	height: 50px;
+	border: 1px solid #DCDCDC;
+	background-color: white;
+	border-radius: 2.5px;
+}
+
+.rights input {
+	vertical-align:middle;
+	width: 20px;
+	height: 20px;
+	margin-right: 10px;
+}
+#mand:focus, #dame:focus {
+	border: 1px solid lightgreen;
+}
+
+.billed {
+	width: 50%;
+	height: 100px;
+	background-color: black;
+	float:right;
+}

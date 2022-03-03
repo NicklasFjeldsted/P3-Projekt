@@ -1,0 +1,79 @@
+
+
+<form data-multi-step class="multi-step-form" action="">
+	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
+	<div class="data-input">
+		<div *ngIf="step == 1" class="card">
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" name="email" id="email">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password">
+			</div>
+			<div class="form-group">
+				<label for="country">Country</label>
+				<input type="country" name="country" id="country">
+			</div>
+			<div class="form-group">
+				<label for="Phone Number">Phone Number</label>
+				<input type="Phone Number" name="Phone Number" id="Phone Number">
+			</div>
+			<div class="form-group buttons">
+				<button type="button" (click)="goNext()">Videre</button>
+			</div>
+		</div>
+		<div class="card" *ngIf="step == 2">
+			<div class="form-group">
+				<label for="CprNumber">CPR Nummer</label>
+				<input type="CprNumber" name="CprNumber" id="CprNumber">
+			</div>
+			<div class="form-group">
+				<label for="FirstName">Fornavn</label>
+				<input type="FirstName" name="FirstName" id="FirstName">
+			</div>
+			<div class="form-group">
+				<label for="LastName">Efternavn</label>
+				<input type="LastName" name="LastName" id="LastName">
+			</div>
+			<div class="form-group location">
+				<label for="Address" id="Address">Adresse</label>
+				<label for="ZipCode" id="ZipCode" style="margin-left: 10px;">Postnummer</label>
+			</div>
+			<div class="form-group location">
+				<input type="Address" name="Address" id="Address">
+				<input type="ZipCode" name="ZipCode" id="ZipCode">
+			</div>
+			<div class="form-group gender">
+				<div class="gender-buttons">
+					<button id="mand" style="margin-right: 5px;">Mand</button>
+					<button id="dame" style="margin-left: 5px;">Kvinde</button>
+				</div>
+			</div>
+			<div class="form-group rights buttons">
+				<label for="check" style="margin-top:10px"><input type="checkbox" name="check">Acceptere du dine rettigheder?</label>
+				<button type="submit" style="margin-top:10px">Opret Konto</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="picture">
+		<div class="info">
+			<div class="info-group">
+				<img id="image" src="" alt="">
+			</div>
+			<h2 class="picture-title">Vælg mellem 2 forskellige velkomsttilbud</h2>
+			<p>Ved oprettelse af din konto hos TEC Kasino kan du vælge mellem disse to velkomstbonusser ved første indbetaling.</p>
+			<b style="font-weight: 700; font-size: .8125rem; line-height: 1.5;">Casino velkomsttilbud:</b>
+			<ul style="list-style-position: outside; margin-left: 50px; vertical-align: middle;">
+				<br>
+				<li>100% oveni din første indbetaling, op til 1.000 kr.</li>
+				<li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig</li>
+			</ul>
+			<br>
+			<h4>Regler og betingelser</h4>
+			<br>
+		</div>
+	</div>
+</form>
