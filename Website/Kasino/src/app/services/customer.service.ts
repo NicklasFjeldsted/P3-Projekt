@@ -3,9 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { mapTo, Observable, pipe, take } from 'rxjs';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 import { AuthenticationService } from './authentication.service';
-
-const URL = "http://10.0.6.2/api/Customers/";
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,19 +26,19 @@ export class CustomerService
   // Might work
   public register(data: CustomerRegisterRequest): Observable<CustomerRegisterRequest>
   {
-    return this.http.post<CustomerRegisterRequest>(URL + 'register', data);
+    return this.http.post<CustomerRegisterRequest>(environment.apiURL + 'customers/register', data);
   }
 
   // Doesnt work
   public refreshToken(): void
   {
-    this.http.post<any>(URL + 'refresh-token', null).subscribe(e => console.log(e));
+    this.http.post<any>(environment.apiURL + 'customers/refresh-token', null).subscribe(e => console.log(e));
   }
 
   // Doesnt work
   public getRefreshTokens(): void
   {
-    this.http.get<any>(URL + 3 + '/refresh-tokens').subscribe(e => console.log(e));
+    this.http.get<any>(environment.apiURL + 3 + 'customers/refresh-tokens').subscribe(e => console.log(e));
   }
 }
 

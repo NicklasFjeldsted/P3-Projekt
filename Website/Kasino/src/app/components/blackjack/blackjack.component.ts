@@ -20,11 +20,12 @@ export class BlackjackComponent implements OnInit {
   author: string;
 
   ngOnInit(): void {
-      this.signalrService.StartConnection(); // Starts connection
+      this.signalrService.StartConnection().then(() => {
+        this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
+      }); // Starts connection
 
       this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(user));
       this.signalrService.hubConnection.on("UpdateMessage", (author, message) => this.ReceiveMessage(author, message));
-      this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
   }
 
   JoinRoom(user: User): void {

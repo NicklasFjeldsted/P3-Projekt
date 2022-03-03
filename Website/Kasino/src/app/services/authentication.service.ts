@@ -5,10 +5,10 @@ import * as moment from "moment";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CanActivate, Router } from '@angular/router';
 import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
-
+import { environment } from 'src/environments/environment';
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
-const URL = 'http://10.0.6.2/api/Customers/authenticate';
+const URL =  environment.apiURL + 'Customers/authenticate';
 
 @Injectable({
   providedIn: 'root'

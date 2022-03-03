@@ -4,6 +4,7 @@ import * as signalR from "@microsoft/signalr";
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../interfaces/User';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,32 +12,31 @@ import { User } from '../interfaces/User';
 
 
 export class SignalrService {
-
-  URL:string = "https://localhost:5001/api/Blackjack/";
-
   constructor(private http: HttpClient, private jwt: JwtHelperService) { }
+
 
   hubConnection:signalR.HubConnection;
 
-  StartConnection = () => {
+  StartConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl("https://localhost:5001/Blackjack", {
+    .withUrl(environment.hubURL + "Blackjack", {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets
     })
     .build();
 
-    this.hubConnection
+    return this.hubConnection
     .start()
     .then(() => {
       console.log("Hub connection started!");
+
     })
     .catch(err => console.log("Error while starting connection" + err))
   }
 
   GetUser(): Observable<User>
   {
-    return this.http.get<User>(this.URL + "GetUser");
+    return this.http.get<User>(environment.apiURL + "blackjack/GetUser");
   }
 
 }

@@ -52,7 +52,7 @@ builder.Services.AddSignalR(options =>
 builder.Services.AddCors(options =>
 {
 	// Defines the policy for frontend JavaScript.
-	options.AddPolicy("EnableCORS", builder =>
+	options.AddPolicy("EnableCors", builder =>
 	{
 		// Currently any frontend JavaScript is allowed.
 		builder.AllowAnyOrigin()
@@ -121,7 +121,9 @@ app.UseCors(x => x
 	.SetIsOriginAllowed(origin => true)
 	.AllowAnyMethod()
 	.AllowAnyHeader()
-	.AllowCredentials());
+	.AllowCredentials())
+	.UseWebSockets();
+
 
 // Eneables the use of static files for the current directory path.
 app.UseStaticFiles();

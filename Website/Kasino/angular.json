@@ -10,7 +10,7 @@
           "strict": true
         }
       },
-      "root": "",
+      "root": "http://10.0.6.2/",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
