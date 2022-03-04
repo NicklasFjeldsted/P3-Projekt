@@ -31,7 +31,7 @@ public class NetworkManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("StartAsync");
+        StartCoroutine(nameof(StartAsync));
     }
 
     public async Task StartAsync()
@@ -44,7 +44,6 @@ public class NetworkManager : MonoBehaviour
 
     public void OnConnected (User user)
     {
-        Debug.Log($"{user.Email} just joined.");
         users.Add(user);
     }
 }

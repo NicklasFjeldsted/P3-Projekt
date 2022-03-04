@@ -14,11 +14,11 @@ namespace TEC_KasinoAPI.Controllers
 		{
 			User user = new User
 			{
-				Email = HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-				FullName = HttpContext.User.FindFirst(ClaimTypes.GivenName).Value
+				email = HttpContext.User.FindFirst(ClaimTypes.Email).Value,
+				fullName = HttpContext.User.FindFirst(ClaimTypes.GivenName).Value
 			};
 
-			if (!string.IsNullOrEmpty(user.Email))
+			if (!string.IsNullOrEmpty(user.email))
 			{
 				return Ok(user);
 			}

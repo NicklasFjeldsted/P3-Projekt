@@ -1,5 +1,4 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { sendMessage } from '@microsoft/signalr/dist/esm/Utils';
 import { User } from 'src/app/interfaces/User';
 import { SignalrService } from 'src/app/services/signalr.service';
 
@@ -24,14 +23,13 @@ export class BlackjackComponent implements OnInit {
         this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
       }); // Starts connection
 
-      this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(user));
-      this.signalrService.hubConnection.on("UpdateMessage", (author, message) => this.ReceiveMessage(author, message));
+      this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(JSON.parse(user)));
+      this.signalrService.hubConnection.on("ReceiveMessage", (author, message) => this.ReceiveMessage(author, message));
   }
 
   JoinRoom(user: User): void {
     this.author = user.fullName;
-    this.signalrService.hubConnection.invoke("JoinRoom", user)
-      .catch(error => console.log(error));
+    this.signalrService.hubConnection.invoke("JoinRoom", JSON.stringify(user)).catch(error => console.log(error));
   }
 
   OnJoinRoom(user: User): void {

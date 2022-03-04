@@ -6,14 +6,14 @@ namespace TEC_KasinoAPI.Hubs
 {
 	public class BlackjackHub : Hub
 	{
-		public async Task JoinRoom(User user)
+		public async Task JoinRoom(string userJSON)
 		{
-			await Clients.All.SendAsync("JoinRoomResponse", user);
+			await Clients.All.SendAsync("JoinRoomResponse", userJSON);
 		}
 		
 		public async Task SendMessage(string author, string message)
 		{
-			await Clients.All.SendAsync("UpdateMessage", author, message);
+			await Clients.All.SendAsync("ReceiveMessage", author, message);
 		}
 	}
 }

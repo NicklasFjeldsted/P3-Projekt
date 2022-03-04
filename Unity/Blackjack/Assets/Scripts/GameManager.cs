@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine("StartAsync");
+        StartCoroutine(nameof(StartAsync));
     }
 
     public async Task StartAsync()

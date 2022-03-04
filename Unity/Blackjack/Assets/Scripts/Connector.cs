@@ -17,9 +17,9 @@ public class Connector
             .WithUrl("https://localhost:5001/Blackjack")
             .Build();
 
-        _connection.On<string>("JoinRoomResponse", (email) =>
+        _connection.On<string>("JoinRoomResponse", (userJSON) =>
         {
-            OnConnected?.Invoke(new User(email));
+            OnConnected?.Invoke(JsonUtility.FromJson<User>(userJSON));
         });
 
         _connection.On("DealCards", () => OnDeal?.Invoke());
