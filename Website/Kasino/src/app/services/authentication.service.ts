@@ -35,7 +35,6 @@ export class AuthenticationService implements CanActivate {
 
     // Get the expiration moment.
     const expiresAt = moment().add(this.jwt.getTokenExpirationDate()?.getMilliseconds(), 'second');
-    console.log(expiresAt);
 
     // Set the tokens in the session storage.
     sessionStorage.setItem(TOKEN_KEY, token);
