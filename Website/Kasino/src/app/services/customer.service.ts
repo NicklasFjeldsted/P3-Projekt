@@ -4,23 +4,19 @@ import { mapTo, Observable, pipe, take } from 'rxjs';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 
 export class CustomerService
 {
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService) { }
+  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private router: Router) { }
 
   // Works
   public authenticate(credentials: any): void
   {
     this.authenticationService.authenticate(credentials.email, credentials.password);
-  }
-
-  // Works
-  public deauthenticate(): void
-  {
   }
 
   // Might work
@@ -39,6 +35,17 @@ export class CustomerService
   public getRefreshTokens(): void
   {
     this.http.get<any>(environment.apiURL + 3 + 'customers/refresh-tokens').subscribe(e => console.log(e));
+  }
+
+  public isLoggedIn(): boolean
+  { 
+    return this.authenticationService.isLoggedIn();
+  }
+
+  public logOut(): void
+  {
+    this.authenticationService.clearSession();
+    this.router.navigate(['login']);
   }
 }
 

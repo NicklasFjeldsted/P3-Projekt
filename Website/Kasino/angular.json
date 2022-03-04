@@ -53,6 +53,7 @@
             },
             "development": {
               "assets": ["src/favicon.ico", "src/assets","src/web.config"],
+              "outputPath": "dist",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,

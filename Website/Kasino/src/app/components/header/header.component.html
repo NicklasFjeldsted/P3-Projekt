@@ -21,9 +21,12 @@
   <!-- Right column storing our navbar. -->
   <div class="column right">
 
-    <nav>
+    <nav *ngIf="!this.customerService.isLoggedIn()">
       <button class="btn"><a routerLink="tilmeld">Tilmeld</a></button>
       <button class="btn"><a routerLink="login">Login</a></button>
+    </nav>
+    <nav *ngIf="this.customerService.isLoggedIn()">
+      <button class="btn"><a (click)="this.customerService.logOut()">Logud</a></button>
     </nav>
 
   </div>

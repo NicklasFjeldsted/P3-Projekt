@@ -62,9 +62,9 @@ export class AuthenticationService implements CanActivate {
   }
 
   // Remove the access token.
-  public removeJwtToken(): void
+  public clearSession(): void
   {
-    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.clear();
   }
 
   // Get the access token.
@@ -73,9 +73,9 @@ export class AuthenticationService implements CanActivate {
     return sessionStorage.getItem(TOKEN_KEY)!;
   }
 
-  canActivate(): boolean
+  public canActivate(): boolean
   {
-	  const token = sessionStorage.getItem("token");
+	  const token = sessionStorage.getItem(TOKEN_KEY);
 
     if (token != null && !this.isExpired())
     {
@@ -85,6 +85,20 @@ export class AuthenticationService implements CanActivate {
 		this.router.navigate(["login"]);
 		return false;
 	}
+
+  public isLoggedIn(): boolean
+  {
+    const token = sessionStorage.getItem(TOKEN_KEY);
+
+    if (token != null && !this.isExpired())
+    {
+			return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
 
 
 }

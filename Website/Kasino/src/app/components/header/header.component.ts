@@ -9,18 +9,7 @@ import { CustomerService } from '../../services/customer.service';
 export class HeaderComponent implements OnInit
 {
 
-  constructor(private customerService: CustomerService) { }
+  constructor(public customerService: CustomerService) { }
 
   ngOnInit(): void { }
-
-  public logOut(): void
-  {
-    this.customerService.deauthenticate();
-  }
-
-  public getRefreshTokens(): void
-  {
-    this.customerService.refreshToken();
-  }
-
 }
