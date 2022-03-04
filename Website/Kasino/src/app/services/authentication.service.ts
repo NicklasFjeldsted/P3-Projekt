@@ -73,6 +73,11 @@ export class AuthenticationService implements CanActivate {
     return sessionStorage.getItem(TOKEN_KEY)!;
   }
 
+  public refreshToken(): void
+  {
+    this.http.post<any>(environment.apiURL + 'customers/refresh-token', null).subscribe(e => console.log(e));
+  }
+
   public canActivate(): boolean
   {
 	  const token = sessionStorage.getItem(TOKEN_KEY);
@@ -99,6 +104,4 @@ export class AuthenticationService implements CanActivate {
       return false;
     }
   }
-
-
 }

@@ -28,7 +28,7 @@ export class CustomerService
   // Doesnt work
   public refreshToken(): void
   {
-    this.http.post<any>(environment.apiURL + 'customers/refresh-token', null).subscribe(e => console.log(e));
+    this.authenticationService.refreshToken();
   }
 
   // Doesnt work
