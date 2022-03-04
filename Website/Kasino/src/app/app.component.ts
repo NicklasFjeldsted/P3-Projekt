@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,6 @@ import { environment } from 'src/environments/environment';
 export class AppComponent
 {
   constructor() {}
-
+  faCoffee = faCoffee;
   title = 'Kasino';
 }

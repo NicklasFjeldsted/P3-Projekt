@@ -17,6 +17,10 @@ import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationInterceptorInterceptor } from './interceptors/authentication-interceptor.interceptor';
 import { BlackjackComponent } from './components/blackjack/blackjack.component';
 import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -40,6 +44,7 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    FontAwesomeModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
@@ -55,4 +60,8 @@ export function tokenGetter() {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor() { }
+
+}
+// "outputPath": "//10.0.6.2/www",

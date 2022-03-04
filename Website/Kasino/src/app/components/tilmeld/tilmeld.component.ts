@@ -1,5 +1,6 @@
 import { Component, } from '@angular/core';
 
+
 @Component({
   selector: 'app-tilmeld',
   templateUrl: './tilmeld.component.html',

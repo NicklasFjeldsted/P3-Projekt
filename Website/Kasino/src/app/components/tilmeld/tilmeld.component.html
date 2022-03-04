@@ -1,58 +1,54 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-<form data-multi-step class="multi-step-form" action="">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<form data-multi-step class="multi-step-form form-control v-center h-center " action="">
 	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
 	<div class="data-input">
 		<div *ngIf="step == 1" class="card">
-			<div class="form-group">
-				<label for="email">Email</label>
-				<input type="email" name="email" id="email">
+			<h1 class="card-title">Udfyld dine oplysninger nedenfor</h1>
+			<br>
+			<div class="form-group card-1">
+				<i class="fa fa-envelope fa-2x"></i>
+				<input type="email" name="email" id="email" placeholder="E-mail">
 			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password">
+			<div class="form-group card-1">
+				<i class="fa fa-lock fa-2x"></i>
+				<input type="password" name="password" id="password" placeholder="Adgangskode">
 			</div>
-			<div class="form-group">
-				<label for="country">Country</label>
-				<input type="country" name="country" id="country">
+			<div class="form-group card-1">
+				<i class="fa fa-flag fa-2x"></i>
+				<input type="country" name="country" id="country" placeholder="Land">
 			</div>
-			<div class="form-group">
-				<label for="Phone Number">Phone Number</label>
-				<input type="Phone Number" name="Phone Number" id="Phone Number">
+			<div class="form-group card-1">
+				<i class="fa fa-regular fa-phone fa-2x"></i>
+				<input type="PhoneNumber" name="PhoneNumber" id="PhoneNumber" placeholder="Mobilnummer">
 			</div>
 			<div class="form-group buttons">
-				<button type="button" (click)="goNext()">Videre</button>
+				<button type="button" (click)="goNext()">Næste</button>
 			</div>
 		</div>
 		<div class="card" *ngIf="step == 2">
-			<div class="form-group">
-				<label for="CprNumber">CPR Nummer</label>
-				<input type="CprNumber" name="CprNumber" id="CprNumber">
+			<div class="form-group card-2">
+				<input type="CprNumber" name="CprNumber" id="CprNumber" placeholder="Indtast venligst dit CPR nummer">
 			</div>
-			<div class="form-group">
-				<label for="FirstName">Fornavn</label>
-				<input type="FirstName" name="FirstName" id="FirstName">
+			<div class="form-group card-2">
+				<input type="FirstName" name="FirstName" id="FirstName" placeholder="Fornavn">
 			</div>
-			<div class="form-group">
-				<label for="LastName">Efternavn</label>
-				<input type="LastName" name="LastName" id="LastName">
+			<div class="form-group card-2">
+				<input type="LastName" name="LastName" id="LastName" placeholder="Efternavn">
 			</div>
-			<div class="form-group location">
-				<label for="Address" id="Address">Adresse</label>
-				<label for="ZipCode" id="ZipCode" style="margin-left: 10px;">Postnummer</label>
+			<div class="form-group location card-2">
+				<input type="Address" name="Address" id="Address" placeholder="Adresse">
+				<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr">
 			</div>
-			<div class="form-group location">
-				<input type="Address" name="Address" id="Address">
-				<input type="ZipCode" name="ZipCode" id="ZipCode">
-			</div>
-			<div class="form-group gender">
+			<div class="form-group gender card-2">
 				<div class="gender-buttons">
 					<button id="mand" style="margin-right: 5px;">Mand</button>
 					<button id="dame" style="margin-left: 5px;">Kvinde</button>
 				</div>
 			</div>
 			<div class="form-group rights buttons">
-				<label for="check" style="margin-top:10px"><input type="checkbox" name="check">Acceptere du dine rettigheder?</label>
+				<label for="check" style="margin-top:10px"><input type="checkbox" name="check">Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label>
 				<button type="submit" style="margin-top:10px">Opret Konto</button>
 			</div>
 		</div>
@@ -61,7 +57,7 @@
 	<div class="picture">
 		<div class="info">
 			<div class="info-group">
-				<img id="image" src="" alt="">
+				<img id="image" src="casino.jpg" alt="">
 			</div>
 			<h2 class="picture-title">Vælg mellem 2 forskellige velkomsttilbud</h2>
 			<p>Ved oprettelse af din konto hos TEC Kasino kan du vælge mellem disse to velkomstbonusser ved første indbetaling.</p>
