@@ -3,6 +3,7 @@
   .center-row
   {
     width: 100%;
+
   }
 }
 
@@ -12,7 +13,9 @@
   display: inline-block;
   margin-left: 20px;
 }
-
+.kasino-logo {
+  color: white;
+}
 .dropdown-content
 {
   display: none;
@@ -27,4 +30,19 @@
 .dropdown:hover .dropdown-content
 {
   display: block;
+}
+.header{
+  background-color: #015536;
+  border-bottom: 0;
+  box-shadow: 0 0 1pc rgb(0 0 0 / 40%);
+}
+
+.tilmeld {
+  background-color: #F08000;
+}
+
+.games {
+  background-color: #05372c;
+  border: 1px solid #05372c;
+  z-index: 4;
 }

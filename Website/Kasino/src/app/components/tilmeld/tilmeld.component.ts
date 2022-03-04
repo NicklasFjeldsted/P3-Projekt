@@ -8,6 +8,7 @@ import { Component, } from '@angular/core';
 })
 export class TilmeldComponent {
   step: any = 1;
+  wrongcred: any = false;
   constructor() { }
 
   goNext() { this.step += 1; }

@@ -1,5 +1,5 @@
 <!-- Top row on the page. -->
-<div class="row">
+<div class="row header">
 
   <!-- Left empty column for correct positioning of other columns. -->
   <div class="column left">
@@ -13,8 +13,7 @@
 
   <!-- Center column storing the title of the website. -->
   <div class="column">
-
-    <h2><a href="">TEC-Kasino</a></h2>
+    <a routerLink=""><img src="../../../assets/media/tec-logo.png" width="135px" alt=""></a>
 
   </div>
 
@@ -22,11 +21,11 @@
   <div class="column right">
 
     <nav *ngIf="!this.customerService.isLoggedIn()">
-      <button class="btn"><a routerLink="tilmeld">Tilmeld</a></button>
-      <button class="btn"><a routerLink="login">Login</a></button>
+      <a routerLink="tilmeld"><button class="btn tilmeld">Tilmeld</button></a>
+      <a routerLink="login"><button class="btn">Login</button></a>
     </nav>
     <nav *ngIf="this.customerService.isLoggedIn()">
-      <button class="btn"><a (click)="this.customerService.logOut()">Logud</a></button>
+      <a (click)="this.customerService.logOut()"><button class="btn">Login</button></a>
     </nav>
 
   </div>
@@ -34,7 +33,7 @@
 </div>
 
 <!-- Second row of the page. -->
-<div class="row">
+<div class="row games">
 
   <!-- Creates a row that is in the horizontal center of the screen. -->
   <div class="center-row">
