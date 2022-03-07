@@ -10,5 +10,4 @@ export interface CustomerRegisterRequest
   Address: string;
   ZipCodeID: number;
   GenderID: number;
-  RegisterDate: string;
 }
