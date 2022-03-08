@@ -19,15 +19,15 @@ export class TilmeldComponent {
   constructor(private customerService: CustomerService, private router: Router) { }
 
   form = new FormGroup({
-    email: new FormControl('asd@asd.com', [Validators.required, Validators.email]),
-    password: new FormControl('Passw0rd', Validators.required),
-    countryID: new FormControl('45', Validators.required),
-    phoneNumber: new FormControl('12345678', Validators.required),
-    cprNumber: new FormControl('1234567890', Validators.required),
-    firstName: new FormControl('Nicklas', Validators.required),
-    lastName: new FormControl('Fjeldsted', Validators.required),
-    address: new FormControl('Brøndbyvestervej 17, 2th', Validators.required),
-    zipCodeID: new FormControl('2600', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', Validators.required),
+    countryID: new FormControl('', Validators.required),
+    phoneNumber: new FormControl('', Validators.required),
+    cprNumber: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
+    lastName: new FormControl('', Validators.required),
+    address: new FormControl('', Validators.required),
+    zipCodeID: new FormControl('', Validators.required),
     genderID: new FormControl()
   });
 

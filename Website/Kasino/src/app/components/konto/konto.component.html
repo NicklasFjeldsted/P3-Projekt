@@ -1,57 +1,57 @@
 <!-- Linksne virker ikke -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<form id="login" method="get" class="form-control v-center h-center">
-  <div class="column flow-down">
-    <div class="form-header">
-      <h1>Min Konto</h1>
-    </div>
-    <div class="row">
-      <div class="column">
-        <button type="submit" name="indbetal" id="indbetal" class="form-submit bg-orange"><a href="Indbetal.html">Indbetal</a></button>
+<body style="background-image: url('../../../assets/media/casino.jpg');">
+  <form id="login" method="get" class="form-control v-center h-center">
+    <div class="column flow-down">
+      <div class="form-header">
+        <h1>Min Konto</h1>
       </div>
-      <div class="column">
-        <button type="submit" name="udbetal" id="udbetal" class="form-submit bg-white"><a href="Udbetal.html">Udbetal</a></button>
+      <div class="row">
+        <div class="column">
+          <button type="submit" name="indbetal" id="indbetal" class="form-submit bg-orange"><a href="Indbetal.html">Indbetal</a></button>
+        </div>
+        <div class="column">
+          <button type="submit" name="udbetal" id="udbetal" class="form-submit bg-white"><a href="Udbetal.html">Udbetal</a></button>
+        </div>
+
+        <div class="column">
+          <button type="submit" name="logUd" id="logUd" class="form-submit bg-green"><a href= "Web.html">Log ud</a></button>
+        </div>
       </div>
 
-      <div class="column">
-        <button type="submit" name="logUd" id="logUd" class="form-submit bg-green"><a href= "Web.html">Log ud</a></button>
+      <div class="form-row flow-down">
+        <label for="balance">Balance</label>
+        <input type="text" name="balance" id="balance" class="form-input " placeholder="0" readonly/>
+      </div>
+
+      <div class="row">
+        <div class="column">
+          <h4>Dine kontooplysninger</h4>
+        </div>
+      </div>
+
+      <div class="form-row flow-down">
+        <label for="fuldeNavn">Navn</label>
+        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder="Dit fulde navn"/>
+      </div>
+
+
+      <div class="form-row flow-down">
+        <label for="tlf">Telefonnummer</label>
+        <input type="text" name="tlf" id="tlf" class="form-input" placeholder="12-34-56-67"/>
+      </div>
+
+      <div class="form-row flow-down">
+        <label for="adresse">Adresse</label>
+        <input type="text" name="adresse" id="adresse" class="form-input" placeholder="Din adresse"/>
+      </div>
+
+      <div class="form-row flow-down">
+        <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-green"><a href= "">Log ud</a></button>
+      </div>
+      <div class="form-row flow-down">
+        <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
       </div>
     </div>
-
-    <div class="form-row flow-down">
-      <label for="balance">Balance</label>
-      <input type="text" name="balance" id="balance" class="form-input " placeholder="0" readonly/>
-    </div>
-
-
-    <div class="row">
-      <div class="column">
-        <h4>Dine kontooplysninger</h4>
-      </div>
-    </div>
-
-    <div class="form-row flow-down">
-      <label for="fuldeNavn">Navn</label>
-      <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder="Dit fulde navn"/>
-    </div>
-
-
-    <div class="form-row flow-down">
-      <label for="tlf">Telefonnummer</label>
-      <input type="text" name="tlf" id="tlf" class="form-input" placeholder="12-34-56-67"/>
-    </div>
-
-    <div class="form-row flow-down">
-      <label for="adresse">Adresse</label>
-      <input type="text" name="adresse" id="adresse" class="form-input" placeholder="Din adresse"/>
-    </div>
-
-    <div class="form-row flow-down">
-      <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-green"><a href= "">Log ud</a></button>
-    </div>
-    <div class="form-row flow-down">
-      <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
-    </div>
-
-  </div>
-</form>
+  </form>
+</body>
