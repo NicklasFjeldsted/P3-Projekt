@@ -172,7 +172,7 @@ a
 /* Standard button style. */
 .btn
 {
-  color: black;
+  color: white;
   height: 100%;
   max-width: 310px;
   max-height: 40px;
@@ -183,6 +183,8 @@ a
   margin: 0 .5em;
   padding: .5em 1em;
   cursor: pointer;
+  background-color: #05372c;
+  
 }
 
 .btn:hover

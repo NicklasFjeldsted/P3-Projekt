@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CustomerService } from '../../services/customer.service';
 
 
 @Component({
@@ -9,7 +10,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class KontoComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(public customerService: CustomerService) { }
+
+  // constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
   }
