@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { Observable } from 'rxjs';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../interfaces/User';
 import { environment } from 'src/environments/environment';
 
@@ -12,7 +11,7 @@ import { environment } from 'src/environments/environment';
 
 
 export class SignalrService {
-  constructor(private http: HttpClient, private jwt: JwtHelperService) { }
+  constructor(private http: HttpClient) { }
 
 
   hubConnection:signalR.HubConnection;

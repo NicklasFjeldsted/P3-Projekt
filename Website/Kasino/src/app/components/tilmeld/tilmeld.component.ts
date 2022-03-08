@@ -67,18 +67,18 @@ export class TilmeldComponent implements OnInit {
   }
 
   signUp(): void {
-    this.custom = Object.assign(this.form.value);
-    this.customerService.register(this.custom).subscribe({
-      next: () => {
-        let credentials = {email: '', password: ''};
-        credentials = Object.assign(credentials, this.form.value)
-        this.customerService.authenticate(credentials);
-        this.router.navigate([""]);
-      },
-      error: error => {
-        console.log(error);
-      }
-    });
+    // this.custom = Object.assign(this.form.value);
+    // this.customerService.register(this.custom).subscribe({
+    //   next: () => {
+    //     let credentials = {email: '', password: ''};
+    //     credentials = Object.assign(credentials, this.form.value)
+    //     this.customerService.authenticate(credentials);
+    //     this.router.navigate([""]);
+    //   },
+    //   error: error => {
+    //     console.log(error);
+    //   }
+    // });
   }
 
   setGender(genderid: Number): void {

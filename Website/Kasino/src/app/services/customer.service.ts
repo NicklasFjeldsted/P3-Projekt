@@ -1,50 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { mapTo, Observable, pipe, take } from 'rxjs';
-import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
-import { AuthenticationService } from './authentication.service';
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient} from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { User } from '../interfaces/User';
+
 @Injectable({
   providedIn: 'root'
 })
 
 export class CustomerService
 {
-  constructor(private http: HttpClient, private authenticationService: AuthenticationService, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
-  // Works
-  public authenticate(credentials: any): void
+  public getAll(): Observable<User[]>
   {
-    this.authenticationService.authenticate(credentials.email, credentials.password);
-  }
-
-  // Might work
-  public register(data: any): Observable<any>
-  {
-    return this.http.post<any>(environment.apiURL + 'customers/register', data);
-  }
-
-  // Doesnt work
-  public refreshToken(): void
-  {
-    this.authenticationService.refreshToken();
-  }
-
-  // Doesnt work
-  public getRefreshTokens(): void
-  {
-    this.http.get<any>(environment.apiURL + 3 + 'customers/refresh-tokens').subscribe(e => console.log(e));
-  }
-
-  public isLoggedIn(): boolean
-  {
-    return this.authenticationService.isLoggedIn();
-  }
-
-  public logOut(): void
-  {
-    this.authenticationService.logOut();
+    return this.http.get<User[]>(`${environment.apiURL}/Customers`);
   }
 }
 

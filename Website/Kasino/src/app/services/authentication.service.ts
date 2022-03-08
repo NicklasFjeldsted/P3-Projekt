@@ -1,127 +1,75 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import * as moment from "moment";
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { CanActivate, Router } from '@angular/router';
-import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { User } from '../interfaces/User';
 
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
 const URL =  environment.apiURL + 'Customers/authenticate';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class AuthenticationService implements CanActivate
+@Injectable({ providedIn: 'root' })
+export class AuthenticationService
 {
-  constructor(
-    private http: HttpClient,
-    private jwt: JwtHelperService,
-    private router: Router
-  ) { }
+  private userSubject: BehaviorSubject<User>;
+  public user: Observable<User>;
 
-  // Authenticates the given credentials.
-  public authenticate(email: string, password: string): void
+  constructor(private http: HttpClient, private router: Router)
   {
-    // Returns the JWT access token.
-    const responseObservable: Observable<AuthenticationResponse> = this.http.post<AuthenticationResponse>(URL, { email, password }, { withCredentials: true });
-
-    // Call the setSession function and pass in the JWT token from the response.
-    responseObservable.subscribe(authenticationResponse =>
-    {
-      this.setSession(authenticationResponse.jwtToken);
-      if (this.isLoggedIn())
-      {
-        this.router.navigate(['/']);
-      }
-    });
+    this.userSubject = new BehaviorSubject<User>(new User());
+    this.user = this.userSubject.asObservable();
   }
 
-  // Sets a token to session storage and sets the expiration date of the token.
-  private setSession(token: string): void
+  public get userValue(): User
   {
-    // Check if the token is there.
-    if (!token) alert("error");
-
-    // Get the expiration moment.
-    const expiresAt = moment().add(this.jwt.getTokenExpirationDate()?.getMilliseconds(), 'second');
-
-    // Set the tokens in the session storage.
-    sessionStorage.setItem(TOKEN_KEY, token);
-    sessionStorage.setItem(TOKEN_EXP, JSON.stringify(expiresAt.valueOf()));
+    return this.userSubject.value;
   }
 
-  // Check if the access token is expired.
-  public isExpired(): boolean
+  public login(email: string, password: string): Observable<any>
   {
-    return moment().isBefore(this.getExpiration());
+    return this.http.post<any>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
+      .pipe(map(user => {
+        this.userSubject.next(user);
+        this.startRefreshTokenTimer();
+        return user;
+      }));
   }
 
-  // Gets the expiration token expiration moment.
-  private getExpiration(): moment.Moment
+  public logout(): void
   {
-    // Gets the expiration.
-    const expiration: string = sessionStorage.getItem(TOKEN_EXP)!;
-
-    // Converts it to a moment.
-    const expiresAt: moment.MomentInput = JSON.parse(expiration);
-
-    // Return it.
-    return moment(expiresAt);
+    this.http.post<any>(`${environment.apiURL}/Customers/revoke-token`, {}, { withCredentials: true }).subscribe();
+    this.stopRefreshTokenTimer();
+    this.userSubject.next(new User());
+    this.router.navigate(['/login']);
   }
 
-  // Remove the access token.
-  private clearSession(): void
+  public refreshToken(): Observable<any>
   {
-    sessionStorage.clear();
+    return this.http.post<any>(`${environment.apiURL}/Customers/refresh-token`, {}, { withCredentials: true })
+      .pipe(map((user) => {
+        this.userSubject.next(user);
+        this.startRefreshTokenTimer();
+        return user;
+      }));
   }
 
-  public logOut(): void
+  // helper methods
+  private refreshTokenTimeout: any;
+
+  private startRefreshTokenTimer(): void
   {
-    this.http.post<any>(environment.apiURL + 'customers/revoke-token', { Token: null }, { withCredentials: true }).subscribe(e =>
-    {
-      this.router.navigate(['/']);
-      this.clearSession();
-    });
+    // parse json object from base64 encoded jwt token
+    const jwtToken = JSON.parse(atob(this.userValue.jwtToken!.split('.')[ 1 ]));
+
+    // set a timeout to refresh the token a minute before it expires
+    const expires = new Date(jwtToken.exp * 1000);
+    const timeout = expires.getTime() - Date.now() - (60 * 1000);
+    this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
   }
 
-  // Get the access token.
-  public getToken(): string
+  private stopRefreshTokenTimer(): void
   {
-    return sessionStorage.getItem(TOKEN_KEY)!;
-  }
-
-  public refreshToken(): void
-  {
-    this.http.post<any>(environment.apiURL + 'customers/refresh-token', null).subscribe(e => console.log(e));
-  }
-
-  public canActivate(): boolean
-  {
-	  const token = sessionStorage.getItem(TOKEN_KEY);
-
-    if (token != null && !this.isExpired())
-    {
-			return true;
-    }
-
-		this.router.navigate(["login"]);
-		return false;
-	}
-
-  public isLoggedIn(): boolean
-  {
-    const token = sessionStorage.getItem(TOKEN_KEY);
-
-    if (token != null && !this.isExpired())
-    {
-			return true;
-    }
-    else
-    {
-      return false;
-    }
+    clearTimeout(this.refreshTokenTimeout);
   }
 }

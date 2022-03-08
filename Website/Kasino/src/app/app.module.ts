@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtModule } from '@auth0/angular-jwt';
 
@@ -22,10 +22,7 @@ import { faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RouterModule } from '@angular/router';
-
-export function tokenGetter() {
-  return localStorage.getItem("token");
-}
+import { appInitializer } from './helpers/app.initializer';
 
 
 @NgModule({
@@ -48,17 +45,10 @@ export function tokenGetter() {
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: [""],
-        disallowedRoutes: [""]
-      }
-    })
+    HttpClientModule
   ],
   providers: [
-    AuthenticationService,
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
