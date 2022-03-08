@@ -9,15 +9,15 @@
 /* Makes the background green. */
 .bg-green
 {
-  background-color: green;
+  background-color: green!important;
 }
 .bg-orange
 {
-  background-color: #F08000;
+  background-color: #F08000!important;
 }
 .bg-white
 {
-  background-color: white;
+  background-color: white!important;
 }
 
 
