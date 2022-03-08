@@ -25,7 +25,7 @@
       <a routerLink="login"><button class="btn">Login</button></a>
     </nav>
     <nav *ngIf="this.customerService.isLoggedIn()">
-      <a (click)="this.customerService.logOut()"><button class="btn">Login</button></a>
+      <a (click)="this.customerService.logOut()"><button class="btn">Logout</button></a>
     </nav>
 
   </div>

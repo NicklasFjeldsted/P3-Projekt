@@ -45,7 +45,7 @@ export class CustomerService
   public logOut(): void
   {
     this.authenticationService.clearSession();
-    this.router.navigate(['login']);
+    this.router.navigate(['/']);
   }
 }
 
