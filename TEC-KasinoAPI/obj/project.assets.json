@@ -63,13 +63,13 @@
           "lib/netstandard2.0/Azure.Identity.dll": {}
         }
       },
-      "BCrypt.Net-Next/4.0.2": {
+      "BCrypt.Net-Next/4.0.3": {
         "type": "package",
         "compile": {
-          "lib/net5.0/BCrypt.Net-Next.dll": {}
+          "lib/net6.0/BCrypt.Net-Next.dll": {}
         },
         "runtime": {
-          "lib/net5.0/BCrypt.Net-Next.dll": {}
+          "lib/net6.0/BCrypt.Net-Next.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -2004,13 +2004,13 @@
           "lib/netcoreapp3.1/Scrutor.dll": {}
         }
       },
-      "Swashbuckle.AspNetCore/6.2.3": {
+      "Swashbuckle.AspNetCore/6.3.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "3.0.0",
-          "Swashbuckle.AspNetCore.Swagger": "6.2.3",
-          "Swashbuckle.AspNetCore.SwaggerGen": "6.2.3",
-          "Swashbuckle.AspNetCore.SwaggerUI": "6.2.3"
+          "Swashbuckle.AspNetCore.Swagger": "6.3.0",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.3.0",
+          "Swashbuckle.AspNetCore.SwaggerUI": "6.3.0"
         },
         "build": {
           "build/Swashbuckle.AspNetCore.props": {}
@@ -2041,7 +2041,7 @@
           "lib/net5.0/Swashbuckle.AspNetCore.Filters.Abstractions.dll": {}
         }
       },
-      "Swashbuckle.AspNetCore.Swagger/6.2.3": {
+      "Swashbuckle.AspNetCore.Swagger/6.3.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.OpenApi": "1.2.3"
@@ -2056,10 +2056,10 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Swashbuckle.AspNetCore.SwaggerGen/6.2.3": {
+      "Swashbuckle.AspNetCore.SwaggerGen/6.3.0": {
         "type": "package",
         "dependencies": {
-          "Swashbuckle.AspNetCore.Swagger": "6.2.3"
+          "Swashbuckle.AspNetCore.Swagger": "6.3.0"
         },
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {}
@@ -2068,7 +2068,7 @@
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerGen.dll": {}
         }
       },
-      "Swashbuckle.AspNetCore.SwaggerUI/6.2.3": {
+      "Swashbuckle.AspNetCore.SwaggerUI/6.3.0": {
         "type": "package",
         "compile": {
           "lib/net6.0/Swashbuckle.AspNetCore.SwaggerUI.dll": {}
@@ -3467,23 +3467,20 @@
         "pkgicon.png"
       ]
     },
-    "BCrypt.Net-Next/4.0.2": {
-      "sha512": "LyNKpIpr4GraRD9+xlTviyxxbZpF6J4xJf7DvraC1mR8PSN/KonGc4rt8C/fjkD3vaEvgA7BcvsbHFCOjgczyQ==",
+    "BCrypt.Net-Next/4.0.3": {
+      "sha512": "W+U9WvmZQgi5cX6FS5GDtDoPzUCV4LkBLkywq/kRZhuDwcbavOzcDAr3LXJFqHUi952Yj3LEYoWW0jbEUQChsA==",
       "type": "package",
-      "path": "bcrypt.net-next/4.0.2",
+      "path": "bcrypt.net-next/4.0.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "bcrypt.net-next.4.0.2.nupkg.sha512",
+        "bcrypt.net-next.4.0.3.nupkg.sha512",
         "bcrypt.net-next.nuspec",
+        "ico.png",
         "lib/net20/BCrypt.Net-Next.dll",
         "lib/net20/BCrypt.Net-Next.xml",
         "lib/net35/BCrypt.Net-Next.dll",
         "lib/net35/BCrypt.Net-Next.xml",
-        "lib/net40/BCrypt.Net-Next.dll",
-        "lib/net40/BCrypt.Net-Next.xml",
-        "lib/net452/BCrypt.Net-Next.dll",
-        "lib/net452/BCrypt.Net-Next.xml",
         "lib/net462/BCrypt.Net-Next.dll",
         "lib/net462/BCrypt.Net-Next.xml",
         "lib/net472/BCrypt.Net-Next.dll",
@@ -3492,12 +3489,13 @@
         "lib/net48/BCrypt.Net-Next.xml",
         "lib/net5.0/BCrypt.Net-Next.dll",
         "lib/net5.0/BCrypt.Net-Next.xml",
-        "lib/netcoreapp3.1/BCrypt.Net-Next.dll",
-        "lib/netcoreapp3.1/BCrypt.Net-Next.xml",
+        "lib/net6.0/BCrypt.Net-Next.dll",
+        "lib/net6.0/BCrypt.Net-Next.xml",
         "lib/netstandard2.0/BCrypt.Net-Next.dll",
         "lib/netstandard2.0/BCrypt.Net-Next.xml",
         "lib/netstandard2.1/BCrypt.Net-Next.dll",
-        "lib/netstandard2.1/BCrypt.Net-Next.xml"
+        "lib/netstandard2.1/BCrypt.Net-Next.xml",
+        "readme.md"
       ]
     },
     "Humanizer.Core/2.8.26": {
@@ -6418,15 +6416,15 @@
         "scrutor.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore/6.2.3": {
-      "sha512": "cnzQDn0Le+hInsw2SYwlOhOCPXpYi/szcvnyqZJ12v+QyrLBwAmWXBg6RIyHB18s/mLeywC+Rg2O9ndz0IUNYQ==",
+    "Swashbuckle.AspNetCore/6.3.0": {
+      "sha512": "3TAV6JqsJF2F5e5d/tiQuW/TlzKXB/n2IcL5QR1FP8ArmLhmPkpeHiLZ3+1YnJ5840/X5ApvpRRJpM9809IjTg==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore/6.2.3",
+      "path": "swashbuckle.aspnetcore/6.3.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "build/Swashbuckle.AspNetCore.props",
-        "swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+        "swashbuckle.aspnetcore.6.3.0.nupkg.sha512",
         "swashbuckle.aspnetcore.nuspec"
       ]
     },
@@ -6458,10 +6456,10 @@
         "swashbuckle.aspnetcore.filters.abstractions.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.Swagger/6.2.3": {
-      "sha512": "qOF7j1sL0bWm8g/qqHVPCvkO3JlVvUIB8WfC98kSh6BT5y5DAnBNctfac7XR5EZf+eD7/WasvANncTqwZYfmWQ==",
+    "Swashbuckle.AspNetCore.Swagger/6.3.0": {
+      "sha512": "+taHh7kowNF+tQo9a82avwDtfqhAC82jTZTqZwypDpauPvwavyVtJ7+ERxE+yDb6U/nOcMicMmDAGbqbJ2Pc+Q==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swagger/6.2.3",
+      "path": "swashbuckle.aspnetcore.swagger/6.3.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6477,14 +6475,14 @@
         "lib/netstandard2.0/Swashbuckle.AspNetCore.Swagger.dll",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.Swagger.pdb",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.Swagger.xml",
-        "swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+        "swashbuckle.aspnetcore.swagger.6.3.0.nupkg.sha512",
         "swashbuckle.aspnetcore.swagger.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerGen/6.2.3": {
-      "sha512": "+Xq7WdMCCfcXlnbLJVFNgY8ITdP2TRYIlpbt6IKzDw5FwFxdi9lBfNDtcT+/wkKwX70iBBFmXldnnd02/VO72A==",
+    "Swashbuckle.AspNetCore.SwaggerGen/6.3.0": {
+      "sha512": "8PRLtqCXTIfc+W/pcyab8GqHzHuFRZ3L+9/fix/ssVknwy/pbgkOqgzq9DGWfKz+MZReIp5ajZLR7bXioDdacQ==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggergen/6.2.3",
+      "path": "swashbuckle.aspnetcore.swaggergen/6.3.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6500,14 +6498,14 @@
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerGen.dll",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerGen.pdb",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerGen.xml",
-        "swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggergen.6.3.0.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggergen.nuspec"
       ]
     },
-    "Swashbuckle.AspNetCore.SwaggerUI/6.2.3": {
-      "sha512": "bCRI87uKJVb4G+KURWm8LQrL64St04dEFZcF6gIM67Zc0Sr/N47EO83ybLMYOvfNdO1DCv8xwPcrz9J/VEhQ5g==",
+    "Swashbuckle.AspNetCore.SwaggerUI/6.3.0": {
+      "sha512": "OmVLGzyeNBFUAx6E/bqrZW4uxfv9q2MtegYzeHv5Dj8N34ry8104d6OcyRIV4BhwHBSFD1rMvDlPciguFMtQ5w==",
       "type": "package",
-      "path": "swashbuckle.aspnetcore.swaggerui/6.2.3",
+      "path": "swashbuckle.aspnetcore.swaggerui/6.3.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6523,7 +6521,7 @@
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerUI.dll",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerUI.pdb",
         "lib/netstandard2.0/Swashbuckle.AspNetCore.SwaggerUI.xml",
-        "swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512",
+        "swashbuckle.aspnetcore.swaggerui.6.3.0.nupkg.sha512",
         "swashbuckle.aspnetcore.swaggerui.nuspec"
       ]
     },
@@ -10476,7 +10474,7 @@
     "net6.0": [
       "AutoMapper >= 11.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
-      "BCrypt.Net-Next >= 4.0.2",
+      "BCrypt.Net-Next >= 4.0.3",
       "Microsoft.AspNet.WebApi.Cors >= 5.2.7",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.2",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 6.0.2",
@@ -10489,32 +10487,27 @@
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore >= 6.0.2",
       "Owin >= 1.0.0",
-      "Swashbuckle.AspNetCore >= 6.2.3",
+      "Swashbuckle.AspNetCore >= 6.3.0",
       "Swashbuckle.AspNetCore.Filters >= 7.0.2",
       "System.ComponentModel.Annotations >= 5.0.0",
       "System.IdentityModel.Tokens.Jwt >= 6.16.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Alexander\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Matthias\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+      "projectUniqueName": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
       "projectName": "TEC-KasinoAPI",
-      "projectPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
-      "packagesPath": "C:\\Users\\Alexander\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
+      "projectPath": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\TEC-KasinoAPI.csproj",
+      "packagesPath": "C:\\Users\\Matthias\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Alexander\\Documents\\GitHub\\P3-Projekt\\TEC-KasinoAPI\\NuGet.Config",
-        "C:\\Users\\Alexander\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Matthias\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\NuGet.Config",
+        "C:\\Users\\Matthias\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10550,7 +10543,7 @@
           },
           "BCrypt.Net-Next": {
             "target": "Package",
-            "version": "[4.0.2, )"
+            "version": "[4.0.3, )"
           },
           "Microsoft.AspNet.WebApi.Cors": {
             "target": "Package",
@@ -10604,7 +10597,7 @@
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
-            "version": "[6.2.3, )"
+            "version": "[6.3.0, )"
           },
           "Swashbuckle.AspNetCore.Filters": {
             "target": "Package",
