@@ -108,12 +108,15 @@
 	padding: 0px 15px;
 }
 
-.form-group > input {
+.form-group input {
 	font-size: 1rem;
-	border: 1px solid #e3e3e3;
+	border: 1px solid #e3e3e3!important;
+	outline: 0px!important;
     border-radius: 3px;
 	line-height: normal;
-	margin-bottom: 0.75rem!important;
+	margin-bottom:
+
+	0.75rem!important;
 }
 .buttons > button {
 	width: 100%;

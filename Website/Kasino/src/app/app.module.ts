@@ -21,6 +21,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import { RouterModule } from '@angular/router';
 
 export function tokenGetter() {
   return localStorage.getItem("token");
@@ -42,6 +43,7 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    RouterModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

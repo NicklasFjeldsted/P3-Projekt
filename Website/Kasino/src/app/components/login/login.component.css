@@ -3,7 +3,9 @@
 {
   height: 100%;
   width: 100%;
-  background-image: url("../../../assets/media/poker-background.jpg");
+  background-color: #e6e6e6;
+ /* background-image: url("../../../assets/media/poker-background.jpg"); */
+  font-family: Montserrat,sans-serif;
 }
 
 /* Defines the behaviour of the Lady Image. */
@@ -16,6 +18,67 @@
   display: block;
 }
 
+.form-header h2 {
+  margin: auto;
+  font-size: 1.5rem;
+  font-weight: 100;
+  line-height: 1.5;
+  font-family: Montserrat,sans-serif;
+}
+
+.form-row {
+  height: 56px;
+  font-size: 1pc;
+  border: none;
+  width: 500px;
+}
+.form-control {
+  background: #f9f9f9;
+  border: none;
+  max-width: 600px!important;
+  min-width: 300px;
+}
+.form-input {
+  max-width: 500px;
+  min-width: 160px;
+  width: 378px;
+  height: 56px;
+  padding: 1pc 1pc 1pc 60px;
+  margin: 0 0 1.6rem;
+  box-shadow: none;
+  border: 1px solid #e3e3e3;
+  font-size: .9rem;
+  background-color: transparent;
+}
+
+.form-row > i {
+	color: #DCDCDC;
+	position: absolute;
+  left: 34px;
+  top: 10px;
+
+}
+
+.form-row button{
+  max-width: 100%;
+  margin: 0;
+  width: 450px;
+  max-height: 56px;
+  border-radius: 50px;
+  color: #313233;
+  padding: 1pc 0;
+}
+
+
+.form-row > button:focus, button:hover {
+  outline: none;
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
+}
+
+.form-row input:focus {
+  outline: none;
+  border: 1px solid #808080 !important;
+}
 .form-control
 {
   max-height: 415px;
@@ -26,6 +89,8 @@
 .form-header
 {
   border-bottom: none;
+  margin-bottom: 0!important;
+  height: 100px;
 }
 
 .column *
@@ -33,6 +98,23 @@
   margin-bottom: 20px;
 }
 
+
+.form-links {
+  width: 75%;
+}
+.form-links a {
+  width: 225px;
+  display:inline-block;
+  color: #015536;
+  border: none;
+  background: none;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  margin-top: 0px;
+  text-decoration: underline;
+
+}
 /* Only applies if the device's screen width is less than 600px. */
 @media only screen and (max-width: 600px)
 {
