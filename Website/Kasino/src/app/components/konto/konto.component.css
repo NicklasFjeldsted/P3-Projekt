@@ -52,4 +52,16 @@
   height: 100%;
 }
 
+.white
+{
+  color: black;
+  background-color: white;
+}
+
+.orange
+{
+  color: black;
+  background-color: orange;
+}
+
 

@@ -11,11 +11,13 @@ import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  { path: 'login', component: LoginComponent },
+  {path: 'login', component: LoginComponent },
   {path: 'tilmeld', component: TilmeldComponent},
   {path: 'konto', component: KontoComponent, canActivate: [AuthenticationService] },
-  {path: 'blackjack', component: BlackjackComponent}
-
+  {path: 'blackjack', component: BlackjackComponent},
+  {path: 'indbetal', component: IndbetalComponent},
+  {path: 'udbetal', component: UdbetalComponent}
+  
 
 ];
 
