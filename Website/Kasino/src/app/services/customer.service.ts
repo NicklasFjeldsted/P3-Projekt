@@ -20,9 +20,9 @@ export class CustomerService
   }
 
   // Might work
-  public register(data: CustomerRegisterRequest): Observable<CustomerRegisterRequest>
+  public register(data: any): Observable<any>
   {
-    return this.http.post<CustomerRegisterRequest>(environment.apiURL + 'customers/register', data);
+    return this.http.post<any>(environment.apiURL + 'customers/register', data);
   }
 
   // Doesnt work
@@ -45,7 +45,7 @@ export class CustomerService
   public logOut(): void
   {
     this.authenticationService.clearSession();
-    this.router.navigate(['login']);
+    this.router.navigate(['/']);
   }
 }
 

@@ -11,7 +11,7 @@ import { KontoComponent } from './components/konto/konto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UdbetalComponent } from './components/udbetal/udbetal.component';
 import { HomeComponent } from './components/home/home.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthenticationInterceptorInterceptor } from './interceptors/authentication-interceptor.interceptor';
@@ -44,6 +44,7 @@ export function tokenGetter() {
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     FontAwesomeModule,
     HttpClientModule,
     JwtModule.forRoot({

@@ -194,7 +194,9 @@ li {
 	width: 100%;
 	margin-top: 10px;
 }
-.gender-buttons button{
+
+
+.gender-buttons input{
 	width: 159px;
 	height: 50px;
 	border: 1px solid #DCDCDC;
