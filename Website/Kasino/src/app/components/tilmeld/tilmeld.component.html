@@ -3,6 +3,7 @@
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <form data-multi-step class="multi-step-form form-control v-center h-center " action="">
 	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
+	<h3 class="error-title" *ngIf="wrongcred == true">Trin 2 ud af 2</h3>
 	<div class="data-input">
 		<div *ngIf="step == 1" class="card">
 			<h1 class="card-title">Udfyld dine oplysninger nedenfor</h1>

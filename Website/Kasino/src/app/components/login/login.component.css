@@ -3,6 +3,7 @@
 {
   height: 100%;
   width: 100%;
+  background-image: url("../../../assets/media/poker-background.jpg");
 }
 
 /* Defines the behaviour of the Lady Image. */
@@ -11,7 +12,7 @@
   height: 100%;
   position: absolute;
   top: 0;
-  left: -257px;
+  left: -187px;
   display: block;
 }
 

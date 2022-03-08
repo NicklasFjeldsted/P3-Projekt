@@ -108,7 +108,7 @@
           "lib/netstandard2.0/MessagePack.Annotations.dll": {}
         }
       },
-      "MessagePackAnalyzer/2.3.85": {
+      "MessagePackAnalyzer/2.1.152": {
         "type": "package"
       },
       "Microsoft.AspNet.Cors/5.2.7": {
@@ -3546,17 +3546,17 @@
         "messagepack.annotations.nuspec"
       ]
     },
-    "MessagePackAnalyzer/2.3.85": {
-      "sha512": "tsuQeEaAzUgvqCw1lU+LBlWQuHhL70SOAx9tDNfD8Ns5BIZdZyJ/nuLH1g8N3YPXsUtzX+CEbM+JpKvaaLszcw==",
+    "MessagePackAnalyzer/2.1.152": {
+      "sha512": "uJhZlGMkXDaFYsH8V9S6o1EyvsUqB9mpU4DVBXNr0DXZVzZMhuLP1IkLj5xK3EKlaAcvkFkZv3eSvuz360wb3Q==",
       "type": "package",
-      "path": "messagepackanalyzer/2.3.85",
+      "path": "messagepackanalyzer/2.1.152",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE",
         "analyzers/dotnet/MessagePackAnalyzer.dll",
-        "messagepackanalyzer.2.3.85.nupkg.sha512",
+        "messagepackanalyzer.2.1.152.nupkg.sha512",
         "messagepackanalyzer.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -10477,7 +10477,6 @@
       "AutoMapper >= 11.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 11.0.0",
       "BCrypt.Net-Next >= 4.0.2",
-      "MessagePackAnalyzer >= 2.3.85",
       "Microsoft.AspNet.WebApi.Cors >= 5.2.7",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 6.0.2",
       "Microsoft.AspNetCore.Mvc.NewtonsoftJson >= 6.0.2",
@@ -10552,10 +10551,6 @@
           "BCrypt.Net-Next": {
             "target": "Package",
             "version": "[4.0.2, )"
-          },
-          "MessagePackAnalyzer": {
-            "target": "Package",
-            "version": "[2.3.85, )"
           },
           "Microsoft.AspNet.WebApi.Cors": {
             "target": "Package",
