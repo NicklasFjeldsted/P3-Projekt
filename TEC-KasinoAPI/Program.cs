@@ -114,16 +114,16 @@ app.UseSwaggerUI();
 
 
 // Enable HTTPS redirection for the web application.
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
 
-// Enable CORS and something about allowing things again.
-app.UseCors(x => x
-	.SetIsOriginAllowed(origin => true)
-	.AllowAnyMethod()
+// Enable CORS and create a new policy for a specific domain.
+app.UseCors(builder =>
+{
+	builder.SetIsOriginAllowed(option => true)
+	.AllowCredentials()
 	.AllowAnyHeader()
-	.AllowCredentials())
-	.UseWebSockets();
-
+	.AllowAnyMethod();
+});
 
 // Eneables the use of static files for the current directory path.
 app.UseStaticFiles();
@@ -136,6 +136,8 @@ app.UseAuthentication();
 
 // Enables API authortization capabilities.
 app.UseAuthorization();
+
+app.UseWebSockets();
 
 // Set up the endpoints for the API using the controllers.
 app.UseEndpoints(x => {

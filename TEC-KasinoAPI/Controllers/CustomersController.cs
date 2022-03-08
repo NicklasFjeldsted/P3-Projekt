@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using TEC_KasinoAPI.Services;
 using TEC_KasinoAPI.Models;
+using System.Diagnostics;
 
 namespace TEC_KasinoAPI.Controllers
 {
@@ -141,7 +142,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPost("revoke-token"), Authorize(Roles = "Admin")]
+        [HttpPost("revoke-token")]
         public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
         {
             // Validate the input.
@@ -153,12 +154,18 @@ namespace TEC_KasinoAPI.Controllers
             // If the model.Token is null get the Token from the Cookies instead
             string token = model.Token ?? Request.Cookies["refreshToken"];
 
+            Debug.WriteLine("Model Token: " + model.Token, "CustomerController");
+            Debug.WriteLine("Cookies Token: " + Request.Cookies["refreshToken"]?.ToString(), "CustomerController");
+
             // Check if the token is null or empty
             if(string.IsNullOrEmpty(token))
             {
                 // Return -> Code 400 and "Token not found."
                 return BadRequest(new { message = "Token not found." });
             }
+
+            // Revoke the token.
+            _userService.RevokeToken(token, IPAddress());
 
             // Return -> Code 200 and "Token revoked."
             return Ok(new { message = "Token revoked." });
@@ -226,6 +233,7 @@ namespace TEC_KasinoAPI.Controllers
             CookieOptions options = new CookieOptions
             {
                 HttpOnly = true,
+                SameSite = SameSiteMode.Strict,
                 Expires = DateTimeOffset.UtcNow.AddDays(7)
             };
 
