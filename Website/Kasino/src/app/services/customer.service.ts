@@ -38,14 +38,13 @@ export class CustomerService
   }
 
   public isLoggedIn(): boolean
-  { 
+  {
     return this.authenticationService.isLoggedIn();
   }
 
   public logOut(): void
   {
-    this.authenticationService.clearSession();
-    this.router.navigate(['/']);
+    this.authenticationService.logOut();
   }
 }
 

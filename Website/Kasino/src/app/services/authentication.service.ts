@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from "moment";
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { CanActivate, Router } from '@angular/router';
 import { AuthenticationResponse } from '../interfaces/AuthenticationResponse';
 import { environment } from 'src/environments/environment';
+
 const TOKEN_KEY = 'auth-token';
 const TOKEN_EXP = 'auth-token-exp';
 const URL =  environment.apiURL + 'Customers/authenticate';
@@ -13,18 +14,29 @@ const URL =  environment.apiURL + 'Customers/authenticate';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService implements CanActivate {
-
-  constructor(private http: HttpClient, private jwt: JwtHelperService, private router: Router) { }
+export class AuthenticationService implements CanActivate
+{
+  constructor(
+    private http: HttpClient,
+    private jwt: JwtHelperService,
+    private router: Router
+  ) { }
 
   // Authenticates the given credentials.
   public authenticate(email: string, password: string): void
   {
     // Returns the JWT access token.
-    const responseObservable: Observable<AuthenticationResponse> = this.http.post<AuthenticationResponse>(URL, { email, password });
+    const responseObservable: Observable<AuthenticationResponse> = this.http.post<AuthenticationResponse>(URL, { email, password }, { withCredentials: true });
 
     // Call the setSession function and pass in the JWT token from the response.
-    responseObservable.subscribe(authenticationResponse => this.setSession(authenticationResponse.jwtToken));
+    responseObservable.subscribe(authenticationResponse =>
+    {
+      this.setSession(authenticationResponse.jwtToken);
+      if (this.isLoggedIn())
+      {
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   // Sets a token to session storage and sets the expiration date of the token.
@@ -61,9 +73,18 @@ export class AuthenticationService implements CanActivate {
   }
 
   // Remove the access token.
-  public clearSession(): void
+  private clearSession(): void
   {
     sessionStorage.clear();
+  }
+
+  public logOut(): void
+  {
+    this.http.post<any>(environment.apiURL + 'customers/revoke-token', { Token: null }, { withCredentials: true }).subscribe(e =>
+    {
+      this.router.navigate(['/']);
+      this.clearSession();
+    });
   }
 
   // Get the access token.
