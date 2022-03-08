@@ -38,4 +38,18 @@
   margin-top: 20px;
 }
 
+.btn
+{
+  margin: 0;
+  width: 300px;
+  margin-top: 20px;
+}
+
+.top
+{
+  margin-top: 10px;
+  width: 100px;
+  height: 100%;
+}
+
 

@@ -1,4 +1,3 @@
-<!-- Linksne virker ikke -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body style="background-image: url('../../../assets/media/casino.jpg');">
   <form id="login" method="get" class="form-control v-center h-center">
@@ -15,13 +14,13 @@
         </div>
 
         <div class="column">
-          <button type="submit" name="logUd" id="logUd" class="form-submit bg-green"><a href= "Web.html">Log ud</a></button>
+          <a (click)="this.customerService.logOut()"><button class="btn top">Logout</button></a>
         </div>
       </div>
 
       <div class="form-row flow-down">
         <label for="balance">Balance</label>
-        <input type="text" name="balance" id="balance" class="form-input " placeholder="0" readonly/>
+        <input type="text" name="balance" id="balance" class="form-input" readonly/>
       </div>
 
       <div class="row">
@@ -32,22 +31,22 @@
 
       <div class="form-row flow-down">
         <label for="fuldeNavn">Navn</label>
-        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" placeholder="Dit fulde navn"/>
+        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" readonly/>
       </div>
 
 
       <div class="form-row flow-down">
         <label for="tlf">Telefonnummer</label>
-        <input type="text" name="tlf" id="tlf" class="form-input" placeholder="12-34-56-67"/>
+        <input type="text" name="tlf" id="tlf" class="form-input" readonly/>
       </div>
 
       <div class="form-row flow-down">
         <label for="adresse">Adresse</label>
-        <input type="text" name="adresse" id="adresse" class="form-input" placeholder="Din adresse"/>
+        <input type="text" name="adresse" id="adresse" class="form-input" readonly/>
       </div>
 
       <div class="form-row flow-down">
-        <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-green"><a href= "">Log ud</a></button>
+        <a (click)="this.customerService.logOut()"><button class="btn">Logout</button></a>
       </div>
       <div class="form-row flow-down">
         <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
