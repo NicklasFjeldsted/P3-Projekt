@@ -63,6 +63,9 @@
 	background-color: white;
 	padding: .5rem;
 	margin:auto;
+	display: flex;
+	flex-direction: column;
+	row-gap: .5em;
 }
 
 .card-title 
@@ -86,10 +89,8 @@
 {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: .5rem;
-	gap: .25em;
 	width: 100%;
-	margin-bottom: 0.75rem !important;
+	flex: 20%;
 }
 
 .form-group:last-child
@@ -212,18 +213,17 @@ li
 {
 	display: flex;
 	flex-direction: row;
+	gap: .5em;
 }
 
 .location #Address 
 {
 	width: 75%;
-	float:left;
 }
 
 .location #ZipCode 
 {
-	width: 20%;
-	float:right;
+	width: 25%;
 }
 
 .form-group .gender 
@@ -237,7 +237,7 @@ li
 	width: 100%;
 	height: 70px;
 	display: flex;
-	gap: 2.5%;
+	gap: .5em;
 }
 
 .gender-buttons input
@@ -247,7 +247,6 @@ li
 	border: 1px solid #DCDCDC;
 	background-color: white;
 	border-radius: 2.5px;
-	margin-bottom: 10px;
 }
 .gender-input-container > input:focus, i:focus {
 	border: 1px solid #7dc198!important;
@@ -262,6 +261,7 @@ li
 	height: 20px;
 	margin-right: 10px;
 }
+
 .rights input[type="checkbox"]:disabled {
 	outline: 1px solid black;
 	box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
@@ -314,11 +314,6 @@ li
 .gender-input-container > input {
 	padding-bottom: 20px;
 }
-
-/* .gender-input-container input
-{
-	margin: 0px 2px!important;
-} */
 
 .gender-input-container > i {
 	opacity: 20%;

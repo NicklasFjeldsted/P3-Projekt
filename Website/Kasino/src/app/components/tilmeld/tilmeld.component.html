@@ -77,12 +77,21 @@
 				</div>
 
 			</div>
-			<div class="form-group location card-2">
-				<input type="Address" name="Address" id="Address" placeholder="Adresse" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f['address'].errors}">
-				<div *ngIf="submitted && f['address'].errors" class="invalid-feedback"></div>
-				<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr" formControlName="zipCodeID" minlength="4" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">
-				<div *ngIf="submitted && f['zipCodeID'].errors" class="invalid-feedback"></div>
+
+			<div class="form-group card-2">
+				<div class="form-group location card-2">
+					<input type="Address" name="Address" id="Address" placeholder="Adresse" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f['address'].errors}">
+					<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr" formControlName="zipCodeID" minlength="4" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">
+				</div>
+
+				<div *ngIf="submitted && f['address'].errors || submitted && f['zipCodeID'].errors" class="invalid-feedback">
+
+					<span>Indtast din adresse og postnummer</span>
+
+				</div>
+
 			</div>
+
 			<div class="form-group gender card-2">
 				<div class="gender-buttons">
 					<div class="gender-input-container">
