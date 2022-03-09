@@ -104,6 +104,7 @@ builder.Services.AddAuthentication(x =>
 // they share a lifetime together for the full duration of a request. (I think)
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
+builder.Services.AddScoped<IDataService, DataService>();
 
 // Build the web application
 WebApplication app = builder.Build();

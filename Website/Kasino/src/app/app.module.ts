@@ -23,6 +23,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { RouterModule } from '@angular/router';
 import { appInitializer } from './helpers/app.initializer';
+import { DataService } from './services/data.service';
 
 
 @NgModule({
@@ -48,7 +49,7 @@ import { appInitializer } from './helpers/app.initializer';
     HttpClientModule
   ],
   providers: [
-    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService] },
+    { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService, DataService] },
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

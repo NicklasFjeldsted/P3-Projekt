@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { CustomerRegisterRequest } from 'src/app/interfaces/CustomerRegisterRequest';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Country } from 'src/app/interfaces/country';
+import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-tilmeld',
@@ -52,7 +54,6 @@ export class TilmeldComponent implements OnInit {
       zipCodeID: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       acceptTerms: [false, Validators.requiredTrue]
     });
-    console.log(this.nextSubmit);
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -61,11 +62,31 @@ export class TilmeldComponent implements OnInit {
 
   goNext(): void {
     this.nextSubmit = true;
-
+    var countryValue = this.form.get('countryID')?.value;
+    if(this.convertCountry(countryValue) == -1)
+    {
+      return;
+    }
     if(this.f['email'].invalid || this.f['password'].invalid || this.f['countryID'].invalid || this.f['phoneNumber'].invalid)
       return;
     else {
+      this.form.patchValue({countryID: this.convertCountry(countryValue)});
       this.step += 1;
+    }
+  }
+
+  convertCountry(countryName: string): number {
+
+    const countries: Country[] = JSON.parse(localStorage.getItem("countries")!);
+    const country: Country | undefined = countries.find(country => country.countryName == countryName);
+    if(country === undefined)
+    {
+      console.error("Country not found!");
+      return -1;
+    }
+    else
+    {
+      return country.countryID;
     }
   }
 
