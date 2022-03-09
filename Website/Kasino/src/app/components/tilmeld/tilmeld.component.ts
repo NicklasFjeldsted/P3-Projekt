@@ -27,7 +27,7 @@ export class TilmeldComponent implements OnInit {
     acceptTerms: new FormControl(false),
   });
 
-  step: any = 1; // Current step on form
+  step: any = 2; // Current step on form
   nextSubmit: boolean = false; // checks if client has pressed next on form
   acceptRights: boolean = false; // checks if client has accepted their rights
   submitted: boolean = false; // checks if client has submitted form
@@ -38,10 +38,10 @@ export class TilmeldComponent implements OnInit {
   // Gives form properties validators
   ngOnInit(): void {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+      email: ['nicklasfjeldstedosbeck@gmail.com', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       password: ['', Validators.required, Validators.minLength(8)],
-      countryID: ['', Validators.required],
-      phoneNumber: ['', Validators.required, Validators.minLength(8), Validators.maxLength(8)],
+      countryID: ['Denmark', Validators.required],
+      phoneNumber: ['', Validators.required, Validators.minLength(8), Validators.maxLength(9)],
       cprNumber: ['', Validators.required, Validators.minLength(10), Validators.maxLength(10)],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
@@ -59,7 +59,7 @@ export class TilmeldComponent implements OnInit {
   goNext(): void {
     this.nextSubmit = true;
 
-    if(this.f['email'].invalid)
+    if(this.f['email'].invalid || this.f['password'].invalid || this.f['countryID'].invalid || this.f['phoneNumber'].invalid)
       return;
     else {
       this.step += 1;
@@ -67,6 +67,12 @@ export class TilmeldComponent implements OnInit {
   }
 
   signUp(): void {
+
+    this.submitted = true;
+
+    if(this.f['cprNumber'].invalid || this.f['firstName'].invalid || this.f['lastName'].invalid || this.f['address'].invalid || this.f['zipCodeID'].invalid || this.f['acceptTerms'].invalid)
+      return;
+
     this.custom = Object.assign(this.form.value);
     this.customerService.register(this.custom).subscribe({
       next: () => {
