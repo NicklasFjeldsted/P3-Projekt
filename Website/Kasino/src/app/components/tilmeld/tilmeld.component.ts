@@ -17,12 +17,12 @@ export class TilmeldComponent implements OnInit {
     email: new FormControl(''),
     password: new FormControl(''),
     countryID: new FormControl(''),
-    phoneNumber: new FormControl(''),
-    cprNumber: new FormControl(''),
+    phoneNumber: new FormControl(),
+    cprNumber: new FormControl(),
     firstName: new FormControl(''),
     lastName: new FormControl(''),
     address: new FormControl(''),
-    zipCodeID: new FormControl(''),
+    zipCodeID: new FormControl(),
     genderID: new FormControl(),
     acceptTerms: new FormControl(false),
   });
@@ -32,6 +32,7 @@ export class TilmeldComponent implements OnInit {
   acceptRights: boolean = false; // checks if client has accepted their rights
   submitted: boolean = false; // checks if client has submitted form
   custom: CustomerRegisterRequest; // customer request model
+  validGender: boolean;
 
   constructor(private customerService: CustomerService, private router: Router, private formBuilder: FormBuilder) { }
 
@@ -39,14 +40,15 @@ export class TilmeldComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: ['nicklasfjeldstedosbeck@gmail.com', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
-      password: ['', Validators.required, Validators.minLength(8)],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       countryID: ['Denmark', Validators.required],
-      phoneNumber: ['', Validators.required, Validators.minLength(8), Validators.maxLength(9)],
-      cprNumber: ['', Validators.required, Validators.minLength(10), Validators.maxLength(10)],
+      phoneNumber: [null, [Validators.required, Validators.minLength(8), Validators.maxLength(9)]],
+      cprNumber: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       address: ['', Validators.required],
-      zipCodeID: ['', Validators.required, Validators.minLength(4), Validators.maxLength(4)],
+      genderID: [],
+      zipCodeID: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(4)]],
       acceptTerms: [false, Validators.requiredTrue]
     });
     console.log(this.nextSubmit);
@@ -70,6 +72,8 @@ export class TilmeldComponent implements OnInit {
 
     this.submitted = true;
 
+    this.checkGender() ? this.validGender = false : this.validGender = true;
+
     if(this.f['cprNumber'].invalid || this.f['firstName'].invalid || this.f['lastName'].invalid || this.f['address'].invalid || this.f['zipCodeID'].invalid || this.f['acceptTerms'].invalid)
       return;
 
@@ -85,6 +89,10 @@ export class TilmeldComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  checkGender(): number | undefined {
+    return this.form.get('genderID')?.value;
   }
 
   setGender(genderid: Number): void {

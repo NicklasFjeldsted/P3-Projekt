@@ -94,14 +94,17 @@
 
 			<div class="form-group gender card-2">
 				<div class="gender-buttons">
-					<div class="gender-input-container">
-						<i class="fa fa-mars"></i>
-						<input type="button" id="mand" (click)="setGender(1)" value="Mand">
+					<div class="gender-input-container" style="outline: none;">
+						<i class="fa fa-mars" [class.active-i]="this.form.get('genderID')?.value === 1"></i>
+						<input type="button" id="mand" (click)="setGender(1)" value="Mand" [class.active]="this.form.get('genderID')?.value === 1">
 					</div>
 					<span class="gender-input-container">
-						<i class="fa fa-venus"></i>
-						<input type="button" id="kvinde" (click)="setGender(2)" value="Kvinde">
+						<i class="fa fa-venus" [class.active-i]="this.form.get('genderID')?.value === 2"></i>
+						<input type="button" id="kvinde" (click)="setGender(2)" value="Kvinde" [class.active]="this.form.get('genderID')?.value === 2">
 					</span>
+				</div>
+				<div *ngIf="this.form.get('genderID')?.value === null && submitted" class="invalid-feedback">
+					<span>Vælg køn</span>
 				</div>
 			</div>
 			<div class="form-group rights buttons">
@@ -109,7 +112,7 @@
 				<div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
 					<div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
 				</div>
-				<button type="submit" style="margin-top:10px" [disabled]="" (click)="signUp()">Opret Konto</button>
+				<button type="submit" style="margin-top:10px" (click)="signUp()">Opret Konto</button>
 			</div>
 		</div>
 	</div>
