@@ -12,18 +12,18 @@
 				<input type="email" name="email" id="email" placeholder="E-mail" formControlName="email" [ngClass]="{ 'is-invalid': nextSubmit && f['email'].errors}">
 
 				<div *ngIf="nextSubmit && f['email'].errors" class="invalid-feedback">
-					<div *ngIf="f['email'].errors['required']">* Email is required</div>
-					<div *ngIf="f['email'].errors['pattern']">* Email is invalid</div>
+					<div *ngIf="f['email'].errors['required']">Indtast en e-mail</div>
+					<div *ngIf="f['email'].errors['pattern']">Indtast en korrekt e-mail</div>
 				</div>
 
 			</div>
 			<div class="form-group card-1">
 				<i class="fa fa-lock fa-2x"></i>
-				<input type="password" name="password" id="password" placeholder="Adgangskode" formControlName="password" [ngClass]="{ 'is-invalid': nextSubmit && f['password'].errors}">
+				<input type="password" name="password" id="password" placeholder="Adgangskode" formControlName="password" minlength="8" [ngClass]="{ 'is-invalid': nextSubmit && f['password'].errors}">
 
 				<div *ngIf="nextSubmit && f['password'].errors" class="invalid-feedback">
-					<div *ngIf="f['password'].errors['required']">* Password is required</div>
-					<div *ngIf="f['password'].errors['minlength']">* Password must be at least 8 characters</div>
+					<div *ngIf="f['password'].errors['required']">Indtast en adgangskode</div>
+					<div *ngIf="f['password'].errors['minlength']">Adgangskode skal mindst have 8 tegn</div>
 				</div>
 
 			</div>
@@ -31,16 +31,16 @@
 				<i class="fa fa-flag fa-2x"></i>
 				<input type="country" name="country" id="country" placeholder="Land" formControlName="countryID" [ngClass]="{ 'is-invalid': nextSubmit && f['countryID'].errors}">
 				<div *ngIf="nextSubmit && f['countryID'].errors" class="invalid-feedback">
-					<div *ngIf="f['countryID'].errors['required']">* Country is required</div>
+					<div *ngIf="f['countryID'].errors['required']">Indtast dit land</div>
 				</div>
 			</div>
 			<div class="form-group card-1">
 				<i class="fa fa-regular fa-phone fa-2x"></i>
-				<input type="PhoneNumber" name="PhoneNumber" id="PhoneNumber" placeholder="Mobilnummer" formControlName="phoneNumber" [ngClass]="{ 'is-invalid': nextSubmit && f['phoneNumber'].errors}">
+				<input type="PhoneNumber" name="PhoneNumber" id="PhoneNumber" placeholder="Mobilnummer" formControlName="phoneNumber" minlength="8"  maxlength="8" [ngClass]="{ 'is-invalid': nextSubmit && f['phoneNumber'].errors}">
 
 				<div *ngIf="nextSubmit && f['phoneNumber'].errors" class="invalid-feedback">
-					<div *ngIf="f['phoneNumber'].errors['required']">* Phone number is required</div>
-					<div *ngIf="f['phoneNumber'].errors['minlength']">* Phone number must be at least 8 characters</div>
+					<div *ngIf="f['phoneNumber'].errors['required']">Indtast dit telefonnummer</div>
+					<div *ngIf="f['phoneNumber'].errors['minlength']">Skal mindst have 8 tegn</div>
 				</div>
 
 			</div>
@@ -53,27 +53,66 @@
 		</div>
 		<div class="card" *ngIf="step == 2">
 			<div class="form-group card-2">
-				<input type="CprNumber" name="CprNumber" id="CprNumber" placeholder="Indtast venligst dit CPR nummer"  formControlName="cprNumber">
+				<input type="CprNumber" name="CprNumber" id="CprNumber" placeholder="Indtast venligst dit CPR nummer"  formControlName="cprNumber" [ngClass]="{ 'is-invalid': submitted && f['cprNumber'].errors}" >
+
+				<div *ngIf="submitted && f['cprNumber'].errors" class="invalid-feedback">
+					<div *ngIf="f['cprNumber'].errors['required']">Indtast dit CPR nummer</div>
+					<div *ngIf="f['cprNumber'].errors['minlength']">CPR nummer skal have 10 tegn</div>
+				</div>
+
 			</div>
 			<div class="form-group card-2">
-				<input type="FirstName" name="FirstName" id="FirstName" placeholder="Fornavn" formControlName="firstName">
+				<input type="FirstName" name="FirstName" id="FirstName" placeholder="Fornavn" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors}">
+
+				<div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+					<div *ngIf="f['firstName'].errors['required']">Indtast dit fornavn</div>
+				</div>
+
 			</div>
 			<div class="form-group card-2">
-				<input type="LastName" name="LastName" id="LastName" placeholder="Efternavn" formControlName="lastName">
+				<input type="LastName" name="LastName" id="LastName" placeholder="Efternavn" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors}" >
+
+				<div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+					<div *ngIf="f['lastName'].errors['required']">Indtast dit efternavn</div>
+				</div>
+
 			</div>
-			<div class="form-group location card-2">
-				<input type="Address" name="Address" id="Address" placeholder="Adresse" formControlName="address">
-				<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr" formControlName="zipCodeID">
+
+			<div class="form-group card-2">
+				<div class="form-group location card-2">
+					<input type="Address" name="Address" id="Address" placeholder="Adresse" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f['address'].errors}">
+					<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr" formControlName="zipCodeID" minlength="4" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">
+				</div>
+
+				<div *ngIf="submitted && f['address'].errors || submitted && f['zipCodeID'].errors" class="invalid-feedback">
+
+					<span>Indtast din adresse og postnummer</span>
+
+				</div>
+
 			</div>
+
 			<div class="form-group gender card-2">
 				<div class="gender-buttons">
-					<input type="button" id="mand" style="margin-right: 5px;" (click)="setGender(1)" value="Mand">
-					<input type="button" id="mand" style="margin-left: 5px;" (click)="setGender(2)" value="Kvinde">
+					<div class="gender-input-container" style="outline: none;">
+						<i class="fa fa-mars" [class.active-i]="this.form.get('genderID')?.value === 1"></i>
+						<input type="button" id="mand" (click)="setGender(1)" value="Mand" [class.active]="this.form.get('genderID')?.value === 1">
+					</div>
+					<span class="gender-input-container">
+						<i class="fa fa-venus" [class.active-i]="this.form.get('genderID')?.value === 2"></i>
+						<input type="button" id="kvinde" (click)="setGender(2)" value="Kvinde" [class.active]="this.form.get('genderID')?.value === 2">
+					</span>
+				</div>
+				<div *ngIf="this.form.get('genderID')?.value === null && submitted" class="invalid-feedback">
+					<span>Vælg køn</span>
 				</div>
 			</div>
 			<div class="form-group rights buttons">
-				<label for="check" style="margin-top:10px"><input type="checkbox" name="check" [checked]="acceptRights" (change)="acceptRights = !acceptRights">Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label>
-				<button type="submit" style="margin-top:10px" [disabled]="!this.form.valid || !acceptRights">Opret Konto</button>
+				<label for="check" style="margin-top:10px"><input type="checkbox" name="check" formControlName="acceptTerms" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label>
+				<div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
+					<div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
+				</div>
+				<button type="submit" style="margin-top:10px" (click)="signUp()">Opret Konto</button>
 			</div>
 		</div>
 	</div>
@@ -89,7 +128,7 @@
 			<ul style="list-style-position: outside; margin-left: 50px; vertical-align: middle;">
 				<br>
 				<li>100% oveni din første indbetaling, op til 1.000 kr.</li>
-				<li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig</li>
+				<li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig. Går op til 500 kr.</li>
 			</ul>
 			<br>
 			<h4>Regler og betingelser</h4>

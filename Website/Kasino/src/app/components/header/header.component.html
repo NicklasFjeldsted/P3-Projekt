@@ -1,7 +1,7 @@
 <!-- Top row on the page. -->
 <div class="row header">
 
-  <!-- Left empty column for correct positioning of other columns. -->
+  <!-- Left column containing a dropdown menu. -->
   <div class="column left">
     <div class="dropdown">
       <i class="fa-solid fa-bars"></i>
@@ -16,7 +16,6 @@
   <!-- Center column storing the title of the website. -->
   <div class="column">
     <a routerLink=""><img src="../../../assets/media/tec-logo.png" width="135px" alt=""></a>
-
   </div>
 
   <!-- Right column storing our navbar. -->
@@ -26,6 +25,7 @@
       <a routerLink="tilmeld"><button class="btn tilmeld">Tilmeld</button></a>
       <a routerLink="login"><button class="btn">Login</button></a>
     </nav>
+
     <nav *ngIf="this.authenticationService.isLoggedIn">
       <a (click)="this.authenticationService.logout()"><button class="btn">Logout</button></a>
     </nav>

@@ -3,6 +3,7 @@ import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
+import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,11 @@ export class CustomerService
   public getAll(): Observable<User[]>
   {
     return this.http.get<User[]>(`${environment.apiURL}/Customers`);
+  }
+
+  public register(body: CustomerRegisterRequest): Observable<any>
+  {
+    return this.http.post<any>(`${environment.apiURL}/Customers/register`, body, { withCredentials: true });
   }
 }
 

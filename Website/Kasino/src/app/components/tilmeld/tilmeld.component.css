@@ -5,12 +5,12 @@
 	background-image: url("../../../assets/media/casino.jpg");
 }
 
-* 
+*
 {
 	font-family: Montserrat,sans-serif;
 }
 
-.main-container 
+.main-container
 {
 	width: 40%;
 	max-width: 40;
@@ -21,7 +21,7 @@
 	padding: 80px;
 }
 
-.form-control 
+.form-control
 {
 	border-radius: 7px;
 	background-color: #fff;
@@ -29,21 +29,21 @@
 	max-width: 40%;
 }
 
-.picture 
+.picture
 {
 	float:right;
 	width: 45%;
 	padding: 10px;
 }
 
-.info 
+.info
 {
 	width: calc(100% - 16px);
 	padding: .5rem;
 	margin:auto;
 }
 
-#image 
+#image
 {
 	margin-top: 10px;
 	width: 100%;
@@ -51,21 +51,37 @@
 }
 
 /* Input */
-.data-input 
+.data-input
 {
 	float:left;
 	width: 45%;
 	padding: 10px;
 }
 
-.card 
+.card
 {
 	background-color: white;
 	padding: .5rem;
 	margin:auto;
+	display: flex;
+	flex-direction: column;
+	row-gap: .5em;
 }
 
-.card-title 
+.active
+{
+	border: 1px solid #7dc198!important;
+	color: #249752!important;
+	background-color: #ebf6ef!important;
+	outline: none!important;
+}
+.active-i
+{
+	color: #249752!important;
+	background-color: #ebf6ef!important;
+}
+
+.card-title
 {
 	font-size: 1.5rem;
   	font-weight: 100;
@@ -82,14 +98,12 @@
 	margin: 0;
 }
 
-.form-group 
+.form-group
 {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: .5rem;
-	gap: .25em;
 	width: 100%;
-	margin-bottom: 0.75rem !important;
+	flex: 20%;
 }
 
 .form-group:last-child
@@ -97,16 +111,16 @@
 	margin: 0;
 }
 
-.form-group > label 
+.form-group > label
 {
 	font-weight: bold;
 	font-size: .8em;
 	color: #333;
 }
 
-.form-group > i 
+.form-group > i
 {
-	color: #DCDCDC;
+	color: #e0e0e0;
 	background: transparent;
 	position: absolute;
   	width: 60px;
@@ -122,21 +136,22 @@
 	padding: 1pc 1pc 1pc 60px;
 }
 
-.card-2 > input 
+.card-2 > input
 {
 	height: 56px;
 	padding: 0px 15px;
 }
 
-.form-group > input 
+.form-group > input
 {
-	font-size: 1rem;
+	font-size: 0.875rem;
 	border: 1px solid #e3e3e3;
   	border-radius: 3px;
 	line-height: normal;
+	outline: none;
 }
 
-.buttons > button 
+.buttons > button
 {
 	width: 100%;
 	font-size: .875rem;
@@ -151,7 +166,7 @@
   	cursor: pointer
 }
 
-.step-title 
+.step-title
 {
 	color: white;
   	line-height: 1;
@@ -167,7 +182,7 @@
 	border-bottom: 1px solid #015536;
 }
 
-.picture-title 
+.picture-title
 {
   	font-size: 1.2rem;
   	margin-bottom: 0;
@@ -180,12 +195,12 @@
   	margin-inline-end: 0px;
 }
 
-.multi-step-form 
+.multi-step-form
 {
 	overflow:hidden;
 }
 
-p 
+p
 {
 	font-size: .8125rem;
   	font-weight: 300;
@@ -197,7 +212,7 @@ p
  	 margin-inline-end: 0px;
 }
 
-li 
+li
 {
  	font-size: .8125rem;
  	font-weight: 300;
@@ -207,62 +222,69 @@ li
  	margin-left: -30px;
 }
 
-.location 
+.location
 {
 	display: flex;
 	flex-direction: row;
+	gap: .5em;
 }
 
-.location #Address 
+.location #Address
 {
 	width: 75%;
-	float:left;
 }
 
-.location #ZipCode 
+.gender-input-container > input:focus {
+	outline:none;
+	border: 1px solid #808080;
+}
+
+.location #ZipCode
 {
-	width: 20%;
-	float:right;
+	width: 25%;
 }
 
-.form-group .gender 
+.form-group .gender
 {
 	display: flex;
 	flex-direction: row;
 }
 
-.gender-buttons 
+.gender-buttons
 {
 	width: 100%;
+	height: 70px;
+	display: flex;
+	gap: .5em;
 }
 
 .gender-buttons input
 {
-	width: 159px;
-	height: 50px;
+	width: 100%;
+	height: 100%;
 	border: 1px solid #DCDCDC;
 	background-color: white;
 	border-radius: 2.5px;
-	margin-bottom: 10px;
 }
 
-.rights input 
+.rights input
 {
 	vertical-align:middle;
 	width: 20px;
 	height: 20px;
 	margin-right: 10px;
 }
+
 .rights input[type="checkbox"]:disabled {
-	outline: 1px solid black;
+	outline: none;
 	box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
-#mand:focus, #dame:focus 
+.gender-input-container:focus-within
 {
-	border: 1px solid lightgreen;
+	color: #249752!important;
 }
 
-.billed 
+.billed
 {
 	width: 50%;
 	height: 100px;
@@ -273,6 +295,7 @@ li
 .invalid-feedback {
 	color:red;
 	font-size: 0.6rem;
+	text-align: left;
 
 }
 
@@ -284,3 +307,30 @@ li
 	text-decoration: underline;
 
   }
+
+.is-invalid {
+	background-color: #ffeeeb;
+	border: 1px solid #f00!important;
+	color:#FF0000;
+}
+
+.form-group > input:focus {
+	border: 1px solid #808080;
+}
+
+.gender-input-container
+{
+	position: relative;
+	flex: 1;
+}
+
+.gender-input-container > input {
+	padding-bottom: 20px;
+}
+
+.gender-input-container > i {
+	opacity: 20%;
+	position: absolute;
+	top: 55%;
+	left: 46%;
+}
