@@ -28,7 +28,7 @@ export class BlackjackComponent implements OnInit {
   }
 
   JoinRoom(user: User): void {
-    this.author = user.firstName;
+    this.author = user.firstName!;
     this.signalrService.hubConnection.invoke("JoinRoom", JSON.stringify(user)).catch(error => console.log(error));
   }
 

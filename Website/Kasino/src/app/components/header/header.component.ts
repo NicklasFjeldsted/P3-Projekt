@@ -11,5 +11,10 @@ export class HeaderComponent implements OnInit
 
   constructor(public authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void
+  {
+
+  }
+
+
 }

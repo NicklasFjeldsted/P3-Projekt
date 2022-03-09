@@ -20,7 +20,7 @@ namespace TEC_KasinoAPI.Services
     public interface ICustomerService
     {
         AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
-        AuthenticateResponse RefreshToken(string token, string ipAddress);
+        RefreshTokenResponse RefreshToken(string token, string ipAddress);
         bool RevokeToken(string token, string ipAddress);
         IEnumerable<Customer> GetAll();
         Customer GetById(int id);
@@ -170,7 +170,7 @@ namespace TEC_KasinoAPI.Services
             _context.SaveChanges();
 
             // Return the the updated customer object with a new JWT Token and Refresh Token.
-            return new AuthenticateResponse(jwtToken, refreshToken.Token);
+            return new AuthenticateResponse(customer.CustomerID, customer.Email, customer.FirstName, customer.LastName, jwtToken, refreshToken.Token);
         }
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace TEC_KasinoAPI.Services
         /// <param name="token"></param>
         /// <param name="ipAddress"></param>
         /// <returns><see cref="AuthenticateResponse"/>: returns the newly updated customer object, with the new access token and refresh token.</returns>
-        public AuthenticateResponse RefreshToken(string token, string ipAddress)
+        public RefreshTokenResponse RefreshToken(string token, string ipAddress)
         {
             // Find the customer that has the token parameter.
             Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
@@ -214,7 +214,7 @@ namespace TEC_KasinoAPI.Services
             string jwtToken = GenerateJWTToken(customer);
 
             // Return the the updated customer object with a new JWT Token and Refresh Token.
-            return new AuthenticateResponse(jwtToken, newRefreshToken.Token);
+            return new RefreshTokenResponse(jwtToken, newRefreshToken.Token);
         }
 
         /// <summary>

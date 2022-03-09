@@ -5,8 +5,10 @@
   <div class="column left">
     <div class="dropdown">
       <i class="fa-solid fa-bars"></i>
-      <div class="dropdown-content">
-        <a routerLink="konto">Konto</a>
+      <div class="dropdown-content navigation">
+        <a routerLink="konto" class="row">
+          <span>Konto</span>
+        </a>
       </div>
     </div>
   </div>
@@ -20,11 +22,11 @@
   <!-- Right column storing our navbar. -->
   <div class="column right">
 
-    <nav *ngIf="this.authenticationService.userValue">
+    <nav *ngIf="!this.authenticationService.isLoggedIn">
       <a routerLink="tilmeld"><button class="btn tilmeld">Tilmeld</button></a>
       <a routerLink="login"><button class="btn">Login</button></a>
     </nav>
-    <nav *ngIf="this.authenticationService.userValue">
+    <nav *ngIf="this.authenticationService.isLoggedIn">
       <a (click)="this.authenticationService.logout()"><button class="btn">Logout</button></a>
     </nav>
 
@@ -39,7 +41,9 @@
   <div class="center-row">
 
     <div class="column">
-      <p class="fa">&#xf0d6;<br><a routerLink="blackjack">Blackjack</a></p>
+      <a routerLink="blackjack">
+        <p class="fa">&#xf0d6;<br><span>Blackjack</span></p>
+      </a>
     </div>
     <div class="column">
       <p class="fa fa-bitcoin"><br>Roulette</p>

@@ -5,14 +5,10 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
 
-const TOKEN_KEY = 'auth-token';
-const TOKEN_EXP = 'auth-token-exp';
-const URL =  environment.apiURL + 'Customers/authenticate';
-
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
-  private userSubject: BehaviorSubject<User>;
+  public userSubject: BehaviorSubject<User>;
   public user: Observable<User>;
 
   constructor(private http: HttpClient, private router: Router)
@@ -26,10 +22,16 @@ export class AuthenticationService
     return this.userSubject.value;
   }
 
-  public login(email: string, password: string): Observable<any>
+  public get isLoggedIn(): boolean
   {
-    return this.http.post<any>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
-      .pipe(map(user => {
+    return this.userSubject.value.jwtToken != null;
+  }
+
+  public login(email: string, password: string): Observable<User>
+  {
+    return this.http.post<User>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
+      .pipe(map(user =>
+      {
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
         return user;

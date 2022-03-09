@@ -121,7 +121,7 @@ namespace TEC_KasinoAPI.Controllers
             string refreshToken = Request.Cookies["refreshToken"];
 
             // Do the actual refreshing getting back the new tokens
-            AuthenticateResponse response = _userService.RefreshToken(refreshToken, IPAddress());
+            RefreshTokenResponse response = _userService.RefreshToken(refreshToken, IPAddress());
 
             // Check if the response is null
             if(response == null)
