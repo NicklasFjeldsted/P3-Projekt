@@ -1,0 +1,1 @@
+sqlcmd -S 10.0.6.2 -i %CD%\Queries\data_snippet.sql -Usa -P1234 -f 65001
