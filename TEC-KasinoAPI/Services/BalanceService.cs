@@ -8,12 +8,12 @@ namespace TEC_KasinoAPI.Services
 {
     public interface IBalanceService
     {
-        void Create(int customerID);
-        void Delete(int customerID);
-        void Update(int customerID, BalanceUpdateRequest model);
-        BalanceResponse AddBalance(BalanceRequest model);
-        BalanceResponse SubtractBalance(BalanceRequest model);
-        AccountBalance GetById(int customerID);
+        Task CreateAsync(int customerID);
+        Task DeleteAsync(int customerID);
+        Task UpdateAsync(int customerID, BalanceUpdateRequest model);
+        Task<BalanceResponse> AddBalanceAsync(BalanceRequest model);
+        Task<BalanceResponse> SubtractBalanceAsync(BalanceRequest model);
+        Task<AccountBalance> GetByIdAsync(int customerID);
     }
 
     public class BalanceService : IBalanceService
@@ -36,7 +36,7 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="customerID"></param>
         /// <exception cref="AppException"></exception>
-        public void Create(int customerID)
+        public async Task CreateAsync(int customerID)
         {
             // Check if there already exists an account balance with the customerID parameter.
             if(_context.AccountBalances.Any(x => x.CustomerID == customerID))
@@ -45,26 +45,26 @@ namespace TEC_KasinoAPI.Services
             }
 
             // Add the new account balance to the database context.
-            _context.AccountBalances.Add(new AccountBalance { CustomerID = customerID });
+            await _context.AccountBalances.AddAsync(new AccountBalance { CustomerID = customerID });
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Delete an account balance with the <paramref name="customerID"/>.
         /// </summary>
         /// <param name="customerID"></param>
-        public void Delete(int customerID)
+        public async Task DeleteAsync(int customerID)
         {
             // Get the account balance with the customerID parameter.
-            AccountBalance accountBalance = GetById(customerID);
+            AccountBalance accountBalance = await GetByIdAsync(customerID);
 
             // Remove that account balance from the database.
-            _context.AccountBalances.Remove(accountBalance);
+            await _context.AccountBalances.RemoveAsync(accountBalance);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -73,13 +73,13 @@ namespace TEC_KasinoAPI.Services
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public void Update(int customerID, BalanceUpdateRequest model)
+        public async Task UpdateAsync(int customerID, BalanceUpdateRequest model)
         {
             // Get the account balance with the customerID parameter.
-            AccountBalance accountBalance = GetById(customerID);
+            AccountBalance accountBalance = await GetByIdAsync(customerID);
 
             // Check if the CustomerID is already in use.
-            if (model.CustomerID != customerID && _context.AccountBalances.Any(x => x.CustomerID == customerID))
+            if (model.CustomerID != customerID && await _context.AccountBalances.AnyAsync(x => x.CustomerID == customerID))
             {
                 // Throw an Application specific exception if the email is taken.
                 throw new AppException("an account balance with the id: " + model.CustomerID + " already exists.");
@@ -100,10 +100,10 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns><see cref="BalanceResponse"/>: returns the CustomerID, DepositLimit, and new Balance of the customer.</returns>
-        public BalanceResponse AddBalance(BalanceRequest model)
+        public async Task<BalanceResponse> AddBalanceAsync(BalanceRequest model)
         {
             // Find the account balance with the model.CustomerID parameter.
-            AccountBalance accountBalance = _context.AccountBalances.SingleOrDefault(x => x.CustomerID == model.CustomerID);
+            AccountBalance accountBalance = await _context.AccountBalances.SingleOrDefaultAsync(x => x.CustomerID == model.CustomerID);
 
             // Returns null if the accountBalance wasnt found I.E. it doesnt exist.
             if (accountBalance == null) return null;
@@ -115,10 +115,10 @@ namespace TEC_KasinoAPI.Services
             string difference = "+" + model.Amount;
 
             // Update the AccountBalance entity with the changes from the accountBalance object.
-            _context.AccountBalances.Update(accountBalance);
+            await _context.AccountBalances.UpdateAsync(accountBalance);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Map the accountBalance object to the BalanceResponse model and return it.
             return _mapper.Map(accountBalance, new BalanceResponse(difference));
@@ -129,10 +129,10 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="model"></param>
         /// <returns><see cref="BalanceResponse"/>: returns the CustomerID, DepositLimit, and new Balance of the customer.</returns>
-        public BalanceResponse SubtractBalance(BalanceRequest model)
+        public async Task<BalanceResponse> SubtractBalanceAsync(BalanceRequest model)
         {
             // Find the account balance with the model.CustomerID parameter.
-            AccountBalance accountBalance = _context.AccountBalances.SingleOrDefault(x => x.CustomerID == model.CustomerID);
+            AccountBalance accountBalance = await _context.AccountBalances.SingleOrDefaultAsync(x => x.CustomerID == model.CustomerID);
 
             // Returns null if the accountBalance wasnt found I.E. it doesnt exist.
             if (accountBalance == null) return null;
@@ -144,10 +144,10 @@ namespace TEC_KasinoAPI.Services
             string difference = "+" + model.Amount;
 
             // Update the AccountBalance entity with the changes from the accountBalance object.
-            _context.AccountBalances.Update(accountBalance);
+            await _context.AccountBalances.UpdateAsync(accountBalance);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Map the accountBalance object to the BalanceResponse model and return it.
             return _mapper.Map(accountBalance, new BalanceResponse(difference));
@@ -159,10 +159,15 @@ namespace TEC_KasinoAPI.Services
         /// <param name="customerID"></param>
         /// <returns><see cref="AccountBalance"/>: returns the account balance associated with the <paramref name="customerID"/>.</returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public AccountBalance GetById(int customerID)
+        public async Task<AccountBalance> GetByIdAsync(int customerID)
         {
-            AccountBalance accountBalance = _context.AccountBalances.Find(customerID);
-            if (accountBalance == null) throw new KeyNotFoundException("Account balance not found.");
+            AccountBalance accountBalance = await _context.AccountBalances.FindAsync(customerID);
+
+            if (accountBalance == null)
+            {
+                throw new KeyNotFoundException("Account balance not found.");
+            }
+
             return accountBalance;
         }
     }

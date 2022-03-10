@@ -19,14 +19,14 @@ namespace TEC_KasinoAPI.Services
     // Define the UserService contract (interface)
     public interface ICustomerService
     {
-        AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
-        RefreshTokenResponse RefreshToken(string token, string ipAddress);
-        bool RevokeToken(string token, string ipAddress);
-        IEnumerable<Customer> GetAll();
-        Customer GetById(int id);
-        void Register(CustomerRegisterRequest model);
-        void Update(int customerID, CustomerUpdateRequest model);
-        void Delete(int customerID);
+        Task<AuthenticateResponse> AuthenticateAsync(AuthenticateRequest model, string ipAddress);
+        Task<RefreshTokenResponse> RefreshTokenAsync(string token, string ipAddress);
+        Task<bool> RevokeTokenAsync(string token, string ipAddress);
+        Task<IEnumerable<Customer>> GetAllAsync();
+        Task<Customer> GetByIdAsync(int id);
+        Task RegisterAsync(CustomerRegisterRequest model);
+        Task UpdateAsync(int customerID, CustomerUpdateRequest model);
+        Task DeleteAsync(int customerID);
     }
 
     public class CustomerService : ICustomerService
@@ -61,10 +61,10 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public void Register([FromBody]CustomerRegisterRequest model)
+        public async Task RegisterAsync([FromBody]CustomerRegisterRequest model)
         {
             // Check if the Email is already in use
-            if (_customers.Any(x => x.Email == model.Email))
+            if (await _customers.AnyAsync(x => x.Email == model.Email))
             {
                 // Throw an Application specific exception if the email is taken
                 throw new AppException("Email '" + model.Email + "' is already taken.");
@@ -80,13 +80,13 @@ namespace TEC_KasinoAPI.Services
             customer.Role = "Customer";
 
             // Add the new customer to the entity
-            _context.Customers.Add(customer);
+            await _context.Customers.AddAsync(customer);
 
             // Save changes to the database
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Create an account balance for the newly registered customer
-            _balanceService.Create(customer.CustomerID);
+            await _balanceService.CreateAsync(customer.CustomerID);
         }
 
         /// <summary>
@@ -95,13 +95,13 @@ namespace TEC_KasinoAPI.Services
         /// <param name="customerid"></param>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public void Update(int customerID, CustomerUpdateRequest model)
+        public async Task UpdateAsync(int customerID, CustomerUpdateRequest model)
         {
             // Find the customer with the customerID paramter
-            Customer customer = GetById(customerID);
+            Customer customer = await GetByIdAsync(customerID);
 
             // Check if the Email is already in use
-            if (model.Email != customer.Email && _customers.Any(x => x.Email == model.Email))
+            if (model.Email != customer.Email && await _customers.AnyAsync(x => x.Email == model.Email))
             {
                 // Throw an Application specific exception if the email is taken
                 throw new AppException("Email '" + model.Email + "' is already taken.");
@@ -119,29 +119,29 @@ namespace TEC_KasinoAPI.Services
             _mapper.Map(model, customer);
 
             // Update the customers entity with the changes
-            _context.Customers.Update(customer);
+            await _context.Customers.UpdateAsync(customer);
 
             // Save the changes to the database
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
         /// Delete a customer from the database
         /// </summary>
         /// <param name="customerID"></param>
-        public void Delete(int customerID)
+        public async Task DeleteAsync(int customerID)
         {
             // Find the customer with the customerID paramter.
-            Customer customer = GetById(customerID);
+            Customer customer = await GetByIdAsync(customerID);
 
             // Delete the account balance associated with the customer.
-            _balanceService.Delete(customerID);
+            await _balanceService.DeleteAsync(customerID);
 
             // Remove the customer object from the customer entity.
-            _context.Customers.Remove(customer);
+            await _context.Customers.RemoveAsync(customer);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -150,10 +150,10 @@ namespace TEC_KasinoAPI.Services
         /// <param name="model"></param>
         /// <param name="ipAddress"></param>
         /// <returns><see cref="AuthenticateResponse"/>: returns the customer object, a new Json Web Token (JWT), and a new refresh token</returns>
-        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
+        public async Task<AuthenticateResponse> AuthenticateAsync(AuthenticateRequest model, string ipAddress)
         {
             // Find the customer that has both email and password.
-            Customer customer = _customers.SingleOrDefault(x => x.Email == model.Email);
+            Customer customer = await _customers.SingleOrDefaultAsync(x => x.Email == model.Email);
 
             // Return false if no user was found with the email or if the password doesnt match.
             if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
@@ -166,8 +166,8 @@ namespace TEC_KasinoAPI.Services
             customer.RefreshTokens.Add(refreshToken);
 
             // Save the changes to the database.
-            _context.Update(customer);
-            _context.SaveChanges();
+            await _context.UpdateAsync(customer);
+            await _context.SaveChangesAsync();
 
             // Return the the updated customer object with a new JWT Token and Refresh Token.
             return new AuthenticateResponse(customer.CustomerID, customer.Email, customer.FirstName, customer.LastName, jwtToken, refreshToken.Token);
@@ -179,16 +179,16 @@ namespace TEC_KasinoAPI.Services
         /// <param name="token"></param>
         /// <param name="ipAddress"></param>
         /// <returns><see cref="AuthenticateResponse"/>: returns the newly updated customer object, with the new access token and refresh token.</returns>
-        public RefreshTokenResponse RefreshToken(string token, string ipAddress)
+        public async Task<RefreshTokenResponse> RefreshTokenAsync(string token, string ipAddress)
         {
             // Find the customer that has the token parameter.
-            Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            Customer customer = await _customers.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return null if no user was found with the token.
             if (customer == null) return null;
 
             // Get a reference to that token instance.
-            RefreshToken refreshToken = customer.RefreshTokens.Single(x => x.Token == token);
+            RefreshToken refreshToken = await customer.RefreshTokens.SingleAsync(x => x.Token == token);
 
             // Return null if the token is not active.
             if (!refreshToken.IsActive) return null;
@@ -205,10 +205,10 @@ namespace TEC_KasinoAPI.Services
             customer.RefreshTokens.Add(newRefreshToken);
 
             // Update the database about the new changes surrounding the customer object.
-            _context.Update(customer);
+            await _context.UpdateAsync(customer);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Generate a new JWT Token.
             string jwtToken = GenerateJWTToken(customer);
@@ -223,16 +223,16 @@ namespace TEC_KasinoAPI.Services
         /// <param name="token"></param>
         /// <param name="ipAddress"></param>
         /// <returns><see cref="bool"/>: returns true if the revoke was successfull otherwise returns false.</returns>
-        public bool RevokeToken(string token, string ipAddress)
+        public async Task<bool> RevokeTokenAsync(string token, string ipAddress)
         {
             // Find the customer that has the token parameter.
-            Customer customer = _customers.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+            Customer customer = await _customers.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return false if no customer was found with the token.
             if(customer == null) return false;
 
             // Get a reference to that token instance.
-            RefreshToken refreshToken = customer.RefreshTokens.Single(x => x.Token == token);
+            RefreshToken refreshToken = await customer.RefreshTokens.SingleAsync(x => x.Token == token);
 
             // Return false if the token is not active.
             if (!refreshToken.IsActive) return false;
@@ -242,10 +242,10 @@ namespace TEC_KasinoAPI.Services
             refreshToken.RevokedByIp = ipAddress;
 
             // Update the database about the changes surrounding the customer object.
-            _context.Update(customer);
+            await _context.UpdateAsync(customer);
 
             // Save the changes to the database.
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return true;
         }
@@ -254,9 +254,9 @@ namespace TEC_KasinoAPI.Services
         /// Gets all customers in the database
         /// </summary>
         /// <returns><see cref="IEnumerable{T}"/> of type <see cref="Customer"/></returns>
-        public IEnumerable<Customer> GetAll()
+        public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-            return _customers;
+            return await Task.Run(() => _customers);
         }
 
         /// <summary>
@@ -265,10 +265,15 @@ namespace TEC_KasinoAPI.Services
         /// <param name="id"></param>
         /// <returns><see cref="Customer"/>: returns the customer with the <paramref name="id"/></returns>
         /// <exception cref="KeyNotFoundException"></exception>
-        public Customer GetById(int id)
+        public async Task<Customer> GetByIdAsync(int id)
         {
-            Customer customer = _context.Customers.Find(id);
-            if (customer == null) throw new KeyNotFoundException("Customer not found.");
+            Customer customer = await _context.Customers.FindAsync(id);
+
+            if (customer == null)
+            {
+                throw new KeyNotFoundException("Customer not found.");
+            }
+
             return customer;
         }
 

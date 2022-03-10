@@ -22,10 +22,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpPost("create"), Authorize(Roles = "Admin")]
-        public IActionResult Create(int customerID)
+        public async Task<IActionResult> Create(int customerID)
         {
             // Create the account balance.
-            _balanceService.Create(customerID);
+            await _balanceService.CreateAsync(customerID);
 
             // Return -> Code 200 and "Account balance created."
             return Ok(new { message = "Account balance created." });
@@ -37,10 +37,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpDelete("delete"), Authorize(Roles = "Admin")]
-        public IActionResult Delete(int customerID)
+        public async Task<IActionResult> Delete(int customerID)
         {
             // Delete the customer with the customerID parameter.
-            _balanceService.Delete(customerID);
+            await _balanceService.DeleteAsync(customerID);
 
             // Return -> Code 200 and "The account balance was deleted."
             return Ok(new { message = "The account balance was deleted." });
@@ -53,7 +53,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("update"), Authorize(Roles = "Admin")]
-        public IActionResult Update(int customerID, [FromBody] BalanceUpdateRequest model)
+        public async Task<IActionResult> Update(int customerID, [FromBody] BalanceUpdateRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
@@ -62,7 +62,7 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Update the account balance
-            _balanceService.Update(customerID, model);
+            await _balanceService.UpdateAsync(customerID, model);
 
             // Return -> Code 200 and "Account balance was updated successfully."
             return Ok(new { message = "Account balance was updated successfully." });
@@ -74,7 +74,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("add-balance")]
-        public IActionResult AddBalance([FromBody] BalanceRequest model)
+        public async Task<IActionResult> AddBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
@@ -83,7 +83,7 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Add the balance.
-            BalanceResponse response = _balanceService.AddBalance(model);
+            BalanceResponse response = await _balanceService.AddBalanceAsync(model);
 
             // Return -> Code 200 and the balance response.
             return Ok(response);
@@ -95,7 +95,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("subtract-balance")]
-        public IActionResult SubtractBalance([FromBody] BalanceRequest model)
+        public async Task<IActionResult> SubtractBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
@@ -104,7 +104,7 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Subtract the balance.
-            BalanceResponse response = _balanceService.SubtractBalance(model);
+            BalanceResponse response = await _balanceService.SubtractBalanceAsync(model);
 
             // Return -> Code 200 and the balance response.
             return Ok(response);
@@ -116,10 +116,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpGet("{customerID}")]
-        public IActionResult GetByID(int customerID)
+        public async Task<IActionResult> GetByID(int customerID)
         {
             // Find the account balance with the customerID parameter.
-            AccountBalance accountBalance = _balanceService.GetById(customerID);
+            AccountBalance accountBalance = await _balanceService.GetByIdAsync(customerID);
 
             // If the account balance wasnt found return -> Code 404
             if(accountBalance == null) return NotFound();

@@ -23,7 +23,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AllowAnonymous, HttpPost("register")]
-        public IActionResult Register(CustomerRegisterRequest model)
+        public async Task<IActionResult> Register(CustomerRegisterRequest model)
         {
             // Validate the input.
             if(!ModelState.IsValid)
@@ -32,7 +32,7 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Register the new customer from the model parameter
-            _userService.Register(model);
+            await _userService.RegisterAsync(model);
 
             // Return -> Code 200 and "Registration successful."
             return Ok(new { message = "Registration successful." });
@@ -45,10 +45,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPut("{customerID}")]
-        public IActionResult Update(int customerID, CustomerUpdateRequest model)
+        public async Task<IActionResult> Update(int customerID, CustomerUpdateRequest model)
         {
             // Update the customer
-            _userService.Update(customerID, model);
+            await _userService.UpdateAsync(customerID, model);
 
             // Return -> Code 200 and "Customer updated successfully."
             return Ok(new { message = "Customer updated successfully." });
@@ -60,10 +60,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpDelete("{customerID}"), Authorize(Roles = "Admin")]
-        public IActionResult Delete(int customerID)
+        public async Task<IActionResult> Delete(int customerID)
         {
             // Delete the customer
-            _userService.Delete(customerID);
+            await _userService.DeleteAsync(customerID);
 
             // Return -> Code 200 and "Customer deleted successfully"
             return Ok(new { message = "Customer deleted successfully." });
@@ -75,7 +75,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [AllowAnonymous, HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthenticateRequest model)
+        public async Task<IActionResult> Authenticate([FromBody] AuthenticateRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
@@ -89,12 +89,12 @@ namespace TEC_KasinoAPI.Controllers
             // If there is a refresh token in the HttpRequest cookies revoke that token.
             if(!string.IsNullOrEmpty(refreshToken))
             {
-                _userService.RevokeToken(refreshToken, IPAddress());
+                await _userService.RevokeTokenAsync(refreshToken, IPAddress());
             }
 
             // Do the actual authentication
             // this also gives us a new refresh token along side a new access token.
-            AuthenticateResponse response = _userService.Authenticate(model, IPAddress());
+            AuthenticateResponse response = await _userService.AuthenticateAsync(model, IPAddress());
 
             // Check if the response is null
             if(response == null)
@@ -115,13 +115,13 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous, HttpPost("refresh-token")]
-        public IActionResult RefreshToken()
+        public async Task<IActionResult> RefreshToken()
         {
             // Get the current refresh token from the Cookies
             string refreshToken = Request.Cookies["refreshToken"];
 
             // Do the actual refreshing getting back the new tokens
-            RefreshTokenResponse response = _userService.RefreshToken(refreshToken, IPAddress());
+            RefreshTokenResponse response = await _userService.RefreshTokenAsync(refreshToken, IPAddress());
 
             // Check if the response is null
             if(response == null)
@@ -143,7 +143,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost("revoke-token")]
-        public IActionResult RevokeToken([FromBody] RevokeTokenRequest model)
+        public async Task<IActionResult> RevokeToken([FromBody] RevokeTokenRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
@@ -154,9 +154,6 @@ namespace TEC_KasinoAPI.Controllers
             // If the model.Token is null get the Token from the Cookies instead
             string token = model.Token ?? Request.Cookies["refreshToken"];
 
-            Debug.WriteLine("Model Token: " + model.Token, "CustomerController");
-            Debug.WriteLine("Cookies Token: " + Request.Cookies["refreshToken"]?.ToString(), "CustomerController");
-
             // Check if the token is null or empty
             if(string.IsNullOrEmpty(token))
             {
@@ -165,7 +162,7 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Revoke the token.
-            _userService.RevokeToken(token, IPAddress());
+            await _userService.RevokeTokenAsync(token, IPAddress());
 
             // Return -> Code 200 and "Token revoked."
             return Ok(new { message = "Token revoked." });
@@ -176,10 +173,10 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet, Authorize(Roles = "Admin")]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // Get all customers from the database
-            IEnumerable<Customer> customers = _userService.GetAll();
+            IEnumerable<Customer> customers = await _userService.GetAllAsync();
 
             // Return -> Code 200 and all the customers
             return Ok(customers);
@@ -191,10 +188,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpGet("{customerID}")]
-        public IActionResult GetByID(int customerID)
+        public async Task<IActionResult> GetByID(int customerID)
         {
             // Get the customer with the customerID parameter
-            Customer customer = _userService.GetById(customerID);
+            Customer customer = await _userService.GetByIdAsync(customerID);
 
             // If the customer wasnt found return -> Code 404
             if (customer == null) return NotFound();
@@ -210,10 +207,10 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <returns></returns>
         [HttpGet("{customerID}/refresh-tokens"), Authorize(Roles = "Admin")]
-        public IActionResult GetRefreshTokens(int customerID)
+        public async Task<IActionResult> GetRefreshTokens(int customerID)
         {
             // Get the customer with the customerID parameter
-            Customer customer = _userService.GetById(customerID);
+            Customer customer = await _userService.GetByIdAsync(customerID);
 
             // If the customer wasnt found return -> Code 404
             if(customer == null) return NotFound();
@@ -259,6 +256,5 @@ namespace TEC_KasinoAPI.Controllers
                 return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             }
         }
-        
     }
 }

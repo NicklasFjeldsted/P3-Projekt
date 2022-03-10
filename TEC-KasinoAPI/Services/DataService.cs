@@ -5,7 +5,7 @@ namespace TEC_KasinoAPI.Services
 {
 	public interface IDataService
 	{
-		Task<IEnumerable<Country>> GetCountryData();
+		Task<IEnumerable<Country>> GetCountryDataAsync();
 	}
 	public class DataService : IDataService
 	{
@@ -16,7 +16,7 @@ namespace TEC_KasinoAPI.Services
 			_context = context;
 		}
 
-		public async Task<IEnumerable<Country>> GetCountryData()
+		public async Task<IEnumerable<Country>> GetCountryDataAsync()
 		{
 			return await _context.Countries.ToListAsync();
 		}

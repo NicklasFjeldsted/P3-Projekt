@@ -19,7 +19,7 @@ namespace TEC_KasinoAPI.Controllers
 		[HttpGet("Countries")]
 		public async Task<IActionResult> GetCountries()
 		{
-			IEnumerable<Country> countries = await _dataService.GetCountryData();
+			IEnumerable<Country> countries = await _dataService.GetCountryDataAsync();
 
 			if(countries == null)
 			{
