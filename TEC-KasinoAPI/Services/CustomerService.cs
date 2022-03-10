@@ -159,8 +159,8 @@ namespace TEC_KasinoAPI.Services
             if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
             
             // Authentication successful so generate jwt and refresh tokens.
-            string jwtToken = GenerateJWTToken(customer);
-            RefreshToken refreshToken = GenerateRefreshToken(ipAddress);
+            string jwtToken = await GenerateJWTTokenAsync(customer);
+            RefreshToken refreshToken = await GenerateRefreshTokenAsync(ipAddress);
 
             // Add the refresh token to the customer object.
             customer.RefreshTokens.Add(refreshToken);
@@ -194,7 +194,7 @@ namespace TEC_KasinoAPI.Services
             if (!refreshToken.IsActive) return null;
 
             // Generate a new refresh token.
-            RefreshToken newRefreshToken = GenerateRefreshToken(ipAddress);
+            RefreshToken newRefreshToken = await GenerateRefreshTokenAsync(ipAddress);
 
             // Revoke the old refresh token and set its properties.
             refreshToken.Revoked = DateTime.UtcNow;
@@ -211,7 +211,7 @@ namespace TEC_KasinoAPI.Services
             await _context.SaveChangesAsync();
 
             // Generate a new JWT Token.
-            string jwtToken = GenerateJWTToken(customer);
+            string jwtToken = await GenerateJWTTokenAsync(customer);
 
             // Return the the updated customer object with a new JWT Token and Refresh Token.
             return new RefreshTokenResponse(jwtToken, newRefreshToken.Token);
@@ -282,7 +282,7 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="customer"></param>
         /// <returns><see cref="string"/>: returns a newly generated Jason Web Token (JWT)</returns>
-        private string GenerateJWTToken(Customer customer)
+        private async Task<string> GenerateJWTTokenAsync(Customer customer)
         {
             JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
             byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
@@ -298,8 +298,8 @@ namespace TEC_KasinoAPI.Services
                 Expires = DateTime.UtcNow.AddMinutes(15),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            SecurityToken token = await tokenHandler.CreateTokenAsync(tokenDescriptor);
+            return await tokenHandler.WriteTokenAsync(token);
         }
 
         /// <summary>
@@ -307,12 +307,12 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="ipAddress"></param>
         /// <returns><see cref="TEC_KasinoAPI.Entities.RefreshToken"/>: returns the newly generated refresh token</returns>
-        private RefreshToken GenerateRefreshToken(string ipAddress)
+        private async Task<RefreshToken> GenerateRefreshTokenAsync(string ipAddress)
         {
             using (RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create())
             {
                 byte[] randomBytes = new byte[64];
-                randomNumberGenerator.GetBytes(randomBytes);
+                await randomNumberGenerator.GetBytesAsync(randomBytes);
                 return new RefreshToken
                 {
                     Token = Convert.ToBase64String(randomBytes),

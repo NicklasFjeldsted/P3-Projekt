@@ -39,7 +39,7 @@ namespace TEC_KasinoAPI.Services
         public async Task CreateAsync(int customerID)
         {
             // Check if there already exists an account balance with the customerID parameter.
-            if(_context.AccountBalances.Any(x => x.CustomerID == customerID))
+            if(await _context.AccountBalances.AnyAsync(x => x.CustomerID == customerID))
             {
                 throw new AppException("Customer already have an account balance.");
             }
