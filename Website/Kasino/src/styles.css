@@ -267,7 +267,6 @@ a
 .form-header
 {
   position: relative;
-  border-bottom: 2px solid black;
   height: 60px;
   display: flex;
   width: 100%;

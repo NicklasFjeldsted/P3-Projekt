@@ -1,21 +1,19 @@
 <!-- Login form for calling the API. -->
-<form id="login" method="post" class="form-control v-center h-center" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form id="login" method="post" class="form-control v-center h-center" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="column flow-down">
     <div class="form-header">
       <h2>Log ind</h2>
     </div>
-
+    <br>
     <!-- Lady on the left of the login form. -->
     <img src="../../../assets/media/girl.png" class="ll-img" />
     <!-- A single column where its content flows down instead of sideways. -->
-    <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password</div>
-
     <div class="form-row flow-down">
       <i class="fa fa-envelope fa-2x"></i>
       <input type="text" name="email" id="email" class="form-input" placeholder="E-mail" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
       <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
         <div *ngIf="f['email'].errors['required']">Username is required</div>
-    </div>
+      </div>
     </div>
 
     <div class="form-row flow-down">
@@ -23,17 +21,16 @@
       <input type="password" name="password" id="password" class="form-input" placeholder="Adgangskode" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
       <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
         <div *ngIf="f['password'].errors['required']">Password is required</div>
-    </div>
+      </div>
     </div>
 
     <div class="form-row flow-down">
-      <button type="submit" name="login" id="login" class="btn form-submit bg-orange" [disabled]="loading">Log ind</button>
+      <button type="submit" name="login" id="login" class="btn form-submit bg-orange">Log ind</button>
     </div>
-
+    <br>
     <div class="form-row flow-down form-links" style="display: block;">
       <a routerLink="">Glemt Adgangskode</a>
       <a routerLink="/tilmeld">Opret Konto</a>
     </div>
-    <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
   </div>
 </form>
