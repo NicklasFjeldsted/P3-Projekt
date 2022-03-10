@@ -103,8 +103,17 @@ export class TilmeldComponent implements OnInit {
       next: () => {
         let credentials = {email: '', password: ''};
         credentials = Object.assign(credentials, this.form.value)
-        this.authenticationService.login(credentials.email, credentials.password);
-        this.router.navigate([""]);
+        this.authenticationService.login(credentials.email, credentials.password).subscribe({
+          next: () =>
+          {
+            this.router.navigate([""]);
+          },
+          error: (error) =>
+          {
+            console.error(error);
+            this.router.navigate(["login"]);
+          }
+        });
       },
       error: error => {
         console.log(error);
