@@ -1,11 +1,10 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CustomerService } from 'src/app/services/customer.service';
 import { CustomerRegisterRequest } from 'src/app/interfaces/CustomerRegisterRequest';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Country } from 'src/app/interfaces/country';
-import { delay } from 'rxjs';
 
 @Component({
   selector: 'app-tilmeld',

@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
-<form data-multi-step class="multi-step-form form-control v-center h-center" [formGroup]="form" (ngSubmit)="signUp()" action="">
+<form data-multi-step class="multi-step-form form-control v-center h-center" [formGroup]="form" (ngSubmit)="signUp()">
 	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
 	<div class="data-input">
 		<div *ngIf="step == 1" class="card">
@@ -112,7 +112,7 @@
 				<div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
 					<div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
 				</div>
-				<button type="submit" style="margin-top:10px" (click)="signUp()">Opret Konto</button>
+				<button type="submit" style="margin-top:10px">Opret Konto</button>
 			</div>
 		</div>
 	</div>
