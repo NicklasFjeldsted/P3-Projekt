@@ -34,9 +34,10 @@
 }
 .form-control {
   background: #f9f9f9;
-  border: none;
   max-width: 600px!important;
   min-width: 300px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .form-input {
   max-width: 500px;
@@ -45,6 +46,7 @@
   height: 56px;
   padding: 1pc 1pc 1pc 60px;
   margin: 0 0 1.6rem;
+  margin-bottom: 0!important;
   box-shadow: none;
   border: 1px solid #e3e3e3;
   font-size: .9rem;
@@ -84,18 +86,30 @@
   max-height: 415px;
   max-width: 400px;
   overflow: visible;
+  gap: 1rem;
+  border: 0px;
 }
 
 .form-header
 {
-  border-bottom: none;
+  height: 15%;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  color: white;
   margin-bottom: 0!important;
-  height: 100px;
+  overflow: hidden;
+  line-height: 1;
+  text-align: center;
+	vertical-align: center;
+	font-size: 1.3em;
+	background-color: #015536;
+	border-bottom: 1px solid #015536;
 }
 
-.column *
+.column
 {
-  margin-bottom: 20px;
+  flex-direction: column;
+  gap: 3%;
 }
 
 
@@ -115,6 +129,20 @@
   text-decoration: underline;
 
 }
+
+.is-invalid {
+	background-color: #ffeeeb;
+	border: 1px solid #f00!important;
+	color:#FF0000;
+}
+.invalid-feedback {
+	color:red;
+	font-size: 0.6rem;
+	text-align: left;
+  width: 90%;
+
+}
+
 /* Only applies if the device's screen width is less than 600px. */
 @media only screen and (max-width: 600px)
 {

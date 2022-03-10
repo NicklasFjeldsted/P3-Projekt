@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'tilmeld', component: TilmeldComponent },
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
