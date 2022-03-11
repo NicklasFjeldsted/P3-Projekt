@@ -13,9 +13,15 @@ public class Connector
 
     public async Task InitAsync()
     {
+#if UNITY_EDITOR
         _connection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:5001/Blackjack")
+            .WithUrl("http://localhost:5001/Blackjack")
             .Build();
+#else
+        _connection = new HubConnectionBuilder()
+            .WithUrl("http://10.0.6.2:5001/Blackjack")
+            .Build();
+#endif
 
         _connection.On<string>("JoinRoomResponse", (userJSON) =>
         {

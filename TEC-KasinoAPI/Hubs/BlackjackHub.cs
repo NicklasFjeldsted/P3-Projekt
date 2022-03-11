@@ -15,5 +15,10 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			await Clients.All.SendAsync("ReceiveMessage", author, message);
 		}
+
+		public async Task PingServer(string data, string connectionId)
+        {
+			await Clients.Client(connectionId).SendAsync("PingClient", data);
+        }
 	}
 }

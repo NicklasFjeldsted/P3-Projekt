@@ -126,7 +126,7 @@ app.UseCors(builder =>
 	.AllowAnyMethod();
 });
 
-// Eneables the use of static files for the current directory path.
+// Enables the use of static files for the current directory path.
 app.UseStaticFiles();
 
 // Enables routing from within the backend.

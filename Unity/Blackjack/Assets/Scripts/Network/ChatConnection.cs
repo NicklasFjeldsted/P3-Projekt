@@ -8,17 +8,23 @@ using UnityEngine;
 public class ChatConnection
 {
     public Action<string, string> OnMessageReceived;
+    public Action<string> OnPingReceived;
     private HubConnection _connection;
 
     public async Task InitAsync()
     {
         _connection = new HubConnectionBuilder()
-            .WithUrl("https://localhost:5001/Blackjack")
+            .WithUrl("http://localhost:5001/Blackjack")
             .Build();
 
         _connection.On<string, string>("ReceiveMessage", (author, message) =>
         {
             OnMessageReceived?.Invoke(author, message);
+        });
+
+        _connection.On<string>("PingClient", (data) =>
+        {
+            OnPingReceived?.Invoke(data);
         });
 
         await StartConnectionAsync();
@@ -27,6 +33,11 @@ public class ChatConnection
     public void SendMessage(string author, string message)
     {
         _connection.SendAsync("SendMessage", author, message);
+    }
+
+    public void PingServer()
+    {
+        _connection.SendAsync("PingServer", _connection.ConnectionId, _connection.ConnectionId);
     }
 
     private async Task StartConnectionAsync()

@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { User } from 'src/app/interfaces/User';
+import { IUser, User } from 'src/app/interfaces/User';
 import { SignalrService } from 'src/app/services/signalr.service';
 
 
@@ -27,14 +27,14 @@ export class BlackjackComponent implements OnInit {
       this.signalrService.hubConnection.on("ReceiveMessage", (author, message) => this.ReceiveMessage(author, message));
   }
 
-  JoinRoom(user: User): void {
-    this.author = user.firstName!;
+  JoinRoom(user: IUser): void {
+    this.author = user.fullName!;
     this.signalrService.hubConnection.invoke("JoinRoom", JSON.stringify(user)).catch(error => console.log(error));
   }
 
-  OnJoinRoom(user: User): void {
-    console.log("hello" + user.firstName);
-    this.SendMessage("Server", user.firstName + " has joined!")
+  OnJoinRoom(user: IUser): void {
+    console.log("hello" + user.fullName);
+    this.SendMessage("Server", user.fullName + " has joined!")
   }
 
   SendMessage(author: string, message: string): void {
@@ -45,6 +45,12 @@ export class BlackjackComponent implements OnInit {
   ReceiveMessage(author: string, message: string)
   {
     this.messages.push(author + ": " + message);
+  }
+
+  PingServer(): void
+  {
+    let conn = this.signalrService.hubConnection.connectionId;
+    this.signalrService.hubConnection.invoke("PingServer", conn, conn).catch(error => console.error(error));
   }
 
 

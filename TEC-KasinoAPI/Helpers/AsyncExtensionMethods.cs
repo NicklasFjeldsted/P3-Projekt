@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 
 namespace TEC_KasinoAPI.Helpers
@@ -137,6 +138,17 @@ namespace TEC_KasinoAPI.Helpers
         public static async Task GetBytesAsync(this RandomNumberGenerator context, byte[] data)
         {
             await Task.Run(() => context.GetBytes(data));
+        }
+    }
+
+    /// <summary>
+    /// Encapsulate the ClaimsPrinciple asynchronous extension methods.
+    /// </summary>
+    public static class ClaimsPrincipleExtensionMethods
+    {
+        public static async Task<string> FindFirstAsync(this ClaimsPrincipal context, string type)
+        {
+            return await Task.Run(() => context.FindFirst(type).Value);
         }
     }
 }

@@ -2,16 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor;
 
 public class ChatManager : MonoBehaviour
 {
     #region Singleton Pattern
     private static ChatManager _instance;
     public static ChatManager Instance { get { return _instance; } }
+    #endregion
+
+    private List<Message> _chatMessages = new List<Message>();
+    private ChatSystem _chatSystem;
+
+    [Header("Settings")]
+    public int maxMessages = 25;
+    public int maxMessageLength = 255;
+
+    [Header("References")]
+    public GameObject messageGameObjectPrefab;
+    public GameObject chatPanelGameObject;
+    public GameObject characterInfoGameObject;
+    public GameObject messageInputFieldGameObject;
+
+    [Header("Character Info References")]
+    private TextMeshProUGUI characterInfoText;
+    private CanvasGroup characterInfoCanvasGroup;
+
+    private TMP_InputField messageInputField;
+
+    private Transform chatPanelTransform;
+
     private void Awake()
     {
-        if(_instance != null && _instance != this)
+        #region Singleton Pattern
+        if (_instance != null && _instance != this)
         {
             Destroy(this);
         }
@@ -19,45 +42,49 @@ public class ChatManager : MonoBehaviour
         {
             _instance = this;
         }
+        #endregion
+
+        #region Character Info References
+        characterInfoText = characterInfoGameObject.GetComponentInChildren<TextMeshProUGUI>();
+        characterInfoCanvasGroup = characterInfoGameObject.GetComponentInChildren<CanvasGroup>();
+        #endregion
+
+        _chatSystem = ChatSystem.Instance;
+
+        chatPanelTransform = chatPanelGameObject.transform;
+        messageInputField = messageInputFieldGameObject.GetComponentInChildren<TMP_InputField>();
     }
-    #endregion
 
-    private List<Message> _chatMessages = new List<Message>();
+    private void Start()
+    {
+        characterInfoCanvasGroup.alpha = 0;
+    }
 
-    [Header("Settings")]
-    public int maxMessages = 25;
-
-    [Header("References")]
-    public GameObject messageGameObjectPrefab;
-    public GameObject chatPanelGameObject;
-
-    public void HandleMessages(Message newMessage)
+    public void ReceiveNewMessage(Message newMessage)
     {
         if(_chatMessages.Count >= maxMessages)
         {
             _chatMessages.Remove(_chatMessages[0]);
+            Destroy(chatPanelTransform.GetChild(0));
         }
 
-        GameObject newMessageObject = Instantiate(messageGameObjectPrefab, chatPanelGameObject.transform);
+        GameObject newMessageObject = Instantiate(messageGameObjectPrefab, chatPanelTransform);
 
         newMessageObject.GetComponentInChildren<TextMeshProUGUI>().text = newMessage.message;
 
         _chatMessages.Add(newMessage);
     }
-}
-#if UNITY_EDITOR
-[CustomEditor(typeof(ChatManager))]
-public class ChatManagerEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        DrawDefaultInspector();
 
-        ChatManager myScript = (ChatManager)target;
-        if (GUILayout.Button("Send Message"))
-        {
-            myScript.HandleMessages(new Message("Alexander", "Hello world!"));
-        }
+    public void OnInputFieldChange(string value)
+    {
+        characterInfoCanvasGroup.alpha = ((float)value.Length / maxMessageLength);
+
+        characterInfoText.text = $"{value.Length}/{maxMessageLength}";
+    }
+
+    public void OnInputFieldEditEnd(string value)
+    {
+        _chatSystem.SendMessage("Unity", value);
+        messageInputField.text = "";
     }
 }
-#endif
