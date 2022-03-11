@@ -3,6 +3,7 @@
 {
   height: 100%;
   width: 100%;
+  background-image: url("/assets/media/login-background.jpg");
   background-color: #e6e6e6;
  /* background-image: url("../../../assets/media/poker-background.jpg"); */
   font-family: Montserrat,sans-serif;
@@ -20,10 +21,15 @@
 
 .form-header h2 {
   margin: auto;
-  font-size: 1.5rem;
-  font-weight: 100;
+  font-size: 1.7rem;
+  font-weight: 500;
   line-height: 1.5;
   font-family: Montserrat,sans-serif;
+}
+
+form
+{
+  box-shadow: black 0px 0px 100px 5px;
 }
 
 .form-row {
@@ -42,7 +48,7 @@
 .form-input {
   max-width: 500px;
   min-width: 160px;
-  width: 378px;
+  width: 74.5%;
   height: 56px;
   padding: 1pc 1pc 1pc 60px;
   margin: 0 0 1.6rem;
