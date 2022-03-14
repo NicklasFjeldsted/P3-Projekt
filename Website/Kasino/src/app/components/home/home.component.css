@@ -7,6 +7,7 @@
 img
 {
   width: 75%;
+  margin-top: 100px;
 }
 
 p
@@ -17,4 +18,12 @@ p
 .btn{
   height: 20px;
   margin: 10px;
+}
+
+.homeRouletteImg{
+  width: 55.5%;
+}
+
+.homeSlotsImg{
+  width: 69.4%;
 }
