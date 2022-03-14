@@ -6,8 +6,10 @@
 
 img
 {
-  width: 75%;
-  margin-top: 100px;
+  width: 100%;
+  margin-top: 50px;
+  height: 338px;
+  min-width: 80%;
 }
 
 p
@@ -15,15 +17,8 @@ p
   margin: auto;
 }
 
-.btn{
+.btn
+{
   height: 20px;
   margin: 10px;
-}
-
-.homeRouletteImg{
-  width: 55.5%;
-}
-
-.homeSlotsImg{
-  width: 69.4%;
 }
