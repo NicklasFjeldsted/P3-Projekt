@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -13,10 +14,10 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
         left: '-250px'
       })),
       transition('open => closed', [
-        animate('0s')
+        animate('0.2s ease')
       ]),
       transition('closed => open', [
-        animate('0.1s')
+        animate('0.2s ease')
       ])
     ])
   ],
@@ -25,7 +26,7 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent implements OnInit
 {
-  constructor() {}
+  constructor(private router: Router) {}
   faCoffee = faCoffee;
   title = 'Kasino';
 
@@ -52,5 +53,9 @@ export class AppComponent implements OnInit
     this.isSidenavOpen = !this.isSidenavOpen;
     this.sideNav.classList.add('active');
     this.backDrop.classList.add('active');
+  }
+
+  goToLink(site: string) {
+    this.router.navigate([site]);
   }
 }
