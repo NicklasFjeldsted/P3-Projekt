@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers
@@ -10,12 +11,12 @@ namespace TEC_KasinoAPI.Controllers
 	public class BlackjackController : ControllerBase
 	{
 		[HttpGet("GetUser")]
-		public ActionResult GetUser()
+		public async Task<IActionResult> GetUser()
 		{
 			User user = new User
 			{
-				email = HttpContext.User.FindFirst(ClaimTypes.Email).Value,
-				fullName = HttpContext.User.FindFirst(ClaimTypes.GivenName).Value
+				email = await HttpContext.User.FindFirstAsync(ClaimTypes.Email),
+				fullName = await HttpContext.User.FindFirstAsync(ClaimTypes.GivenName)
 			};
 
 			if (!string.IsNullOrEmpty(user.email))
