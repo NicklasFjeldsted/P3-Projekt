@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer2, ViewChild, ViewChildren} from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, Renderer2, ViewChild, ViewChildren} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -10,6 +10,12 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class HeaderComponent
 {
   constructor(public authenticationService: AuthenticationService) { }
+
+  @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
+
+  emitSideNavToggle(): void {
+    this.onSideNavToggle.emit();
+  }
 
 }
 

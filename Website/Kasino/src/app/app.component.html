@@ -1,7 +1,11 @@
-<div class="back-drop">
+<div class="back-drop" id="backdrop" (click)="closeSideNav()">
 </div>
+<div class="sidenav" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
+
+</div>
+
 <div class="container">
-  <app-header></app-header>
+  <app-header (onSideNavToggle)="openSideNav()"></app-header>
   <div class="fill-row">
     <router-outlet></router-outlet>
   </div>

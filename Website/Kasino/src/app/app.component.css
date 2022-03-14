@@ -1,5 +1,25 @@
 .back-drop {
 	display: none;
+	z-index: 900;
 	height: 100%;
 	width: 100%;
+	background-color: black;
+	opacity: 0.50;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.sidenav {
+	display: none;
+	z-index: 1000;
+	width: 250px;
+	height: 100%;
+	background-color: white;
+	position: absolute;
+	top: 0;
+}
+
+.active {
+	display: block;
 }
