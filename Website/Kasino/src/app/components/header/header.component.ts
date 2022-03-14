@@ -12,13 +12,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 })
 export class HeaderComponent
 {
-  @ViewChild(MatSidenav) sidenav!: MatSidenav;
-
   constructor(public authenticationService: AuthenticationService) { }
 
-  onClickedOutside(e: Event) {
-    this.sidenav.close();
-  }
 }
 
 

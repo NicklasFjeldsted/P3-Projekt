@@ -6,15 +6,9 @@
   <!-- Left column containing a dropdown menu. -->
   <div class="column left">
     <div class="dropdown">
-      <button #toggleMenu class="toggle-menu" (click)="this.sideNav.open()"><i class="fa-solid fa-bars fa-2x" style="pointer-events:none" id="testright" aria-hidden="true"></i></button>
+      <button #toggleMenu class="toggle-menu"><i class="fa-solid fa-bars fa-2x" style="pointer-events:none" id="testright" aria-hidden="true"></i></button>
 
 
-      <mat-sidenav-container (clickOutside)="onClickedOutside($event)">
-        <mat-sidenav #sideNav mode="side">
-
-        </mat-sidenav>
-      </mat-sidenav-container>
-    </div>
   </div>
 
   <!-- Center column storing the title of the website. -->
