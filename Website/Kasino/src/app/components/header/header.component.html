@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+</style>
 <!-- Top row on the page. -->
 
 <div class="row header">
@@ -7,7 +9,7 @@
   <!-- Left column containing a dropdown menu. -->
   <div class="column left">
     <div class="dropdown">
-     <button (click)="emitSideNavToggle()">
+     <button (click)="emitSideNavToggle()" class="sideNav-button">
        <i class="fa-solid fa-bars fa-2x" style="pointer-events:none" id="testright" aria-hidden="true"></i>
     </button>
 
@@ -17,7 +19,7 @@
 
   <!-- Center column storing the title of the website. -->
   <div class="column">
-    <a>
+    <a routerLink="">
       <img  id="logo" src="../../../assets/media/tec-logo.svg" width="150px">
      </a>
   </div>
