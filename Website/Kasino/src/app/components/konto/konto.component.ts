@@ -14,7 +14,6 @@ export class KontoComponent implements OnInit {
 
   // constructor(private http: HttpClient) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

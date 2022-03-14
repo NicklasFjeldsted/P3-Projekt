@@ -14,6 +14,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'tilmeld', component: TilmeldComponent },
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
+  { path: 'udbetal', component: UdbetalComponent},
+  { path: 'indbetal', component: IndbetalComponent},
   { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
   { path: '**', redirectTo: '' },
 ];
