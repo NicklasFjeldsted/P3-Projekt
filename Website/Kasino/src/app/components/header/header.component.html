@@ -1,13 +1,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 <!-- Top row on the page. -->
-<div class="row header">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav class="sidenav-content" #sideNav mode="over">
+
+    </mat-sidenav>
+  </mat-sidenav-container>
+  <div class="row header">
 
   <!-- Left column containing a dropdown menu. -->
   <div class="column left">
     <div class="dropdown">
-      <button #toggleMenu class="toggle-menu"><i class="fa-solid fa-bars fa-2x" style="pointer-events:none" id="testright" aria-hidden="true"></i></button>
+     <button (click)="sideNav.toggle()">
+       <i class="fa-solid fa-bars fa-2x" style="pointer-events:none" id="testright" aria-hidden="true"></i>
+    </button>
 
+    </div>
 
   </div>
 
