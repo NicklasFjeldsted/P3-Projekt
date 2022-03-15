@@ -2,7 +2,6 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import { IUser, User } from 'src/app/interfaces/User';
 import { SignalrService } from 'src/app/services/signalr.service';
 
-
 @Component({
   selector: 'app-blackjack',
   templateUrl: './blackjack.component.html',
@@ -18,26 +17,30 @@ export class BlackjackComponent implements OnInit {
   messages: string[] = [];
   author: string;
 
-  ngOnInit(): void {
-      this.signalrService.StartConnection().then(() => {
-        this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
-      }); // Starts connection
+  ngOnInit(): void
+  {
+    this.signalrService.StartConnection().then(() => {
+      this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
+    }); // Starts connection
 
-      this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(JSON.parse(user)));
-      this.signalrService.hubConnection.on("ReceiveMessage", (author, message) => this.ReceiveMessage(author, message));
+    this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(JSON.parse(user)));
+    this.signalrService.hubConnection.on("ReceiveMessage", (author, message) => this.ReceiveMessage(author, message));
   }
 
-  JoinRoom(user: IUser): void {
+  JoinRoom(user: IUser): void
+  {
     this.author = user.fullName!;
     this.signalrService.hubConnection.invoke("JoinRoom", JSON.stringify(user)).catch(error => console.log(error));
   }
 
-  OnJoinRoom(user: IUser): void {
+  OnJoinRoom(user: IUser): void
+  {
     console.log("hello" + user.fullName);
     this.SendMessage("Server", user.fullName + " has joined!")
   }
 
-  SendMessage(author: string, message: string): void {
+  SendMessage(author: string, message: string): void
+  {
     this.signalrService.hubConnection.invoke("SendMessage", author, message)
       .catch(error => console.error(error));
   }
@@ -47,17 +50,8 @@ export class BlackjackComponent implements OnInit {
     this.messages.push(author + ": " + message);
   }
 
-  PingServer(): void
+  onKeydown(event: any): void
   {
-    let conn = this.signalrService.hubConnection.connectionId;
-    this.signalrService.hubConnection.invoke("PingServer", conn, conn).catch(error => console.error(error));
-  }
-
-
-
-  onKeydown(event: any): void{
     event.preventDefault();
   }
-
-
 }
