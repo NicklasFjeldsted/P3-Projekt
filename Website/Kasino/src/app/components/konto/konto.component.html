@@ -48,8 +48,8 @@
         <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
       </div>
       <div class="form-row flow-down">
-        <button type="submit" name="logUd" id="logUd" class="form-submit bot bg-orange"><a href= "Deaktiver.html">Deaktiver konto</a></button>
-      </div>
+        <a (click)="this.authenticationService.logout()"><button class="form-submit bot bg-orange">Deaktiver konto</button></a> <!--Linket skal ændres når vi kan deativer en konto-->
+      </div> 
     </div>
   </form>
 </body>
