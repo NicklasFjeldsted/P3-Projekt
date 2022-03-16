@@ -15,6 +15,6 @@ export class BlackjackComponent implements OnInit {
   
   ngOnInit(): void
   {
-    new Game(this.elementRef.nativeElement).Awake();
+    new Game().Awake();
   }
 }
