@@ -4,31 +4,34 @@
   font-weight: 400;
 }
 
-
-.form-control {
+.form-control 
+{
 	width: 35vw;
 	border: none;
 	height: auto!important;
 }
 
-.main-container {
+.main-container 
+{
 	padding: 20px;
 	width: auto;
 }
 
-.form-header {
+.form-header 
+{
 	justify-content: left;
 	padding: 20px;
 	margin: 0;
 	padding-bottom: 0;
 }
 
-.form-header > h1{
+.form-header > h1
+{
 	font: 400 32px / 32px 'Montserrat', sans-serif!important;
 }
 
-
-.form-input {
+.form-input 
+{
 	max-width: calc(100% - 20px);
 	margin-top: .5rem;
 	border: 1px solid #e3e3e3;
@@ -36,28 +39,32 @@
 	outline: none;
 }
 
-.input-section {
+.input-section 
+{
 	display:block;
 	text-align: left;
 	max-width: 100%;
 	width: 100%;
 }
 
-.form-textarea {
+.form-textarea 
+{
 	max-height: 250px;
 	height: 100px;
 	resize: none;
-	font-size: .875rem;
+	padding: 10px;
 }
 
-.submit-button {
+.submit-button 
+{
 	max-width: 150px;
 	max-height: 50px;
 	width: 100px;
 	height: 50px;
 }
 
-.form-row .form-input:focus   {
+.form-row input:focus 
+{
 	outline: none;
 	border: 1px solid #808080 !important;
-  }
+}
