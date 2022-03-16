@@ -47,6 +47,7 @@ export class Game extends Entity
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
+		// Milliseconds I think
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 
 		super.Update(deltaTime);
