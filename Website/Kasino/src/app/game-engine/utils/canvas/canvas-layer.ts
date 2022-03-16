@@ -34,7 +34,7 @@ export class CanvasLayer
 	{
 		const size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
 		const canvas = new Canvas(new Vector2(size, size));
-		
+
 		canvas.Awake();
 		canvas.SetStyle(style);
 

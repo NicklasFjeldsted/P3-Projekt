@@ -4,6 +4,11 @@ import { Settings } from "../settings";
 
 export class Grid extends Entity
 {
+	constructor(private gridSize:number, private nodeSize: number)
+	{
+		super();
+	}
+
 	private _nodes: Node[] = [];
 
 	public get Nodes(): Node[]
@@ -37,6 +42,8 @@ export class Grid extends Entity
 
 	private InitNodes(): void
 	{
+		// const size = this.nodeSize;
+		// const offset = this.gridSize;
 		const size = Settings.grid.nodeSize;
 		const offset = Settings.grid.nodeOffset;
 
