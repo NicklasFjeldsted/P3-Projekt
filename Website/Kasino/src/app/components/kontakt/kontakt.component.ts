@@ -30,13 +30,11 @@ export class KontaktComponent implements OnInit {
     this.customerService.sendMail(this.mail).subscribe({
       next: () => {
         this.mailSent = true;
+        window.alert("Beskeden er sendt!");
       },
       error: (error) => {
         console.log(error);
       }
     })
   }
-
-
-
 }
