@@ -76,7 +76,7 @@
 	line-height: 1pc;
 }
 
-.sidenav-info > span {
+.sidenav-info > a > span {
 	padding-left: 1pc;
 	padding-right: 3pc;
 }

@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { KontaktComponent } from './components/kontakt/kontakt.component';
 
 
 
@@ -44,7 +45,8 @@ import { ClickOutsideModule } from 'ng-click-outside';
     UdbetalComponent,
     HomeComponent,
     BlackjackComponent,
-    TilmeldComponent
+    TilmeldComponent,
+    KontaktComponent
   ],
   imports: [
     BrowserModule,

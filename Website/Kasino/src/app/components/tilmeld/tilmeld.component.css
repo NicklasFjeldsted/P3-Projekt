@@ -4,10 +4,6 @@
 	height: 100%;
 }
 
-*
-{
-	font-family: Montserrat,sans-serif;
-}
 .bg-image {
 	background-image: url("../../../assets/media/casino.jpg");
 	/* The image used */
@@ -83,7 +79,7 @@
 	margin:auto;
 	display: flex;
 	flex-direction: column;
-	row-gap: .5em;
+	row-gap: .75em;
 }
 
 .active
@@ -193,7 +189,7 @@
   	overflow: hidden;
   	text-overflow: ellipsis;
 	vertical-align: center;
-	font-size: 1.3em;
+	font-size: 1.3rem;
 	background-color: #015536;
 	height: 40px;
 	padding-top: 20px;

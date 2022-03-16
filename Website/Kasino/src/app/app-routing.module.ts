@@ -8,6 +8,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthenticationGuard } from './services/authentication-guard.service';
 import { BlackjackComponent } from './components/blackjack/blackjack.component';
 import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
+import { KontaktComponent } from './components/kontakt/kontakt.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -15,7 +16,8 @@ const routes: Routes = [
   { path: 'tilmeld', component: TilmeldComponent },
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
-  { path: '**', redirectTo: '' },
+  { path: 'kontakt', component: KontaktComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

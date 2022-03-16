@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
+import { ContactMail } from '../interfaces/ContactMail';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class CustomerService
   {
     return this.http.post<any>(`${environment.apiURL}/Customers/register`, body, { withCredentials: true });
   }
+
+  public sendMail(mail: ContactMail): Observable<any> {
+    return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);
+  }
+
 }
 
 /*

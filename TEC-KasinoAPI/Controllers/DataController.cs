@@ -28,5 +28,6 @@ namespace TEC_KasinoAPI.Controllers
 
 			return Ok(countries);
 		}
+
 	}
 }

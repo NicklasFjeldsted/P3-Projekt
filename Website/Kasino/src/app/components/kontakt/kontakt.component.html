@@ -1,0 +1,36 @@
+<body>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-control v-center h-center">
+		<div class="form-header">
+			<h1>Kontakt os</h1>
+		</div>
+		<div class="main-container">
+			<div class="form-row form-down">
+				<div class="input-section">
+				<label for="name">Navn</label>
+				<input class="form-input" id="name" placeholder="Dit fulde navn" formControlName="Fullname">
+				</div>
+			</div>
+			<div class="form-row form-down">
+				<div class="input-section">
+					<label for="email">E-mail</label>
+					<input class="form-input" id="email" placeholder="Hvor vi skal kontakte dig" formControlName="Email">
+				</div>
+			</div>
+			<div class="form-row form-down">
+				<div class="input-section">
+					<label for="subject">Emne</label>
+					<input class="form-input" id="subject" placeholder="Årsag" maxlength="70" formControlName="Subject">
+				</div>
+			</div>
+			<div class="form-row form-down">
+				<div class="input-section" >
+					<label for="message" class="form-label">Besked</label>
+					<textarea class="form-input form-textarea" id="message" placeholder="Forklar dit problem" maxlength="300" formControlName="Message"></textarea>
+				</div>
+			</div>
+			<div class="form-row form-down">
+				<button type="submit" class="submit-button" [disabled]="!form.valid" >Send besked</button>
+			</div>
+		</div>
+	</form>
+</body>
