@@ -47,7 +47,7 @@
 	max-height: 250px;
 	height: 100px;
 	resize: none;
-	padding: 10px;
+	font-size: .875rem;
 }
 
 .submit-button {
@@ -57,7 +57,7 @@
 	height: 50px;
 }
 
-.form-row input:focus {
+.form-row .form-input:focus   {
 	outline: none;
 	border: 1px solid #808080 !important;
   }

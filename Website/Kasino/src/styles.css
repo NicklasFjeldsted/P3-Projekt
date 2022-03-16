@@ -243,6 +243,10 @@ a
   margin-bottom: 10px;
 }
 
+.form-input:focus {
+  outline: none;
+}
+
 .form-row
 {
   position: relative;

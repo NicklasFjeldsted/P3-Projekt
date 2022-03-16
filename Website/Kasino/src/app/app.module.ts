@@ -32,6 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { KontaktComponent } from './components/kontakt/kontakt.component';
+import { SupportComponent } from './components/support/support.component';
 
 
 
@@ -46,7 +47,8 @@ import { KontaktComponent } from './components/kontakt/kontakt.component';
     HomeComponent,
     BlackjackComponent,
     TilmeldComponent,
-    KontaktComponent
+    KontaktComponent,
+    SupportComponent
   ],
   imports: [
     BrowserModule,

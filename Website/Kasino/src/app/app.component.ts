@@ -8,16 +8,18 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
   animations: [
     trigger('openSidenav', [
       state('open', style({
-        left: '0'
+        left: '0',
+        opacity: '1'
       })),
       state('closed', style({
-        left: '-250px'
+        left: '-250px',
+        opacity: '.3'
       })),
       transition('open => closed', [
-        animate('0.2s ease')
+        animate('0.3s ease')
       ]),
       transition('closed => open', [
-        animate('0.2s ease')
+        animate('0.3s ease')
       ])
     ])
   ],
