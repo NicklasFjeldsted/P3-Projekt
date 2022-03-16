@@ -1,7 +1,5 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { IUser, User } from 'src/app/interfaces/User';
-import { SignalrService } from 'src/app/services/signalr.service';
-
+import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
+import { Game } from 'src/app/game-engine';
 
 @Component({
   selector: 'app-blackjack',
@@ -13,51 +11,10 @@ import { SignalrService } from 'src/app/services/signalr.service';
 
 export class BlackjackComponent implements OnInit {
 
-  constructor(public signalrService: SignalrService) {}
-
-  messages: string[] = [];
-  author: string;
-
-  ngOnInit(): void {
-      this.signalrService.StartConnection().then(() => {
-        this.signalrService.GetUser().subscribe(user => this.JoinRoom(user));
-      }); // Starts connection
-
-      this.signalrService.hubConnection.on("JoinRoomResponse", (user) => this.OnJoinRoom(JSON.parse(user)));
-      this.signalrService.hubConnection.on("ReceiveMessage", (author, message) => this.ReceiveMessage(author, message));
-  }
-
-  JoinRoom(user: IUser): void {
-    this.author = user.fullName!;
-    this.signalrService.hubConnection.invoke("JoinRoom", JSON.stringify(user)).catch(error => console.log(error));
-  }
-
-  OnJoinRoom(user: IUser): void {
-    console.log("hello" + user.fullName);
-    this.SendMessage("Server", user.fullName + " has joined!")
-  }
-
-  SendMessage(author: string, message: string): void {
-    this.signalrService.hubConnection.invoke("SendMessage", author, message)
-      .catch(error => console.error(error));
-  }
-
-  ReceiveMessage(author: string, message: string)
+  constructor(private elementRef: ElementRef) { }
+  
+  ngOnInit(): void
   {
-    this.messages.push(author + ": " + message);
+    new Game(this.elementRef.nativeElement).Awake();
   }
-
-  PingServer(): void
-  {
-    let conn = this.signalrService.hubConnection.connectionId;
-    this.signalrService.hubConnection.invoke("PingServer", conn, conn).catch(error => console.error(error));
-  }
-
-
-
-  onKeydown(event: any): void{
-    event.preventDefault();
-  }
-
-
 }

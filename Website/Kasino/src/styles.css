@@ -21,6 +21,15 @@
   background-color: white!important;
 }
 
+/* Canvas styling */
+canvas {
+  margin: 0;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
 /* Makes the body equal to the device's screen width and height. */
 body

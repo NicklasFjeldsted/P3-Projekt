@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "",
+            "outputPath": "//10.0.6.2/www",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -30,7 +30,7 @@
           },
           "configurations": {
             "production": {
-              "assets": ["src/favicon.ico", "src/assets","src/web.config"],
+              "assets": ["src/favicon.ico", "src/assets", "src/web.config"],
               "budgets": [
                 {
                   "type": "initial",
@@ -52,7 +52,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "assets": ["src/favicon.ico", "src/assets","src/web.config"],
+              "assets": ["src/favicon.ico", "src/assets", "src/web.config"],
               "outputPath": "dist",
               "buildOptimizer": false,
               "optimization": false,
