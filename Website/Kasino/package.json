@@ -28,6 +28,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@microsoft/signalr": "^6.0.2",
     "font-awesome": "^4.7.0",
+    "jest": "^27.5.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "ng-click-outside": "^9.0.1",

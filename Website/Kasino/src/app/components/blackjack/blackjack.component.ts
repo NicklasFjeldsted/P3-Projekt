@@ -2,7 +2,7 @@ import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
 import { Game } from 'src/app/game-engine';
 
 @Component({
-  selector: 'app-blackjack',
+  selector: 'game',
   templateUrl: './blackjack.component.html',
   styleUrls: ['./blackjack.component.css']
 })
