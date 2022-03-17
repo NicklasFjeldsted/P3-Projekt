@@ -1,6 +1,7 @@
 import { Entity, Vector2 } from "../utils";
 import { Node } from "../node";
 import { Settings } from "../settings";
+import { GridOnclickComponent } from "./components";
 
 export class Grid extends Entity
 {
@@ -21,6 +22,8 @@ export class Grid extends Entity
 	// Awake this grid entity and all of its node children.
 	public override Awake(): void
 	{
+		this.AddComponent(new GridOnclickComponent())
+
 		super.Awake();
 
 		this.InitNodes();

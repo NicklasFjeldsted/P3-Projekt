@@ -1,5 +1,7 @@
 import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
-import { Game } from 'src/app/game-engine';
+import { Game, Grid } from 'src/app/game-engine';
+import { Fleet } from 'src/app/game-engine/fleet';
+import { Team } from 'src/app/game-engine/team';
 
 @Component({
   selector: 'game',
@@ -15,6 +17,7 @@ export class BlackjackComponent implements OnInit {
   
   ngOnInit(): void
   {
-    new Game().Awake();
+    const grid = new Grid();
+    new Game(grid, new Fleet(Team.A, grid), new Fleet(Team.B, grid)).Awake();
   }
 }

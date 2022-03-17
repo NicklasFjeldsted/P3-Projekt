@@ -6,9 +6,11 @@ import { GameInputComponent } from './components';
 
 export class Game extends Entity
 {
-	constructor()
+	constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet)
 	{
 		super();
+
+		this._entities.push(grid, fleetA, fleetB);
 	}
 
 	private _entities: Entity[] = [];
@@ -27,11 +29,6 @@ export class Game extends Entity
 		this.AddComponent(new GameInputComponent());
 
 		super.Awake();
-
-		const grid = new Grid();
-
-		// Adding entities to the game.
-		this._entities.push(grid, new Fleet(Team.A, grid), new Fleet(Team.B, grid));
 
 		// Awake all the entities in the game.
 		for (const entity of this.Entities)

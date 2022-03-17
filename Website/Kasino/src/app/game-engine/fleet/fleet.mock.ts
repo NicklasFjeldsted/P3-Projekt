@@ -1,5 +1,5 @@
 import { Fleet } from "./fleet";
 import { Team } from "../team";
-import { Grid } from "../grid";
+import { Grid, mockGridFactory } from "../grid";
 
-export const mockFleetFactory = (team = Team.A, grid = new Grid()): Fleet => new Fleet(team, grid);
+export const mockFleetFactory = (team = Team.A, grid = mockGridFactory()): Fleet => new Fleet(team, grid);
