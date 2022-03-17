@@ -9,7 +9,12 @@ export class ShipDrawComponent implements IComponent
 
 	private get Position(): Vector2
 	{
-		return new Vector2(100, 100);
+		const position = this.Entity.Position;
+		if (!position)
+		{
+			throw new Error('Attempted to draw sip that has no position!');
+		}
+		return position;
 	};
 
 	Awake(): void

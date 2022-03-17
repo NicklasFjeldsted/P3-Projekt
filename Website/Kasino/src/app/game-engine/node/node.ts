@@ -20,6 +20,11 @@ export class Node extends Entity
 		)
 	};
 
+	public get Center(): Vector2
+	{
+		return new Vector2(this.Start.x + this.Size.x / 2, this.Start.y + this.Size.y / 2);
+	}
+
 	public override Awake(): void
 	{
 		this.AddComponent(new NodeDrawComponent());

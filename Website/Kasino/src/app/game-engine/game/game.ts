@@ -25,7 +25,9 @@ export class Game extends Entity
 	{
 		super.Awake();
 
-		this._entities.push(new Grid(6, 100), new Fleet(Team.A), new Fleet(Team.B));
+		const grid = new Grid();
+
+		this._entities.push(grid, new Fleet(Team.A, grid), new Fleet(Team.B, grid));
 
 		// Awake all the entities in the game.
 		for (const entity of this.Entities)

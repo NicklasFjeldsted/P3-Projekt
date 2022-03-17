@@ -4,7 +4,7 @@ import { Settings } from "../settings";
 
 export class Grid extends Entity
 {
-	constructor(private gridSize:number, private nodeSize: number)
+	constructor()
 	{
 		super();
 	}
