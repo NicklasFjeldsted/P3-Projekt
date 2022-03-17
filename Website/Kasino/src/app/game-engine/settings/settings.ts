@@ -5,7 +5,10 @@ export const Settings = Object.freeze({
 		dimension: 6,
 		nodeSize: 100,
 		nodeOffset: 10,
-		color: new Color(50, 50, 50, 1)
+		color: {
+			regular: new Color(35, 39, 42, 1),
+			active: new Color(215, 215, 215, 1)
+		}
 	},
 	ships: { // This is the settings for all things ship related.
 		fleetSize: 3,

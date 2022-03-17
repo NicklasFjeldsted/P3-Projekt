@@ -2,6 +2,7 @@ import { Fleet } from '../fleet';
 import { Grid } from '../grid';
 import { Team } from '../team';
 import { Entity } from '../utils';
+import { GameInputComponent } from './components';
 
 export class Game extends Entity
 {
@@ -23,6 +24,8 @@ export class Game extends Entity
 	// Then begin the game loop.
 	public override Awake(): void
 	{
+		this.AddComponent(new GameInputComponent());
+
 		super.Awake();
 
 		const grid = new Grid();

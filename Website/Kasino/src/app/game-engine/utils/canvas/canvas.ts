@@ -38,6 +38,34 @@ export class Canvas implements IAwake
 		this._context = ctx;
 	}
 
+	/** Calculates the local canvas mouse position from the global mouse position. */
+	public CalculateLocalPointFrom(globalPoint: Vector2): Vector2 | null
+	{
+		const canvasRect = this._element.getBoundingClientRect();
+		const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+		const offset = {
+			top: canvasRect.top + scrollTop,
+			left: canvasRect.left + scrollLeft
+		}
+
+		const x = globalPoint.x - offset.left;
+		const y = globalPoint.y - offset.top;
+
+		if (x < 0 || y < 0)
+		{
+			return null;
+		}
+
+		if (x > offset.left + canvasRect.width || y > offset.top + canvasRect.height)
+		{
+			return null;
+		}
+
+		return new Vector2(x, y);
+	}
+
 	/** Add CSS styles to the canvas element. */
 	public SetStyle(style: Partial<CSSStyleDeclaration>): void
 	{

@@ -11,13 +11,14 @@ export class NodeDrawComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
-
+		this.Clear();
+		this.Draw();
 	}
 
 	/** Draw a node to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.Background.FillRect(this.Entity.Start, this.Entity.Size, Settings.grid.color);
+		CanvasLayer.Background.FillRect(this.Entity.Start, this.Entity.Size, this.Entity.IsActive ? Settings.grid.color.active : Settings.grid.color.regular);
 	}
 
 	/** Clear a node from the canvas. */

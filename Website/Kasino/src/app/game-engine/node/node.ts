@@ -1,4 +1,4 @@
-import { Entity, Vector2 } from "../utils";
+import { CanvasLayer, Entity, Vector2 } from "../utils";
 import { NodeDrawComponent } from "./components";
 
 export class Node extends Entity
@@ -11,6 +11,9 @@ export class Node extends Entity
 	{
 		super();
 	}
+
+	/** **TEMPORARY** */
+	public IsActive = false;
 
 	// Calculate the size of this Node entity.
 	/** Public getter for the Size of this Node. */
@@ -34,5 +37,31 @@ export class Node extends Entity
 		this.AddComponent(new NodeDrawComponent());
 
 		super.Awake();
+	}
+
+	/** Return true if the point argument is within this Node. */
+	public Occupies(point: Vector2): boolean
+	{
+		if (point.x < this.Start.x)
+		{
+			return false;
+		}
+
+		if (point.x > this.End.x)
+		{
+			return false;
+		}
+
+		if (point.y < this.Start.y)
+		{
+			return false;
+		}
+
+		if (point.y > this.End.y)
+		{
+			return false;
+		}
+
+		return true;
 	}
 }
