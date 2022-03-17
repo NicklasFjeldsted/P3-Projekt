@@ -33,7 +33,7 @@ export class CanvasLayer
 	private static InitCanvas(style: Partial<CSSStyleDeclaration>): Canvas
 	{
 		const size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
-		const canvas = new Canvas(new Vector2(size, size));
+		const canvas = new Canvas(new Vector2(960, 600));
 
 		canvas.Awake();
 		canvas.SetStyle(style);

@@ -115,6 +115,6 @@ export class Canvas implements IAwake
 	/** Draws and image to the canvas. */
 	public DrawImage(source: CanvasImageSource, transform: Transform): void
 	{
-		this._context.drawImage(source, transform.position.x, transform.position.y);
+		this._context.drawImage(source, transform.position.x, transform.position.y, transform.position.x, transform.position.y);
 	}
 }

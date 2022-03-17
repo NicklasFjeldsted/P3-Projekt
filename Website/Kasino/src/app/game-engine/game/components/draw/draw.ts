@@ -25,7 +25,10 @@ export class SpriteRendererComponent implements IComponent
 	/** Draw a node to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.Foreground.DrawImage(this._image, this.gameObject.transform);
+		this._image.onload = () =>
+		{
+			CanvasLayer.Foreground.DrawImage(this._image, this.gameObject.transform);
+		}
 	}
 
 	/** Clear a node from the canvas. */

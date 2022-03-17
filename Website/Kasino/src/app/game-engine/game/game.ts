@@ -1,4 +1,5 @@
 import { Fleet } from '../fleet';
+import { GameObject } from '../gameObject';
 import { Grid } from '../grid';
 import { Entity } from '../utils';
 import { GameInputComponent } from './components';
@@ -6,12 +7,15 @@ import { SpriteRendererComponent } from './components/draw';
 
 export class Game extends Entity
 {
-	constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet)
+	constructor()
 	{
 		super();
 
-		this._entities.push(grid, fleetA, fleetB);
-		this._entities.push()
+		let go: GameObject = new GameObject();
+		go.AddComponent(new SpriteRendererComponent());
+		go.GetComponent(SpriteRendererComponent).image = '../../../assets/media/cards.png';
+		
+		this._entities.push(go);
 	}
 
 	private _entities: Entity[] = [];

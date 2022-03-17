@@ -17,8 +17,7 @@ export class BlackjackComponent implements OnInit {
   
   ngOnInit(): void
   {
-    const grid = new Grid();
-    let game = new Game(grid, new Fleet(Team.A, grid), new Fleet(Team.B, grid));
+    let game = new Game();
 
     game.Load().then(() => { game.Awake(); }).catch(() => { console.log("Something went wrong!") })
   }
