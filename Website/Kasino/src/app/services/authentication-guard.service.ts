@@ -11,7 +11,7 @@ export class AuthenticationGuard implements CanActivate
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean
   {
     const currentUser = this.authenticationService.userValue;
-    if (currentUser)
+    if (currentUser.jwtToken)
     {
       // logged in so return true
       return true;
