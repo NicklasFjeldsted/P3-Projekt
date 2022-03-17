@@ -15,6 +15,7 @@ export class Ship extends Entity
 		this._locomotionComponent.Node = node;
 	}
 
+	/** Public getter for the position of the ship. */
 	public get Position(): Vector2 | null
 	{
 		return this._locomotionComponent.Position;

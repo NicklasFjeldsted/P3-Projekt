@@ -5,16 +5,16 @@ export class Color
 	public readonly B: number;
 	public readonly A: number;
 
-	// Validate that a channel value is acceptable.
-	public static IsValidChannel(v: number, isAlpha = false): boolean
+	/** Validate that a channel value is acceptable. */
+	public static IsValidChannel(value: number, isAlpha = false): boolean
 	{
 		const max = isAlpha ? 1 : 255;
-		if (v < 0 || v > max)
+		if (value < 0 || value > max)
 		{
 			return false;
 		}
 
-		if (!isAlpha && v % 1 !== 0)
+		if (!isAlpha && value % 1 !== 0)
 		{
 			return false;
 		}
@@ -53,12 +53,13 @@ export class Color
 
 	// Because we are using a canvas to draw objects the color must be a string
 	// so we convert our numbers to an rgba style with out values.
+	/** Convert this Color object to a CSS friendly 'rgba'. */
 	public AsString(): string
 	{
 		return `rgba(${this.R}, ${this.G}, ${this.B}, ${this.A})`;
 	}
 
-	// Convert an "rgba" string to a color object.
+	/** Convert an CSS friendly 'rgba' string to a Color object. */
 	public static FromString(stringColor: string): Color
 	{
 		// Removes everything from the string except for colors and comma, then split the string seperated by comma

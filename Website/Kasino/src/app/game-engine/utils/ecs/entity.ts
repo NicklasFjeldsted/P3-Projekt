@@ -6,17 +6,16 @@ type constr<T> = { new(...args: unknown[]): T; };
 export abstract class Entity implements IUpdate, IAwake
 {
 	// Create a protected array of IComponents.
-	// This is the entire list of components associated
-	// with this entity.
+	/** This is the entire array of components associated with this entity. */
 	protected _components: IComponent[] = [];
 
-	// Get all components on this entity.
+	/** Public getter for the all components on this entity. */
 	public get Components(): IComponent[]
 	{
 		return this._components;
 	};
 
-	// Add a new component to this entity.
+	/** Add a new component to this entity. */
 	public AddComponent(component: IComponent): void
 	{
 		this._components.push(component);
@@ -28,7 +27,7 @@ export abstract class Entity implements IUpdate, IAwake
 	// The "constr" will take the constructor from the argument class
 	// and build a temporary class with the same attributes.
 	// This archetype is used througout this file.
-	// This function finds and returns an IComponent from this entity.
+	/** Get a Component from this entity. */
 	public GetComponent<C extends IComponent>(constr: constr<C>): C
 	{
 		for (const component of this._components)
@@ -43,7 +42,7 @@ export abstract class Entity implements IUpdate, IAwake
 		throw new Error(`Component ${constr.name} not found on Entity ${this.constructor.name}!`);
 	}
 
-	// This function removes an IComponent from this entity.
+	/** Remove a Component from this entity. */
 	public RemoveComponent<C extends IComponent>(constr: constr<C>): void
 	{
 		let toRemove: IComponent | undefined;
@@ -77,6 +76,7 @@ export abstract class Entity implements IUpdate, IAwake
 
 	// This function returns true if the component array on this entity has
 	// the component that is equal to the argument.
+	/** Returns whether or not this entity contains a Component of the argument. */
 	public HasComponent<C extends IComponent>(constr: constr<C>): boolean
 	{
 		for (const component of this._components)
@@ -93,6 +93,7 @@ export abstract class Entity implements IUpdate, IAwake
 
 	// This function is a part of the start up of the game loop.
 	// This entity will also call the Awake function of all the components in this entities component array.
+	/** This is the first call made to this entity when the game compiles. */
 	public Awake(): void
 	{
 		for (const component of this._components)
@@ -103,6 +104,7 @@ export abstract class Entity implements IUpdate, IAwake
 
 	// This function is a part of the game loop and will be called everyframe.
 	// This entity will also call the Update function of all the components in this entities component array.
+	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */
 	public Update(deltaTime: number): void
 	{
 		for (const component of this._components)

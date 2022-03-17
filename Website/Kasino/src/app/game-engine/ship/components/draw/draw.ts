@@ -7,6 +7,8 @@ export class ShipDrawComponent implements IComponent
 {
 	public Entity: Ship;
 
+	// Get the position of this entity for drawing the ship to the canvas.
+	// It will throw an error if the position of the entity is null.
 	private get Position(): Vector2
 	{
 		const position = this.Entity.Position;
@@ -28,6 +30,7 @@ export class ShipDrawComponent implements IComponent
 
 	}
 
+	/** Draw a ship to the canvas. */
 	private Draw(): void
 	{ 
 		const colors = Settings.ships.colors;
@@ -35,6 +38,7 @@ export class ShipDrawComponent implements IComponent
 		CanvasLayer.Foreground.FillCircle(this.Position, Settings.ships.radius, color);
 	}
 
+	/** Clear a ship from the canvas. */
 	private Clear(): void
 	{
 		CanvasLayer.Foreground.ClearRect(

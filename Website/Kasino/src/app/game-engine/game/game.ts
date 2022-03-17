@@ -27,6 +27,7 @@ export class Game extends Entity
 
 		const grid = new Grid();
 
+		// Adding entities to the game.
 		this._entities.push(grid, new Fleet(Team.A, grid), new Fleet(Team.B, grid));
 
 		// Awake all the entities in the game.
@@ -48,12 +49,12 @@ export class Game extends Entity
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
-		// Milliseconds I think
+		// deltaTime will look something like 0.283192 milliseconds
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 
 		super.Update(deltaTime);
 
-		// Update all the entities in the game.
+		// Update all the entities in this game.
 		for (const entity of this.Entities)
 		{
 			entity.Update(deltaTime);

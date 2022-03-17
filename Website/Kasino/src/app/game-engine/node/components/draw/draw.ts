@@ -1,5 +1,4 @@
 import { CanvasLayer, IComponent, Node, Settings } from 'src/app/game-engine';
-import { Color, Vector2 } from 'src/app/game-engine/utils';
 
 export class NodeDrawComponent implements IComponent
 {
@@ -15,16 +14,15 @@ export class NodeDrawComponent implements IComponent
 
 	}
 
+	/** Draw a node to the canvas. */
 	private Draw(): void
 	{
 		CanvasLayer.Background.FillRect(this.Entity.Start, this.Entity.Size, Settings.grid.color);
 	}
 
+	/** Clear a node from the canvas. */
 	private Clear(): void
 	{
-		// CanvasLayer.Background.ClearRect(
-		// 	new Vector2(this.Position.x - Settings.grid.nodeSize / 2, this.Position.y - Settings.grid.nodeSize / 2),
-		// 	new Vector2(Settings.grid.nodeSize, Settings.grid.nodeSize)
-		// );
+		CanvasLayer.Background.ClearRect(this.Entity.Start, this.Entity.Size);
 	}
 }

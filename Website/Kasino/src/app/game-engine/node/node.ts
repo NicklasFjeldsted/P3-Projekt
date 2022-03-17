@@ -12,6 +12,8 @@ export class Node extends Entity
 		super();
 	}
 
+	// Calculate the size of this Node entity.
+	/** Public getter for the Size of this Node. */
 	public get Size(): Vector2
 	{
 		return new Vector2(
@@ -20,6 +22,8 @@ export class Node extends Entity
 		)
 	};
 
+	// Calculate the center position of this Node entity.
+	/** Public getter for the center position of this Node. */
 	public get Center(): Vector2
 	{
 		return new Vector2(this.Start.x + this.Size.x / 2, this.Start.y + this.Size.y / 2);

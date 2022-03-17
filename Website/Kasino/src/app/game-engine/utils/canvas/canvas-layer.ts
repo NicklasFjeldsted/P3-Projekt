@@ -7,7 +7,7 @@ export class CanvasLayer
 
 	private constructor() { }
 	
-	// Return the background canvas layer if it exists else create it and return it.
+	/** Public getter for the background canvas layer if it does not exist create it and return it. */
 	public static get Background(): Canvas
 	{
 		if (!this._background)
@@ -18,7 +18,7 @@ export class CanvasLayer
 		return this._background;
 	}
 
-	// Return the foreground canvas layer if it exists else create it and return it.
+	/** Public getter for the foreground canvas layer if it does not exist create it and return it. */
 	public static get Foreground(): Canvas
 	{
 		if (!this._foreground)
@@ -29,7 +29,7 @@ export class CanvasLayer
 		return this._foreground;
 	}
 
-	// Create a new canvas.
+	/** Create a new canvas. */
 	private static InitCanvas(style: Partial<CSSStyleDeclaration>): Canvas
 	{
 		const size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;

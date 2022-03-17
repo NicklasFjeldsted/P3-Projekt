@@ -9,8 +9,10 @@ export class Grid extends Entity
 		super();
 	}
 
+	/** An array of all the nodes on this Grid. */
 	private _nodes: Node[] = [];
 
+	/** Public getter for the nodes associated with this Grid. */
 	public get Nodes(): Node[]
 	{
 		return this._nodes;
@@ -40,13 +42,14 @@ export class Grid extends Entity
 		}
 	}
 
+	/** Create the grids nodes. */
 	private InitNodes(): void
 	{
-		// const size = this.nodeSize;
-		// const offset = this.gridSize;
+		// Get the grid settings.
 		const size = Settings.grid.nodeSize;
 		const offset = Settings.grid.nodeOffset;
 
+		// Loop the specified dimension amount both horizontally and vertically.
 		for (let y = 0; y < Settings.grid.dimension; y++)
 		{
 			for (let x = 0; x < Settings.grid.dimension; x++)

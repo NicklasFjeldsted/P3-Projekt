@@ -11,6 +11,7 @@ export class Fleet extends Entity
 		super();
 	}
 
+	// This is a reference to all the ships that belong to this fleet.
 	private _ships: Ship[] = [];
 
 	public override Awake(): void
@@ -27,6 +28,7 @@ export class Fleet extends Entity
 		this._ships.map(ship => ship.Update(deltaTime));
 	}
 
+	/** Spawn ships as described in the Settings. */
 	private PrepareShips(): void
 	{
 		const fleetSize = Settings.ships.fleetSize;

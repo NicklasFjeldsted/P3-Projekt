@@ -7,11 +7,13 @@ export class Canvas implements IAwake
 	private _element: HTMLCanvasElement;
 	private _context: CanvasRenderingContext2D;
 
+	/** Public getter for the canvas element. */
 	public get Element(): HTMLCanvasElement
 	{
 		return this._element;
 	}
 
+	/** Public getter for the context of the 2D canvas rendering. */
 	public get Context(): CanvasRenderingContext2D
 	{
 		return this._context;
@@ -36,7 +38,7 @@ export class Canvas implements IAwake
 		this._context = ctx;
 	}
 
-	// Add CSS styles to the canvas element.
+	/** Add CSS styles to the canvas element. */
 	public SetStyle(style: Partial<CSSStyleDeclaration>): void
 	{
 		for (const key in style)
@@ -58,7 +60,7 @@ export class Canvas implements IAwake
 		}
 	}
 
-	// Draws a square on the canvas.
+	/** Draws a square on the canvas. */
 	public FillRect(start: Vector2, size: Vector2, color: Color): void
 	{
 		this._context.beginPath();
@@ -67,7 +69,7 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
-	// Draws a circle on the canvas.
+	/** Draws a circle on the canvas. */
 	public FillCircle(center: Vector2, radius: number, color: Color): void
 	{
 		this._context.beginPath();
@@ -76,7 +78,7 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
-	// Clear a square on the canvas.
+	/** Clear a rect from the canvas. */
 	public ClearRect(start: Vector2, size: Vector2): void
 	{
 		this._context.clearRect(start.x, start.y, size.x, size.y);
