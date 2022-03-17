@@ -1,22 +1,22 @@
 import { Fleet } from '../fleet';
 import { Grid } from '../grid';
-import { Team } from '../team';
-import { GameObject } from '../utils';
+import { Entity } from '../utils';
 import { GameInputComponent } from './components';
 import { SpriteRendererComponent } from './components/draw';
 
-export class Game extends GameObject
+export class Game extends Entity
 {
 	constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet)
 	{
 		super();
 
 		this._entities.push(grid, fleetA, fleetB);
+		this._entities.push()
 	}
 
-	private _entities: GameObject[] = [];
+	private _entities: Entity[] = [];
 
-	public get GameObjects(): GameObject[]
+	public get GameObjects(): Entity[]
 	{
 		return this._entities;
 	}
@@ -57,8 +57,6 @@ export class Game extends GameObject
 	public override Awake(): void
 	{
 		console.warn("GAME - Awoken");
-
-		this.AddComponent(new GameInputComponent());
 
 		super.Awake();
 

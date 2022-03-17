@@ -1,4 +1,5 @@
-import { GameObject, IComponent } from "../ecs";
+import { IComponent } from "../ecs";
+import { GameObject } from "../../gameObject";
 import { Vector2 } from "../vector2";
 
 export abstract class OnclickComponent implements IComponent

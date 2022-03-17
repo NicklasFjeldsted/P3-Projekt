@@ -1,4 +1,5 @@
-import { CanvasLayer, GameObject, IComponent, Vector2 } from "src/app/game-engine/utils";
+import { GameObject } from "src/app/game-engine/gameObject";
+import { CanvasLayer, IComponent, Vector2 } from "src/app/game-engine/utils";
 
 export class SpriteRendererComponent implements IComponent
 {

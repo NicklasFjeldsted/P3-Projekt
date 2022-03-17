@@ -1,10 +1,11 @@
 import { IComponent, Vector2 } from "src/app/game-engine/utils";
 import { Node } from "src/app/game-engine/node";
 import { Ship } from "../../ship";
+import { GameObject } from "src/app/game-engine/gameObject";
 
 export class ShipLocomotionComponent implements IComponent
 {
-	public gameObject: Ship;
+	public gameObject: GameObject;
 
 	// Since the ship is only supposed to move to and from nodes
 	// there is a reference to the current Node the ship is "assigned" to.

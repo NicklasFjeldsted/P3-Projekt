@@ -1,9 +1,9 @@
-import { GameObject, Vector2 } from "../utils";
+import { Entity, Vector2 } from "../utils";
 import { Node } from "../node";
 import { Settings } from "../settings";
 import { GridOnclickComponent } from "./components";
 
-export class Grid extends GameObject
+export class Grid extends Entity
 {
 	constructor()
 	{
@@ -22,7 +22,7 @@ export class Grid extends GameObject
 	// Awake this grid entity and all of its node children.
 	public override Awake(): void
 	{
-		this.AddComponent(new GridOnclickComponent())
+		//this.AddComponent(new GridOnclickComponent())
 
 		super.Awake();
 

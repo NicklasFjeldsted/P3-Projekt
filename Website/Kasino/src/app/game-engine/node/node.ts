@@ -1,7 +1,7 @@
-import { GameObject, Vector2 } from "../utils";
+import { Entity, Vector2 } from "../utils";
 import { NodeDrawComponent } from "./components";
 
-export class Node extends GameObject
+export class Node extends Entity
 {
 	constructor(
 		public readonly Start: Vector2,
@@ -34,7 +34,7 @@ export class Node extends GameObject
 
 	public override Awake(): void
 	{
-		this.AddComponent(new NodeDrawComponent());
+		//this.AddComponent(new NodeDrawComponent());
 
 		super.Awake();
 	}

@@ -1,10 +1,10 @@
-import { GameObject } from "../utils";
+import { Entity } from "../utils";
 import { Team } from "../team";
 import { Ship } from "../ship";
 import { Settings } from "../settings";
 import { Grid } from "../grid";
 
-export class Fleet extends GameObject
+export class Fleet extends Entity
 {
 	constructor(public readonly Team: Team, private readonly _grid: Grid)
 	{

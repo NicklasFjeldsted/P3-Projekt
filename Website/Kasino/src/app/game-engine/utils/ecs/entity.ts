@@ -1,7 +1,5 @@
 import { IComponent } from './component.h';
 import { IUpdate, IAwake } from '../lifecycle';
-import { Transform } from '../transform';
-import { Vector3 } from '../vector3';
 
 // Read up on JavaScript prototype inheritance.
 // This Type basicly is this "thing" must be a function AND has to extend <T>
@@ -9,15 +7,8 @@ type AbstractComponent<T> = Function & { prototype: T; };
 
 type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
-export abstract class GameObject implements IUpdate, IAwake
+export abstract class Entity implements IUpdate, IAwake
 {
-	public transform: Transform;
-
-	constructor()
-	{
-		this.transform = new Transform(new Vector3(0, 0, 0), new Vector3(0, 0, 0), new Vector3(0, 0, 0));
-	}
-
 	// Create a protected array of IComponents.
 	/** This is the entire array of components associated with this entity. */
 	protected _components: IComponent[] = [];
@@ -29,10 +20,9 @@ export abstract class GameObject implements IUpdate, IAwake
 	};
 
 	/** Add a new component to this entity. */
-	public AddComponent(component: IComponent): void
+	protected AddComponent(component: IComponent): void
 	{
 		this._components.push(component);
-		component.gameObject = this;
 	}
 
 	// "C" is a generic class that conforms to IComponent.
