@@ -35,6 +35,8 @@ import { KontaktComponent } from './components/kontakt/kontakt.component';
 import { SupportComponent } from './components/support/support.component';
 import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/reglerOgBetingelser.component';
 import { OmOsComponent } from './components/om-os/om-os.component';
+import { RouletteComponent } from './components/roulette/roulette.component';
+import { SlotsComponent } from './components/slots/slots.component';
 
 
 
@@ -52,7 +54,9 @@ import { OmOsComponent } from './components/om-os/om-os.component';
     KontaktComponent,
     SupportComponent,
     ReglerOgBetingelserComponent,
-    OmOsComponent
+    OmOsComponent,
+    RouletteComponent,
+    SlotsComponent,
   ],
   imports: [
     BrowserModule,
