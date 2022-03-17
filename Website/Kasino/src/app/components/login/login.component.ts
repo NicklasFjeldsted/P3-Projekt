@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit
         {
           this.error = error;
           this.loading = false;
+          window.alert("Fejl ved login. Forkert E-mail eller adgangskode");
         }
       });
   }
