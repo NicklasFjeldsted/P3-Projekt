@@ -1,7 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
-<div class="bg-image">
-</div>
+<div class="bg-image"></div>
 <form data-multi-step class="multi-step-form form-control v-center h-center" [formGroup]="form" (ngSubmit)="signUp()">
 	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
 	<div class="data-input">
@@ -124,7 +123,7 @@
 				<img id="image" src="casino.jpg" alt="">
 			</div>
 			<h2 class="picture-title">Vælg mellem 2 forskellige velkomsttilbud</h2>
-			<p>Ved oprettelse af din konto hos TEC Kasino kan du vælge mellem disse to velkomstbonusser ved første indbetaling.</p>
+			<p>Ved oprettelse af en konto hos TEC-Kasino kan du vælge mellem to velkomstbonusser ved første indbetaling.</p>
 			<b style="font-weight: 700; font-size: .8125rem; line-height: 1.5;">Casino velkomsttilbud:</b>
 			<ul style="list-style-position: outside; margin-left: 50px; vertical-align: middle;">
 				<br>
@@ -132,7 +131,7 @@
 				<li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig. Går op til 500 kr.</li>
 			</ul>
 			<br>
-			<h4>Regler og betingelser</h4>
+			<a routerLink="/reglerOgBetingelser"><h4>Regler og betingelser</h4></a>
 			<br>
 		</div>
 	</div>

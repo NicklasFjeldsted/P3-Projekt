@@ -24,7 +24,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { RouterModule } from '@angular/router';
 import { appInitializer } from './helpers/app.initializer';
 import { DataService } from './services/data.service';
-import {MatNativeDateModule} from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +33,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { KontaktComponent } from './components/kontakt/kontakt.component';
 import { SupportComponent } from './components/support/support.component';
+import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/reglerOgBetingelser.component';
 
 
 
@@ -48,7 +49,8 @@ import { SupportComponent } from './components/support/support.component';
     BlackjackComponent,
     TilmeldComponent,
     KontaktComponent,
-    SupportComponent
+    SupportComponent,
+    ReglerOgBetingelserComponent
   ],
   imports: [
     BrowserModule,

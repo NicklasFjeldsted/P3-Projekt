@@ -10,6 +10,7 @@ import { BlackjackComponent } from './components/blackjack/blackjack.component';
 import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
 import { KontaktComponent } from './components/kontakt/kontakt.component';
 import { SupportComponent } from './components/support/support.component';
+import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/reglerOgBetingelser.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'kontakt', component: KontaktComponent},
   { path: 'support', component: SupportComponent},
+  { path: 'reglerOgBetingelser', component: ReglerOgBetingelserComponent},
   { path: '**', redirectTo: '' }
 ];
 
