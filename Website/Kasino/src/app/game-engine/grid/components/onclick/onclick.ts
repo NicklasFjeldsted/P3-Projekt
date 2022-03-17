@@ -3,7 +3,7 @@ import { Grid } from "../../grid";
 
 export class GridOnclickComponent extends OnclickComponent
 {
-	public Entity: Grid;
+	public gameObject: Grid;
 
 	public Awake(): void
 	{
@@ -17,7 +17,7 @@ export class GridOnclickComponent extends OnclickComponent
 
 	public ClickOn(point: Vector2): void
 	{
-		for (const node of this.Entity.Nodes)
+		for (const node of this.gameObject.Nodes)
 		{
 			node.IsActive = node.Occupies(point);
 		}

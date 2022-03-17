@@ -1,9 +1,9 @@
 import { Fleet } from "../fleet";
-import { Entity, Vector2 } from "../utils";
+import { GameObject, Vector2 } from "../utils";
 import { Node } from "../node";
 import { ShipDrawComponent, ShipLocomotionComponent } from "./components";
 
-export class Ship extends Entity
+export class Ship extends GameObject
 {
 	private readonly _locomotionComponent: ShipLocomotionComponent;
 

@@ -3,7 +3,7 @@ import { Game } from "../../game";
 
 export class GameInputComponent implements IComponent
 {
-	Entity: Game;
+	gameObject: Game;
 
 	Awake(): void
 	{
@@ -23,7 +23,7 @@ export class GameInputComponent implements IComponent
 			return;
 		}
 
-		for (const entity of this.Entity.Entities)
+		for (const entity of this.gameObject.GameObjects)
 		{
 			if (!entity.HasComponent(OnclickComponent))
 			{

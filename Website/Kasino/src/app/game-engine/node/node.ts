@@ -1,7 +1,7 @@
-import { CanvasLayer, Entity, Vector2 } from "../utils";
+import { GameObject, Vector2 } from "../utils";
 import { NodeDrawComponent } from "./components";
 
-export class Node extends Entity
+export class Node extends GameObject
 {
 	constructor(
 		public readonly Start: Vector2,

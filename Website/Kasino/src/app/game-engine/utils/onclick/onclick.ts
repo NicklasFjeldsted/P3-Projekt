@@ -1,9 +1,9 @@
-import { Entity, IComponent } from "../ecs";
-import { Vector2 } from "../vector2D";
+import { GameObject, IComponent } from "../ecs";
+import { Vector2 } from "../vector2";
 
 export abstract class OnclickComponent implements IComponent
 {
-	public abstract Entity: Entity | null;
+	public abstract gameObject: GameObject | null;
 	
 	public abstract Awake(): void;
 	public abstract Update(deltaTime: number): void;

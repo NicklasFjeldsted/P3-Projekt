@@ -5,13 +5,13 @@ import { Ship } from "../../ship";
 
 export class ShipDrawComponent implements IComponent
 {
-	public Entity: Ship;
+	public gameObject: Ship;
 
 	// Get the position of this entity for drawing the ship to the canvas.
 	// It will throw an error if the position of the entity is null.
 	private get Position(): Vector2
 	{
-		const position = this.Entity.Position;
+		const position = this.gameObject.Position;
 		if (!position)
 		{
 			throw new Error('Attempted to draw sip that has no position!');
@@ -34,7 +34,7 @@ export class ShipDrawComponent implements IComponent
 	private Draw(): void
 	{ 
 		const colors = Settings.ships.colors;
-		const color = this.Entity.Factory.Team === Team.A ? colors.a : colors.b;
+		const color = this.gameObject.Factory.Team === Team.A ? colors.a : colors.b;
 		CanvasLayer.Foreground.FillCircle(this.Position, Settings.ships.radius, color);
 	}
 

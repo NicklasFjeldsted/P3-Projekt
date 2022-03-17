@@ -1,10 +1,11 @@
 import { Fleet } from '../fleet';
 import { Grid } from '../grid';
 import { Team } from '../team';
-import { Entity } from '../utils';
+import { GameObject } from '../utils';
 import { GameInputComponent } from './components';
+import { SpriteRendererComponent } from './components/draw';
 
-export class Game extends Entity
+export class Game extends GameObject
 {
 	constructor(grid: Grid, fleetA: Fleet, fleetB: Fleet)
 	{
@@ -13,25 +14,56 @@ export class Game extends Entity
 		this._entities.push(grid, fleetA, fleetB);
 	}
 
-	private _entities: Entity[] = [];
+	private _entities: GameObject[] = [];
 
-	public get Entities(): Entity[]
+	public get GameObjects(): GameObject[]
 	{
 		return this._entities;
 	}
 
 	private _lastTimestamp = 0;
 
+	k = new Image();
+	
+	public async Load(): Promise<void>
+	{
+		this.k.src = '../../../assets/media/cards.png';
+		const toBeLoaded: any[] = [];
+
+		toBeLoaded.push(this.k);
+
+		new Promise(async (resolve, reject) =>
+		{
+			const finished = [];
+			for (let i = 0; i < toBeLoaded.length; i++)
+			{
+				toBeLoaded[ i ].onload = () =>
+				{
+					finished.push(toBeLoaded[ i ]);
+
+					if (finished.length >= toBeLoaded.length)
+					{
+						console.log("Finished loading..");
+						resolve(true);
+					}
+				}
+				console.log(`Ran: ${i + 1} times`);
+			}
+		});
+	}
+
 	// Start up the game and get the start time.
 	// Then begin the game loop.
 	public override Awake(): void
 	{
+		console.warn("GAME - Awoken");
+
 		this.AddComponent(new GameInputComponent());
 
 		super.Awake();
 
 		// Awake all the entities in the game.
-		for (const entity of this.Entities)
+		for (const entity of this.GameObjects)
 		{
 			entity.Awake();
 		}
@@ -55,7 +87,7 @@ export class Game extends Entity
 		super.Update(deltaTime);
 
 		// Update all the entities in this game.
-		for (const entity of this.Entities)
+		for (const entity of this.GameObjects)
 		{
 			entity.Update(deltaTime);
 		}

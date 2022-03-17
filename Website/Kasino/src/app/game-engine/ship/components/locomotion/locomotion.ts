@@ -4,7 +4,7 @@ import { Ship } from "../../ship";
 
 export class ShipLocomotionComponent implements IComponent
 {
-	public Entity: Ship;
+	public gameObject: Ship;
 
 	// Since the ship is only supposed to move to and from nodes
 	// there is a reference to the current Node the ship is "assigned" to.

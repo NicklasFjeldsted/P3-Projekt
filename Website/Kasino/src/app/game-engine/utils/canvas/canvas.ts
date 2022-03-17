@@ -1,4 +1,4 @@
-import { Vector2, IAwake, Color } from "src/app/game-engine";
+import { Vector2, IAwake, Color, Transform } from "src/app/game-engine";
 
 export class Canvas implements IAwake
 {
@@ -110,5 +110,11 @@ export class Canvas implements IAwake
 	public ClearRect(start: Vector2, size: Vector2): void
 	{
 		this._context.clearRect(start.x, start.y, size.x, size.y);
+	}
+
+	/** Draws and image to the canvas. */
+	public DrawImage(source: CanvasImageSource, transform: Transform): void
+	{
+		this._context.drawImage(source, transform.position.x, transform.position.y);
 	}
 }

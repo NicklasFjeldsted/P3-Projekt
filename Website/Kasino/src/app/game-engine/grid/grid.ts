@@ -1,9 +1,9 @@
-import { Entity, Vector2 } from "../utils";
+import { GameObject, Vector2 } from "../utils";
 import { Node } from "../node";
 import { Settings } from "../settings";
 import { GridOnclickComponent } from "./components";
 
-export class Grid extends Entity
+export class Grid extends GameObject
 {
 	constructor()
 	{

@@ -2,7 +2,7 @@ import { CanvasLayer, IComponent, Node, Settings } from 'src/app/game-engine';
 
 export class NodeDrawComponent implements IComponent
 {
-	public Entity: Node;
+	public gameObject: Node;
 
 	Awake(): void
 	{
@@ -18,12 +18,12 @@ export class NodeDrawComponent implements IComponent
 	/** Draw a node to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.Background.FillRect(this.Entity.Start, this.Entity.Size, this.Entity.IsActive ? Settings.grid.color.active : Settings.grid.color.regular);
+		CanvasLayer.Background.FillRect(this.gameObject.Start, this.gameObject.Size, this.gameObject.IsActive ? Settings.grid.color.active : Settings.grid.color.regular);
 	}
 
 	/** Clear a node from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.Background.ClearRect(this.Entity.Start, this.Entity.Size);
+		CanvasLayer.Background.ClearRect(this.gameObject.Start, this.gameObject.Size);
 	}
 }
