@@ -23,7 +23,13 @@ const routes: Routes = [
   { path: 'kontakt', component: KontaktComponent},
   { path: 'support', component: SupportComponent},
   { path: 'reglerOgBetingelser', component: ReglerOgBetingelserComponent},
-  { path: '**', redirectTo: '' }
+
+
+
+
+
+  
+  { path: '**', redirectTo: '' }  // MUST BE LAST IN THE ARRAY!
 ];
 
 @NgModule({
