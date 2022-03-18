@@ -1,6 +1,7 @@
 import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
 import { Game, GameObject, MonoBehaviour, Vector3 } from 'src/app/game-engine';
-import { SpriteRendererComponent } from 'src/app/game-engine/game/components/draw';
+import { SpriteRendererComponent, TextComponent } from 'src/app/game-engine/game/components/draw';
+import { House, Player } from './blackjack-game';
 
 @Component({
   selector: 'game',
@@ -17,9 +18,14 @@ export class BlackjackComponent implements OnInit {
   ngOnInit(): void
   {
     const game = Game.Instance;
-    const player: GameObject = new GameObject('House');
-    const house: GameObject = new GameObject('Player');
 
+    const player: GameObject = new GameObject('Player');
+    const house: GameObject = new GameObject('House');
+    house.AddComponent(House.Instance);
+    player.AddComponent(new Player());
+    player.AddComponent(new TextComponent('@playerCards'));
+    player.transform.position = new Vector3(20, 550, 0);
+    GameObject.FindOfType(Player);
 
 
 

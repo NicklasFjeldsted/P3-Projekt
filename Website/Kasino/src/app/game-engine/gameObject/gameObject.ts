@@ -7,12 +7,28 @@ type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
 export class GameObject extends Entity
 {
+	private static _gameObjects: GameObject[] = [];
+
+	/** Returns the first GameObjects with the given component. */
+	public static FindOfType<C extends IComponent>(constr: constr<C>): GameObject
+	{
+		for (const gameObject of this._gameObjects)
+		{
+			if (gameObject.HasComponent(constr))
+			{
+				return gameObject;
+			}
+		}
+		throw new Error(`No GameObject has ${constr.name}!`);
+	}
+
 	public gameObjectName: string;
 	public transform: Transform;
 	
 	constructor(name?: string)
 	{
 		super();
+		GameObject._gameObjects.push(this);
 		this.transform = new Transform();
 		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
 		Game.Instance.Instantiate(this);

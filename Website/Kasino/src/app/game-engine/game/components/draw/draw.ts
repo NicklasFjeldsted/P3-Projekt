@@ -35,3 +35,38 @@ export class SpriteRendererComponent implements IComponent
 		CanvasLayer.Foreground.ClearCanvas();
 	}
 }
+
+export class TextComponent implements IComponent
+{
+	public gameObject: GameObject;
+
+	public text: string = "Empty Text";
+
+	constructor(private startText?: string)
+	{
+		startText ? this.text = startText : null
+	}
+
+	Awake(): void
+	{
+		this.Draw();
+	}
+
+	Update(deltaTime: number): void
+	{
+		this.Clear();
+		this.Draw();
+	}
+
+	/** Draw Text to the canvas. */
+	private Draw(): void
+	{
+		CanvasLayer.UI.DrawText(this.text, this.gameObject.transform);
+	}
+
+	/** Clear Text from the canvas. */
+	private Clear(): void
+	{
+		CanvasLayer.UI.ClearCanvas();
+	}
+}

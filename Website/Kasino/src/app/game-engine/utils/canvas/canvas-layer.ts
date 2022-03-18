@@ -4,6 +4,7 @@ export class CanvasLayer
 { 
 	private static _background: Canvas;
 	private static _foreground: Canvas;
+	private static _ui: Canvas;
 
 	private constructor() { }
 	
@@ -24,6 +25,17 @@ export class CanvasLayer
 		if (!this._foreground)
 		{
 			this._foreground = this.InitCanvas({ zIndex: '1' });
+		}
+
+		return this._foreground;
+	}
+
+	/** Public getter for the ui canvas layer if it does not exist create it and return it. */
+	public static get UI(): Canvas
+	{
+		if (!this._foreground)
+		{
+			this._foreground = this.InitCanvas({ zIndex: '2' });
 		}
 
 		return this._foreground;
