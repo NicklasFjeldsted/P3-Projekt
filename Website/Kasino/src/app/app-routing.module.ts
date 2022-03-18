@@ -11,6 +11,9 @@ import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
 import { KontaktComponent } from './components/kontakt/kontakt.component';
 import { SupportComponent } from './components/support/support.component';
 import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/reglerOgBetingelser.component';
+import { OmOsComponent } from './components/om-os/om-os.component';
+import { RouletteComponent } from './components/roulette/roulette.component';
+import { SlotsComponent } from './components/slots/slots.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -23,6 +26,9 @@ const routes: Routes = [
   { path: 'kontakt', component: KontaktComponent},
   { path: 'support', component: SupportComponent},
   { path: 'reglerOgBetingelser', component: ReglerOgBetingelserComponent},
+  { path: 'om-os', component: OmOsComponent},
+  { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
+  { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
   
   
   

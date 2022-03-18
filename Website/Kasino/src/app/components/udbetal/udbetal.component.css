@@ -25,3 +25,34 @@
     border-top-right-radius: 0px;
   }
 }
+
+.kortnummer
+{
+  margin-top: -20px;
+  align-self: center; 
+  font-size: medium;
+}
+
+.text
+{
+  font-size: medium;
+  margin-left: 70px;
+}
+
+.self-center
+{
+  font-size: medium;
+}
+
+.columnbtn
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  border: 2px transparent;
+  max-width: 105px;
+}
