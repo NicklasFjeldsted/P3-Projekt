@@ -10,20 +10,24 @@
 
 
 .searchbar-container {
+	top: 0;
 	width: 100%;
-	border: 1px solid black;
 	height: 300px;
 	background-image: url("../../../assets/media/searchbar-bg.jpg");
-	background-size: 2250px;
+	background-size: 1250px;
 }
 
 .searchbar {
 	width: 50%;
+	padding-top: 3rem;
+	justify-content: center;
+	left: 0;
+	right: 0;
+	margin: 0 auto;
 }
 
 .searchbar > h1 {
 	text-align: center;
-	margin-top: 3rem;
 	margin-bottom: 50px;
 	font-size: 2.5em;
 	color: #fff;
