@@ -1,1 +1,1 @@
-export * from './mono.h';
+export * from './mono';

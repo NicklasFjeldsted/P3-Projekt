@@ -7,3 +7,5 @@ export * from './canvas';
 export * from './color';
 export * from './onclick';
 export * from './guid';
+export * from './mono';
+export * from './sprite';

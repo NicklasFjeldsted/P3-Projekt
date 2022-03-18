@@ -1,4 +1,5 @@
 import { Vector2, IAwake, Color, Transform } from "src/app/game-engine";
+import { Vector3 } from "../vector3";
 
 export class Canvas implements IAwake
 {
@@ -112,6 +113,11 @@ export class Canvas implements IAwake
 		this._context.clearRect(start.x, start.y, size.x, size.y);
 	}
 
+	public ClearCanvas(): void
+	{
+		this._context.clearRect(0, 0, this._element.width, this._element.height);
+	}
+
 	/** Draws and image to the canvas. */
 	public DrawImage(source: string, transform: Transform, color?: Color): void
 	{
@@ -123,22 +129,22 @@ export class Canvas implements IAwake
 			throw new Error('Image source not specified.');
 		}
 
-		image.onload = () =>
-		{
-			const width = image.naturalWidth * transform.scale.x;
+		// image.onload = () =>
+		// {
+			const width = image.naturalHeight * transform.scale.x;
 			const height = image.naturalHeight * transform.scale.y;
 			this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
 			if (color)
 			{
-				this.recolorImage(image, color);
+				this.recolorImage(image, width, height, transform.position, color);
 			}
-		}
+		// }
 	}
 
-	private recolorImage(image: HTMLImageElement, newColor: Color)
+	private recolorImage(image: HTMLImageElement, width: number, height: number, position: Vector3, newColor: Color)
 	{
 		// pull the entire image into an array of pixel data
-		var imageData = this._context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
+		var imageData = this._context.getImageData(position.x, position.y, width, height);
 
 		// examine every pixel, 
 		// change any old rgb to the new-rgb
@@ -150,6 +156,6 @@ export class Canvas implements IAwake
 			imageData.data[ i + 2 ] = newColor.B;
 		}
 		// put the altered data back on the canvas  
-		this._context.putImageData(imageData, 0, 0);
+		this._context.putImageData(imageData, position.x, position.y);
 	}
 }
