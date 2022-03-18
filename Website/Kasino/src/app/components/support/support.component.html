@@ -8,15 +8,12 @@
 
 	<div class="category-container h-center">
 		<section class="grid-container">
-			<div class="grid-item">
-				<i class="fa-regular fa-circle-question"></i>
-				<a>Generalt</a>
-			</div>
-			<div class="grid-item"><i class="fa-regular fa-credit-card"></i><a>Indbetaling</a></div>
-			<div class="grid-item"><i class="fa-regular fa-credit-card"></i><a>Udbetaling</a></div>
-			<div class="grid-item"><i class="fa-regular fa-id-card"></i><a>Registrering og log ind</a></div>
+			<a routerLink="/generalt"><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
+      <a routerLink="/help-indbetaling"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
+			<a routerLink="/help-udbetaling"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Udbetaling</div></a>
+			<a routerLink="/help-login"><div class="grid-item"><i class="fa-regular fa-id-card"></i>Registrering og log ind</div></a>
 			<a routerLink="/reglerOgBetingelser"><div class="grid-item"><i class="fa-solid fa-scroll"></i>Spilleregler</div></a>
-			<div class="grid-item"><i class="fa-regular fa-gem"></i><a>Velkomstbonusser</a></div>
+			<a routerLink="/velkomstbonusser"><div class="grid-item"><i class="fa-regular fa-gem"></i>Velkomstbonusser</div></a>
 		</section>
 	</div>
 </div>

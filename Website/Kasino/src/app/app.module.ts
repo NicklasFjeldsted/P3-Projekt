@@ -37,6 +37,11 @@ import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/r
 import { OmOsComponent } from './components/om-os/om-os.component';
 import { RouletteComponent } from './components/roulette/roulette.component';
 import { SlotsComponent } from './components/slots/slots.component';
+import { GeneraltComponent } from './components/generalt/generalt.component';
+import { HelpIndbetalingComponent } from './components/help-indbetaling/help-indbetaling.component';
+import { HelpUdbetalingComponent } from './components/help-udbetaling/help-udbetaling.component';
+import { HelpLoginComponent } from './components/help-login/help-login.component';
+import { VelkomstbonusserComponent } from './components/velkomstbonusser/velkomstbonusser.component';
 
 
 
@@ -57,6 +62,11 @@ import { SlotsComponent } from './components/slots/slots.component';
     OmOsComponent,
     RouletteComponent,
     SlotsComponent,
+    GeneraltComponent,
+    HelpIndbetalingComponent,
+    HelpUdbetalingComponent,
+    HelpLoginComponent,
+    VelkomstbonusserComponent,
   ],
   imports: [
     BrowserModule,

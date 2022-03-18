@@ -14,6 +14,11 @@ import { ReglerOgBetingelserComponent } from './components/reglerOgBetingelser/r
 import { OmOsComponent } from './components/om-os/om-os.component';
 import { RouletteComponent } from './components/roulette/roulette.component';
 import { SlotsComponent } from './components/slots/slots.component';
+import { GeneraltComponent } from './components/generalt/generalt.component';
+import { HelpIndbetalingComponent } from './components/help-indbetaling/help-indbetaling.component';
+import { HelpUdbetalingComponent } from './components/help-udbetaling/help-udbetaling.component';
+import { HelpLoginComponent } from './components/help-login/help-login.component';
+import { VelkomstbonusserComponent } from './components/velkomstbonusser/velkomstbonusser.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,6 +34,11 @@ const routes: Routes = [
   { path: 'om-os', component: OmOsComponent},
   { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
+  { path: 'generalt', component: GeneraltComponent},
+  { path: 'help-indbetaling', component: HelpIndbetalingComponent},
+  { path: 'help-udbetaling', component: HelpUdbetalingComponent},
+  { path: 'help-login', component: HelpLoginComponent},
+  {path: 'velkomstbonusser', component: VelkomstbonusserComponent},
   
   
   
