@@ -7,18 +7,16 @@ export class Player extends MonoBehaviour
 	public cards: number[] = [];
 	private textComp: TextComponent;
 
-	Start(): void
-	{
-
-	}
-
 	Awake(): void
 	{
 		House.OnDeal.subscribe(e => this.OnCardDeal(e));
 
 		this.textComp = this.gameObject.GetComponent(TextComponent);
+	}
 
-
+	Start(): void
+	{
+		
 	}
 
 	Update(deltaTime: number): void
@@ -28,7 +26,17 @@ export class Player extends MonoBehaviour
 
 	private OnCardDeal(card: number): void
 	{
-		this.textComp.text = card.toString();
+		this.cards.push(card);
+		this.UpdateDisplayedCards();
+	}
+
+	private UpdateDisplayedCards(): void
+	{
+		this.textComp.text = "";
+		for (let card of this.cards)
+		{
+			this.textComp.text += card + "  ";
+		}
 	}
 	
 }

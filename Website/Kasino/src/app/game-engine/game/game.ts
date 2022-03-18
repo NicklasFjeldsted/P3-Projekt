@@ -97,10 +97,23 @@ export class Game extends Entity
 		// components have awaken.
 		window.requestAnimationFrame(() =>
 		{
-			this._lastTimestamp = Date.now();
+			this.Start();
+			window.requestAnimationFrame(() =>
+			{
+				this._lastTimestamp = Date.now();
 			
-			this.Update();
+				this.Update();
+			});
 		});
+	}
+
+	public override Start(): void
+	{
+		// Start all the entities in the game.
+		for (const entity of this.Entities)
+		{
+			entity.Start();
+		}
 	}
 
 	// Update the game everyframe and calculate the new deltaTime.

@@ -131,6 +131,14 @@ export class GameObject extends Entity
 		}
 	}
 
+	public override Start(): void
+	{
+		for (const component of this._components)
+		{
+			component.Start();
+		}
+	}
+
 	// This function is a part of the game loop and will be called everyframe.
 	// This entity will also call the Update function of all the components in this entities component array.
 	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */

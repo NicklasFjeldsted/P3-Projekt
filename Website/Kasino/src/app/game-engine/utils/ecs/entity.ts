@@ -1,5 +1,5 @@
 import { Guid } from '../guid';
-import { IUpdate, IAwake } from '../lifecycle';
+import { IUpdate, IAwake, IStart } from '../lifecycle';
 import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
@@ -8,7 +8,7 @@ type AbstractComponent<T> = Function & { prototype: T; };
 
 type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
-export abstract class Entity implements IUpdate, IAwake
+export abstract class Entity implements IUpdate, IAwake, IStart
 {
 	public entityId: string;
 
@@ -25,7 +25,7 @@ export abstract class Entity implements IUpdate, IAwake
 	};
 
 	/** Add a new feature to this entity. */
-	protected AddFeature(feature: IFeature): void
+	public AddFeature(feature: IFeature): void
 	{
 		this._features.push(feature);
 	}
@@ -108,6 +108,11 @@ export abstract class Entity implements IUpdate, IAwake
 		{
 			feature.Awake();
 		}
+	}
+
+	public Start(): void
+	{
+		
 	}
 
 	// This function is a part of the game loop and will be called everyframe.

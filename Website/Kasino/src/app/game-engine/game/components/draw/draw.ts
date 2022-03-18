@@ -1,5 +1,6 @@
 import { GameObject } from "src/app/game-engine/gameObject";
-import { CanvasLayer, Color, IComponent } from "src/app/game-engine/utils";
+import { CanvasLayer, Color, Entity, IComponent, IFeature, Vector2 } from "src/app/game-engine/utils";
+import { Game } from "../../game";
 
 export class SpriteRendererComponent implements IComponent
 {
@@ -10,6 +11,11 @@ export class SpriteRendererComponent implements IComponent
 	constructor(private imageSource?: string)
 	{
 		imageSource ? this.image = imageSource : null;
+	}
+	
+	Start(): void
+	{
+		
 	}
 
 	Awake(): void
@@ -46,6 +52,11 @@ export class TextComponent implements IComponent
 	{
 		startText ? this.text = startText : null
 	}
+	
+	Start(): void
+	{
+		
+	}
 
 	Awake(): void
 	{
@@ -68,5 +79,30 @@ export class TextComponent implements IComponent
 	private Clear(): void
 	{
 		CanvasLayer.UI.ClearCanvas();
+	}
+}
+
+export class BackgroundFeature implements IFeature
+{
+	Entity: Game;
+
+	Awake(): void
+	{
+		this.Draw();
+	}
+
+	Update(deltaTime: number): void
+	{
+
+	}
+	
+	private Draw(): void
+	{
+		CanvasLayer.Background.FillRect(new Vector2(0, 0), CanvasLayer.Background.Size, new Color(210, 210, 210, 1));
+	}
+
+	private Clear(): void
+	{
+		
 	}
 }

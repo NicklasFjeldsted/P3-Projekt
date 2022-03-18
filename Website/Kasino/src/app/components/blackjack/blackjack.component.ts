@@ -1,6 +1,6 @@
-import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
-import { Game, GameObject, MonoBehaviour, Vector3 } from 'src/app/game-engine';
-import { SpriteRendererComponent, TextComponent } from 'src/app/game-engine/game/components/draw';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { Game, GameObject, Vector3 } from 'src/app/game-engine';
+import { BackgroundFeature, SpriteRendererComponent, TextComponent } from 'src/app/game-engine/game/components/draw';
 import { House, Player } from './blackjack-game';
 
 @Component({
@@ -18,6 +18,8 @@ export class BlackjackComponent implements OnInit {
   ngOnInit(): void
   {
     const game = Game.Instance;
+
+    game.AddFeature(new BackgroundFeature());
 
     const player: GameObject = new GameObject('Player');
     const house: GameObject = new GameObject('House');

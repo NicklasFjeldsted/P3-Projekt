@@ -1,9 +1,8 @@
 import { GameObject } from "../../gameObject";
 import { IComponent } from "../ecs";
-import { IStart } from "../lifecycle/start.h";
 import { Transform } from "../transform";
 
-export abstract class MonoBehaviour implements IComponent, IStart
+export abstract class MonoBehaviour implements IComponent
 {
 	gameObject: GameObject;
 
@@ -12,10 +11,10 @@ export abstract class MonoBehaviour implements IComponent, IStart
 		return this.gameObject.transform;
 	}
 
-	abstract Start(): void;
+	public abstract Start(): void;
 
-	abstract Awake(): void;
+	public abstract Awake(): void;
 
-	abstract Update(deltaTime: number): void;
+	public abstract Update(deltaTime: number): void;
 
 }

@@ -33,12 +33,12 @@ export class CanvasLayer
 	/** Public getter for the ui canvas layer if it does not exist create it and return it. */
 	public static get UI(): Canvas
 	{
-		if (!this._foreground)
+		if (!this._ui)
 		{
-			this._foreground = this.InitCanvas({ zIndex: '2' });
+			this._ui = this.InitCanvas({ zIndex: '2' });
 		}
 
-		return this._foreground;
+		return this._ui;
 	}
 
 	/** Create a new canvas. */
