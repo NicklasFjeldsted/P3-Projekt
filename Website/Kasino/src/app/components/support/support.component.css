@@ -1,38 +1,38 @@
-:host() 
+:host()
 {
 	width: 100%;
 	height: 100%;
 }
 
-.container 
+.container
 {
 	overflow: auto;
 }
 
-.searchbar-container 
+.searchbar-container
 {
 	width: 100%;
-	border: 1px solid black;
 	height: 300px;
 	background-image: url("../../../assets/media/searchbar-bg.jpg");
 	background-size: 2250px;
 }
 
-.searchbar 
+.searchbar
 {
 	width: 50%;
+	padding-top: 3rem;
+	margin: 0 auto;
 }
 
-.searchbar > h1 
+.searchbar > h1
 {
 	text-align: center;
-	margin-top: 3rem;
 	margin-bottom: 50px;
 	font-size: 2.5em;
 	color: #fff;
 }
 
-.input-searchbar 
+.input-searchbar
 {
 	height: 65px;
 	border-radius: 4px;
@@ -45,13 +45,13 @@
 	font-size: 1.5em;
 }
 
-.category-container 
+.category-container
 {
 	max-width: 60%;
 	max-height: 50%;
 }
 
-.grid-container 
+.grid-container
 {
 	display: grid;
 	gap: 1.5rem;
@@ -61,7 +61,7 @@
 	padding: 10px;
 }
 
-.grid-item 
+.grid-item
 {
 	display:flex;
 	flex-direction: column;
@@ -85,20 +85,20 @@
 	height: 150px;
 }
 
-.grid-item > i 
+.grid-item > i
 {
 	font-size: 2em;
 	height: 40%;
 	color: rgba(28, 83, 54, 1);
 }
 
-.grid-item > a 
+.grid-item > a
 {
 	cursor: pointer;
 	height: 30%;
 }
 
-.grid-item:hover 
+.grid-item:hover
 {
 	box-shadow: rgba(2, 8, 20, 0.1) 0px 0.35em 1.175em, rgba(2, 8, 20, 0.08) 0px 0.175em 0.5em;
 	transform: translateY(-1px) scale(1.03);
