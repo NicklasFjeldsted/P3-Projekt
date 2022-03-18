@@ -113,8 +113,43 @@ export class Canvas implements IAwake
 	}
 
 	/** Draws and image to the canvas. */
-	public DrawImage(source: CanvasImageSource, transform: Transform): void
+	public DrawImage(source: string, transform: Transform, color?: Color): void
 	{
-		this._context.drawImage(source, transform.position.x, transform.position.y, transform.position.x, transform.position.y);
+		let image = new Image();
+		image.src = source;
+
+		if (image.src === '') 
+		{
+			throw new Error('Image source not specified.');
+		}
+
+		image.onload = () =>
+		{
+			const width = image.naturalWidth * transform.scale.x;
+			const height = image.naturalHeight * transform.scale.y;
+			this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
+			if (color)
+			{
+				this.recolorImage(image, color);
+			}
+		}
+	}
+
+	private recolorImage(image: HTMLImageElement, newColor: Color)
+	{
+		// pull the entire image into an array of pixel data
+		var imageData = this._context.getImageData(0, 0, image.naturalWidth, image.naturalHeight);
+
+		// examine every pixel, 
+		// change any old rgb to the new-rgb
+		for (let i=0; i < imageData.data.length; i+=4)
+		{
+			// change to your new rgb
+			imageData.data[ i ] = newColor.R;
+			imageData.data[ i + 1 ] = newColor.G;
+			imageData.data[ i + 2 ] = newColor.B;
+		}
+		// put the altered data back on the canvas  
+		this._context.putImageData(imageData, 0, 0);
 	}
 }

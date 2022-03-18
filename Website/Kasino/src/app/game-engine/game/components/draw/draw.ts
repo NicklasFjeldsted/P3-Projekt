@@ -1,18 +1,19 @@
 import { GameObject } from "src/app/game-engine/gameObject";
-import { CanvasLayer, IComponent, Vector2 } from "src/app/game-engine/utils";
+import { CanvasLayer, Color, IComponent } from "src/app/game-engine/utils";
 
 export class SpriteRendererComponent implements IComponent
 {
 	public gameObject: GameObject;
 
-	private _image = new Image();
-
 	public image: string;
+
+	constructor(private imageSource?: string)
+	{
+		imageSource ? this.image = imageSource : null;
+	}
 
 	Awake(): void
 	{
-		this._image.src = this.image;
-
 		this.Draw();
 	}
 
@@ -25,10 +26,7 @@ export class SpriteRendererComponent implements IComponent
 	/** Draw a node to the canvas. */
 	private Draw(): void
 	{
-		this._image.onload = () =>
-		{
-			CanvasLayer.Foreground.DrawImage(this._image, this.gameObject.transform);
-		}
+		CanvasLayer.Foreground.DrawImage(this.image, this.gameObject.transform, new Color(0, 0, 0, 1));
 	}
 
 	/** Clear a node from the canvas. */

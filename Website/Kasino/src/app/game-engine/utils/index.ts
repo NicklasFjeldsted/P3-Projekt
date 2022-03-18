@@ -6,3 +6,4 @@ export * from './transform';
 export * from './canvas';
 export * from './color';
 export * from './onclick';
+export * from './guid';

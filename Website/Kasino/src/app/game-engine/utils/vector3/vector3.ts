@@ -1,4 +1,4 @@
 export class Vector3
 {
-	constructor(public x: number, public y: number, public z: number) { }
+	constructor(public readonly x: number, public readonly y: number, public readonly z: number) { }
 }

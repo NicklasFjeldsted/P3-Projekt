@@ -1,7 +1,6 @@
 import { Component, ElementRef, Injectable, OnInit } from '@angular/core';
-import { Game, Grid } from 'src/app/game-engine';
-import { Fleet } from 'src/app/game-engine/fleet';
-import { Team } from 'src/app/game-engine/team';
+import { Game, GameObject, Vector3 } from 'src/app/game-engine';
+import { SpriteRendererComponent } from 'src/app/game-engine/game/components/draw';
 
 @Component({
   selector: 'game',
@@ -13,12 +12,21 @@ import { Team } from 'src/app/game-engine/team';
 
 export class BlackjackComponent implements OnInit {
 
-  constructor(private elementRef: ElementRef) { }
+  constructor() { }
   
   ngOnInit(): void
   {
-    let game = new Game();
+    const game = Game.Instance;
 
-    game.Load().then(() => { game.Awake(); }).catch(() => { console.log("Something went wrong!") })
+    let testGO: GameObject = new GameObject("Hello World!");
+
+    testGO.AddComponent(new SpriteRendererComponent('../../../assets/media/cards.png'));
+    testGO.transform.scale = new Vector3(0.25, 0.25, 0);
+
+
+
+
+
+    game.Load().then(() => { game.Awake(); }).catch((error) => { console.log(error); });
   }
 }

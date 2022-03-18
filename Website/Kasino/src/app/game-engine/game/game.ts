@@ -1,26 +1,26 @@
 import { Fleet } from '../fleet';
 import { GameObject } from '../gameObject';
 import { Grid } from '../grid';
-import { Entity } from '../utils';
+import { CanvasLayer, Entity, Vector3 } from '../utils';
 import { GameInputComponent } from './components';
 import { SpriteRendererComponent } from './components/draw';
 
 export class Game extends Entity
 {
-	constructor()
+	private static _instance: Game;
+	public static get Instance(): Game
 	{
-		super();
+		if (!Game._instance)
+		{
+			Game._instance = new Game();
+		}
 
-		let go: GameObject = new GameObject();
-		go.AddComponent(new SpriteRendererComponent());
-		go.GetComponent(SpriteRendererComponent).image = '../../../assets/media/cards.png';
-		
-		this._entities.push(go);
+		return Game._instance;
 	}
 
 	private _entities: Entity[] = [];
 
-	public get GameObjects(): Entity[]
+	public get Entities(): Entity[]
 	{
 		return this._entities;
 	}
@@ -29,6 +29,7 @@ export class Game extends Entity
 
 	k = new Image();
 	
+	/** **Experimental** method for loading before initializing the game. */
 	public async Load(): Promise<void>
 	{
 		this.k.src = '../../../assets/media/cards.png';
@@ -36,7 +37,7 @@ export class Game extends Entity
 
 		toBeLoaded.push(this.k);
 
-		new Promise(async (resolve, reject) =>
+		await new Promise(async (resolve, reject) =>
 		{
 			const finished = [];
 			for (let i = 0; i < toBeLoaded.length; i++)
@@ -44,28 +45,50 @@ export class Game extends Entity
 				toBeLoaded[ i ].onload = () =>
 				{
 					finished.push(toBeLoaded[ i ]);
-
-					if (finished.length >= toBeLoaded.length)
+					
+					if (finished.length === toBeLoaded.length)
 					{
-						console.log("Finished loading..");
 						resolve(true);
 					}
 				}
-				console.log(`Ran: ${i + 1} times`);
 			}
 		});
+	}
+
+	/** Instantiates a GameObject in the game. */
+	public Instantiate(gameObject: GameObject, position?: Vector3): void
+	{
+		if (position)
+		{
+			gameObject.transform.position = position;
+		}
+		this.Entities.push(gameObject);
+	}
+
+	/** Destroys a GameObject from the game. */
+	public Destroy(gameObject: GameObject): void
+	{
+		for (let i = 0; i < this.Entities.length; i++)
+		{
+			if (this.Entities[i].entityId === gameObject.entityId)
+			{
+				this.Entities.splice(i, 1);
+				return;
+			}
+		}
+		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
 	}
 
 	// Start up the game and get the start time.
 	// Then begin the game loop.
 	public override Awake(): void
 	{
-		console.warn("GAME - Awoken");
+		console.warn(`GAME - Awoken`);
 
 		super.Awake();
 
 		// Awake all the entities in the game.
-		for (const entity of this.GameObjects)
+		for (const entity of this.Entities)
 		{
 			entity.Awake();
 		}
@@ -89,7 +112,7 @@ export class Game extends Entity
 		super.Update(deltaTime);
 
 		// Update all the entities in this game.
-		for (const entity of this.GameObjects)
+		for (const entity of this.Entities)
 		{
 			entity.Update(deltaTime);
 		}

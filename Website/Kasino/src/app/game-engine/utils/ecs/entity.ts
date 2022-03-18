@@ -1,5 +1,6 @@
-import { IComponent } from './component.h';
+import { Guid } from '../guid';
 import { IUpdate, IAwake } from '../lifecycle';
+import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
 // This Type basicly is this "thing" must be a function AND has to extend <T>
@@ -9,83 +10,87 @@ type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
 export abstract class Entity implements IUpdate, IAwake
 {
-	// Create a protected array of IComponents.
-	/** This is the entire array of components associated with this entity. */
-	protected _components: IComponent[] = [];
+	public entityId: string;
 
-	/** Public getter for the all components on this entity. */
-	public get Components(): IComponent[]
+	constructor(){ this.entityId = Guid.newGuid() }
+
+	// Create a protected array of IFeature.
+	/** This is the entire array of features associated with this entity. */
+	protected _features: IFeature[] = [];
+
+	/** Public getter for the all features on this entity. */
+	public get Features(): IFeature[]
 	{
-		return this._components;
+		return this._features;
 	};
 
-	/** Add a new component to this entity. */
-	protected AddComponent(component: IComponent): void
+	/** Add a new feature to this entity. */
+	protected AddFeature(feature: IFeature): void
 	{
-		this._components.push(component);
+		this._features.push(feature);
 	}
 
-	// "C" is a generic class that conforms to IComponent.
+	// "C" is a generic class that conforms to IFeature.
 	// "constr" is the constructer of the class argument.
 	// The "constr" will take the constructor from the argument class
 	// and build a temporary class with the same attributes.
 	// This archetype is used througout this file.
-	/** Get a Component from this entity. */
-	public GetComponent<C extends IComponent>(constr: constr<C>): C
+	/** Get a Feature from this entity. */
+	public GetFeature<C extends IFeature>(constr: constr<C>): C
 	{
-		for (const component of this._components)
+		for (const feature of this._features)
 		{
-			// Check if the component we are on in the loop is the same
-			// as the constructor, meaning we found the component we were looking for.
-			if (component instanceof constr)
+			// Check if the feature we are on in the loop is the same
+			// as the constructor, meaning we found the feature we were looking for.
+			if (feature instanceof constr)
 			{
-				return component as C;
+				return feature as C;
 			}
 		}
-		throw new Error(`Component ${constr.name} not found on Entity ${this.constructor.name}!`);
+		throw new Error(`Feature ${constr.name} not found on Entity ${this.constructor.name}!`);
 	}
 
-	/** Remove a Component from this entity. */
-	public RemoveComponent<C extends IComponent>(constr: constr<C>): void
+	/** Remove a Feature from this entity. */
+	public RemoveFeature<C extends IFeature>(constr: constr<C>): void
 	{
-		let toRemove: IComponent | undefined;
+		let toRemove: IFeature | undefined;
 		let index: number | undefined;
 
 		// We use a for loop here with an index because we need it
-		// for splicing the index off of the components array on this entity.
-		for (let i = 0; i < this._components.length; i++)
+		// for splicing the index off of the features array on this entity.
+		for (let i = 0; i < this._features.length; i++)
 		{
-			const component = this._components[ i ];
+			const feature = this._features[ i ];
 
-			// Check if the component we are on in the loop is the same
-			// as the constructor, meaning we found the component we were looking for.
-			if (component instanceof constr)
+			// Check if the feature we are on in the loop is the same
+			// as the constructor, meaning we found the feature we were looking for.
+			if (feature instanceof constr)
 			{
-				// If we found the component set the component to remove equal to that component
-				// and set the index of the component equal to the current loop index.
-				toRemove = component;
+				// If we found the feature set the feature to remove equal to that feature
+				// and set the index of the feature equal to the current loop index.
+				toRemove = feature;
 				index = i;
 				break;
 			}
 		}
 
-		// If we found the index and the component we want to remove we can then proceed to remove them.
+		// If we found the index and the feature we want to remove we can then proceed to remove them.
 		if (toRemove && index)
 		{
-			toRemove.gameObject = null;
-			this._components.splice(index, 1);
+			toRemove.Entity = null;
+			this._features.splice(index, 1);
 		}
 	}
 
-	// This function returns true if the component array on this entity has
-	// the component that is equal to the argument.
-	/** Returns whether or not this entity contains a Component of the argument. */
-	public HasComponent<C extends IComponent>(constr: constr<C>): boolean
+	// This function returns true if the feature array on this entity has
+	// the feature that is equal to the argument.
+	/** Returns whether or not this entity contains a Feature of the argument. */
+	public HasFeature<C extends IFeature>(constr: constr<C>): boolean
 	{
-		for (const component of this._components)
+		for (const feature of this._features)
 		{
-			// Check if the component is of the same instance as the constructor.
-			if (component instanceof constr)
+			// Check if the feature is of the same instance as the constructor.
+			if (feature instanceof constr)
 			{
 				return true
 		  	}
@@ -95,24 +100,24 @@ export abstract class Entity implements IUpdate, IAwake
 	}
 
 	// This function is a part of the start up of the game loop.
-	// This entity will also call the Awake function of all the components in this entities component array.
+	// This entity will also call the Awake function of all the features in this entities feature array.
 	/** This is the first call made to this entity when the game compiles. */
 	public Awake(): void
 	{
-		for (const component of this._components)
+		for (const feature of this._features)
 		{
-			component.Awake();
+			feature.Awake();
 		}
 	}
 
 	// This function is a part of the game loop and will be called everyframe.
-	// This entity will also call the Update function of all the components in this entities component array.
+	// This entity will also call the Update function of all the features in this entities feature array.
 	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */
 	public Update(deltaTime: number): void
 	{
-		for (const component of this._components)
+		for (const feature of this._features)
 		{
-			component.Update(deltaTime);
+			feature.Update(deltaTime);
 		}
 	}
 }

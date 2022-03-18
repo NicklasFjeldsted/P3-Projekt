@@ -23,8 +23,8 @@ export class Ship extends Entity
 	
 	public override Awake(): void
 	{
-		this.AddComponent(this._locomotionComponent);
-		this.AddComponent(new ShipDrawComponent());
+		//this.AddComponent(this._locomotionComponent);
+		//this.AddComponent(new ShipDrawComponent());
 
 		super.Awake();
 	}
