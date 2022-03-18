@@ -89,3 +89,7 @@
 .sidenav-item:hover {
 	background-color: hsla(0,0%,82.7%,.5);
 }
+
+.sidenav-list > li:nth-child(4) {
+	border-top: 1px solid #808080;
+}
