@@ -4,12 +4,13 @@ import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
 // This Type basicly is this "thing" must be a function AND has to extend <T>
-type AbstractComponent<T> = Function & { prototype: T; };
+type AbstractFeature<T> = Function & { prototype: T; };
 
-type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
+type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
 
 export abstract class Entity implements IUpdate, IAwake, IStart
 {
+	/** This is a unique identifier for this Entity. */
 	public entityId: string;
 
 	constructor(){ this.entityId = Guid.newGuid() }

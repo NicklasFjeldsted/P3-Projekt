@@ -1,5 +1,5 @@
 import { Game } from "../game/game";
-import { Entity, IComponent, Transform, Vector3 } from "../utils";
+import { Entity, IComponent, Transform, Vector2, Vector3 } from "../utils";
 
 type AbstractComponent<T> = Function & { prototype: T; };
 
@@ -7,7 +7,70 @@ type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
 export class GameObject extends Entity
 {
+	/** All GameObjects that exists, **NOT** instantiated. */
 	private static _gameObjects: GameObject[] = [];
+
+	/** This GameObjects name, this is not a unique identifier. */
+	public gameObjectName: string;
+	
+	private _transform: Transform;
+	/** Transform for this GameObject, it contains a position, rotation, and a scale. */
+	public get transform(): Transform
+	{
+		if (!this._transform)
+		{
+			this._transform = new Transform();
+		}
+
+		return this._transform;
+	}
+
+	private _size: Vector2;
+
+	/** **deprecated** 
+	 * Get the size of the GameObject.
+	 * 
+	 * This is the overall Width and Height of the GameObject.
+	 */
+	public get Size(): Vector2
+	{
+		return this._size;
+	}
+
+	/** **deprecated**
+	 * Set the size of the GameObject.
+	 * 
+	 * This is the overall Width and Height of the GameObject.
+	 * 
+	 * This is **ONLY** supposed to be set by a rendering component.
+	*/
+	public set Size(value: Vector2)
+	{
+		this._size = value;
+	}
+
+	// Create a protected array of IComponents.
+	/** This is the entire array of components associated with this entity. */
+	private _components: IComponent[] = [];
+
+	/** Public getter for the all components on this entity. */
+	public get Components(): IComponent[]
+	{
+		return this._components;
+	}
+
+	constructor(name?: string, instantiate: boolean = true)
+	{
+		super();
+		GameObject._gameObjects.push(this);
+
+		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
+
+		if (instantiate == true)
+		{
+			Game.Instance.Instantiate(this);
+		}
+	}
 
 	/** Returns the first GameObjects with the given component. */
 	public static FindOfType<C extends IComponent>(constr: constr<C>): GameObject
@@ -22,6 +85,7 @@ export class GameObject extends Entity
 		throw new Error(`No GameObject has ${constr.name}!`);
 	}
 
+	/** Return all GameObjects with the given component. */
 	public static FindAllOfType<C extends IComponent>(constr: constr<C>): GameObject[]
 	{
 		const outputArray: GameObject[] = [];
@@ -36,30 +100,6 @@ export class GameObject extends Entity
 
 		return outputArray;
 	}
-
-	public gameObjectName: string;
-	public transform: Transform;
-
-	
-	
-	constructor(name?: string)
-	{
-		super();
-		GameObject._gameObjects.push(this);
-		this.transform = new Transform();
-		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
-		Game.Instance.Instantiate(this);
-	}
-
-	// Create a protected array of IComponents.
-	/** This is the entire array of components associated with this entity. */
-	private _components: IComponent[] = [];
-
-	/** Public getter for the all components on this entity. */
-	public get Components(): IComponent[]
-	{
-		return this._components;
-	};
 
 	/** Add a new component to this entity. */
 	public AddComponent(component: IComponent): void
@@ -95,7 +135,7 @@ export class GameObject extends Entity
 		let index: number | undefined;
 
 		// We use a for loop here with an index because we need it
-		// for splicing the index off of the components array on this entity.
+		// for splicing the index off of the components array on this GameObject.
 		for (let i = 0; i < this._components.length; i++)
 		{
 			const component = this._components[ i ];
