@@ -1,4 +1,4 @@
-import { GameObject, MonoBehaviour } from "src/app/game-engine";
+import { GameInputFeature, GameObject, MonoBehaviour, OnclickComponent, Vector2 } from "src/app/game-engine";
 import { TextComponent } from "src/app/game-engine/game/components/draw";
 import { House } from "../house";
 
@@ -10,6 +10,7 @@ export class Player extends MonoBehaviour
 	Awake(): void
 	{
 		House.OnDeal.subscribe(e => this.OnCardDeal(e));
+		GameInputFeature.OnClick.subscribe(e => this.OnClick(e));
 
 		this.textComp = this.gameObject.GetComponent(TextComponent);
 	}
@@ -22,6 +23,11 @@ export class Player extends MonoBehaviour
 	Update(deltaTime: number): void
 	{
 		
+	}
+
+	private OnClick(point: Vector2): void
+	{
+		console.log(point);
 	}
 
 	private OnCardDeal(card: number): void

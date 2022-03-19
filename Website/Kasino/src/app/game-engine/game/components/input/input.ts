@@ -1,37 +1,32 @@
-import { GameObject } from "src/app/game-engine/gameObject";
-import { CanvasLayer, IComponent, Vector2, OnclickComponent } from "src/app/game-engine/utils";
+import { Subject } from "rxjs";
+import { GameObject } from "src/app/game-engine";
+import { CanvasLayer, Vector2, OnclickComponent, IFeature } from "src/app/game-engine/utils";
+import { Game } from "../..";
 
-export class GameInputComponent
+export class GameInputFeature implements IFeature
 {
-	// gameObject: GameObject;
+	public Entity: Game;
+	public static OnClick: Subject<Vector2> = new Subject<Vector2>();
 
-	// Awake(): void
-	// {
-	// 	document.body.addEventListener('click', this.HandleClick.bind(this));
-	// }
+	Awake(): void
+	{
+		document.body.addEventListener('click', this.HandleClick.bind(this));
+	}
 
-	// Update(deltaTime: number): void
-	// {
+	Update(deltaTime: number): void
+	{
 
-	// }
+	}
 
-	// private HandleClick(event: MouseEvent): void
-	// {
-	// 	const point = CanvasLayer.Background.CalculateLocalPointFrom(new Vector2(event.clientX, event.clientY));
-	// 	if (!point)
-	// 	{
-	// 		return;
-	// 	}
+	private HandleClick(event: MouseEvent): void
+	{
+		const point: Vector2 | null = CanvasLayer.Background.CalculateLocalPointFrom(new Vector2(event.clientX, event.clientY));
+		if (!point)
+		{
+			return;
+		}
 
-	// 	for (const entity of this.gameObject.)
-	// 	{
-	// 		if (!entity.HasComponent(OnclickComponent))
-	// 		{
-	// 			continue;
-	// 		}
-
-	// 		entity.GetComponent(OnclickComponent).ClickOn(point);
-	// 	}
-	// }
+		GameInputFeature.OnClick.next(point);
+	}
 	
 }

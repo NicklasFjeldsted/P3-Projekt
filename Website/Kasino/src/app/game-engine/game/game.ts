@@ -1,9 +1,5 @@
-import { Fleet } from '../fleet';
 import { GameObject } from '../gameObject';
-import { Grid } from '../grid';
-import { CanvasLayer, Entity, Vector3 } from '../utils';
-import { GameInputComponent } from './components';
-import { SpriteRendererComponent } from './components/draw';
+import { Entity, Vector3 } from '../utils';
 
 export class Game extends Entity
 {

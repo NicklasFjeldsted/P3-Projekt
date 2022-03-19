@@ -22,8 +22,25 @@ export class GameObject extends Entity
 		throw new Error(`No GameObject has ${constr.name}!`);
 	}
 
+	public static FindAllOfType<C extends IComponent>(constr: constr<C>): GameObject[]
+	{
+		const outputArray: GameObject[] = [];
+
+		for (const gameObject of this._gameObjects)
+		{
+			if (gameObject.HasComponent(constr))
+			{
+				outputArray.push(gameObject);
+			}
+		}
+
+		return outputArray;
+	}
+
 	public gameObjectName: string;
 	public transform: Transform;
+
+	
 	
 	constructor(name?: string)
 	{
