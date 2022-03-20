@@ -4,6 +4,7 @@ export class CanvasLayer
 { 
 	private static _background: Canvas;
 	private static _foreground: Canvas;
+	private static _debug: Canvas;
 	private static _ui: Canvas;
 
 	private constructor() { }
@@ -30,12 +31,23 @@ export class CanvasLayer
 		return this._foreground;
 	}
 
+	/** Public getter for the debug canvas layer if it does not exist create it and return it. */
+	public static get Debug(): Canvas
+	{
+		if (!this._debug)
+		{
+			this._debug = this.InitCanvas({ zIndex: '2' });
+		}
+
+		return this._debug;
+	}
+
 	/** Public getter for the ui canvas layer if it does not exist create it and return it. */
 	public static get UI(): Canvas
 	{
 		if (!this._ui)
 		{
-			this._ui = this.InitCanvas({ zIndex: '2' });
+			this._ui = this.InitCanvas({ zIndex: '5' });
 		}
 
 		return this._ui;

@@ -1,4 +1,5 @@
 import { GameObject } from "../../gameObject";
+import { CanvasLayer } from "../canvas";
 import { IComponent } from "../ecs";
 import { Vector2 } from "../vector2";
 
@@ -42,7 +43,8 @@ export class ColliderComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
-
+		this.DEBUG_Clear();
+		this.DEBUG_Draw();
 	}
 
 	public Hit(point: Vector2): boolean
@@ -68,5 +70,15 @@ export class ColliderComponent implements IComponent
 		}
 
 		return true;
+	}
+
+	public DEBUG_Draw(): void
+	{
+		CanvasLayer.Debug.FillOutline(this.start, this.end);
+	}
+
+	public DEBUG_Clear(): void
+	{
+		CanvasLayer.Debug.ClearRect(this.start, this.Size);
 	}
 }

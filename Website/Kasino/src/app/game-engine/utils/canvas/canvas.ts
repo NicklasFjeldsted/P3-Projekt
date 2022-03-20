@@ -98,6 +98,18 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
+	public FillOutline(start: Vector2, end: Vector2, color: Color = new Color(50, 205, 50, 1)): void
+	{
+		this._context.beginPath();
+		this._context.strokeStyle = color.AsString();
+		this._context.moveTo(start.x, start.y);
+		this._context.lineTo(start.x, end.y);
+		this._context.lineTo(end.x, end.y);
+		this._context.lineTo(end.x, start.y);
+		this._context.lineTo(start.x, start.y);
+		this._context.stroke();
+	}
+
 	/** Draws a circle on the canvas. */
 	public FillCircle(center: Vector2, radius: number, color: Color): void
 	{
