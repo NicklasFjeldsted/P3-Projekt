@@ -1,5 +1,6 @@
 import { Subject } from "rxjs";
 import { MonoBehaviour } from "src/app/game-engine";
+import { Seat } from "../seat";
 
 export class House extends MonoBehaviour
 {
@@ -15,19 +16,29 @@ export class House extends MonoBehaviour
 	}
 
 	private availableCards: number[] = [];
+	public seats: Seat[] = [];
+
+	constructor()
+	{
+		super();
+		for (let i = 1; i < 11; i++)
+		{
+			this.seats.push(new Seat());
+		}
+	}
 
 	public static OnDeal: Subject<number> = new Subject<number>();
 
 	Start(): void
 	{
-		
+		this.StartNewRound();
 	}
 
 	Awake(): void
 	{
-		this.StartNewRound();
-	}
 
+	}
+	
 	Update(deltaTime: number): void
 	{
 		
@@ -64,6 +75,14 @@ export class House extends MonoBehaviour
 
 	public DealCards(): void
 	{
-		House.OnDeal.next(this.GetCard());
+		for (const seat of this.seats)
+		{
+			if (!seat.player)
+			{
+				continue;
+			}
+
+			seat.player.OnCardDeal(this.GetCard());
+		}
 	}
 }

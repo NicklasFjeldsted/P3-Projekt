@@ -10,16 +10,14 @@ export class Player extends MonoBehaviour
 
 	Awake(): void
 	{
-		House.OnDeal.subscribe(e => this.OnCardDeal(e));
 		GameInputFeature.OnClick.subscribe(e => this.OnClick(e));
-
+		
 		this.textComp = this.gameObject.GetComponent(TextComponent);
 		this.collider = this.gameObject.GetComponent(ColliderComponent);
 	}
 
 	Start(): void
 	{
-		
 	}
 
 	Update(deltaTime: number): void
@@ -37,7 +35,7 @@ export class Player extends MonoBehaviour
 		console.log(`Hit ${this.gameObject.gameObjectName}`);
 	}
 
-	private OnCardDeal(card: number): void
+	public OnCardDeal(card: number): void
 	{
 		this.cards.push(card);
 		this.UpdateDisplayedCards();

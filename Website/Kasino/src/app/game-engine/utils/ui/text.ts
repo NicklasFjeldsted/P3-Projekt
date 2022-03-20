@@ -38,6 +38,6 @@ export class TextComponent implements IComponent
 	/** Clear Text from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.UI.ClearCanvas();
+		CanvasLayer.UI.ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
 	}
 }

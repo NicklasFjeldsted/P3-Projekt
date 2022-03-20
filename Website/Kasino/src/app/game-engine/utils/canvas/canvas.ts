@@ -124,6 +124,11 @@ export class Canvas implements IAwake
 	{
 		this._context.clearRect(start.x, start.y, size.x, size.y);
 	}
+	/** Clear a rect from the canvas. */
+	public ClearRectV3(start: Vector3, size: Vector2): void
+	{
+		this._context.clearRect(start.x, start.y, size.x, size.y);
+	}
 
 	public ClearCanvas(): void
 	{

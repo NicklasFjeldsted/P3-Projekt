@@ -21,15 +21,21 @@ export class BlackjackComponent implements OnInit {
     game.AddFeature(new BackgroundFeature());
     game.AddFeature(new GameInputFeature());
 
-    const player: GameObject = new GameObject('Player');
+    const player1: GameObject = new GameObject('Player1');
+    const player2: GameObject = new GameObject('Player2');
     const house: GameObject = new GameObject('House');
 
     house.AddComponent(House.Instance);
 
-    player.AddComponent(new Player());
-    player.AddComponent(new ColliderComponent());
-    player.AddComponent(new TextComponent('@playerCards'));
-    player.transform.position = new Vector3(20, 550, 0);
+    player1.AddComponent(new Player());
+    player1.transform.position = new Vector3(20, 550, 0);
+    player1.AddComponent(new ColliderComponent());
+    player1.AddComponent(new TextComponent('@playerCards1'));
+
+    player2.AddComponent(new Player());
+    player2.transform.position = new Vector3(300, 550, 0);
+    player2.AddComponent(new ColliderComponent());
+    player2.AddComponent(new TextComponent('@playerCards2'));
 
     game.Load().then(() => { game.Awake(); }).catch((error) => { console.log(error); });
   }
