@@ -1,7 +1,6 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { JwtModule } from '@auth0/angular-jwt';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -39,8 +38,6 @@ import { HelpIndbetalingComponent } from './components/helpcenter-components/hel
 import { HelpUdbetalingComponent } from './components/helpcenter-components/help-udbetaling/help-udbetaling.component';
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
-
-
 
 @NgModule({
   declarations: [
@@ -93,6 +90,5 @@ import { VelkomstbonusserComponent } from './components/helpcenter-components/ve
 })
 export class AppModule {
   constructor() { }
-
 }
 // "outputPath": "//10.0.6.2/www",

@@ -9,7 +9,5 @@ export class VelkomstbonusserComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

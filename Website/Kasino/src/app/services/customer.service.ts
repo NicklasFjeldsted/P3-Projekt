@@ -27,7 +27,6 @@ export class CustomerService
   public sendMail(mail: ContactMail): Observable<any> {
     return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);
   }
-
 }
 
 /*

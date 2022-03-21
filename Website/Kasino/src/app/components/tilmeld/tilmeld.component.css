@@ -1,10 +1,11 @@
 :host()
 {
 	width: 100%;
-	height: 100%;
+	height: 85%;
 }
 
-.bg-image {
+.bg-image 
+{
 	background-image: url("../../../assets/media/casino.jpg");
 	/* The image used */
 	position: absolute;
@@ -87,6 +88,7 @@
 	background-color: #ebf6ef!important;
 	outline: none!important;
 }
+
 .active-i
 {
 	color: #249752!important;
@@ -96,17 +98,17 @@
 .card-title
 {
 	font-size: 1.5rem;
-  	font-weight: 100;
-  	line-height: 1.5;
+  font-weight: 100;
+  line-height: 1.5;
 	margin-block-start: 0.67em;
-  	margin-block-end: 0.67em;
-  	margin-inline-start: 0px;
-  	margin-inline-end: 0px;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 	display: block;
 	text-align: left;
 	letter-spacing: normal;
-  	word-spacing: normal;
-  	text-rendering: auto;
+  word-spacing: normal;
+  text-rendering: auto;
 	margin: 0;
 }
 
@@ -135,12 +137,12 @@
 	color: #e0e0e0;
 	background: transparent;
 	position: absolute;
-  	width: 60px;
+  width: 60px;
 	height: 64px;
 	margin:auto;
 	margin-top: 9px;
 	margin-left: 0px;
-  	box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .card-1 > input
@@ -158,7 +160,7 @@
 {
 	font-size: 0.875rem;
 	border: 1px solid #e3e3e3;
-  	border-radius: 3px;
+  border-radius: 3px;
 	line-height: normal;
 	outline: none;
 }
@@ -175,17 +177,17 @@
 	background-color: #F08000;
 	border: 3px solid#F08000;
 	margin: auto;
-  	cursor: pointer
+  cursor: pointer
 }
 
 .step-title
 {
 	color: white;
-  	line-height: 1;
-  	text-align: center;
-  	white-space: nowrap;
-  	overflow: hidden;
-  	text-overflow: ellipsis;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 	vertical-align: center;
 	font-size: 1.3rem;
 	background-color: #015536;
@@ -196,15 +198,15 @@
 
 .picture-title
 {
-  	font-size: 1.2rem;
-  	margin-bottom: 0;
-  	font-weight: 550;
-  	display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+  font-weight: 550;
+  display: block;
 	line-height: 1.5;
 	margin-block-start: 0.83em;
-  	margin-block-end: 0.83em;
-  	margin-inline-start: 0px;
-  	margin-inline-end: 0px;
+  margin-block-end: 0.83em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 .multi-step-form
@@ -215,20 +217,20 @@
 p
 {
 	font-size: .8125rem;
-  	font-weight: 300;
-  	line-height: 1.5;
+  font-weight: 300;
+  line-height: 1.5;
 	display: block;
- 	 margin-block-start: 1em;
-  	margin-block-end: 1em;
-  	margin-inline-start: 0px;
- 	 margin-inline-end: 0px;
+ 	margin-block-start: 1em;
+  margin-block-end: 1em;
+	margin-inline-start: 0px;
+ 	margin-inline-end: 0px;
 }
 
 li
 {
  	font-size: .8125rem;
  	font-weight: 300;
-  	line-height: 1.5;
+  line-height: 1.5;
 	font-family: Montserrat,sans-serif;
 	margin-right: 25px;
  	margin-left: -30px;
@@ -246,7 +248,8 @@ li
 	width: 75%;
 }
 
-.gender-input-container > input:focus {
+.gender-input-container > input:focus 
+{
 	outline:none;
 	border: 1px solid #808080;
 }
@@ -287,10 +290,12 @@ li
 	margin-right: 10px;
 }
 
-.rights input[type="checkbox"]:disabled {
+.rights input[type="checkbox"]:disabled 
+{
 	outline: none;
 	box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
+
 .gender-input-container:focus-within
 {
 	color: #249752!important;
@@ -305,34 +310,36 @@ li
 
 }
 
-.invalid-feedback {
+.invalid-feedback 
+{
 	color:red;
 	font-size: 0.6rem;
 	text-align: left;
-
 }
+
 form
 {
   box-shadow: black 0px 0px 100px 5px;
-
 }
 
-.form-group > p > a {
+.form-group > p > a 
+{
 	color: #015536;
 	border: none;
 	background: none;
 	font-size: 14px;
 	text-decoration: underline;
+}
 
-  }
-
-.is-invalid {
+.is-invalid 
+{
 	background-color: #ffeeeb;
 	border: 1px solid #f00!important;
 	color:#FF0000;
 }
 
-.form-group > input:focus {
+.form-group > input:focus 
+{
 	border: 1px solid #808080;
 }
 
@@ -342,11 +349,13 @@ form
 	flex: 1;
 }
 
-.gender-input-container > input {
+.gender-input-container > input 
+{
 	padding-bottom: 20px;
 }
 
-.gender-input-container > i {
+.gender-input-container > i 
+{
 	opacity: 20%;
 	position: absolute;
 	top: 55%;

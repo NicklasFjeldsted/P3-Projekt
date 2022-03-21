@@ -40,7 +40,8 @@ body
   overflow: hidden;
 }
 
-.container-body {
+.container-body 
+{
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -199,7 +200,6 @@ a
   padding: .5em 1em;
   cursor: pointer;
   background-color: #05372c;
-  
 }
 
 .btn:hover
@@ -248,7 +248,8 @@ a
   margin-bottom: 10px;
 }
 
-.form-input:focus {
+.form-input:focus 
+{
   outline: none;
 }
 

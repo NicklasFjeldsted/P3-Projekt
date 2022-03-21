@@ -15,8 +15,5 @@ export class HomeComponent
 
   constructor(private customerService: CustomerService) { }
 
-  ngOnInit()
-  {
-
-  }
+  ngOnInit() { }
 }

@@ -9,7 +9,5 @@ export class HelpUdbetalingComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }

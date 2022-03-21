@@ -10,7 +10,5 @@ export class UdbetalComponent implements OnInit {
 
   constructor(public customerService: CustomerService) { }
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void { }
 }
