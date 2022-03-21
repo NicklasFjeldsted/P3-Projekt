@@ -24,16 +24,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'tilmeld', component: TilmeldComponent },
-  { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
-  { path: 'udbetal', component: UdbetalComponent},
-  { path: 'indbetal', component: IndbetalComponent},
-  { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'kontakt', component: KontaktComponent},
   { path: 'support', component: SupportComponent},
   { path: 'reglerOgBetingelser', component: ReglerOgBetingelserComponent},
   { path: 'om-os', component: OmOsComponent},
-  { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
-  { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'generalt', component: GeneraltComponent},
   { path: 'help-indbetaling', component: HelpIndbetalingComponent},
   { path: 'help-udbetaling', component: HelpUdbetalingComponent},
@@ -42,6 +36,12 @@ const routes: Routes = [
   
   
   
+  { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
+  { path: 'udbetal', component: UdbetalComponent, canActivate: [ AuthenticationGuard ]},
+  { path: 'indbetal', component: IndbetalComponent, canActivate: [ AuthenticationGuard ]},
+  { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
+  { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
+  { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
   
   
   
