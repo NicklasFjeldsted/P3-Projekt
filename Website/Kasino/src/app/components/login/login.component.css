@@ -1,7 +1,7 @@
 /* Gets the angular component element in the DOM and defines the behaviour of it. */
 :host
 {
-  height: 100%;
+  height: 85%;
   width: 100%;
   background-image: url("/assets/media/login-background.jpg");
   background-color: #e6e6e6;
