@@ -79,7 +79,6 @@
 	transition: all 500ms;
 	border: 1px solid #D4EFDF;
 	overflow: hidden;
-
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -107,4 +106,3 @@
 	transform: translateY(-1px) scale(1.03);
 	background-color: #D4EFDF;
 }
-

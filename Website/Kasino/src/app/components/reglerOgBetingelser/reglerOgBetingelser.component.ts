@@ -9,8 +9,5 @@ export class ReglerOgBetingelserComponent
 {
   constructor() { }
 
-  ngOnInit()
-  {
-
-  }
+  ngOnInit() { }
 }

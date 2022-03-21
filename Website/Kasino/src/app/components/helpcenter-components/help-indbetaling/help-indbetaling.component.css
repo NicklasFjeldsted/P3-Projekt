@@ -6,7 +6,7 @@
 
 .bg-image
 {
-  background-image: url('../../../assets/media/casino.jpg');
+  background-image: url('../../../../assets/media/casino.jpg');
   position: absolute;
 	width: 100%;
 	/* Add the blur effect */

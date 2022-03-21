@@ -38,7 +38,7 @@ const routes: Routes = [
   { path: 'help-indbetaling', component: HelpIndbetalingComponent},
   { path: 'help-udbetaling', component: HelpUdbetalingComponent},
   { path: 'help-login', component: HelpLoginComponent},
-  {path: 'velkomstbonusser', component: VelkomstbonusserComponent},
+  { path: 'velkomstbonusser', component: VelkomstbonusserComponent},
   
   
   

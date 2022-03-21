@@ -13,7 +13,6 @@ import { environment } from 'src/environments/environment';
 export class SignalrService {
   constructor(private http: HttpClient) { }
 
-
   hubConnection:signalR.HubConnection;
 
   StartConnection(): Promise<void> {
@@ -35,5 +34,4 @@ export class SignalrService {
   {
     return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
   }
-
 }
