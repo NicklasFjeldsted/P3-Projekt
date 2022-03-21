@@ -1,6 +1,7 @@
 import { GameObject } from "../../gameObject";
 import { CanvasLayer } from "../canvas";
 import { IComponent } from "../ecs";
+import { Vector2 } from "../vector2";
 
 export class TextComponent implements IComponent
 {
@@ -15,12 +16,12 @@ export class TextComponent implements IComponent
 
 	Start(): void
 	{
-		
+		this.Draw();
 	}
 
 	Awake(): void
 	{
-		this.Draw();
+		
 	}
 
 	Update(deltaTime: number): void
@@ -32,7 +33,8 @@ export class TextComponent implements IComponent
 	/** Draw Text to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.UI.DrawText(this.text, this.gameObject.transform);
+		let cachedWidth: TextMetrics = CanvasLayer.UI.DrawText(this.text, this.gameObject.transform);
+		this.gameObject.Size = new Vector2(cachedWidth.width, 30);
 	}
 
 	/** Clear Text from the canvas. */

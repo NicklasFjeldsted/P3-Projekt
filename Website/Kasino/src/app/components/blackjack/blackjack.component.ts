@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { BackgroundFeature, TextComponent, Game, GameInputFeature, GameObject, Vector3, ColliderComponent } from 'src/app/game-engine';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { House, Player } from './blackjack-game';
 
 @Component({
@@ -12,7 +13,7 @@ import { House, Player } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit {
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) { }
   
   ngOnInit(): void
   {
@@ -21,21 +22,15 @@ export class BlackjackComponent implements OnInit {
     game.AddFeature(new BackgroundFeature());
     game.AddFeature(new GameInputFeature());
 
-    const player1: GameObject = new GameObject('Player1');
-    const player2: GameObject = new GameObject('Player2');
+    const local_player: GameObject = new GameObject('TempName Local Player 1');
+    local_player.AddComponent(new Player());
+    
     const house: GameObject = new GameObject('House');
-
+    
     house.AddComponent(House.Instance);
 
-    player1.AddComponent(new Player());
-    player1.transform.position = new Vector3(20, 550, 0);
-    player1.AddComponent(new ColliderComponent());
-    player1.AddComponent(new TextComponent('@playerCards1'));
-
-    player2.AddComponent(new Player());
-    player2.transform.position = new Vector3(300, 550, 0);
-    player2.AddComponent(new ColliderComponent());
-    player2.AddComponent(new TextComponent('@playerCards2'));
+    house.GetComponent(House)._localPlayer = local_player.GetComponent(Player);
+    
 
     game.Load().then(() => { game.Awake(); }).catch((error) => { console.log(error); });
   }

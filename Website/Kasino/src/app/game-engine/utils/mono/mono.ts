@@ -4,7 +4,7 @@ import { Transform } from "../transform";
 
 export abstract class MonoBehaviour implements IComponent
 {
-	gameObject: GameObject;
+	public gameObject: GameObject;
 
 	public get transform(): Transform
 	{

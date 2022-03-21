@@ -33,12 +33,12 @@ export class SpriteRendererComponent implements IComponent
 	/** Draw a Sprite to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.Foreground.DrawImage(this.image, this.gameObject.transform, new Color(0, 0, 0, 1));
+		CanvasLayer.Foreground.DrawImage(this.image, this.gameObject.transform);
 	}
 
 	/** Clear a Sprite from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.Foreground.ClearCanvas();
+		CanvasLayer.Foreground.ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
 	}
 }

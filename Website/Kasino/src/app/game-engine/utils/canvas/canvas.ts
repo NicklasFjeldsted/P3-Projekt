@@ -135,10 +135,12 @@ export class Canvas implements IAwake
 		this._context.clearRect(0, 0, this._element.width, this._element.height);
 	}
 
-	public DrawText(text: string, transform: Transform, color?: Color)
+	/** Draw text the canvas and return the width of it. */
+	public DrawText(text: string, transform: Transform, color?: Color): TextMetrics
 	{
 		this._context.font = "24px Arial";
 		this._context.fillText(text, transform.position.x, transform.position.y + 20);
+		return this._context.measureText(text);
 	}
 
 	/** Draws and image to the canvas. */

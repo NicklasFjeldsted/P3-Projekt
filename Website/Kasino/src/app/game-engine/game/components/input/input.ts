@@ -1,5 +1,4 @@
 import { Subject } from "rxjs";
-import { GameObject } from "src/app/game-engine";
 import { CanvasLayer, Vector2, OnclickComponent, IFeature } from "src/app/game-engine/utils";
 import { Game } from "../..";
 

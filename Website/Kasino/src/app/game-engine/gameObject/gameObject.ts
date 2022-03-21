@@ -10,6 +10,36 @@ export class GameObject extends Entity
 	/** All GameObjects that exists, **NOT** instantiated. */
 	private static _gameObjects: GameObject[] = [];
 
+	/** This GameObject's parent. */
+	private _parent: GameObject;
+
+	/** This GameObject's children. */
+	private _children: GameObject[] = [];
+
+	/** Public getter for all this GameObject's children. */
+	public get Children(): GameObject[]
+	{
+		return this._children;
+	}
+
+	public Child(index: number): GameObject
+	{
+		return this._children[ index ];
+	}
+
+	/** Add a child to this GameObject. */
+	public SetParent(newParent: GameObject): void
+	{
+		this.transform.position = new Vector3(
+			this.transform.position.x + newParent.transform.position.x,
+			this.transform.position.y + newParent.transform.position.y,
+			this.transform.position.z + newParent.transform.position.z
+		);
+
+		this._parent = newParent;
+		this._parent._children.push(this);
+	}
+
 	/** This GameObjects name, this is not a unique identifier. */
 	public gameObjectName: string;
 	
@@ -25,7 +55,7 @@ export class GameObject extends Entity
 		return this._transform;
 	}
 
-	private _size: Vector2;
+	private _size: Vector2 = new Vector2(100, 100);
 
 	/** **deprecated** 
 	 * Get the size of the GameObject.
@@ -182,6 +212,11 @@ export class GameObject extends Entity
 	/** This is the first call made to this entity when the game compiles. */
 	public override Awake(): void
 	{
+		for (const child of this._children)
+		{
+			child.Awake();
+		}
+
 		for (const component of this._components)
 		{
 			component.Awake();
@@ -190,6 +225,11 @@ export class GameObject extends Entity
 
 	public override Start(): void
 	{
+		for (const child of this._children)
+		{
+			child.Start();
+		}
+
 		for (const component of this._components)
 		{
 			component.Start();
@@ -201,6 +241,11 @@ export class GameObject extends Entity
 	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */
 	public override Update(deltaTime: number): void
 	{
+		for (const child of this._children)
+		{
+			child.Update(deltaTime);
+		}
+
 		for (const component of this._components)
 		{
 			component.Update(deltaTime);

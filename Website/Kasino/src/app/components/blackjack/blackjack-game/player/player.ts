@@ -1,19 +1,15 @@
-import { GameInputFeature, MonoBehaviour, Vector2 } from "src/app/game-engine";
-import { ColliderComponent, TextComponent } from "src/app/game-engine/utils";
-import { House } from "../house";
+import { MonoBehaviour } from "src/app/game-engine";
+import { Card } from "../cards";
+import { Seat } from "../seat";
 
 export class Player extends MonoBehaviour
 {
 	public cards: number[] = [];
-	private textComp: TextComponent;
-	private collider: ColliderComponent;
+	public seat: Seat;
 
 	Awake(): void
 	{
-		GameInputFeature.OnClick.subscribe(e => this.OnClick(e));
-		
-		this.textComp = this.gameObject.GetComponent(TextComponent);
-		this.collider = this.gameObject.GetComponent(ColliderComponent);
+
 	}
 
 	Start(): void
@@ -25,28 +21,8 @@ export class Player extends MonoBehaviour
 		
 	}
 
-	private OnClick(point: Vector2): void
+	public OnCardDeal(card: Card): void
 	{
-		if (!this.collider.Hit(point))
-		{
-			return;
-		}
-
-		console.log(`Hit ${this.gameObject.gameObjectName}`);
-	}
-
-	public OnCardDeal(card: number): void
-	{
-		this.cards.push(card);
-		this.UpdateDisplayedCards();
-	}
-
-	private UpdateDisplayedCards(): void
-	{
-		this.textComp.text = "";
-		for (let card of this.cards)
-		{
-			this.textComp.text += card + "  ";
-		}
+		this.seat.UpdateCards(card);
 	}
 }
