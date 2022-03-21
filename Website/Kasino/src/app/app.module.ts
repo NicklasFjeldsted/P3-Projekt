@@ -18,9 +18,6 @@ import { AuthenticationInterceptorInterceptor } from './interceptors/authenticat
 import { BlackjackComponent } from './components/blackjack/blackjack.component';
 import { TilmeldComponent } from './components/tilmeld/tilmeld.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEnvelope, faFlag } from '@fortawesome/free-regular-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
 import { RouterModule } from '@angular/router';
 import { appInitializer } from './helpers/app.initializer';
 import { DataService } from './services/data.service';

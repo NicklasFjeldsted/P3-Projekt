@@ -162,7 +162,7 @@ body
 .v-center
 {
   position: relative!important;
-  top: 50%!important;
+  top: 50%;
   transform: translateY(-50%)!important;
 }
 

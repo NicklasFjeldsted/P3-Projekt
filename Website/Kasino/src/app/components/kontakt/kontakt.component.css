@@ -39,6 +39,10 @@
 	outline: none;
 }
 
+.v-center {
+	top: 40%!important;
+}
+
 .input-section 
 {
 	display:block;

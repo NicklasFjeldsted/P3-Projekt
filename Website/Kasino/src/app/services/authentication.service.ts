@@ -4,7 +4,11 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
+import { Balance } from '../interfaces/balance';
+import { HeaderComponent } from '../components/header/header.component';
+import { Broadcast } from '../components/header/broadcast';
 
+const USER = 'USER_ID';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
@@ -32,8 +36,10 @@ export class AuthenticationService
     return this.http.post<User>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
       .pipe(map(user =>
       {
+        localStorage.setItem(USER, JSON.stringify(user.id));
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
+        Broadcast.Instance.onBalanceChange.next();
         return user;
       }));
   }
@@ -49,9 +55,10 @@ export class AuthenticationService
   public refreshToken(): Observable<any>
   {
     return this.http.post<any>(`${environment.apiURL}/Customers/refresh-token`, {}, { withCredentials: true })
-      .pipe(map((user) => {
+      .pipe(map(user => {
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
+        Broadcast.Instance.onBalanceChange.next();
         return user;
       }));
   }
@@ -73,5 +80,11 @@ export class AuthenticationService
   private stopRefreshTokenTimer(): void
   {
     clearTimeout(this.refreshTokenTimeout);
+  }
+
+  public decodeToken(): Observable<Balance>
+  {
+    var id = JSON.parse(localStorage.getItem(USER)!);
+    return this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
   }
 }

@@ -28,6 +28,7 @@
     </nav>
 
     <nav *ngIf="this.authenticationService.isLoggedIn">
+      <span class="btn" (click)="getBalance()">{{currentBalance}}</span>
       <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
     </nav>
   </div>

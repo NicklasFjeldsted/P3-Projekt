@@ -14,4 +14,5 @@ export class DataService {
   public GetCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.apiURL}/data/Countries`);
   }
+
 }

@@ -59,6 +59,11 @@ form
   background-color: transparent;
 }
 
+
+.v-center {
+	top: 35%!important;
+}
+
 .form-row > i {
 	color: #DCDCDC;
 	position: absolute;
