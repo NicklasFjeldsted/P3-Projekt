@@ -1,6 +1,5 @@
 import { GameObject } from "../../gameObject";
 import { CanvasLayer } from "../canvas";
-import { Color } from "../color";
 import { IComponent } from "../ecs";
 
 export class SpriteRendererComponent implements IComponent
@@ -16,12 +15,12 @@ export class SpriteRendererComponent implements IComponent
 
 	Start(): void
 	{
-		
+		this.Draw();
 	}
 
 	Awake(): void
 	{
-		this.Draw();
+
 	}
 
 	Update(deltaTime: number): void
@@ -33,7 +32,11 @@ export class SpriteRendererComponent implements IComponent
 	/** Draw a Sprite to the canvas. */
 	private Draw(): void
 	{
-		CanvasLayer.Foreground.DrawImage(this.image, this.gameObject.transform);
+		if (!this.gameObject.isActive)
+		{
+			return;
+		}
+		this.gameObject.Size = CanvasLayer.Foreground.DrawImage(this.image, this.gameObject.transform);
 	}
 
 	/** Clear a Sprite from the canvas. */

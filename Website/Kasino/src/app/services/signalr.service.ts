@@ -13,10 +13,9 @@ import { environment } from 'src/environments/environment';
 export class SignalrService {
   constructor(private http: HttpClient) { }
 
+  hubConnection: signalR.HubConnection;
 
-  hubConnection:signalR.HubConnection;
-
-  StartConnection(): Promise<void> {
+  public StartConnection(): Promise<void> {
     this.hubConnection = new signalR.HubConnectionBuilder()
     .withUrl(environment.hubURL + "/Blackjack", {
     })
@@ -24,16 +23,32 @@ export class SignalrService {
 
     return this.hubConnection
     .start()
-    .then(() => {
-      console.log("Hub connection started!");
-
-    })
     .catch(err => console.log("Error while starting connection" + err))
   }
 
-  GetUser(): Observable<IUser>
+  public OnDisconnect()
+  {
+    this.hubConnection
+  }
+
+  public GetUser(): Observable<IUser>
   {
     return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
+  }
+
+  public SendData(func: string, data: string): void
+  {
+    this.hubConnection.send(func, data);
+  }
+
+  public GetData(func: string): void
+  {
+    this.hubConnection.send(func);
+  }
+
+  public Subscribe(func: string, action: (data: string) => void)
+  {
+    this.hubConnection.on(func, (data) => action(data));
   }
 
 }

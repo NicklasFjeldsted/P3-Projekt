@@ -144,7 +144,7 @@ export class Canvas implements IAwake
 	}
 
 	/** Draws and image to the canvas. */
-	public DrawImage(source: string, transform: Transform, color?: Color): void
+	public DrawImage(source: string, transform: Transform, color?: Color): Vector2
 	{
 		let image = new Image();
 		image.src = source;
@@ -154,16 +154,14 @@ export class Canvas implements IAwake
 			throw new Error('Image source not specified.');
 		}
 
-		// image.onload = () =>
-		// {
-			const width = image.naturalHeight * transform.scale.x;
-			const height = image.naturalHeight * transform.scale.y;
-			this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
-			if (color)
-			{
-				this.recolorImage(image, width, height, transform.position, color);
-			}
-		// }
+		const width = image.naturalHeight * transform.scale.x;
+		const height = image.naturalHeight * transform.scale.y;
+		this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
+		if (color)
+		{
+			this.recolorImage(image, width, height, transform.position, color);
+		}
+		return new Vector2(width, height);
 	}
 
 	private recolorImage(image: HTMLImageElement, width: number, height: number, position: Vector3, newColor: Color)

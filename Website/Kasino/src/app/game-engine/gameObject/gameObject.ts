@@ -10,6 +10,8 @@ export class GameObject extends Entity
 	/** All GameObjects that exists, **NOT** instantiated. */
 	private static _gameObjects: GameObject[] = [];
 
+	public isActive: boolean = true;
+
 	/** This GameObject's parent. */
 	private _parent: GameObject;
 
@@ -241,6 +243,11 @@ export class GameObject extends Entity
 	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */
 	public override Update(deltaTime: number): void
 	{
+		if (this._parent)
+		{
+			this.isActive = this._parent.isActive;
+		}
+
 		for (const child of this._children)
 		{
 			child.Update(deltaTime);

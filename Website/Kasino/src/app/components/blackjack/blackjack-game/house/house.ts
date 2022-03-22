@@ -1,8 +1,8 @@
 import { Subject } from "rxjs";
-import { ColliderComponent, Game, GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
+import { GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
 import { Card } from "../cards";
 import { Player } from "../player";
-import { Seat } from "../seat";
+import { ISeat, Seat } from "../seat";
 
 export class House extends MonoBehaviour
 {
@@ -74,10 +74,23 @@ export class House extends MonoBehaviour
 
 	private availableCards: Card[] = [];
 	public seats: Seat[] = [];
+	public occupiedSeats: Seat[] = [];
 
 	public TimeBetweenRounds: number = 5;
 	private currentTimeBetweenRounds: number;
 	private IsPlaying: boolean;
+
+	private childText: TextComponent;
+	private houseCards: Card[] = [];
+	private get HeldValue(): number
+	{
+		var output = 0;
+		for (const card of this.houseCards)
+		{
+			output += card.value;
+		}
+		return output;
+	}
 
 	public _localPlayer: Player;
 
@@ -100,7 +113,12 @@ export class House extends MonoBehaviour
 
 	Awake(): void
 	{
-
+		let cardChild = new GameObject('House Cards');
+		cardChild.AddComponent(new TextComponent());
+		this.childText = cardChild.GetComponent(TextComponent);
+		cardChild.transform.Translate(new Vector3(450, 50, 0));
+		cardChild.SetParent(this.gameObject);
+		this.childText.text = ' ';
 	}
 	
 	Update(deltaTime: number): void
@@ -129,10 +147,29 @@ export class House extends MonoBehaviour
 		}
 	}
 
+	public UpdateSeats(seatData: string)
+	{
+		var newSeats = JSON.parse(seatData);
+		for (const key in newSeats)
+		{
+			if (newSeats.hasOwnProperty(key))
+			{
+				for (const seat of this.seats)
+				{
+					if (seat.seatIndex === newSeats[ key ].seatIndex)
+					{
+						seat.Occupied = true;
+					}
+				}
+			}
+		}
+	}
+
 	private CreateSeat(id: number, position: Vector3): GameObject
 	{
 		let seat: GameObject = new GameObject(`Seat - ${id}`);
 		seat.AddComponent(new Seat());
+		seat.GetComponent(Seat).seatIndex = id;
 		seat.transform.position = position;
 		this.seats.push(seat.GetComponent(Seat));
 		return seat;
@@ -142,7 +179,7 @@ export class House extends MonoBehaviour
 	{
 		for (const seat of this.seats)
 		{
-			if (seat.Player)
+			if (seat.Occupied)
 			{
 				return true;
 			}
@@ -153,8 +190,11 @@ export class House extends MonoBehaviour
 	private StartNewRound(): void
 	{
 		this.IsPlaying = true;
-		this.availableCards = this.AllCards;
-		this.DealCards();
+		for (let i = 0; i < this.AllCards.length; i++)
+		{
+			this.availableCards[ i ] = this.AllCards[ i ];
+		}
+		this.DealCards().then(e => this.DealCards());
 	}
 
 	private EndRound(): void
@@ -180,16 +220,37 @@ export class House extends MonoBehaviour
 		return card;
 	}
 
-	public DealCards(): void
+	public async DealCards(): Promise<void>
 	{
-		for (const seat of this.seats)
+		return await new Promise((resolve) =>
 		{
-			if (!seat.Player)
+			for (const seat of this.seats)
 			{
-				continue;
+				if (!seat.Player)
+				{
+					continue;
+				}
+	
+				seat.Player.OnCardDeal(this.GetCard());
 			}
+			
+			this.HouseDeal(this.GetCard());
 
-			seat.Player.OnCardDeal(this.GetCard());
+			resolve();
+		})
+	}
+
+	private HouseDeal(card: Card): void
+	{
+		this.houseCards.push(card);
+		if (this.houseCards.length < 2)
+		{
+			this.childText.text = this.GetCard().value.toString();
 		}
+	}
+
+	private HouseReveal(): void
+	{
+		this.childText.text = this.HeldValue.toString();
 	}
 }

@@ -43,12 +43,18 @@ export class ColliderComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
+		this.start = this.gameObject.transform.position;
 		this.DEBUG_Clear();
 		this.DEBUG_Draw();
 	}
 
 	public Hit(point: Vector2): boolean
 	{
+		if (!this.gameObject.isActive)
+		{
+			return false;
+		}
+
 		if (point.x < this.start.x)
 		{
 			return false;

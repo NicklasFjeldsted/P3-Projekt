@@ -33,6 +33,11 @@ export class TextComponent implements IComponent
 	/** Draw Text to the canvas. */
 	private Draw(): void
 	{
+		if (!this.gameObject.isActive)
+		{
+			return;
+		}
+		
 		let cachedWidth: TextMetrics = CanvasLayer.UI.DrawText(this.text, this.gameObject.transform);
 		this.gameObject.Size = new Vector2(cachedWidth.width, 30);
 	}

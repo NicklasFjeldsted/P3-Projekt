@@ -72,6 +72,7 @@ export class Game extends Entity
 				return;
 			}
 		}
+
 		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
 	}
 
