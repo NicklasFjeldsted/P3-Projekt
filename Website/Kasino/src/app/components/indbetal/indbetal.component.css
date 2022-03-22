@@ -56,3 +56,9 @@
   border: 2px transparent;
   max-width: 105px;
 }
+
+.btn-secondary
+{
+  color: black; 
+  margin: 40px;
+}
