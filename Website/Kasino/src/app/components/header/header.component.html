@@ -28,7 +28,7 @@
     </nav>
 
     <nav *ngIf="this.authenticationService.isLoggedIn">
-      <a routerLink="/indbetal"><span class="btn" (click)="getBalance()">{{currentBalance}} kr</span></a>
+      <a routerLink="/indbetal"><span class="btn" (click)="getBalance()" style="background-color: green;">{{currentBalance}} kr</span></a>
       <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
     </nav>
   </div>
