@@ -35,7 +35,6 @@ export class KontoComponent implements OnInit {
     this.authenticationService.getAccount().subscribe({
       next: (userInfo) => {
         this.accountInfo = Object.assign(userInfo);
-        console.log(this.accountInfo);
       },
       error: (error) => {
         console.log(error);

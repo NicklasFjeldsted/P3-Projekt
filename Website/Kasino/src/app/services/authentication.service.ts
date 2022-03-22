@@ -32,6 +32,7 @@ export class AuthenticationService
     return this.userSubject.value.jwtToken != null;
   }
 
+
   public login(email: string, password: string): Observable<User>
   {
     return this.http.post<User>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
