@@ -70,7 +70,13 @@
   margin-bottom: -5px;
 }
 
-.form-input:read-only {
+.form-input:read-only 
+{
   cursor: not-allowed;
   font-size: 1rem;
+}
+
+.h4
+{
+  margin-bottom: -10px;
 }
