@@ -38,6 +38,7 @@ import { HelpIndbetalingComponent } from './components/helpcenter-components/hel
 import { HelpUdbetalingComponent } from './components/helpcenter-components/help-udbetaling/help-udbetaling.component';
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
+import { IndstillingerComponent } from './components/indstillinger/indstillinger.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { VelkomstbonusserComponent } from './components/helpcenter-components/ve
     HelpUdbetalingComponent,
     HelpLoginComponent,
     VelkomstbonusserComponent,
+    IndstillingerComponent,
   ],
   imports: [
     BrowserModule,
