@@ -69,3 +69,8 @@
   margin-top: 20px;
   margin-bottom: -5px;
 }
+
+.form-input:read-only {
+  cursor: not-allowed;
+  font-size: 1rem;
+}

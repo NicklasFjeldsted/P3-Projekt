@@ -7,6 +7,7 @@ import { User } from '../interfaces/User';
 import { Balance } from '../interfaces/balance';
 import { HeaderComponent } from '../components/header/header.component';
 import { Broadcast } from '../components/header/broadcast';
+import { AccountInfo } from '../interfaces/accountInfo';
 
 const USER = 'USER_ID';
 @Injectable({ providedIn: 'root' })
@@ -86,5 +87,10 @@ export class AuthenticationService
   {
     var id = JSON.parse(localStorage.getItem(USER)!);
     return this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
+  }
+
+  public getAccount(): Observable<AccountInfo> {
+    var id = JSON.parse(localStorage.getItem(USER)!);
+    return this.http.get<AccountInfo>(`${environment.apiURL}/Customers/${id}`);
   }
 }

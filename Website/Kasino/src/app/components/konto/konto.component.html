@@ -19,7 +19,7 @@
 
       <div class="form-row flow-down">
         <label for="balance">Balance</label>
-        <input type="text" name="balance" id="balance" class="form-input" readonly/>
+        <input type="text" name="balance" id="balance" class="form-input" [value]="this.currentBalance" readonly/>
       </div>
 
       <div class="row">
@@ -30,18 +30,18 @@
 
       <div class="form-row flow-down">
         <label for="fuldeNavn">Navn</label>
-        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" readonly/>
+        <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" [value]="this.accountInfo.firstName + this.accountInfo.lastName" readonly/>
       </div>
 
 
       <div class="form-row flow-down">
         <label for="tlf">Telefonnummer</label>
-        <input type="text" name="tlf" id="tlf" class="form-input" readonly/>
+        <input type="text" name="tlf" id="tlf" class="form-input" [value]="this.accountInfo.phoneNumber" readonly/>
       </div>
 
       <div class="form-row flow-down">
         <label for="adresse">Adresse</label>
-        <input type="text" name="adresse" id="adresse" class="form-input" readonly/>
+        <input type="text" name="adresse" id="adresse" class="form-input" [value]="this.accountInfo.address" readonly/>
       </div>
 
       <div class="form-row flow-down">
