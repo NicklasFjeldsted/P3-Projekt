@@ -20,6 +20,7 @@ import { HelpUdbetalingComponent } from './components/helpcenter-components/help
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
 import { IndstillingerComponent } from './components/indstillinger/indstillinger.component';
+import { IndbetalingsgraenseComponent } from './components/indbetalingsgraense/indbetalingsgraense.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,6 +45,8 @@ const routes: Routes = [
   { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'indstillinger', component: IndstillingerComponent, canActivate: [ AuthenticationGuard]},
+  { path: 'indbetalingsgrænse', component: IndbetalingsgraenseComponent, canActivate: [ AuthenticationGuard]},
+
   
   
   
