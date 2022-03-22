@@ -1,17 +1,31 @@
-:host
-{
-  height: 85%;
-  width: 100%;
-}
-
 .form-control
 {
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
   max-height: 550px;
   max-width: 400px;
+  position: absolute!important;
+  border: none;
 }
 
+#indbetalForm {
+  z-index: 999;
+}
+
+
+.active {
+  display: block!important;
+}
+
+
+.fa-xmark {
+  padding: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #fff;
+}
+
+.v-center {
+	top: 35%!important;
+}
 .row
 {
   border-bottom: none;
@@ -29,7 +43,7 @@
 .kortnummer
 {
   margin-top: -20px;
-  align-self: center; 
+  align-self: center;
   font-size: medium;
 }
 

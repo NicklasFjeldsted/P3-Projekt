@@ -1,6 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, Renderer2, ViewChild, ViewChildren} from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
-import { Balance } from 'src/app/interfaces/balance';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { Broadcast } from './broadcast';
 
@@ -35,7 +33,6 @@ export class HeaderComponent implements OnInit
       }
     })
   }
-
 }
 
 

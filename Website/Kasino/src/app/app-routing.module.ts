@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UdbetalComponent } from './components/udbetal/udbetal.component';
-import { IndbetalComponent } from './components/indbetal/indbetal.component';
 import { LoginComponent } from './components/login/login.component';
 import { KontoComponent } from './components/konto/konto.component';
 import { HomeComponent } from './components/home/home.component';
@@ -19,6 +18,7 @@ import { HelpIndbetalingComponent } from './components/helpcenter-components/hel
 import { HelpUdbetalingComponent } from './components/helpcenter-components/help-udbetaling/help-udbetaling.component';
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,12 +33,12 @@ const routes: Routes = [
   { path: 'help-udbetaling', component: HelpUdbetalingComponent},
   { path: 'help-login', component: HelpLoginComponent},
   { path: 'velkomstbonusser', component: VelkomstbonusserComponent},
+  { path: 'modal', component: ModalComponent},
   
   
   
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'udbetal', component: UdbetalComponent, canActivate: [ AuthenticationGuard ]},
-  { path: 'indbetal', component: IndbetalComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
   { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},

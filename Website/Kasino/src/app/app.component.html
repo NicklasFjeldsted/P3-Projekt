@@ -1,7 +1,7 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 </style>
-<div class="back-drop" id="backdrop" (click)="closeSideNav()">
+<div class="back-drop" id="backdrop" (click)="closeSideNav();">
 </div>
 <div class="sidenav" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
@@ -21,5 +21,6 @@
   <app-header (onSideNavToggle)="openSideNav()"></app-header>
   <div class="fill-row">
     <router-outlet></router-outlet>
+    <app-modal [hidden]="!isIndbetalOpen"></app-modal>
   </div>
 </div>

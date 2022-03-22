@@ -1,7 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -30,8 +29,8 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 export class AppComponent implements OnInit
 {
   constructor(private router: Router) {}
-  faCoffee = faCoffee;
-  title = 'Kasino';
+
+  isIndbetalOpen = false;
 
   isSidenavOpen = false;
 
@@ -61,4 +60,6 @@ export class AppComponent implements OnInit
   goToLink(site: string) {
     this.router.navigate([site]);
   }
+
+
 }

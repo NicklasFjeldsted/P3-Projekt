@@ -106,3 +106,23 @@
   border: none;
   cursor: pointer;
 }
+
+#balance {
+  box-shadow: none;
+  width: 150px;
+
+}
+
+.deposit {
+  position: relative;
+  padding-right: .3em;
+
+}
+
+.deposit > i {
+  position: relative;
+  padding-left: 10px;
+  right: 0px;
+  font-size: 1.6em;
+  top: 4px;
+}
