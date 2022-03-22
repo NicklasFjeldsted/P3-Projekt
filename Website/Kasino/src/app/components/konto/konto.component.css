@@ -74,6 +74,8 @@
 {
   cursor: not-allowed;
   font-size: 1rem;
+  background-color:#EBEBE4;
+  border:1px solid #ABADB3;
 }
 
 .h4
