@@ -4,6 +4,9 @@ import { CustomerService } from '../../services/customer.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AccountInfo } from 'src/app/interfaces/accountInfo';
 import { Balance } from 'src/app/interfaces/balance';
+import { IndbetalComponent } from '../modals/indbetal/indbetal.component';
+import { UdbetalComponent } from '../modals/udbetal/udbetal.component';
+import { DialogService } from '../modals/dialog.service';
 
 
 @Component({
@@ -16,7 +19,7 @@ export class KontoComponent implements OnInit {
   accountInfo: AccountInfo;
   currentBalance: number | null;
 
-  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService) {
+  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, private dialog: DialogService) {
     this.accountInfo = {
       phoneNumber: 0,
       firstName: '',
@@ -53,5 +56,21 @@ export class KontoComponent implements OnInit {
     })
   }
 
+  openIndbetal() {
+    const dialogRef = this.dialog.open(IndbetalComponent);
 
+    dialogRef.afterClosed().subscribe(() => {
+      // Subscription runs after the dialog closes
+      console.log('Dialog closed!');
+    });
+  }
+
+  openUdbetal() {
+    const dialogRef = this.dialog.open(UdbetalComponent);
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Subscription runs after the dialog closes
+      console.log('Dialog closed!');
+    });
+  }
 }

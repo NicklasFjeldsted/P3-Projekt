@@ -10,6 +10,8 @@
   border-top-right-radius: 25px;
   max-height: 550px;
   max-width: 400px;
+  position: absolute!important;
+  border: none;
 }
 
 .row
@@ -55,4 +57,11 @@
   text-align: center;
   border: 2px transparent;
   max-width: 105px;
+}
+
+.fa-xmark {
+  padding: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+  color: #fff;
 }
