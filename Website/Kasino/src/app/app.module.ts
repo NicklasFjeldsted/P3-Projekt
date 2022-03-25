@@ -6,7 +6,6 @@ import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { KontoComponent } from './components/konto/konto.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UdbetalComponent } from './components/udbetal/udbetal.component';
 import { HomeComponent } from './components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -36,15 +35,15 @@ import { HelpIndbetalingComponent } from './components/helpcenter-components/hel
 import { HelpUdbetalingComponent } from './components/helpcenter-components/help-udbetaling/help-udbetaling.component';
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
+import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 
 @NgModule({
   declarations: [
-    [AppComponent, ModalComponent],
+    AppComponent,
     LoginComponent,
     HeaderComponent,
     KontoComponent,
-    UdbetalComponent,
     HomeComponent,
     BlackjackComponent,
     TilmeldComponent,
@@ -59,6 +58,8 @@ import { ModalComponent } from './components/modal/modal.component';
     HelpUdbetalingComponent,
     HelpLoginComponent,
     VelkomstbonusserComponent,
+    IndbetalComponent,
+    UdbetalComponent,
   ],
   imports: [
     BrowserModule,
