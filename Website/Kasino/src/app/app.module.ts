@@ -37,6 +37,8 @@ import { HelpLoginComponent } from './components/helpcenter-components/help-logi
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
 import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
+import { OverlayModule } from '@angular/cdk/overlay';
+
 
 @NgModule({
   declarations: [
@@ -79,7 +81,8 @@ import { UdbetalComponent } from './components/modals/udbetal/udbetal.component'
     MatIconModule,
     MatDividerModule,
     HttpClientModule,
-    ClickOutsideModule
+    ClickOutsideModule,
+    OverlayModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService, DataService] },

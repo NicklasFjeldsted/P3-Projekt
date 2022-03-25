@@ -1,5 +1,8 @@
 import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { DialogRef } from '../modals/dialog-ref';
+import { DialogService } from '../modals/dialog.service';
+import { IndbetalComponent } from '../modals/indbetal/indbetal.component';
 import { Broadcast } from './broadcast';
 
 @Component({
@@ -9,7 +12,7 @@ import { Broadcast } from './broadcast';
 })
 export class HeaderComponent implements OnInit
 {
-  constructor(public authenticationService: AuthenticationService) { }
+  constructor(public authenticationService: AuthenticationService, private dialog: DialogService) { }
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
 
@@ -32,6 +35,15 @@ export class HeaderComponent implements OnInit
         console.log(error)
       }
     })
+  }
+
+  openIndbetal() {
+    const dialogRef = this.dialog.open(IndbetalComponent);
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Subscription runs after the dialog closes
+      console.log('Dialog closed!');
+    });
   }
 }
 
