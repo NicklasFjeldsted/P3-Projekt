@@ -1,5 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, filter, take } from 'rxjs';
+import { IndbetalComponent } from './indbetal/indbetal.component';
 
 /**
  * A reference to the dialog itself.

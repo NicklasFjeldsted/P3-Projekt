@@ -10,6 +10,7 @@ import { Broadcast } from './broadcast';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
+
 export class HeaderComponent implements OnInit
 {
   constructor(public authenticationService: AuthenticationService, private dialog: DialogService) { }
@@ -38,12 +39,7 @@ export class HeaderComponent implements OnInit
   }
 
   openIndbetal() {
-    const dialogRef = this.dialog.open(IndbetalComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-      // Subscription runs after the dialog closes
-      console.log('Dialog closed!');
-    });
+    this.dialog.open(IndbetalComponent);
   }
 }
 

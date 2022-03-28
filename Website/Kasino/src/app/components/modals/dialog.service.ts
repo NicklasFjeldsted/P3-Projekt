@@ -1,8 +1,10 @@
 import { Overlay, ComponentType } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { Injectable, Injector } from '@angular/core';
+import { EventEmitter, Injectable, Injector, Output } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { DialogRef } from './dialog-ref';
 import { DIALOG_DATA } from './dialog-tokens';
+import { IndbetalComponent } from './indbetal/indbetal.component';
 
 export interface DialogConfig {
   data?: any;
@@ -12,11 +14,13 @@ export interface DialogConfig {
   providedIn: 'root',
 })
 export class DialogService {
+
+  public showIndbetal = new Subject<boolean>();
+
+
   constructor(private overlay: Overlay, private injector: Injector) {}
 
-  /**
-   * Open a custom component in an overlay
-   */
+  // Open modal
   open<T>(component: ComponentType<T>, config?: DialogConfig): DialogRef {
     // Globally centered position strategy
     const positionStrategy = this.overlay
@@ -27,6 +31,7 @@ export class DialogService {
 
     // Create the overlay with customizable options
     const overlayRef = this.overlay.create({
+      width: '250px',
       positionStrategy,
       hasBackdrop: true,
       backdropClass: 'overlay-backdrop',
