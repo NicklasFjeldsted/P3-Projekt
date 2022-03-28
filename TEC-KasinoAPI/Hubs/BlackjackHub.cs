@@ -188,10 +188,13 @@ namespace TEC_KasinoAPI.Hubs
 
 		private async void BeginGame()
         {
-			await SetPlayers();
 
             if (CheckPlayers() && !IsPlaying)
             {
+				timer.Stop();
+
+				await SetPlayers();
+
 				RefillCards();
 
 				IsPlaying = true;
@@ -199,7 +202,6 @@ namespace TEC_KasinoAPI.Hubs
 				DealCards();
             }
 
-			await _hubContext.Clients.All.SendAsync("SyncPlaying", string.Format("\"IsPlaying\": {0}", IsPlaying));
 			await _hubContext.Clients.All.SendAsync("GameStarted");
         }
 
@@ -210,7 +212,8 @@ namespace TEC_KasinoAPI.Hubs
 				IsPlaying = false;
             }
 
-			await _hubContext.Clients.All.SendAsync("SyncPlaying", string.Format("\"IsPlaying\": {0}", IsPlaying));
+			timer.Start();
+
 			await _hubContext.Clients.All.SendAsync("GameEnded");
 		}
 
