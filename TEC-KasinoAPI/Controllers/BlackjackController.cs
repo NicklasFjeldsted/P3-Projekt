@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 using TEC_KasinoAPI.Helpers;
+using TEC_KasinoAPI.Hubs;
 using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Controllers

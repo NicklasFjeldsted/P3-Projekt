@@ -8,9 +8,23 @@ export class Seat extends MonoBehaviour
 {
 	public Player: Player | null;
 	public Occupied: boolean = false;
+
 	private collider: ColliderComponent;
+
 	public HeldCards: Card[] = [];
-	public cardValues: number;
+	public get cardValues(): number
+	{
+		var output: number = 0;
+		for (const card of this.HeldCards)
+		{
+			output += card.value;
+		}
+		return output;
+	}
+
+	public stand: boolean;
+	public busted: boolean;
+
 	public seatIndex: number;
 
 	private childTextComponent: TextComponent;
@@ -33,17 +47,18 @@ export class Seat extends MonoBehaviour
 	{
 		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.png'));
 		this.gameObject.AddComponent(new ColliderComponent());
+		
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
+
 		let cardsChild = new GameObject(`${this.gameObject.gameObjectName}'s Child`);
 		cardsChild.SetParent(this.gameObject);
 		cardsChild.AddComponent(new TextComponent(' '));
 		cardsChild.transform.Translate(new Vector3(0, -30, 0));
 		this.childTextComponent = cardsChild.GetComponent(TextComponent);
+
 		GameInputFeature.OnClick.subscribe(event => this.OnClicked(event));
-
-
 	}
 
 	public Update(deltaTime: number): void
@@ -63,29 +78,52 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-		this.JoinSeat(House.Instance._localPlayer);
+		this.JoinSeat();
 	}
 
-	public UpdateCards(card: Card): void
+	public UpdateCards(cards: Card[]): void
 	{
-		this.HeldCards.push(card);
+		for (const card of cards)
+		{
+			if (this.IsDuplicate(card))
+			{
+				continue;
+			}
+
+			this.HeldCards.push(card);
+		}
 		this.DisplayCards();
+	}
+
+	public IsDuplicate(card: Card): boolean
+	{
+		for (const hcard of this.HeldCards)
+		{
+			if (card.id === hcard.id)
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public DisplayCards(): void
 	{
-		var cardValues: number = 0;
-		for (const card of this.HeldCards)
-		{
-			cardValues += card.value;
-		}
-		this.childTextComponent.text = cardValues.toString();
+		this.childTextComponent.text = this.cardValues.toString();
 	}
 
-	public JoinSeat(player: Player): void
+	public JoinSeat(): void
 	{
+		if (!House.Instance._localPlayer)
+		{
+			const local_player: GameObject = new GameObject('TempName Local Player 1');
+			local_player.AddComponent(new Player());
+			House.Instance._localPlayer = local_player.GetComponent(Player);
+		}
+
+		this.Player = House.Instance._localPlayer;
+
 		this.Occupied = true;
-		this.Player = player;
 
 		if (this.Player.seat)
 		{
@@ -96,7 +134,7 @@ export class Seat extends MonoBehaviour
 
 		this.Player.SitDown();
 
-		this.OnSeatJoined.next(player);
+		this.OnSeatJoined.next(this.Player);
 	}
 
 	public LeaveSeat()

@@ -1,5 +1,6 @@
 import { GameObject } from '../gameObject';
 import { Entity, Vector3 } from '../utils';
+import { NetworkingFeature } from './components';
 
 export class Game extends Entity
 {
@@ -22,34 +23,6 @@ export class Game extends Entity
 	}
 
 	private _lastTimestamp = 0;
-
-	k = new Image();
-	
-	/** **Experimental** method for loading before initializing the game. */
-	public async Load(): Promise<void>
-	{
-		this.k.src = '../../../assets/media/cards.png';
-		const toBeLoaded: any[] = [];
-
-		toBeLoaded.push(this.k);
-
-		await new Promise(async (resolve, reject) =>
-		{
-			const finished = [];
-			for (let i = 0; i < toBeLoaded.length; i++)
-			{
-				toBeLoaded[ i ].onload = () =>
-				{
-					finished.push(toBeLoaded[ i ]);
-					
-					if (finished.length === toBeLoaded.length)
-					{
-						resolve(true);
-					}
-				}
-			}
-		});
-	}
 
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject, position?: Vector3): void
@@ -76,6 +49,32 @@ export class Game extends Entity
 		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
 	}
 
+	/** This is how the game is started up, it will run the functions to begin the game loop and initialization. */
+	public BEGIN_GAME(): Promise<void>
+	{
+		return new Promise((resolve, reject) =>
+		{
+			let networking = this.GetFeature(NetworkingFeature);
+			if (networking)
+			{
+				networking.StartConnection()
+				.then(() =>
+				{
+					this.Awake();
+				})
+				.finally(() =>
+				{
+					resolve();
+				});
+			}
+			else
+			{
+				this.Awake();
+				resolve();
+			}
+		});
+	}
+
 	// Start up the game and get the start time.
 	// Then begin the game loop.
 	public override Awake(): void
@@ -90,8 +89,8 @@ export class Game extends Entity
 			entity.Awake();
 		}
 
-		// Delay the game loop by one frame to make sure all entities and
-		// components have awaken.
+		// Delay Start by one frame to make sure all entities and components have awaken.
+		// Then delay the game loop by one frame to make sure all entities and components have executed start.
 		window.requestAnimationFrame(() =>
 		{
 			this.Start();
@@ -106,6 +105,8 @@ export class Game extends Entity
 
 	public override Start(): void
 	{
+		super.Start();
+
 		// Start all the entities in the game.
 		for (const entity of this.Entities)
 		{

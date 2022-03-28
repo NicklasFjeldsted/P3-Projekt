@@ -10,6 +10,11 @@ export class BackgroundFeature implements IFeature
 		this.Draw();
 	}
 
+	Start(): void
+	{
+		
+	}
+
 	Update(deltaTime: number): void
 	{
 

@@ -1,9 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { delay } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject } from 'src/app/game-engine';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { SignalrService } from 'src/app/services/signalr.service';
-import { House, Player, ISeat } from './blackjack-game';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
+import { House, Player } from './blackjack-game';
 
 @Component({
   selector: 'game',
@@ -15,47 +12,41 @@ import { House, Player, ISeat } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit
 {
-  constructor(private authenticationService: AuthenticationService, private signalr: SignalrService) { }
+  constructor() { }
  
+  private networking: NetworkingFeature;
+
   ngOnInit(): void
   {
     const game: Game = Game.Instance;
+    var networking: NetworkingFeature;
     
     game.AddFeature(new BackgroundFeature());
     game.AddFeature(new GameInputFeature());
-    
-    const local_player: GameObject = new GameObject('TempName Local Player 1');
-    local_player.AddComponent(new Player());
-    
+    game.AddFeature(new NetworkingFeature());
+
+    this.networking = game.GetFeature(NetworkingFeature);
+
     const house: GameObject = new GameObject('House');
-    
     house.AddComponent(House.Instance);
-    
-    house.GetComponent(House)._localPlayer = local_player.GetComponent(Player);
-    
-    this.signalr.StartConnection().then(() =>
-    {
-      this.signalr.Subscribe("SeatsChanged", (data) => this.ReceiveSeatChanges(data));
-      this.signalr.GetData("GetData");
-      House.Instance._localPlayer.Connect();
-    });
 
     for (const seat of House.Instance.seats)
     {
-      seat.OnSeatJoined.subscribe((player: Player) => this.SendSeatJoined(player));
+      seat.OnSeatJoined.subscribe((player: Player) => this.networking.SendData("JoinSeat", this.BuildPlayerData(player)));
     }
 
-    game.Load().then(() => { game.Awake(); }).catch((error) => { console.log(error); });
-  }
+    game.BEGIN_GAME().then(() =>
+    {
+      this.networking.Subscribe("SeatsChanged", (data) => House.Instance.UpdateSeats(data)).then(() =>
+      {
+        this.networking.GetData("GetData");
+      });
 
-  private SendSeatJoined(player: Player): void
-  {
-    this.signalr.SendData("JoinSeat", this.BuildPlayerData(player));
-  }
+      this.networking.Subscribe("SyncTurn", (data) => House.Instance.SyncTurn(data));
+      this.networking.Subscribe("SyncPlaying", (data) => House.Instance.SyncPlaying(data));
 
-  private ReceiveSeatChanges(seatData: string): void
-  {
-    House.Instance.UpdateSeats(seatData);
+      this.networking.Subscribe("HouseCards", (data) => House.Instance.HouseCards(data));
+    });
   }
 
   private BuildPlayerData(player: Player): string
@@ -64,7 +55,11 @@ export class BlackjackComponent implements OnInit
       {
         fullName: player.gameObject.gameObjectName,
         entityID: player.gameObject.entityId,
-        seatIndex: player.seat?.seatIndex
+        seatIndex: player.seat?.seatIndex,
+        seated: player.seat ? true : false,
+        stand: player.seat?.stand,
+        busted: player.seat?.busted,
+        cards: player.seat?.HeldCards
       }
     );
   }

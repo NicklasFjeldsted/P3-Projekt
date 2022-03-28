@@ -12,6 +12,11 @@ export class GameInputFeature implements IFeature
 		document.body.addEventListener('click', this.HandleClick.bind(this));
 	}
 
+	Start(): void
+	{
+		
+	}
+
 	Update(deltaTime: number): void
 	{
 

@@ -9,21 +9,26 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 
-
-export class SignalrService {
+export class SignalrService
+{
   constructor(private http: HttpClient) { }
 
   hubConnection: signalR.HubConnection;
 
-  public StartConnection(): Promise<void> {
+  public async StartConnection(): Promise<void>
+  {
     this.hubConnection = new signalR.HubConnectionBuilder()
-    .withUrl(environment.hubURL + "/Blackjack", {
-    })
-    .build();
-
-    return this.hubConnection
-    .start()
-    .catch(err => console.log("Error while starting connection" + err))
+      .withUrl(environment.hubURL + "/Blackjack", {})
+      .build();
+    
+    try
+    {
+      return await this.hubConnection.start();
+    }
+    catch (err)
+    {
+      return console.log("Error while starting connection" + err);
+    }
   }
 
   public OnDisconnect()
