@@ -28,7 +28,7 @@
     </nav>
 
     <nav *ngIf="this.authenticationService.isLoggedIn">
-      <a class="btn deposit balance" (click)="openIndbetal()">{{currentBalance}} kr.<i class="fa-solid fa-circle-plus"></i></a>
+      <a class="btn deposit saldo" (click)="openIndbetal()">{{currentBalance}} kr.<i class="fa-solid fa-circle-plus"></i></a>
       <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
     </nav>
   </div>
