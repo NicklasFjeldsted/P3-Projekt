@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { DialogRef } from '../dialog-ref';
+import { DIALOG_DATA } from '../dialog-tokens';
 
 @Component({
   selector: 'app-udbetal',
@@ -7,7 +9,9 @@ import { Component } from '@angular/core';
 })
 export class UdbetalComponent {
 
-  constructor() { }
+  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string) { }
 
-
+  close(): void {
+    this.dialogRef.close();
+  }
 }

@@ -43,7 +43,7 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
-  z-index: 4;
+  z-index: 999;
 }
 
 .dropdown:hover .dropdown-content
@@ -107,22 +107,34 @@
   cursor: pointer;
 }
 
-#balance {
+#balance 
+{
   box-shadow: none;
   width: 150px;
-
 }
 
-.deposit {
+.deposit 
+{
   position: relative;
   padding-right: .3em;
 
 }
 
-.deposit > i {
+.deposit > i 
+{
   position: relative;
   padding-left: 10px;
   right: 0px;
   font-size: 1.6em;
   top: 4px;
+}
+
+.saldo
+{
+  background-color: #F08000;
+}
+
+.slado:hover 
+{
+  box-shadow: 0px 0px 10px #F08000;
 }
