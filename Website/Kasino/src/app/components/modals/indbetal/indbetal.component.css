@@ -1,33 +1,42 @@
+:host
+{
+  height: 100%;
+  width: 100%;
+}
+
 .form-control
 {
-  max-height: 520px;
+  max-height: 650px;
   max-width: 400px;
+  height: 100%;
   position: absolute!important;
   border: none;
 }
 
-#indbetalForm {
-  z-index: 999;
-}
-
-
-.active {
+.active 
+{
   display: block!important;
 }
 
-
-.fa-xmark {
+.fa-xmark 
+{
   padding: 5px;
   font-size: 1.2em;
   cursor: pointer;
   color: #fff;
 }
 
-.v-center {
-	top: 50%!important;
+.v-center 
+{
+	top: 57.5%!important;
 }
+
 .row
 {
+  margin: 0 auto;
+  max-height: 200px;
+  right: 0;
+  left: 0;
   border-bottom: none;
 }
 
