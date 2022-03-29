@@ -1,12 +1,18 @@
-import { Grid } from '../grid';
-import { Settings } from '../settings';
-import { Entity } from '../utils';
+import { GameObject } from '../gameObject';
+import { Entity, Vector3 } from '../utils';
+import { NetworkingFeature } from './components';
 
 export class Game extends Entity
 {
-	constructor(private parent: Element)
+	private static _instance: Game;
+	public static get Instance(): Game
 	{
-		super();
+		if (!Game._instance)
+		{
+			Game._instance = new Game();
+		}
+
+		return Game._instance;
 	}
 
 	private _entities: Entity[] = [];
@@ -18,13 +24,64 @@ export class Game extends Entity
 
 	private _lastTimestamp = 0;
 
+	/** Instantiates a GameObject in the game. */
+	public Instantiate(gameObject: GameObject, position?: Vector3): void
+	{
+		if (position)
+		{
+			gameObject.transform.position = position;
+		}
+		this.Entities.push(gameObject);
+	}
+
+	/** Destroys a GameObject from the game. */
+	public Destroy(gameObject: GameObject): void
+	{
+		for (let i = 0; i < this.Entities.length; i++)
+		{
+			if (this.Entities[i].entityId === gameObject.entityId)
+			{
+				this.Entities.splice(i, 1);
+				return;
+			}
+		}
+
+		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
+	}
+
+	/** This is how the game is started up, it will run the functions to begin the game loop and initialization. */
+	public BEGIN_GAME(): Promise<void>
+	{
+		return new Promise((resolve, reject) =>
+		{
+			let networking = this.GetFeature(NetworkingFeature);
+			if (networking)
+			{
+				networking.StartConnection()
+				.then(() =>
+				{
+					this.Awake();
+				})
+				.finally(() =>
+				{
+					resolve();
+				});
+			}
+			else
+			{
+				this.Awake();
+				resolve();
+			}
+		});
+	}
+
 	// Start up the game and get the start time.
 	// Then begin the game loop.
 	public override Awake(): void
 	{
-		super.Awake();
+		console.warn(`GAME - Awoken`);
 
-		this._entities.push(new Grid())
+		super.Awake();
 
 		// Awake all the entities in the game.
 		for (const entity of this.Entities)
@@ -32,26 +89,40 @@ export class Game extends Entity
 			entity.Awake();
 		}
 
-		// Delay the game loop by one frame to make sure all entities and
-		// components have awaken.
+		// Delay Start by one frame to make sure all entities and components have awaken.
+		// Then delay the game loop by one frame to make sure all entities and components have executed start.
 		window.requestAnimationFrame(() =>
 		{
-			this._lastTimestamp = Date.now();
+			this.Start();
+			window.requestAnimationFrame(() =>
+			{
+				this._lastTimestamp = Date.now();
 			
-			this.Update();
+				this.Update();
+			});
 		});
+	}
 
-		this.DirtyDraw();
+	public override Start(): void
+	{
+		super.Start();
+
+		// Start all the entities in the game.
+		for (const entity of this.Entities)
+		{
+			entity.Start();
+		}
 	}
 
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
+		// deltaTime will look something like 0.283192 milliseconds
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 
 		super.Update(deltaTime);
 
-		// Update all the entities in the game.
+		// Update all the entities in this game.
 		for (const entity of this.Entities)
 		{
 			entity.Update(deltaTime);
@@ -60,32 +131,5 @@ export class Game extends Entity
 		this._lastTimestamp = Date.now();
 
 		window.requestAnimationFrame(() => this.Update());
-	}
-
-	private DirtyDraw(): void
-	{
-		const canvas = document.createElement('canvas');
-
-		const canvasSize = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
-
-		canvas.setAttribute('width', canvasSize.toString());
-		canvas.setAttribute('height', canvasSize.toString());
-
-		this.parent.appendChild(canvas);
-
-		const size = Settings.grid.nodeSize;
-		const offset = Settings.grid.nodeOffset;
-
-		for (let y = 0; y < Settings.grid.dimension; y++)
-		{
-			for (let x = 0; x < Settings.grid.dimension; x++)
-			{
-				const ctx = canvas.getContext('2d')!;
-				ctx.beginPath();
-				ctx.fillStyle = Settings.grid.color;
-				ctx.rect((size + offset) * x, (size + offset) * y, size, size);
-				ctx.fill();
-			}
-		}
 	}
 }
