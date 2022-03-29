@@ -95,19 +95,12 @@ export class House extends MonoBehaviour
 
 	public UpdateSeatData(playerDataString: string)
 	{
-		// The changes that happen to seats with a key of the connection id.
+		// Convert the incoming playerDataJsonString to a Json Object and Index it by the connection id.
 		var playerData: PlayerData[] = JSON.parse(playerDataString);
+
 		this.clients = playerData;
-		for (const key in playerData)
-		{
-			if (playerData.hasOwnProperty(key))
-			{
-				if (this.client.data.email === playerData[ key ].email)
-				{
-					this.client.UpdateData(playerData[ key ]);
-				}
-			}
-		}
+
+		console.log(playerData);
 	}
 
 	public CreateClient(user: IUser)

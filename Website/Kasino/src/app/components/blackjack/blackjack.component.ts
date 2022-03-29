@@ -40,15 +40,15 @@ export class BlackjackComponent implements OnInit
 
     game.BEGIN_GAME().then(() =>
     {
-      Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
-
-      this.GetUser().subscribe((user) => House.Instance.CreateClient(user));
+      this.networking.Subscribe("Debug", (data) => { console.log("--DEBUG--"); console.log(JSON.parse(data)); console.log("--DEBUG--"); });
 
       this.networking.Subscribe("DataChanged", (data) => House.Instance.UpdateSeatData(data)).then(() =>
       {
-        this.networking.GetData("GetData");
-      });
+        Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
 
+        this.GetUser().subscribe((user) => House.Instance.CreateClient(user));
+      });
+      
       this.networking.Subscribe("SyncTurn", (data) => House.Instance.SyncTurn(data));
       this.networking.Subscribe("SyncPlaying", (data) => House.Instance.SyncPlaying(data));
 

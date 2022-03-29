@@ -50,9 +50,13 @@ export class Seat extends MonoBehaviour
 		var clients = House.Instance.clients;
 		for (const key in clients)
 		{
-			if (clients[key].seatIndex === this.seatIndex && this.Player !== House.Instance.client)
+			if (clients[key].seatIndex === this.seatIndex && this.Player! !== House.Instance.client)
 			{
 				this.Player = new Player();
+				this.Player.UpdateData(clients[ key ]);
+			}
+			else if (clients[ key ].seatIndex === this.seatIndex && this.Player! === House.Instance.client)
+			{
 				this.Player.UpdateData(clients[ key ]);
 			}
 		}
