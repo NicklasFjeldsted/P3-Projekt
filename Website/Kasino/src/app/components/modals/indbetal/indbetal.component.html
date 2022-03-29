@@ -18,7 +18,7 @@
 		</div>
 		<div class="form-row flow-down">
 			<label for="" class="form-label">Kortnummer</label>
-			<input class="form-input" (keyup)="addDashes()" formControlName="cardNumber" maxlength="19" [ngClass]="{ 'is-invalid': submitted && f['cardNumber'].errors}" placeholder="1234-1234-1234-1234">
+			<input class="form-input" (keyup)="addDashes()" (keypress)="keyPressNumbers($event)" formControlName="cardNumber" maxlength="19" [ngClass]="{ 'is-invalid': submitted && f['cardNumber'].errors}" placeholder="1234-1234-1234-1234">
 
 			<div *ngIf="submitted && f['cardNumber'].errors" class="invalid-feedback">
 				<div *ngIf="f['cardNumber'].errors['required']">Indtast kortnummeret</div>
@@ -52,7 +52,7 @@
 		</div>
 		<div class="form-row flow-down">
 			<label for="" class="form-label">Beløb</label>
-			<input class="form-input" formControlName="amount">
+			<input class="form-input" formControlName="amount" maxlength="6">
 		</div>
 	</div>
 	<br>
@@ -68,7 +68,7 @@
 	</div>
 	<div class="column flow-down submit-form">
 		<div class="row center">
-			<button type="submit" id="submit" class="form-submit" [disabled]="this.form.invalid || f['amount'].value < 100">Indbetal {{f['amount'].value}} kr på min konto</button>
+			<button type="submit" id="submit" class="form-submit" [disabled]="f['amount'].value < 100">Indbetal {{f['amount'].value}} kr på min konto</button>
 		</div>
 		<div class="row center change">
 			<button id="change" class="form-submit">Indstil indbetalingsgrænse</button>
