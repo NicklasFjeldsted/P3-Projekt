@@ -1,6 +1,7 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
-import { House, Player } from './blackjack-game';
+import { AuthenticationGuard } from 'src/app/services/authentication-guard.service';
+import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
   selector: 'game',
@@ -12,14 +13,13 @@ import { House, Player } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit
 {
-  constructor() { }
+  constructor(private authenticationGuard: AuthenticationGuard) { }
  
   private networking: NetworkingFeature;
 
   ngOnInit(): void
   {
     const game: Game = Game.Instance;
-    var networking: NetworkingFeature;
     
     game.AddFeature(new BackgroundFeature());
     game.AddFeature(new GameInputFeature());
@@ -32,7 +32,7 @@ export class BlackjackComponent implements OnInit
 
     for (const seat of House.Instance.seats)
     {
-      seat.OnSeatJoined.subscribe((player: Player) => this.networking.SendData("JoinSeat", this.BuildPlayerData(player)));
+      seat.OnSeatJoined.subscribe((player: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(player)));
     }
 
     game.BEGIN_GAME().then(() =>
@@ -47,20 +47,5 @@ export class BlackjackComponent implements OnInit
 
       this.networking.Subscribe("HouseCards", (data) => House.Instance.HouseCards(data));
     });
-  }
-
-  private BuildPlayerData(player: Player): string
-  {
-    return JSON.stringify(
-      {
-        fullName: player.gameObject.gameObjectName,
-        entityID: player.gameObject.entityId,
-        seatIndex: player.seat?.seatIndex,
-        seated: player.seat ? true : false,
-        stand: player.seat?.stand,
-        busted: player.seat?.busted,
-        cards: player.seat?.HeldCards
-      }
-    );
   }
 }

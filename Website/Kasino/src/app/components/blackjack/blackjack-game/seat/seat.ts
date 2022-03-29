@@ -1,41 +1,22 @@
 import { Subject } from "rxjs";
 import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
-import { Card } from "../cards";
-import { House } from "../house";
-import { Player } from "../player";
+import { Player, PlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
 {
 	public Player: Player | null;
-	public Occupied: boolean = false;
-
-	private collider: ColliderComponent;
-
-	public HeldCards: Card[] = [];
-	public get cardValues(): number
+	
+	public get Occupied(): boolean
 	{
-		var output: number = 0;
-		for (const card of this.HeldCards)
-		{
-			output += card.value;
-		}
-		return output;
+		return this.Player ? true : false;
 	}
-
-	public stand: boolean;
-	public busted: boolean;
 
 	public seatIndex: number;
-
+	
+	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
+	
 	private childTextComponent: TextComponent;
-
-	public OnSeatJoined: Subject<Player> = new Subject<Player>();
-
-	constructor(private _player?: Player)
-	{
-		super();
-		_player ? this.Player = _player : this.Player = null;
-	}
+	private collider: ColliderComponent;
 
 	public Start(): void
 	{
@@ -63,7 +44,23 @@ export class Seat extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
+		
+	}
 
+	public ResetSeat(): void
+	{
+		this.Player = null;
+	}
+
+	/** Updates the seat and the playerdata if the player isnt null, if it is throws and error. */
+	public UpdateSeat(playerData: PlayerData): void
+	{
+		if (this.Player)
+		{
+			this.Player.UpdateData(playerData);
+			return;
+		}
+		throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
 	}
 
 	private OnClicked(point: Vector2): void
@@ -81,60 +78,20 @@ export class Seat extends MonoBehaviour
 		this.JoinSeat();
 	}
 
-	public UpdateCards(cards: Card[]): void
-	{
-		for (const card of cards)
-		{
-			if (this.IsDuplicate(card))
-			{
-				continue;
-			}
-
-			this.HeldCards.push(card);
-		}
-		this.DisplayCards();
-	}
-
-	public IsDuplicate(card: Card): boolean
-	{
-		for (const hcard of this.HeldCards)
-		{
-			if (card.id === hcard.id)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
+	/** Display the current card value of the player sitting in this seat, throws an error if the player is null. */
 	public DisplayCards(): void
 	{
-		this.childTextComponent.text = this.cardValues.toString();
+		if (this.Player)
+		{
+			this.childTextComponent.text = this.Player.cardValues.toString();
+			return;
+		}
+		throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
 	}
 
 	public JoinSeat(): void
 	{
-		if (!House.Instance._localPlayer)
-		{
-			const local_player: GameObject = new GameObject('TempName Local Player 1');
-			local_player.AddComponent(new Player());
-			House.Instance._localPlayer = local_player.GetComponent(Player);
-		}
-
-		this.Player = House.Instance._localPlayer;
-
-		this.Occupied = true;
-
-		if (this.Player.seat)
-		{
-			this.Player.seat.Occupied = false;
-		}
-
-		this.Player.seat = this;
-
-		this.Player.SitDown();
-
-		this.OnSeatJoined.next(this.Player);
+		
 	}
 
 	public LeaveSeat()

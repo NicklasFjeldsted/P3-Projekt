@@ -11,6 +11,7 @@ using Swashbuckle.AspNetCore.Filters;
 using System.Text;
 using System.Text.Json.Serialization;
 using TEC_KasinoAPI.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +106,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddSingleton<IUserIdProvider, IdBasedUserIdProvider>();
 
 // Build the web application
 WebApplication app = builder.Build();

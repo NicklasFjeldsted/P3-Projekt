@@ -1,9 +1,8 @@
 ﻿namespace TEC_KasinoAPI.Models
 {
-    public class Seat
+    public class PlayerData
     {
         public string fullName;
-        public string entityID;
         public int seatIndex;
         public bool seated;
         public bool stand;

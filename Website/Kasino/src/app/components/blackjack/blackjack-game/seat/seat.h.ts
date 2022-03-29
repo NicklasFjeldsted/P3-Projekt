@@ -2,8 +2,8 @@ import { Card } from "../cards";
 
 export interface ISeat
 {
+	occupied: boolean;
 	fullName: string;
-	entityID: string;
 	seatIndex: number;
 	seated: boolean;
 	stand: boolean;

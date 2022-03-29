@@ -1,7 +1,7 @@
 import { Subject } from "rxjs";
 import { GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
 import { Card } from "../cards";
-import { Player } from "../player";
+import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
 
 export class House extends MonoBehaviour
@@ -91,19 +91,24 @@ export class House extends MonoBehaviour
 		this.SeatTurn = JSON.parse(data).SeatTurnIndex;
 	}
 
-	public UpdateSeats(seatData: string)
+	public UpdateSeats(playerDataString: string)
 	{
-		var newSeats = JSON.parse(seatData);
-		for (const key in newSeats)
+		// The changes that happen to seats with a key of the connection id.
+		var playerData: PlayerData[] = JSON.parse(playerDataString);
+		for (const key in playerData)
 		{
-			if (newSeats.hasOwnProperty(key))
+			if (playerData.hasOwnProperty(key))
 			{
 				for (const seat of this.seats)
 				{
-					if (seat.seatIndex === newSeats[ key ].seatIndex)
+					if (seat.seatIndex === playerData[ key ].seatIndex)
 					{
-						seat.Occupied = true;
-						seat.UpdateCards(newSeats[ key ].cards);
+						seat.UpdateSeat(playerData[ key ]);
+					}
+
+					if (seat.seatIndex != playerData[key].seatIndex)
+					{
+						seat.ResetSeat();
 					}
 
 					if (!this._localPlayer)

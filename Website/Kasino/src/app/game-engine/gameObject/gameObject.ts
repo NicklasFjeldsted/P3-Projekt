@@ -98,7 +98,7 @@ export class GameObject extends Entity
 
 		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
 
-		if (instantiate == true)
+		if (instantiate === true)
 		{
 			Game.Instance.Instantiate(this);
 		}
