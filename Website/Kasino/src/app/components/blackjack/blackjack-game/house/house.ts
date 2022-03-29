@@ -1,5 +1,6 @@
 import { Subject } from "rxjs";
 import { GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
+import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
@@ -47,7 +48,8 @@ export class House extends MonoBehaviour
 		return output;
 	}
 
-	public _localPlayer: Player;
+	public client: Player;
+	public clients: PlayerData[];
 
 	constructor()
 	{
@@ -91,43 +93,29 @@ export class House extends MonoBehaviour
 		this.SeatTurn = JSON.parse(data).SeatTurnIndex;
 	}
 
-	public UpdateSeats(playerDataString: string)
+	public UpdateSeatData(playerDataString: string)
 	{
 		// The changes that happen to seats with a key of the connection id.
 		var playerData: PlayerData[] = JSON.parse(playerDataString);
+		this.clients = playerData;
 		for (const key in playerData)
 		{
 			if (playerData.hasOwnProperty(key))
 			{
-				for (const seat of this.seats)
+				if (this.client.data.email === playerData[ key ].email)
 				{
-					if (seat.seatIndex === playerData[ key ].seatIndex)
-					{
-						seat.UpdateSeat(playerData[ key ]);
-					}
-
-					if (seat.seatIndex != playerData[key].seatIndex)
-					{
-						seat.ResetSeat();
-					}
-
-					if (!this._localPlayer)
-					{
-						if (seat.Occupied)
-						{
-							seat.gameObject.isActive = false;
-						}
-					}
-					else
-					{
-						if (seat.Occupied)
-						{
-							seat.gameObject.isActive = true;
-						}
-					}
+					this.client.UpdateData(playerData[ key ]);
 				}
 			}
 		}
+	}
+
+	public CreateClient(user: IUser)
+	{
+		this.client = new Player();
+		this.client.data.email = user.email;
+		this.client.data.fullName = user.fullName;
+		Player.OnDataChanged.next(this.client.data);
 	}
 
 	private CreateSeat(id: number, position: Vector3): GameObject

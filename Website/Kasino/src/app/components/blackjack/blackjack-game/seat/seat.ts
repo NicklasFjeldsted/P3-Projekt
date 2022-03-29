@@ -1,5 +1,6 @@
-import { Subject } from "rxjs";
+import { of, Subject } from "rxjs";
 import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { House } from "../house";
 import { Player, PlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
@@ -16,6 +17,7 @@ export class Seat extends MonoBehaviour
 	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
 	
 	private childTextComponent: TextComponent;
+	private seatText: TextComponent;
 	private collider: ColliderComponent;
 
 	public Start(): void
@@ -32,6 +34,7 @@ export class Seat extends MonoBehaviour
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
+		this.seatText = seatText.GetComponent(TextComponent);
 
 		let cardsChild = new GameObject(`${this.gameObject.gameObjectName}'s Child`);
 		cardsChild.SetParent(this.gameObject);
@@ -44,7 +47,17 @@ export class Seat extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
-		
+		var clients = House.Instance.clients;
+		for (const key in clients)
+		{
+			if (clients[key].seatIndex === this.seatIndex && this.Player !== House.Instance.client)
+			{
+				this.Player = new Player();
+				this.Player.UpdateData(clients[ key ]);
+			}
+		}
+
+		this.Display();
 	}
 
 	public ResetSeat(): void
@@ -53,15 +66,15 @@ export class Seat extends MonoBehaviour
 	}
 
 	/** Updates the seat and the playerdata if the player isnt null, if it is throws and error. */
-	public UpdateSeat(playerData: PlayerData): void
-	{
-		if (this.Player)
-		{
-			this.Player.UpdateData(playerData);
-			return;
-		}
-		throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
-	}
+	// public UpdateSeat(playerData: PlayerData): void
+	// {
+	// 	if (this.Player)
+	// 	{
+	// 		this.Player.UpdateData(playerData);
+	// 		return;
+	// 	}
+	// 	throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
+	// }
 
 	private OnClicked(point: Vector2): void
 	{
@@ -78,25 +91,40 @@ export class Seat extends MonoBehaviour
 		this.JoinSeat();
 	}
 
-	/** Display the current card value of the player sitting in this seat, throws an error if the player is null. */
-	public DisplayCards(): void
+	/** Display the current card value of the player sitting in this seat. */
+	public Display(): void
+	{
+		if (!this.Player) return;
+
+		this.childTextComponent.text = this.Player.cardValues.toString();
+		this.seatText.text = this.Player.data.fullName;
+	}
+
+	/** Join a seat. Throws an error if the seat already has a player. */
+	public JoinSeat(): void
+	{
+		if (!this.Player)
+		{
+			this.Player = House.Instance.client;
+			this.Player.data.seated = true;
+			this.Player.data.seatIndex = this.seatIndex;
+	
+			this.OnSeatJoined.next(this.Player.data);
+			return;
+		}
+		throw new Error(`Exists Error:\n Seat-Number: ${this.seatIndex}'s Player is not null.`);
+	}
+
+	/** Leave a seat. Throws an error if the seat does not contains a player. */
+	public LeaveSeat(): void
 	{
 		if (this.Player)
 		{
-			this.childTextComponent.text = this.Player.cardValues.toString();
+			this.Player.data.seated = false;
+			this.Player.data.seatIndex = -1;
+			this.Player = null;
 			return;
 		}
 		throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
 	}
-
-	public JoinSeat(): void
-	{
-		
-	}
-
-	public LeaveSeat()
-	{
-		return null;
-	}
-
 }

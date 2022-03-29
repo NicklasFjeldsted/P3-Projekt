@@ -1,3 +1,5 @@
+import { Subject } from "rxjs";
+import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 export interface IPlayerData
 {
@@ -12,6 +14,7 @@ export interface IPlayerData
 export class PlayerData implements IPlayerData
 {
 	public fullName: string;
+	public email: string;
 	public seatIndex: number;
 	public seated: boolean;
 	public stand: boolean;
@@ -31,16 +34,7 @@ export class PlayerData implements IPlayerData
 
 export class Player
 {
-	private static _instance: Player;
-	public static get Instance(): Player
-	{
-		if (!Player._instance)
-		{
-			Player._instance = new Player();
-		}
-
-		return Player._instance;
-	}
+	public static OnDataChanged: Subject<PlayerData> = new Subject<PlayerData>();
 
 	constructor()
 	{
@@ -104,7 +98,8 @@ export class Player
 	{
 		return JSON.stringify(
 			{
-			  	fullName: data.fullName,
+				fullName: data.fullName,
+				email: data.email,
 			  	seatIndex: data.seatIndex,
 			  	seated: data.seated,
 			  	stand: data.stand,

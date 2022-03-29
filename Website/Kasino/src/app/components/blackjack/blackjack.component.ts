@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
-import { AuthenticationGuard } from 'src/app/services/authentication-guard.service';
+import { IUser } from 'src/app/interfaces/User';
+import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
@@ -13,7 +16,7 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit
 {
-  constructor(private authenticationGuard: AuthenticationGuard) { }
+  constructor(private http: HttpClient) { }
  
   private networking: NetworkingFeature;
 
@@ -32,12 +35,16 @@ export class BlackjackComponent implements OnInit
 
     for (const seat of House.Instance.seats)
     {
-      seat.OnSeatJoined.subscribe((player: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(player)));
+      seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
     }
 
     game.BEGIN_GAME().then(() =>
     {
-      this.networking.Subscribe("SeatsChanged", (data) => House.Instance.UpdateSeats(data)).then(() =>
+      Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
+
+      this.GetUser().subscribe((user) => House.Instance.CreateClient(user));
+
+      this.networking.Subscribe("DataChanged", (data) => House.Instance.UpdateSeatData(data)).then(() =>
       {
         this.networking.GetData("GetData");
       });
@@ -47,5 +54,10 @@ export class BlackjackComponent implements OnInit
 
       this.networking.Subscribe("HouseCards", (data) => House.Instance.HouseCards(data));
     });
+  }
+
+  public GetUser(): Observable<IUser>
+  {
+    return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
   }
 }

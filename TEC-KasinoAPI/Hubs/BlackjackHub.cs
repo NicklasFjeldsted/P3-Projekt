@@ -8,7 +8,6 @@ using System.Security.Claims;
 
 namespace TEC_KasinoAPI.Hubs
 {
-	[Authorize]
 	public class BlackjackHub : Hub
 	{
 		private static Card[] ALL_CARDS =
@@ -81,7 +80,6 @@ namespace TEC_KasinoAPI.Hubs
 		private readonly IHubContext<BlackjackHub> _hubContext;
 		private System.Timers.Timer timer;
 
-
 		public BlackjackHub(IHubContext<BlackjackHub> hubContext)
 		{
 			_hubContext = hubContext;
@@ -109,12 +107,17 @@ namespace TEC_KasinoAPI.Hubs
 		public async Task JoinSeat(string playerData)
 		{
 			connectedPlayers[Context.ConnectionId] = JsonConvert.DeserializeObject<PlayerData>(playerData);
-			await Clients.All.SendAsync("SeatsChanged", DictionaryToJson(connectedPlayers));
+			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
+
+		public void UpdatePlayerData(string playerData)
+        {
+			connectedPlayers[Context.ConnectionId] = JsonConvert.DeserializeObject<PlayerData>(playerData);
+        }
 
 		public async Task GetData()
         {
-			await Clients.Client(Context.ConnectionId).SendAsync("SeatsChanged", DictionaryToJson(connectedPlayers));
+			await Clients.Client(Context.ConnectionId).SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
         }
 
 		private static async Task<bool> CheckPlayers()
@@ -139,7 +142,7 @@ namespace TEC_KasinoAPI.Hubs
 				players[ Context.ConnectionId ].cards.Append(await GenerateCard());
             }
 
-			await Clients.All.SendAsync("SeatsChanged", DictionaryToJson(players));
+			await Clients.All.SendAsync("DataChanged", DictionaryToJson(players));
 		}
 
 		public async void Stand()
@@ -150,7 +153,7 @@ namespace TEC_KasinoAPI.Hubs
 				seatTurnIndex = turnOrder.Dequeue().seatIndex;
 			}
 
-			await Clients.All.SendAsync("SeatsChanged", DictionaryToJson(players));
+			await Clients.All.SendAsync("DataChanged", DictionaryToJson(players));
 			await Clients.All.SendAsync("SyncTurn", string.Format("{\"seatTurnIndex\": {0}}", seatTurnIndex));
 		}
 
@@ -162,7 +165,7 @@ namespace TEC_KasinoAPI.Hubs
 				seatTurnIndex = turnOrder.Dequeue().seatIndex;
 			}
 
-			await Clients.All.SendAsync("SeatsChanged", DictionaryToJson(players));
+			await Clients.All.SendAsync("DataChanged", DictionaryToJson(players));
 			await Clients.All.SendAsync("SyncTurn", string.Format("{\"seatTurnIndex\": {0}}", seatTurnIndex));
 		}
 
@@ -187,7 +190,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			seatTurnIndex = turnOrder.Dequeue().seatIndex;
 
-			await _hubContext.Clients.All.SendAsync("SeatsChanged", DictionaryToJson(players));
+			await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(players));
 			await _hubContext.Clients.All.SendAsync("SyncTurn", string.Format("\"SeatTurnIndex\": {0}", seatTurnIndex));
 			await _hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards[0]));
 		}
@@ -298,7 +301,7 @@ namespace TEC_KasinoAPI.Hubs
             }
 
 			Task.Run(async () => {
-				await _hubContext.Clients.All.SendAsync("SeatsChanged", DictionaryToJson(connectedPlayers));
+				await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 			});
 
             return base.OnDisconnectedAsync(exception);
@@ -307,7 +310,6 @@ namespace TEC_KasinoAPI.Hubs
 		public override Task OnConnectedAsync()
 		{
 			connectedPlayers.Add(Context.ConnectionId, new PlayerData());
-			Debug.Write($"\n\nUserIdentifier -> {Context.UserIdentifier}\n\n");
 			return base.OnConnectedAsync();
 		}
 
@@ -323,17 +325,6 @@ namespace TEC_KasinoAPI.Hubs
 				string.Join(",", JsonConvert.SerializeObject(data.Value)))).ToList();
 
 			return "{" + string.Join(",", entries) + "}";
-		}
-	}
-
-	public class IdBasedUserIdProvider : IUserIdProvider
-	{
-		public string GetUserId(HubConnectionContext connection)
-		{
-			//TODO: Implement USERID Mapper Here
-			//throw new NotImplementedException();
-
-			return connection.User.FindFirst(ClaimTypes.Email).Value;
 		}
 	}
 }
