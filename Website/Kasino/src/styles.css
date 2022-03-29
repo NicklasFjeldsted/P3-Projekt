@@ -40,12 +40,18 @@ body
   overflow: hidden;
 }
 
+.container-body 
+{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
 /* A wrapper for everything on a page. */
 .container
 {
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
+  display: block;
   width: 100%;
   height: 100%
 }
@@ -157,7 +163,7 @@ body
 .v-center
 {
   position: relative!important;
-  top: 50%!important;
+  top: 50%;
   transform: translateY(-50%)!important;
 }
 
@@ -194,7 +200,6 @@ a
   padding: .5em 1em;
   cursor: pointer;
   background-color: #05372c;
-  
 }
 
 .btn:hover
@@ -241,6 +246,11 @@ a
   box-shadow: black 0px 0px 3px;
   padding: 2px 8px;
   margin-bottom: 10px;
+}
+
+.form-input:focus 
+{
+  outline: none;
 }
 
 .form-row
@@ -290,6 +300,24 @@ form a
   margin-bottom: 10px;
 }
 
+.cdk-overlay-backdrop {
+  z-index: 400;
+  animation: fade-in .4s;
+}
+
+.animateOut {
+  animation: fade-out .4s!important;
+}
+
+@keyframes fade-in {
+  from { background-color: rgba(0,0,0, 0); }
+  to   { background-color: rgba(0,0,0, 0.32); }
+}
+@keyframes fade-out {
+  from { background-color: rgba(0,0,0, 0.32); }
+  to   { background-color: rgba(0,0,0, 0); }
+}
+
 @media only screen and (max-width: 600px)
 {
   .form-control
@@ -302,6 +330,23 @@ form a
     max-height: 100%!important;
   }
 }
+
+.is-invalid
+{
+	background-color: #ffeeeb;
+	border: 1px solid #f00!important;
+	color:#FF0000;
+}
+
+.invalid-feedback
+{
+	color:red;
+	font-size: 0.6rem;
+	text-align: left;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

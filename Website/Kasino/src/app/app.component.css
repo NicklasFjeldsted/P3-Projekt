@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-.back-drop {
+.back-drop 
+{
 	display: none;
 	z-index: 900;
 	height: 100%;
@@ -12,8 +13,8 @@
 	left: 0;
 }
 
-.sidenav {
-	display: none;
+.sidenav 
+{
 	z-index: 1000;
 	width: 250px;
 	height: 100%;
@@ -22,17 +23,21 @@
 	top: 0;
 }
 
-.active {
-	display: block;
+.active 
+{
+	display: block!important;
 }
 
-.sidenav-content {
+.sidenav-content 
+{
 	position: absolute;
 	width: 100%;
 	height: 100%;
 	align-items: center;
 }
-.sidenav-list {
+
+.sidenav-list 
+{
 	width: 100%;
 	height: 50%;
 	list-style: none;
@@ -40,7 +45,8 @@
 	margin: 0 auto;
 }
 
-.sidenav-item {
+.sidenav-item 
+{
 	width: 100%;
 	height: 50px;
 	font-size: 1.1rem;
@@ -51,22 +57,27 @@
 	cursor: pointer;
 }
 
-.sidenav-item > a {
+.sidenav-item > a 
+{
 	width: 100%;
 	height: 100%;
 	align-items: center;
 	display: flex;
 	font-family: 'Montserrat', sans-serif;
 }
-.sidenav-item > span{
+
+.sidenav-item > span
+{
 	margin-left: .25rem;
 }
 
-.sidenav-item > a > i {
+.sidenav-item > a > i 
+{
 	margin-right: .5rem;
 }
 
-.sidenav-info {
+.sidenav-info 
+{
 	text-align: left;
 	height: 30px;
 	font-family: 'Montserrat', sans-serif;
@@ -76,17 +87,36 @@
 	line-height: 1pc;
 }
 
-.sidenav-info > span {
+.sidenav-info > a > span 
+{
 	padding-left: 1pc;
 	padding-right: 3pc;
 }
 
-.sidenav-item > a > i {
+.sidenav-item > a > i 
+{
 	width: 50px;
 	color: green;
 	font-size: 1.6rem;
 }
 
-.sidenav-item:hover {
+.sidenav-item:hover 
+{
 	background-color: hsla(0,0%,82.7%,.5);
+}
+
+.sidenav-list > li:nth-child(4) 
+{
+	border-top: 1px solid #808080;
+}
+
+.modal {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display:none;
+}
+
+.open {
+	display: block!important;;
 }

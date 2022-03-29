@@ -1,15 +1,18 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
 </style>
-<div class="back-drop" id="backdrop" (click)="closeSideNav()">
+<div class="back-drop" id="backdrop" (click)="closeSideNav();">
 </div>
 <div class="sidenav" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
     <ul class="sidenav-list">
       <li class="sidenav-item"><a routerLink=""><i class="fa fa-house"></i><span>Forside</span></a></li>
       <li class="sidenav-item"><a routerLink="konto"><i class="fa fa-user"></i><span>Konto</span></a></li>
-      <li class="sidenav-item"><a routerLink=""><i class="fa fa-gear"></i><span>Indstillinger</span></a></li>
-      <li class="sidenav-item sidenav-info" style="border-top: 1px solid #808080 "><span>Kontakt os</span></li>
+      <li class="sidenav-item"><a routerLink="/indstillinger"><i class="fa fa-gear"></i><span>Indstillinger</span></a></li>
+      <li class="sidenav-item sidenav-info"><a routerLink="support"><span>Help Center</span></a></li>
+      <li class="sidenav-item sidenav-info"><a routerLink="kontakt"><span>Kontakt os</span></a></li>
+      <li class="sidenav-item sidenav-info"><a routerLink="om-os"><span>Om os</span></a></li>
+      <li class="sidenav-item sidenav-info"><a routerLink="/reglerOgBetingelser"><span>Regler og Betingelser</span></a></li>
     </ul>
   </div>
 </div>

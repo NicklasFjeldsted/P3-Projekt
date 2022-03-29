@@ -1,34 +1,36 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
   animations: [
     trigger('openSidenav', [
       state('open', style({
-        left: '0'
+        left: '0',
+        opacity: '1'
       })),
       state('closed', style({
-        left: '-250px'
+        left: '-250px',
+        opacity: '.3'
       })),
       transition('open => closed', [
-        animate('0.2s ease')
+        animate('0.3s ease')
       ]),
       transition('closed => open', [
-        animate('0.2s ease')
+        animate('0.3s ease')
       ])
     ])
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent implements OnInit
 {
   constructor(private router: Router) {}
-  faCoffee = faCoffee;
-  title = 'Kasino';
+
+  isIndbetalOpen = false;
 
   isSidenavOpen = false;
 
@@ -58,4 +60,6 @@ export class AppComponent implements OnInit
   goToLink(site: string) {
     this.router.navigate([site]);
   }
+
+
 }

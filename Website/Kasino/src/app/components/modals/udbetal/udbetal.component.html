@@ -1,0 +1,59 @@
+<form id="login" method="post" class="form-control v-center h-center">
+  <div class="form-header bg-green">
+    <i class="fa fa-xmark" (click)="close()"></i>
+	  <div class="column">
+	    <h2>Udbetaling</h2>
+	  </div>
+  </div>
+  <div class="column flow-down">
+	  <label for="Kortnummer" class="kortnummer">Kortnummer</label>
+	  <div class="row center">
+	    <input type="text" name="cardNum" id="cardNum" class="form-input" placeholder="Kortnummer fx 0000 0000 0000 0000" />
+	  </div>
+	  <div class="row center">
+      <div class="column left text" style="max-width: 125px;">
+        <label for="Udløbsdato" class="">Udløbsdato</label>
+      </div>
+    <div class="column right text" style="max-width: 125px;">
+      <label for="Kontrolcifre" class="">Kontrolcifre</label>
+    </div>
+  </div>
+	  <div class="row center">
+	    <div class="column left" style="max-width: 158px;">
+	  	  <input type="text" name="expDate" id="expDate" class="form-input" style="padding-right: 2px;" placeholder="Udløbsdato  fx 12/12" />
+	    </div>
+	    <div class="column right" style="max-width: 158px;">
+	  	  <input type="text" name="control" id="control" class="form-input" style="padding-left: 2px;" placeholder="Kontrolcifre fx 123" />
+	    </div>
+	  </div>
+	  <label for="Beløb" class="self-center">Beløb</label>
+	  <div class="row center">
+	    <input type="text" name="amount" id="amount" class="form-input" placeholder="Beløb" />
+    </div>
+    <div class="row center">
+	    <div class="columnbtn">
+	      <button class="btn">25</button>
+	    </div>
+	    <div class="columnbtn">
+	      <button class="btn">50</button>
+	    </div>
+	    <div class="columnbtn">
+	      <button class="btn">100</button>
+	    </div>
+      </div>
+      <div class="row center">
+	    <div class="columnbtn">
+	      <button class="btn">250</button>
+	    </div>
+	    <div class="columnbtn">
+	      <button class="btn">500</button>
+	    </div>
+	    <div class="columnbtn">
+	      <button class="btn">1000</button>
+	    </div>
+    </div>
+	  <div class="row center">
+	    <button type="submit" name="log" id="log" class="btn form-submit bg-green" style="margin: 20px">Udbetal</button>
+	  </div>
+  </div>
+</form>
