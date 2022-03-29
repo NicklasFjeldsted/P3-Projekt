@@ -15,7 +15,8 @@ export class DialogRef {
    * Closes the overlay. You can optionally provide a result.
    */
   public close(result?: any) {
-    this.overlayRef.dispose();
+    this.overlayRef.backdropElement?.classList.add('animateOut')
+    setTimeout(() => {this.overlayRef.dispose();}, 400);
     this.afterClosedSubject.next(result);
     this.afterClosedSubject.complete();
   }

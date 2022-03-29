@@ -34,8 +34,6 @@ export class DialogService {
       width: '250px',
       positionStrategy,
       hasBackdrop: true,
-      backdropClass: 'overlay-backdrop',
-      panelClass: 'overlay-panel',
     });
 
     // Create dialogRef to return

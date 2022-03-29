@@ -1,6 +1,17 @@
+:host() {
+  width: 100%;
+  height: 100%;
+}
+
+.overlay-backdrop {
+  opacity: 25%;
+  background-color: grey;
+}
+
 .form-control
 {
-  max-height: 550px;
+  opacity: 0;
+  max-height: 620px;
   max-width: 500px;
   position: absolute!important;
   border: none;
@@ -36,6 +47,10 @@ svg {
 	filter: invert(100%) sepia(0%) saturate(7483%) hue-rotate(208deg) brightness(114%) contrast(104%);
 }
 
+.form-row {
+	align-items: baseline;
+}
+
 .flow-down {
 	height: auto;
 }
@@ -56,7 +71,7 @@ svg {
 .card-credentials {
 	display: grid;
 	font-size: 16px;
-	gap: 1rem;
+	gap: 2rem;
 	max-width: 400px;
 	grid-template-columns: repeat(auto-fit, minmax(166.6px, 1fr));
 }
@@ -70,6 +85,7 @@ svg {
 	height: auto;
 	display: flex;
 	justify-content: center;
+	margin-bottom: 1rem;
 }
 
 .amount-grid {
@@ -82,7 +98,6 @@ svg {
 	grid-gap: .5em;
 	text-align: center;
 	align-items: center;
-	margin-bottom: 10px;
 }
 
 .grid-item {
@@ -90,6 +105,7 @@ svg {
 	text-align: center;
 	color: black;
 	font-size: 1em;
+	font-weight: bold;
 	border-radius: 50px;
 	position: relative;
 	border: 2px solid #015536;
@@ -97,6 +113,7 @@ svg {
 	display:inline-block;
 	z-index: 1;
 	height: 35px;
+	outline: none;
 }
 
 .grid-item > p {
@@ -106,6 +123,7 @@ svg {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	position: absolute;
+	transition: 0.8s ease;
 }
 
 .grid-item .left {
@@ -139,6 +157,10 @@ svg {
 	z-index: 1;
 }
 
+.grid-item:focus > p {
+	color: #fff;
+}
+
 .grid-item:focus .left {
 	box-shadow: inset 100px 0 0 0 #015536;
 }
@@ -152,10 +174,28 @@ svg {
 	background-color: #e78553;
 	color: #313233;
 	height: 2.25em;
-	font-size: .875rem;
+	font-size: 1rem;
+}
+
+.form-submit:disabled {
+	opacity: .4;
+	cursor: not-allowed;
 }
 
 .row #change {
 	background-color: #fff;
 	border: 2px solid #015536;
+}
+
+.change {
+	align-items: flex-end!important;
+}
+
+.submit-form {
+	max-height: 120px;
+}
+
+#submit {
+	max-height: 75px;
+	height: auto;
 }

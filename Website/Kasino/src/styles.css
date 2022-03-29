@@ -300,6 +300,24 @@ form a
   margin-bottom: 10px;
 }
 
+.cdk-overlay-backdrop {
+  z-index: 400;
+  animation: fade-in .4s;
+}
+
+.animateOut {
+  animation: fade-out .4s!important;
+}
+
+@keyframes fade-in {
+  from { background-color: rgba(0,0,0, 0); }
+  to   { background-color: rgba(0,0,0, 0.32); }
+}
+@keyframes fade-out {
+  from { background-color: rgba(0,0,0, 0.32); }
+  to   { background-color: rgba(0,0,0, 0); }
+}
+
 @media only screen and (max-width: 600px)
 {
   .form-control
@@ -312,6 +330,23 @@ form a
     max-height: 100%!important;
   }
 }
+
+.is-invalid
+{
+	background-color: #ffeeeb;
+	border: 1px solid #f00!important;
+	color:#FF0000;
+}
+
+.invalid-feedback
+{
+	color:red;
+	font-size: 0.6rem;
+	text-align: left;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

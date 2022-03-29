@@ -17,8 +17,6 @@ import { HelpIndbetalingComponent } from './components/helpcenter-components/hel
 import { HelpUdbetalingComponent } from './components/helpcenter-components/help-udbetaling/help-udbetaling.component';
 import { HelpLoginComponent } from './components/helpcenter-components/help-login/help-login.component';
 import { VelkomstbonusserComponent } from './components/helpcenter-components/velkomstbonusser/velkomstbonusser.component';
-import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
-import { TestComponent } from './components/test/test.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -33,7 +31,6 @@ const routes: Routes = [
   { path: 'help-udbetaling', component: HelpUdbetalingComponent},
   { path: 'help-login', component: HelpLoginComponent},
   { path: 'velkomstbonusser', component: VelkomstbonusserComponent},
-  {path: 'test', component: TestComponent},
   
   
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },

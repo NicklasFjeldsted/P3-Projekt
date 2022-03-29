@@ -38,7 +38,6 @@ import { VelkomstbonusserComponent } from './components/helpcenter-components/ve
 import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { TestComponent } from './components/test/test.component';
 
 
 @NgModule({
@@ -63,7 +62,6 @@ import { TestComponent } from './components/test/test.component';
     VelkomstbonusserComponent,
     IndbetalComponent,
     UdbetalComponent,
-    TestComponent,
   ],
   imports: [
     BrowserModule,
