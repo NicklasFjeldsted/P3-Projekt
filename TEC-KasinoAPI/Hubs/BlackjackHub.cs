@@ -70,12 +70,10 @@ namespace TEC_KasinoAPI.Hubs
 		private static ConcurrentDictionary<string, PlayerData> connectedPlayers = new ConcurrentDictionary<string, PlayerData>();
 		private static ConcurrentDictionary<string, PlayerData> players = new ConcurrentDictionary<string, PlayerData>();
 
-		private static Queue<PlayerData> turnOrder = new Queue<PlayerData>();
-
 		private static List<Card> availableCards = new List<Card>();
 		private static List<Card> houseCards = new List<Card>();
 
-		private static int seatTurnIndex;
+		private static int seatTurnIndex = 9;
 		private static bool IsPlaying = false;
 
 		private readonly IHubContext<BlackjackHub> _hubContext;
@@ -86,11 +84,6 @@ namespace TEC_KasinoAPI.Hubs
 			_hubContext = hubContext;
 			SetTimer();
 		}
-
-        ~BlackjackHub()
-        {
-			timer.Dispose();
-        }
 
 		private void OnTimerEvent(object source, ElapsedEventArgs e)
         {
@@ -122,7 +115,7 @@ namespace TEC_KasinoAPI.Hubs
 
 		public async Task GetData()
         {
-			await Clients.Client(Context.ConnectionId).SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
+			await Clients.Caller.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
         }
 
 		private static async Task<bool> CheckPlayers()
@@ -155,11 +148,10 @@ namespace TEC_KasinoAPI.Hubs
 			if (IsPlaying && !players[Context.ConnectionId].busted)
 			{
 				players[Context.ConnectionId].stand = true;
-				seatTurnIndex = turnOrder.Dequeue().seatIndex;
 			}
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-			await Clients.All.SendAsync("SyncTurn", string.Format("{\"seatTurnIndex\": {0}}", seatTurnIndex));
+			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
 		}
 
 		public async void Bust()
@@ -167,67 +159,62 @@ namespace TEC_KasinoAPI.Hubs
             if (IsPlaying)
             {
 				players[Context.ConnectionId].busted = true;
-				seatTurnIndex = turnOrder.Dequeue().seatIndex;
 			}
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-			await Clients.All.SendAsync("SyncTurn", string.Format("{\"seatTurnIndex\": {0}}", seatTurnIndex));
 		}
 
 		private async void DealCards()
         {
-			turnOrder.Clear();
-
-            foreach (PlayerData seat in players.Values.ToList())
+            foreach (PlayerData data in players.Values.ToList())
             {
-				turnOrder.Enqueue(seat);
-				seat.cards.Add(await GenerateCard());
+				data.cards.Add(await GenerateCard());
             }
 
 			houseCards.Add(await GenerateCard());
 
-			foreach (PlayerData seat in players.Values.ToList())
+			foreach (PlayerData data in players.Values.ToList())
 			{
-				seat.cards.Add(await GenerateCard());
+				data.cards.Add(await GenerateCard());
 			}
 
 			houseCards.Add(await GenerateCard());
 
-			seatTurnIndex = turnOrder.Dequeue().seatIndex;
+			IsPlaying = true;
 
+			await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
+			await _hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
 			await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-			await _hubContext.Clients.All.SendAsync("SyncTurn", string.Format("\"SeatTurnIndex\": {0}", seatTurnIndex));
 			await _hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards[0]));
 		}
 
 		private async void BeginGame()
         {
+			if (IsPlaying || !await CheckPlayers())
+				return;
 
-            if (await CheckPlayers() && !IsPlaying)
-            {
-				timer.Stop();
+			timer.Stop();
+			timer.Dispose();
 
-				await SetPlayers();
+			await SetPlayers();
 
-				RefillCards();
+			RefillCards();
 
-				IsPlaying = true;
-
-				DealCards();
-            }
+			DealCards();
 
 			await _hubContext.Clients.All.SendAsync("GameStarted");
-        }
+		}
 
 		public async void EndGame()
         {
-            if (IsPlaying)
-            {
-				IsPlaying = false;
-            }
+			if (!IsPlaying)
+				return;
 
-			timer.Start();
+			IsPlaying = false;
 
+			SetTimer();
+
+			await _hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
 			await _hubContext.Clients.All.SendAsync("GameEnded");
 		}
 
@@ -262,7 +249,7 @@ namespace TEC_KasinoAPI.Hubs
 			});
         }
 
-		private static async Task<Card> GenerateCard()
+		private async Task<Card> GenerateCard()
 		{
 			return await Task.Run(() =>
 			{
@@ -307,7 +294,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			connectedPlayers.TryRemove(new KeyValuePair<string, PlayerData>(id, connectedPlayers[id]));
 
-			Task.Run(async () => await _hubContext.Clients.All.SendAsync("Debug", DictionaryToJson(connectedPlayers)));
+			Task.Run(async () => await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers)));
 
             return base.OnDisconnectedAsync(exception);
 		}
@@ -315,8 +302,6 @@ namespace TEC_KasinoAPI.Hubs
 		public override Task OnConnectedAsync()
 		{
 			connectedPlayers.TryAdd(Context.ConnectionId, new PlayerData());
-
-			Task.Run(async () => await _hubContext.Clients.All.SendAsync("Debug", DictionaryToJson(connectedPlayers)));
 
 			return base.OnConnectedAsync();
 		}

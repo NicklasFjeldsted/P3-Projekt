@@ -214,11 +214,6 @@ export class GameObject extends Entity
 	/** This is the first call made to this entity when the game compiles. */
 	public override Awake(): void
 	{
-		for (const child of this._children)
-		{
-			child.Awake();
-		}
-
 		for (const component of this._components)
 		{
 			component.Awake();
@@ -227,11 +222,6 @@ export class GameObject extends Entity
 
 	public override Start(): void
 	{
-		for (const child of this._children)
-		{
-			child.Start();
-		}
-
 		for (const component of this._components)
 		{
 			component.Start();
@@ -246,11 +236,6 @@ export class GameObject extends Entity
 		if (this._parent)
 		{
 			this.isActive = this._parent.isActive;
-		}
-
-		for (const child of this._children)
-		{
-			child.Update(deltaTime);
 		}
 
 		for (const component of this._components)

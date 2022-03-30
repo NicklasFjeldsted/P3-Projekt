@@ -1,6 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 import { Observable } from "rxjs";
-import { IFeature } from "src/app/game-engine/utils";
+import { IBeforeUnload, IFeature, ServerLogger } from "src/app/game-engine/utils";
 import { environment } from "src/environments/environment";
 import { Game } from "../../game";
 
@@ -14,8 +14,9 @@ export class NetworkingFeature implements IFeature
 	{
 	  this.hubConnection = new signalR.HubConnectionBuilder()
 		.withUrl(environment.hubURL + "/Blackjack", {})
+		.configureLogging(new ServerLogger())
 		.build();
-	  
+		
 	  try
 	  {
 		return await this.hubConnection.start();
@@ -48,6 +49,14 @@ export class NetworkingFeature implements IFeature
 			this.hubConnection.on(func, (data) => action(data));
 			resolve();
 		});
+	}
+
+	public kill(): Promise<boolean>
+	{
+		return new Promise<boolean>((resolve, reject) =>
+			this.hubConnection.stop()
+				.then(() => resolve(true))
+				.catch((error) => { console.log(error); reject(false); }));
 	}
 
 	Awake(): void

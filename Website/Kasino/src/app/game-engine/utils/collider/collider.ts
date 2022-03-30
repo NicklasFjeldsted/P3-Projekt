@@ -24,10 +24,11 @@ export class ColliderComponent implements IComponent
 		this.end.y = this.start.y + value.y;
 	}
 
-	constructor()
+	constructor(startSize?: Vector2)
 	{
 		this.start = new Vector2(0, 0);
 		this.end = new Vector2(100, 100);
+		//this.Size = startSize ? startSize : new Vector2(100, 100);
 	}
 
 	Awake(): void
@@ -80,6 +81,11 @@ export class ColliderComponent implements IComponent
 
 	public DEBUG_Draw(): void
 	{
+		if (!this.gameObject.isActive)
+		{
+			return;
+		}
+		
 		CanvasLayer.Debug.FillOutline(this.start, this.end);
 	}
 

@@ -4,7 +4,7 @@ import { NetworkingFeature } from './components';
 
 export class Game extends Entity
 {
-	private static _instance: Game;
+	private static _instance: Game | null;
 	public static get Instance(): Game
 	{
 		if (!Game._instance)
@@ -22,7 +22,8 @@ export class Game extends Entity
 		return this._entities;
 	}
 
-	private _lastTimestamp = 0;
+	private _lastTimestamp: number = 0;
+	private _break: boolean = false;
 
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject, position?: Vector3): void
@@ -52,8 +53,9 @@ export class Game extends Entity
 	/** This is how the game is started up, it will run the functions to begin the game loop and initialization. */
 	public BEGIN_GAME(): Promise<void>
 	{
-		return new Promise((resolve, reject) =>
+		return new Promise((resolve) =>
 		{
+			this._break = false;
 			let networking = this.GetFeature(NetworkingFeature);
 			if (networking)
 			{
@@ -71,6 +73,27 @@ export class Game extends Entity
 			{
 				this.Awake();
 				resolve();
+			}
+		});
+	}
+
+	public STOP_GAME(): Promise<boolean>
+	{
+		this._break = true;
+		return new Promise((resolve) =>
+		{
+			for (let i = 0; i < this.Entities.length; i++)
+			{
+				this._entities.splice(i, 1);
+
+				if (this._entities.length === 0)
+				{
+					Game._instance = null;
+					if (Game._instance === null)
+					{
+						return resolve(true);
+					}
+				}
 			}
 		});
 	}
@@ -130,6 +153,11 @@ export class Game extends Entity
 
 		this._lastTimestamp = Date.now();
 
+		if (this._break)
+		{
+			return;
+		}
+		
 		window.requestAnimationFrame(() => this.Update());
 	}
 }

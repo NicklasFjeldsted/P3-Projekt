@@ -71,26 +71,42 @@ export class House extends MonoBehaviour
 	Awake(): void
 	{
 		let cardChild = new GameObject('House Cards');
+
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
+
 		cardChild.transform.Translate(new Vector3(450, 50, 0));
 		cardChild.SetParent(this.gameObject);
+
 		this.childText.text = ' ';
 	}
 	
 	Update(deltaTime: number): void
 	{
-
+		if (this.IsPlaying)
+		{
+			for (const seat of this.seats)
+			{
+				if (this.SeatTurn === seat.seatIndex)
+				{
+					seat.myTurn = true;
+				}
+				else
+				{
+					seat.myTurn = false;
+				}
+			}
+		}
 	}
 
 	public SyncPlaying(data: string): void
 	{
-		this.IsPlaying = JSON.parse(data).IsPlaying;
+		this.IsPlaying = JSON.parse(data);
 	}
 
 	public SyncTurn(data: string): void
 	{
-		this.SeatTurn = JSON.parse(data).SeatTurnIndex;
+		this.SeatTurn = JSON.parse(data);
 	}
 
 	public UpdateSeatData(playerDataString: string)
@@ -100,7 +116,42 @@ export class House extends MonoBehaviour
 
 		this.clients = playerData;
 
-		console.log(playerData);
+		for (const key in playerData)
+		{
+			for (const seat of this.seats)
+			{
+				this.ShouldReset(playerData, seat).then((result) =>
+				{
+					if (result)
+					{
+						seat.ResetSeat();
+					}
+					else if (!result && seat.seatIndex === playerData[ key ].seatIndex)
+					{
+						seat.UpdateSeat(playerData[key]);
+					}
+				})
+				.finally(() =>
+				{
+					seat.Display();
+				});
+			}
+		}
+	}
+
+	private async ShouldReset(data: PlayerData[], seat: Seat): Promise<boolean>
+	{
+		return await new Promise<boolean>((resolve) =>
+		{
+			for (const key in data)
+			{
+				if (seat.seatIndex == data[ key ].seatIndex)
+				{
+					return resolve(false);
+				}
+			}
+			return resolve(true);
+		});
 	}
 
 	public CreateClient(user: IUser)

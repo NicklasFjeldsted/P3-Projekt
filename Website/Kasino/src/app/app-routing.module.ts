@@ -34,7 +34,7 @@ const routes: Routes = [
   
   
   { path: 'konto', component: KontoComponent, canActivate: [ AuthenticationGuard ] },
-  { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ] },
+  { path: 'blackjack', component: BlackjackComponent, canActivate: [ AuthenticationGuard ], canDeactivate: [ BlackjackComponent ] },
   { path: 'roulette', component: RouletteComponent, canActivate: [ AuthenticationGuard ]},
   { path: 'slots', component: SlotsComponent, canActivate: [ AuthenticationGuard ]},
   

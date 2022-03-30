@@ -13,17 +13,23 @@ export class Seat extends MonoBehaviour
 	}
 
 	public seatIndex: number;
+	public myTurn: boolean = false;
 	
 	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
 	
 	private childTextComponent: TextComponent;
 	private seatText: TextComponent;
 	private collider: ColliderComponent;
+	private hitButtonCollider: ColliderComponent;
+	private standButtonCollider: ColliderComponent;
 
 	public Start(): void
 	{
 		this.transform.scale = new Vector3(.1, .1, .1);
 		this.collider = this.gameObject.GetComponent(ColliderComponent);
+		this.standButtonCollider.gameObject.transform.Translate(new Vector3(50, 0, 0));
+		this.standButtonCollider.Size = new Vector2(50, 30);
+		this.hitButtonCollider.Size = new Vector2(50, 30);
 	}
 
 	public Awake(): void
@@ -42,26 +48,39 @@ export class Seat extends MonoBehaviour
 		cardsChild.transform.Translate(new Vector3(0, -30, 0));
 		this.childTextComponent = cardsChild.GetComponent(TextComponent);
 
+		let buttons = new GameObject(`${this.gameObject.gameObjectName}'s buttons`);
+		buttons.SetParent(this.gameObject);
+		buttons.transform.Translate(new Vector3(0, -60, 0));
+		
+		let hitButton = new GameObject(`${this.gameObject.gameObjectName}'s Hit Button`);
+		hitButton.SetParent(buttons);
+		hitButton.AddComponent(new TextComponent("Hit"));
+		hitButton.AddComponent(new ColliderComponent());
+		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
+
+		let standButton = new GameObject(`${this.gameObject.gameObjectName}'s Stand Button`);
+		standButton.SetParent(buttons);
+		standButton.AddComponent(new TextComponent("Stand"));
+		standButton.AddComponent(new ColliderComponent());
+		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
+
 		GameInputFeature.OnClick.subscribe(event => this.OnClicked(event));
 	}
 
 	public Update(deltaTime: number): void
 	{
-		var clients = House.Instance.clients;
-		for (const key in clients)
+		this.standButtonCollider.gameObject.isActive = this.myTurn;
+		this.hitButtonCollider.gameObject.isActive = this.myTurn;
+	}
+
+	public UpdateSeat(data: PlayerData): void
+	{
+		if (!this.Player)
 		{
-			if (clients[key].seatIndex === this.seatIndex && this.Player! !== House.Instance.client)
-			{
-				this.Player = new Player();
-				this.Player.UpdateData(clients[ key ]);
-			}
-			else if (clients[ key ].seatIndex === this.seatIndex && this.Player! === House.Instance.client)
-			{
-				this.Player.UpdateData(clients[ key ]);
-			}
+			this.Player = new Player();
 		}
 
-		this.Display();
+		this.Player.UpdateData(data);
 	}
 
 	public ResetSeat(): void
@@ -69,36 +88,42 @@ export class Seat extends MonoBehaviour
 		this.Player = null;
 	}
 
-	/** Updates the seat and the playerdata if the player isnt null, if it is throws and error. */
-	// public UpdateSeat(playerData: PlayerData): void
-	// {
-	// 	if (this.Player)
-	// 	{
-	// 		this.Player.UpdateData(playerData);
-	// 		return;
-	// 	}
-	// 	throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);
-	// }
-
 	private OnClicked(point: Vector2): void
 	{
-		if (!this.collider.Hit(point))
+		if (this.collider.Hit(point))
+		{
+			if (this.Occupied)
+			{
+				return;
+			}
+			this.JoinSeat();
+		}
+
+		if (!this.myTurn)
 		{
 			return;
 		}
 
-		if (this.Occupied)
+		if (this.hitButtonCollider.Hit(point))
 		{
-			return;
+			console.log(`${this.gameObject.gameObjectName} hits.`);
 		}
 
-		this.JoinSeat();
+		if (this.standButtonCollider.Hit(point))
+		{
+			console.log(`${this.gameObject.gameObjectName} stands.`);
+		}
 	}
 
 	/** Display the current card value of the player sitting in this seat. */
 	public Display(): void
 	{
-		if (!this.Player) return;
+		if (!this.Player)
+		{
+			this.childTextComponent.text = ' ';
+			this.seatText.text = this.gameObject.gameObjectName;
+			return;
+		}
 
 		this.childTextComponent.text = this.Player.cardValues.toString();
 		this.seatText.text = this.Player.data.fullName;

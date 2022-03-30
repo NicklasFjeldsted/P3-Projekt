@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature } from 'src/app/game-engine';
 import { IUser } from 'src/app/interfaces/User';
 import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';
@@ -14,11 +15,19 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 @Injectable({ providedIn: 'root' })
 
-export class BlackjackComponent implements OnInit
+export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
-  constructor(private http: HttpClient) { }
- 
+  constructor(private http: HttpClient)
+  { 
+
+  }
+
   private networking: NetworkingFeature;
+
+  ngOnDestroy(): void
+  {
+
+  }
 
   ngOnInit(): void
   {
@@ -40,8 +49,6 @@ export class BlackjackComponent implements OnInit
 
     game.BEGIN_GAME().then(() =>
     {
-      this.networking.Subscribe("Debug", (data) => { console.log("--DEBUG--"); console.log(JSON.parse(data)); console.log("--DEBUG--"); });
-
       this.networking.Subscribe("DataChanged", (data) => House.Instance.UpdateSeatData(data)).then(() =>
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
@@ -59,5 +66,40 @@ export class BlackjackComponent implements OnInit
   public GetUser(): Observable<IUser>
   {
     return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
+  }
+
+  public canDeactivate(
+    component: BlackjackComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
+  {
+    console.warn("GAME - Destroyed");
+    return component.beforeUnload();
+  }
+
+  public beforeUnload(): boolean | Observable<boolean> | Promise<boolean>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      this.networking.kill()
+      .then((kill_Result) =>
+      {
+        Game.Instance.STOP_GAME()
+        .then((game_Result) =>
+        {
+          if (game_Result && kill_Result)
+          {
+            resolve(true);
+          }
+          else
+          {
+            resolve(false);
+          }
+        })
+        .catch((error) => { console.error(error); reject(error); });
+      });
+    });
   }
 }
