@@ -17,4 +17,10 @@ export class BalanceService {
     this.balance = {customerID: id, amount: money};
     return this.http.put<any>(`${environment.apiURL}/balance/add-balance`, this.balance, {withCredentials: true});
   }
+
+  public subtractBalance(money: number): Observable<any> {
+    var id = JSON.parse(localStorage.getItem(USER)!);
+    this.balance = {customerID: id, amount: money};
+    return this.http.put<any>(`${environment.apiURL}/balance/subtract-balance`, this.balance, {withCredentials: true})
+  }
 }

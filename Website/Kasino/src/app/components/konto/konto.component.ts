@@ -58,19 +58,9 @@ export class KontoComponent implements OnInit {
 
   openIndbetal() {
     const dialogRef = this.dialog.open(IndbetalComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-      // Subscription runs after the dialog closes
-      console.log('Dialog closed!');
-    });
   }
 
   openUdbetal() {
     const dialogRef = this.dialog.open(UdbetalComponent);
-
-    dialogRef.afterClosed().subscribe(() => {
-      // Subscription runs after the dialog closes
-      console.log('Dialog closed!');
-    });
   }
 }

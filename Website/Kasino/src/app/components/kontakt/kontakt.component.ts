@@ -18,7 +18,7 @@ export class KontaktComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.builder.group({
       Fullname: new FormControl('', [Validators.required]),
-      Email: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+      Email: new FormControl('', [Validators.required, Validators.email,Validators.pattern('^[A-Za-z-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')]),
       Subject: new FormControl('', Validators.required),
       Message: new FormControl('', Validators.required)
     })

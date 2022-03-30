@@ -95,7 +95,7 @@
   font-weight: 500;
 }
 
-.link-game > svg, .link-game > img, #logo 
+.link-game > svg, .link-game > img, #logo, #testright
 {
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
 }

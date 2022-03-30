@@ -331,11 +331,17 @@ form a
   }
 }
 
+.is-valid {
+  border: 1px solid #015536;
+	box-shadow: #015536 0px 0px 1px;
+}
+
 .is-invalid
 {
 	background-color: #ffeeeb;
 	border: 1px solid #f00!important;
 	color:#FF0000;
+  box-shadow: #FF0000 0px 0px 1px;
 }
 
 .invalid-feedback

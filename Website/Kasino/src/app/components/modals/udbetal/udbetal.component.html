@@ -1,59 +1,82 @@
-<form id="login" method="post" class="form-control v-center h-center">
-  <div class="form-header bg-green">
-    <i class="fa fa-xmark" (click)="close()"></i>
-	  <div class="column">
-	    <h2>Udbetaling</h2>
-	  </div>
-  </div>
-  <div class="column flow-down">
-	  <label for="Kortnummer" class="kortnummer">Kortnummer</label>
-	  <div class="row center">
-	    <input type="text" name="cardNum" id="cardNum" class="form-input" placeholder="Kortnummer fx 0000 0000 0000 0000" />
-	  </div>
-	  <div class="row center">
-      <div class="column left text" style="max-width: 125px;">
-        <label for="Udløbsdato" class="">Udløbsdato</label>
-      </div>
-    <div class="column right text" style="max-width: 125px;">
-      <label for="Kontrolcifre" class="">Kontrolcifre</label>
-    </div>
-  </div>
-	  <div class="row center">
-	    <div class="column left" style="max-width: 158px;">
-	  	  <input type="text" name="expDate" id="expDate" class="form-input" style="padding-right: 2px;" placeholder="Udløbsdato  fx 12/12" />
-	    </div>
-	    <div class="column right" style="max-width: 158px;">
-	  	  <input type="text" name="control" id="control" class="form-input" style="padding-left: 2px;" placeholder="Kontrolcifre fx 123" />
-	    </div>
-	  </div>
-	  <label for="Beløb" class="self-center">Beløb</label>
-	  <div class="row center">
-	    <input type="text" name="amount" id="amount" class="form-input" placeholder="Beløb" />
-    </div>
-    <div class="row center">
-	    <div class="columnbtn">
-	      <button class="btn">25</button>
-	    </div>
-	    <div class="columnbtn">
-	      <button class="btn">50</button>
-	    </div>
-	    <div class="columnbtn">
-	      <button class="btn">100</button>
-	    </div>
-      </div>
-      <div class="row center">
-	    <div class="columnbtn">
-	      <button class="btn">250</button>
-	    </div>
-	    <div class="columnbtn">
-	      <button class="btn">500</button>
-	    </div>
-	    <div class="columnbtn">
-	      <button class="btn">1000</button>
-	    </div>
-    </div>
-	  <div class="row center">
-	    <button type="submit" name="log" id="log" class="btn form-submit bg-green" style="margin: 20px">Udbetal</button>
-	  </div>
-  </div>
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [@openClose]="isOpen ? 'open' : 'close'" [ngStyle]="{'max-height':f['amount'].value < 50 ? '620px' : '580px' }" id="indbetalForm" method="post" class="form-control h-center v-center">
+	<div class="form-header bg-green">
+		<svg (click)="close()" xmlns="http://www.w3.org/2000/svg" class="v-center" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet"><path data-path="close" fill-rule="evenodd" d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"></path></svg>
+
+		<div class="column column-header">
+			<h2>Udbetaling</h2>
+		</div>
+	</div>
+	<br>
+	<div class="column flow-down input-section">
+		<div class="form-row flow-down">
+			<label for="" class="form-label">Kortholders navn</label>
+			<input class="form-input" formControlName="cardName" [ngClass]="{ 'is-invalid': submitted && f['cardName'].errors, 'is-valid': submitted && !f['cardName'].errors}" placeholder="Ex. John Smith">
+
+			<div *ngIf="submitted && f['cardName'].errors" class="invalid-feedback">
+				<div *ngIf="f['cardName'].errors['required']">Indtast kortholderens navn</div>
+			</div>
+		</div>
+		<div class="form-row flow-down">
+			<label for="" class="form-label">Kortnummer</label>
+			<input class="form-input" (keyup)="addDashes()" (keypress)="keyPressNumbers($event)" (focusout)="this.isCardValid = isValid()" formControlName="cardNumber" maxlength="19" [ngClass]="{ 'is-invalid': submitted && f['cardNumber'].errors || !this.isCardValid, 'is-valid': submitted && !f['cardNumber'].errors && this.isCardValid} " placeholder="1234-1234-1234-1234">
+
+			<div *ngIf="submitted && !this.isCardValid && !f['cardNumber'].errors" class="invalid-feedback">
+				<div *ngIf="!this.isCardValid">Kortnummeret er ikke gyldigt!</div>
+			</div>
+			<div *ngIf="submitted && f['cardNumber'].errors" class="invalid-feedback">
+				<div *ngIf="f['cardNumber'].errors['required']">Indtast kortnummeret</div>
+				<div *ngIf="f['cardNumber'].errors['maxlength']">Kortnummeret skal have 16 cifre</div>
+				<div *ngIf="f['cardNumber'].errors['minlength']">Kortnummeret skal have 16 cifre</div>
+			</div>
+		</div>
+		<div class="form-row center card">
+			<div class="form-row card-credentials">
+				<div class="form-row flow-down">
+					<label for="" class="form-label">Udløbsdato</label>
+					<input class="form-input" #expDate (keyup)="addSlash()" formControlName="expDate" minlength="5" maxlength="5" [ngClass]="{ 'is-invalid': submitted && f['expDate'].errors, 'is-valid': submitted && !f['expDate'].errors}" placeholder="12/24">
+
+					<div *ngIf="submitted && f['expDate'].errors" class="invalid-feedback">
+						<div *ngIf="f['expDate'].errors['required']">Indtast udløbsdatoen</div>
+						<div *ngIf="f['expDate'].errors['maxlength']">Udløbsdatoen skal have både måned og år</div>
+						<div *ngIf="f['expDate'].errors['minlength']">Udløbsdatoen skal have både måned og år</div>
+					</div>
+				</div>
+				<div class="form-row flow-down">
+					<label for="" class="form-label">Kontrolcifre/CVV</label>
+					<input class="form-input" formControlName="cvv" [ngClass]="{ 'is-invalid': submitted && f['cvv'].errors, 'is-valid': submitted && !f['cvv'].errors}" placeholder="123">
+
+					<div *ngIf="submitted && f['cvv'].errors" class="invalid-feedback">
+						<div *ngIf="f['cvv'].errors['required']">Indtast kontrolcifrene</div>
+						<div *ngIf="f['cvv'].errors['minlength']">CVV skal være 3 cifre</div>
+						<div *ngIf="f['cvv'].errors['maxlength']">CVV skal være 3 cifre</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="form-row flow-down">
+			<label for="" class="form-label">Beløb</label>
+			<input class="form-input" formControlName="amount" maxlength="6" (keypress)="keyPressNumbers($event)" [ngClass]="{ 'is-invalid': f['amount'].value < 50, 'is-valid': submitted && f['amount'].value >= 50}">
+
+			<div *ngIf="f['amount'].value < 50" class="invalid-feedback">
+				<div>Du kan mindst indbetale 100 kr.</div>
+			</div>
+		</div>
+	</div>
+	<br>
+	<div class="amount-selection">
+		<div class="amount-grid">
+			<button type="button" class="grid-item" (click)="updateAmount(50)" #focusBtn><span class="left"></span><p>50 kr</p><span class="right"></span></button>
+			<button type="button" class="grid-item" (click)="updateAmount(75)"><span class="left"></span><p>75 kr</p><span class="right"></span></button>
+			<button type="button" class="grid-item" (click)="updateAmount(100)"><span class="left"></span><p>100 kr</p><span class="right"></span></button>
+			<button type="button" class="grid-item" (click)="updateAmount(250)"><span class="left"></span><p>250 kr</p><span class="right"></span></button>
+			<button type="button" class="grid-item" (click)="updateAmount(1000)"><span class="left"></span><p>1000 kr</p><span class="right"></span></button>
+			<button type="button" class="grid-item" (click)="updateAmount(currentBalance)"><span class="left"></span><p>Max</p><span class="right"></span></button>
+		</div>
+	</div>
+	<div class="column flow-down submit-form">
+		<div class="row center">
+			<button type="submit" id="submit" class="form-submit" [disabled]="f['amount'].value < 50">Udbetal {{f['amount'].value}} kr fra min konto</button>
+		</div>
+
+	</div>
 </form>

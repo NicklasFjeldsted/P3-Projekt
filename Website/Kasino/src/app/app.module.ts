@@ -38,6 +38,7 @@ import { VelkomstbonusserComponent } from './components/helpcenter-components/ve
 import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { LogoutComponent } from './components/modals/logout/logout.component';
 
 
 @NgModule({
@@ -62,6 +63,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
     VelkomstbonusserComponent,
     IndbetalComponent,
     UdbetalComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
