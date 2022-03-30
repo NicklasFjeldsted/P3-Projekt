@@ -7,6 +7,7 @@ import { Balance } from 'src/app/interfaces/balance';
 import { IndbetalComponent } from '../modals/indbetal/indbetal.component';
 import { UdbetalComponent } from '../modals/udbetal/udbetal.component';
 import { DialogService } from '../modals/dialog.service';
+import { LogoutComponent } from '../modals/logout/logout.component';
 
 
 @Component({
@@ -57,10 +58,14 @@ export class KontoComponent implements OnInit {
   }
 
   openIndbetal() {
-    const dialogRef = this.dialog.open(IndbetalComponent);
+    this.dialog.open(IndbetalComponent);
   }
 
   openUdbetal() {
-    const dialogRef = this.dialog.open(UdbetalComponent);
+    this.dialog.open(UdbetalComponent);
+  }
+
+  openLogout() {
+    this.dialog.open(LogoutComponent);
   }
 }

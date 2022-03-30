@@ -1,1 +1,9 @@
-<p>logout works!</p>
+<div class="logout-container h-center" [@openClose]="isOpen ? 'open' : 'closed'">
+	<div class="logout-header">
+		<h2>Vil du gerne logge ud?</h2>
+	</div>
+	<div class="logout-buttons">
+		<button id="close-logout" (click)="close()">Luk</button>
+		<button id="logout" (click)="logout()">Log ud</button>
+	</div>
+</div>

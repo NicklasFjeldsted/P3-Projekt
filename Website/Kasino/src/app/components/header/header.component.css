@@ -107,6 +107,20 @@
   cursor: pointer;
 }
 
+.login {
+  background-color: transparent;
+  border: 1px solid transparent;
+  outline: none!important;
+  transition: all .3s ease 0s;
+}
+
+.login:hover {
+  border: 1px solid #fff;
+  box-shadow: none!important;
+}
+
+
+
 #balance 
 {
   box-shadow: none;
@@ -129,12 +143,22 @@
   top: 4px;
 }
 
+
+.logout > i {
+  font-size: 1.2em;
+  position: relative;
+  top: 2px;
+  padding-right: 5px;
+  transform: rotate(180deg);
+}
+
+
 .saldo
 {
   background-color: #F08000;
 }
 
-.slado:hover 
+.saldo:hover
 {
   box-shadow: 0px 0px 10px #F08000;
 }

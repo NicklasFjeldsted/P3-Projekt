@@ -45,6 +45,7 @@ export class UdbetalComponent implements OnInit {
   constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
+    Broadcast.Instance.onBalanceChange.subscribe(event => this.getBalance());
     this.getBalance();
     this.showFocus();
     this.isOpen = true;
@@ -87,7 +88,7 @@ export class UdbetalComponent implements OnInit {
       next: (message) => {
         console.log(message);
         this.close();
-        window.location.reload();
+        this.getBalance();
       },
       error: (error) => {
         console.log(error);

@@ -3,7 +3,9 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { DialogRef } from '../modals/dialog-ref';
 import { DialogService } from '../modals/dialog.service';
 import { IndbetalComponent } from '../modals/indbetal/indbetal.component';
+import { LogoutComponent } from '../modals/logout/logout.component';
 import { Broadcast } from './broadcast';
+import {MatDialogConfig, MatDialogModule} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-header',
@@ -40,6 +42,10 @@ export class HeaderComponent implements OnInit
 
   openIndbetal() {
     this.dialog.open(IndbetalComponent);
+  }
+
+  openLogout() {
+    this.dialog.open(LogoutComponent);
   }
 }
 

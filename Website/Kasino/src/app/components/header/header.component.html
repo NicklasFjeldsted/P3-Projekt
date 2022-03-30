@@ -24,12 +24,12 @@
   <div class="column right">
     <nav *ngIf="!this.authenticationService.isLoggedIn">
       <a routerLink="tilmeld"><button class="btn tilmeld">Tilmeld</button></a>
-      <a routerLink="login"><button class="btn">Log ind</button></a>
+      <a routerLink="login"><button class="btn login">Log ind</button></a>
     </nav>
 
     <nav *ngIf="this.authenticationService.isLoggedIn">
       <a class="btn deposit saldo" (click)="openIndbetal()">{{currentBalance}} kr.<i class="fa-solid fa-circle-plus"></i></a>
-      <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
+      <a class="btn logout" (click)="openLogout()">Log ud<i class="fa-solid fa-right-from-bracket"></i></a>
     </nav>
   </div>
 </div>

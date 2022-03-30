@@ -13,7 +13,7 @@
         </div>
 
         <div class="column">
-          <a (click)="this.authenticationService.logout()"><button class="btn top">Log ud</button></a>
+          <a (click)="openLogout()"><button class="btn top">Log ud</button></a>
         </div>
       </div>
 
@@ -45,10 +45,10 @@
       </div>
 
       <div class="form-row flow-down">
-        <a (click)="this.authenticationService.logout()"><button class="btn">Log ud</button></a>
+        <a (click)="openLogout()"><button class="btn">Log ud</button></a>
       </div>
       <div class="form-row flow-down">
-        <a (click)="this.authenticationService.logout()"><button class="form-submit bot bg-orange">Deaktiver konto</button></a> <!--Linket skal ændres når vi kan deativer en konto-->
+        <a (click)="openLogout()"><button class="form-submit bot bg-orange">Deaktiver konto</button></a> <!--Linket skal ændres når vi kan deativer en konto-->
       </div> 
     </div>
   </form>
