@@ -2,18 +2,39 @@
 {
   height: 85%;
   width: 100%;
+  background-image: url("../../../assets/media/casino.jpg");
 }
 
-.login
-{
-  z-index: 4
-}
-
-.form-control
-{
-  max-height: 650px;
-  max-width: 400px;
+.form-control {
+  max-width: 600px;
+  padding: 90px 60px 60px;
   height: 100%;
+  background-color: #fff;
+  border: none;
+  border-radius: 0;
+}
+
+.form-header {
+  height: 15%;
+  margin-top: 20px;
+  margin-bottom: -5px;
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
+}
+
+.form-header > h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 1.75rem;
+}
+
+.customer-title {
+  text-align: left;
+}
+
+.customer-title > h2 {
+  margin: 0;
 }
 
 .form-submit
@@ -22,6 +43,11 @@
   font-size: small;
   width: 100px;
   height: 30px;
+}
+
+.login
+{
+  z-index: 4
 }
 
 .row
@@ -62,12 +88,6 @@
 {
   color: black;
   background-color: orange;
-}
-
-.form-header
-{
-  margin-top: 20px;
-  margin-bottom: -5px;
 }
 
 .form-input:read-only 

@@ -39,6 +39,7 @@ import { IndbetalComponent } from './components/modals/indbetal/indbetal.compone
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { LogoutComponent } from './components/modals/logout/logout.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { LogoutComponent } from './components/modals/logout/logout.component';
     IndbetalComponent,
     UdbetalComponent,
     LogoutComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

@@ -45,6 +45,10 @@
 	margin: 0 auto;
 }
 
+p {
+	margin: 0;
+}
+
 .sidenav-item 
 {
 	width: 100%;
@@ -123,20 +127,6 @@
 	display: block!important;;
 }
 
-.footer
-{
-  position: relative;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  background-color: rgb(29, 29, 29);
-  color: white;
-  text-align: center;
-}
-
-.footer-text
-{
-  margin-left: 50px; 
-  margin-right: 50px; 
-  color: gray;
+.fill-row {
+	box-shadow: 0 5px 10px rgba(0,0,0,.4);
 }

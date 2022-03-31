@@ -1,0 +1,49 @@
+:host() {
+	height: 300px;
+	width: 100vw;
+}
+
+
+.footer {
+	height: auto;
+	width: 100%;
+	box-shadow: 0 -.25pc 1pc rgba(0,0,0,.4);
+  	background-color: rgb(29, 29, 29);
+  	color: white;
+  	display:flex;
+	align-items: center;
+}
+
+.footer-icons {
+	width: 15%;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 2.5em;
+	height: fit-content;
+	overflow: hidden;
+}
+
+.footer-icons > a {
+	max-width: 100px;
+	min-width: 50px;
+	max-height: 100px;
+	min-height: 50px;
+	display:flex;
+	align-items: center;
+	position: relative;
+	left: 50px;
+}
+
+.footer-icons > a > img {
+	width: 100%;
+	height: auto;
+}
+
+.footer-text {
+  width: 75%;
+  color: gray;
+  padding: 2.5em;
+  font-size: .8125rem;
+  color: #444;
+}
