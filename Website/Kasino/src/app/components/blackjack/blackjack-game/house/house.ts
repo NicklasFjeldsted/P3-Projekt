@@ -7,7 +7,7 @@ import { Seat } from "../seat";
 
 export class House extends MonoBehaviour
 {
-	private static _instance: House;
+	private static _instance: House | null;
 	public static get Instance()
 	{
 		if (!House._instance)
@@ -16,6 +16,12 @@ export class House extends MonoBehaviour
 		}
 
 		return House._instance;
+	}
+
+	public override Dispose(): void
+	{
+		House._instance = null;
+		super.Dispose();
 	}
 
 	public seats: Seat[] = [];

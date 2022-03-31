@@ -30,6 +30,11 @@ export class TextComponent implements IComponent
 		this.Draw();
 	}
 
+	Dispose(): void
+	{
+		this.gameObject.RemoveComponent(TextComponent);
+	}
+
 	/** Draw Text to the canvas. */
 	private Draw(): void
 	{

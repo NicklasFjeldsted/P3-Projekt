@@ -10,10 +10,24 @@ export class GameObject extends Entity
 	/** All GameObjects that exists, **NOT** instantiated. */
 	private static _gameObjects: GameObject[] = [];
 
+	public static get GameObjects(): GameObject[]
+	{
+		return this._gameObjects;
+	}
+
 	public isActive: boolean = true;
 
 	/** This GameObject's parent. */
-	private _parent: GameObject;
+	private _parent: GameObject | null;
+	public get parent(): GameObject
+	{
+		if (this._parent)
+		{
+			return this._parent;
+		}
+
+		throw new Error(`${this.gameObjectName} has no Parent!`);
+	}
 
 	/** This GameObject's children. */
 	private _children: GameObject[] = [];
@@ -29,13 +43,13 @@ export class GameObject extends Entity
 		return this._children[ index ];
 	}
 
-	/** Add a child to this GameObject. */
+	/** Set the parent of this GameObject. */
 	public SetParent(newParent: GameObject): void
 	{
 		this.transform.position = new Vector3(
-			this.transform.position.x + newParent.transform.position.x,
-			this.transform.position.y + newParent.transform.position.y,
-			this.transform.position.z + newParent.transform.position.z
+			this.transform.position!.x + newParent.transform.position!.x,
+			this.transform.position!.y + newParent.transform.position!.y,
+			this.transform.position!.z + newParent.transform.position!.z
 		);
 
 		this._parent = newParent;
@@ -45,16 +59,10 @@ export class GameObject extends Entity
 	/** This GameObjects name, this is not a unique identifier. */
 	public gameObjectName: string;
 	
-	private _transform: Transform;
 	/** Transform for this GameObject, it contains a position, rotation, and a scale. */
 	public get transform(): Transform
 	{
-		if (!this._transform)
-		{
-			this._transform = new Transform();
-		}
-
-		return this._transform;
+		return this.GetComponent(Transform);
 	}
 
 	private _size: Vector2 = new Vector2(100, 100);
@@ -94,6 +102,9 @@ export class GameObject extends Entity
 	constructor(name?: string, instantiate: boolean = true)
 	{
 		super();
+
+		this.AddComponent(new Transform());
+
 		GameObject._gameObjects.push(this);
 
 		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
@@ -207,6 +218,53 @@ export class GameObject extends Entity
 		}
 	
 		return false
+	}
+
+	public Destroy(): void
+	{
+		if (this._parent)
+		{
+			this.parent.DestroyChild(this);
+		}
+
+		Game.Instance.Destroy(this);
+	}
+
+	public DestroyChild(child: GameObject): void
+	{
+		let toRemove: GameObject | undefined;
+		let index: number | undefined;
+
+		for (let i = 0; i < this.Children.length; i++)
+		{
+			if (this._children[ i ].entityId === child.entityId)
+			{
+				toRemove = this._children[i];
+				index = i;
+				break;
+			}
+		}
+
+		if (toRemove && index)
+		{
+			toRemove._parent = null;
+			this._children.splice(index, 1);
+		}
+	}
+
+	public override Dispose(): void
+	{
+		for (const component of this.Components)
+		{
+			component.Dispose();
+		}
+
+		for (const child of this.Children)
+		{
+			child.Dispose();
+		}
+
+		this.Destroy();
 	}
 
 	// This function is a part of the start up of the game loop.

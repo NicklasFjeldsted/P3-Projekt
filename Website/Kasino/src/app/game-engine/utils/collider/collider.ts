@@ -24,7 +24,7 @@ export class ColliderComponent implements IComponent
 		this.end.y = this.start.y + value.y;
 	}
 
-	constructor(startSize?: Vector2)
+	constructor()
 	{
 		this.start = new Vector2(0, 0);
 		this.end = new Vector2(100, 100);
@@ -47,6 +47,13 @@ export class ColliderComponent implements IComponent
 		this.start = this.gameObject.transform.position;
 		this.DEBUG_Clear();
 		this.DEBUG_Draw();
+	}
+
+	Dispose(): void
+	{
+		this.start.Dispose();
+		this.end.Dispose();
+		this.gameObject.RemoveComponent(ColliderComponent);
 	}
 
 	public Hit(point: Vector2): boolean

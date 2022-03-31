@@ -1,11 +1,17 @@
 import { of, Subject } from "rxjs";
-import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
 import { House } from "../house";
 import { Player, PlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
 {
 	public Player: Player | null;
+
+	override Dispose(): void
+	{
+		this.Player = null;
+		super.Dispose();
+	}
 	
 	public get Occupied(): boolean
 	{
@@ -52,25 +58,25 @@ export class Seat extends MonoBehaviour
 		buttons.SetParent(this.gameObject);
 		buttons.transform.Translate(new Vector3(0, -60, 0));
 		
-		let hitButton = new GameObject(`${this.gameObject.gameObjectName}'s Hit Button`);
+		let hitButton = new GameObject(`${buttons.gameObjectName}'s Hit Button`);
 		hitButton.SetParent(buttons);
 		hitButton.AddComponent(new TextComponent("Hit"));
 		hitButton.AddComponent(new ColliderComponent());
 		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
 
-		let standButton = new GameObject(`${this.gameObject.gameObjectName}'s Stand Button`);
+		let standButton = new GameObject(`${buttons.gameObjectName}'s Stand Button`);
 		standButton.SetParent(buttons);
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
 
-		GameInputFeature.OnClick.subscribe(event => this.OnClicked(event));
+		Game.Instance.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
 	}
 
 	public Update(deltaTime: number): void
 	{
-		this.standButtonCollider.gameObject.isActive = this.myTurn;
-		this.hitButtonCollider.gameObject.isActive = this.myTurn;
+		// this.standButtonCollider.gameObject.isActive = this.myTurn;
+		// this.hitButtonCollider.gameObject.isActive = this.myTurn;
 	}
 
 	public UpdateSeat(data: PlayerData): void

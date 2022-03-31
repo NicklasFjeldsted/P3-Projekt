@@ -1,14 +1,13 @@
 import { Guid } from '../guid';
-import { IUpdate, IAwake, IStart } from '../lifecycle';
+import { IUpdate, IAwake, IStart, IDisposable } from '../lifecycle';
 import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
 // This Type basicly is this "thing" must be a function AND has to extend <T>
 type AbstractFeature<T> = Function & { prototype: T; };
-
 type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
 
-export abstract class Entity implements IUpdate, IAwake, IStart
+export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 {
 	/** This is a unique identifier for this Entity. */
 	public entityId: string;
@@ -28,6 +27,7 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 	/** Add a new feature to this entity. */
 	public AddFeature(feature: IFeature): void
 	{
+		feature.Entity = this;
 		this._features.push(feature);
 	}
 
@@ -100,6 +100,14 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 		return false
 	}
 
+	public Dispose(): void
+	{
+		for (const feature of this.Features)
+		{
+			feature.Dispose();
+		}
+	}
+
 	// This function is a part of the start up of the game loop.
 	// This entity will also call the Awake function of all the features in this entities feature array.
 	/** This is the first call made to this entity when the game compiles. */
@@ -113,7 +121,10 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 
 	public Start(): void
 	{
-		
+		for (const feature of this._features)
+		{
+			feature.Start();
+		}
 	}
 
 	// This function is a part of the game loop and will be called everyframe.

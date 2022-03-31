@@ -1,14 +1,13 @@
 import * as signalR from "@microsoft/signalr";
-import { Observable } from "rxjs";
-import { IBeforeUnload, IFeature, ServerLogger } from "src/app/game-engine/utils";
+import { IFeature, ServerLogger } from "src/app/game-engine/utils";
 import { environment } from "src/environments/environment";
 import { Game } from "../../game";
 
 export class NetworkingFeature implements IFeature
 {
-	Entity: Game;
+	public Entity: Game;
 
-	public hubConnection: signalR.HubConnection;
+	public hubConnection: signalR.HubConnection | null;
 
 	public async StartConnection(): Promise<void>
 	{
@@ -26,35 +25,30 @@ export class NetworkingFeature implements IFeature
 		return console.log("Error while starting connection" + err);
 	  }
 	}
-
-	public OnDisconnect()
-	{
-	  this.hubConnection
-	}
   
 	public SendData(func: string, data: string): void
 	{
-	  this.hubConnection.send(func, data);
+	  this.hubConnection!.send(func, data);
 	}
   
 	public GetData(func: string): void
 	{
-	  this.hubConnection.send(func);
+	  this.hubConnection!.send(func);
 	}
   
 	public async Subscribe(func: string, action: (data: string) => void): Promise<void>
 	{
 		return await new Promise((resolve) =>
 		{
-			this.hubConnection.on(func, (data) => action(data));
+			this.hubConnection!.on(func, (data) => action(data));
 			resolve();
 		});
 	}
 
-	public kill(): Promise<boolean>
+	public StopConnection(): Promise<boolean>
 	{
 		return new Promise<boolean>((resolve, reject) =>
-			this.hubConnection.stop()
+			this.hubConnection!.stop()
 				.then(() => resolve(true))
 				.catch((error) => { console.log(error); reject(false); }));
 	}
@@ -72,5 +66,10 @@ export class NetworkingFeature implements IFeature
 	Update(deltaTime: number): void
 	{
 
+	}
+
+	Dispose(): void
+	{
+		this.Entity.RemoveFeature(NetworkingFeature);
 	}
 }

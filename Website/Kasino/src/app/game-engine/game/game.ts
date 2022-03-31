@@ -28,24 +28,18 @@ export class Game extends Entity
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject, position?: Vector3): void
 	{
+		this.Entities.push(gameObject);
 		if (position)
 		{
 			gameObject.transform.position = position;
 		}
-		this.Entities.push(gameObject);
 	}
 
 	/** Destroys a GameObject from the game. */
 	public Destroy(gameObject: GameObject): void
 	{
-		for (let i = 0; i < this.Entities.length; i++)
-		{
-			if (this.Entities[i].entityId === gameObject.entityId)
-			{
-				this.Entities.splice(i, 1);
-				return;
-			}
-		}
+		this._entities.splice(this._entities.findIndex(e => e.entityId = gameObject.entityId), 1);
+		return;
 
 		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
 	}
@@ -77,25 +71,40 @@ export class Game extends Entity
 		});
 	}
 
-	public STOP_GAME(): Promise<boolean>
+	public END_GAME(): Promise<void>
 	{
-		this._break = true;
 		return new Promise((resolve) =>
 		{
-			for (let i = 0; i < this.Entities.length; i++)
+			this._break = true;
+			let networking = this.GetFeature(NetworkingFeature);
+			if (networking)
 			{
-				this._entities.splice(i, 1);
-
-				if (this._entities.length === 0)
+				networking.StopConnection()
+				.then(() =>
 				{
-					Game._instance = null;
-					if (Game._instance === null)
-					{
-						return resolve(true);
-					}
-				}
+					this.Dispose();
+				})
+				.finally(() =>
+				{
+					resolve();
+				});
 			}
-		});
+			else
+			{
+				this.Dispose();
+				resolve();
+			}
+		})
+	}
+
+	public override Dispose(): void
+	{
+		super.Dispose();
+
+		for (const entity of this.Entities)
+		{
+			entity.Dispose();
+		}
 	}
 
 	// Start up the game and get the start time.

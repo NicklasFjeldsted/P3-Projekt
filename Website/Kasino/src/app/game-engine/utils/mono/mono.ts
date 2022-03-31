@@ -8,7 +8,7 @@ export abstract class MonoBehaviour implements IComponent
 
 	public get transform(): Transform
 	{
-		return this.gameObject.transform;
+		return this.gameObject!.transform;
 	}
 
 	public abstract Start(): void;
@@ -17,4 +17,8 @@ export abstract class MonoBehaviour implements IComponent
 
 	public abstract Update(deltaTime: number): void;
 
+	public Dispose(): void
+	{
+		this.gameObject.RemoveComponent(MonoBehaviour);
+	}
 }

@@ -3,7 +3,7 @@ import { Game } from "../../game";
 
 export class BackgroundFeature implements IFeature
 {
-	Entity: Game;
+	public Entity: Game;
 
 	Awake(): void
 	{
@@ -18,6 +18,11 @@ export class BackgroundFeature implements IFeature
 	Update(deltaTime: number): void
 	{
 
+	}
+
+	Dispose(): void
+	{
+		this.Entity.RemoveFeature(BackgroundFeature);
 	}
 	
 	private Draw(): void
