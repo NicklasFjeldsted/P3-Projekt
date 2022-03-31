@@ -7,23 +7,6 @@ import { Seat } from "../seat";
 
 export class House extends MonoBehaviour
 {
-	private static _instance: House | null;
-	public static get Instance()
-	{
-		if (!House._instance)
-		{
-			House._instance = new House();
-		}
-
-		return House._instance;
-	}
-
-	public override Dispose(): void
-	{
-		House._instance = null;
-		super.Dispose();
-	}
-
 	public seats: Seat[] = [];
 	public get OccupiedSeats(): Seat[]
 	{
@@ -57,16 +40,6 @@ export class House extends MonoBehaviour
 	public client: Player;
 	public clients: PlayerData[];
 
-	constructor()
-	{
-		super();
-		this.CreateSeat(1, new Vector3(0, 500, 0));
-		for (let i = 1; i < 9; i++)
-		{
-			this.CreateSeat(i+1, new Vector3(i * 107, 500, 0));
-		}
-	}
-
 	public static OnDeal: Subject<number> = new Subject<number>();
 
 	Start(): void
@@ -76,7 +49,14 @@ export class House extends MonoBehaviour
 
 	Awake(): void
 	{
+		this.CreateSeat(1, new Vector3(0, 500, 0));
+		for (let i = 1; i < 9; i++)
+		{
+			this.CreateSeat(i+1, new Vector3(i * 107, 500, 0));
+		}
+
 		let cardChild = new GameObject('House Cards');
+		this.gameObject.game.Instantiate(cardChild);
 
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
@@ -171,6 +151,8 @@ export class House extends MonoBehaviour
 	private CreateSeat(id: number, position: Vector3): GameObject
 	{
 		let seat: GameObject = new GameObject(`Seat - ${id}`);
+		this.gameObject.game.Instantiate(seat);
+		seat.SetParent(this.gameObject);
 		seat.AddComponent(new Seat());
 		seat.GetComponent(Seat).seatIndex = id;
 		seat.transform.position = position;

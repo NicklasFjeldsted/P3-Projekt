@@ -7,15 +7,17 @@ type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
 export class GameObject extends Entity
 {
-	/** All GameObjects that exists, **NOT** instantiated. */
-	private static _gameObjects: GameObject[] = [];
+	// /** All GameObjects that exists, **NOT** instantiated. */
+	// private static _gameObjects: GameObject[] = [];
 
-	public static get GameObjects(): GameObject[]
-	{
-		return this._gameObjects;
-	}
+	// public static get GameObjects(): GameObject[]
+	// {
+	// 	return this._gameObjects;
+	// }
 
 	public isActive: boolean = true;
+
+	public game: Game;
 
 	/** This GameObject's parent. */
 	private _parent: GameObject | null;
@@ -105,50 +107,46 @@ export class GameObject extends Entity
 
 		this.AddComponent(new Transform());
 
-		GameObject._gameObjects.push(this);
+		//GameObject._gameObjects.push(this);
 
 		name ? this.gameObjectName = name : this.gameObjectName = 'New GameObject';
-
-		if (instantiate === true)
-		{
-			Game.Instance.Instantiate(this);
-		}
 	}
 
-	/** Returns the first GameObjects with the given component. */
-	public static FindOfType<C extends IComponent>(constr: constr<C>): GameObject
-	{
-		for (const gameObject of this._gameObjects)
-		{
-			if (gameObject.HasComponent(constr))
-			{
-				return gameObject;
-			}
-		}
-		throw new Error(`No GameObject has ${constr.name}!`);
-	}
+	// /** Returns the first GameObjects with the given component. */
+	// public static FindOfType<C extends IComponent>(constr: constr<C>): GameObject
+	// {
+	// 	for (const gameObject of this._gameObjects)
+	// 	{
+	// 		if (gameObject.HasComponent(constr))
+	// 		{
+	// 			return gameObject;
+	// 		}
+	// 	}
+	// 	throw new Error(`No GameObject has ${constr.name}!`);
+	// }
 
-	/** Return all GameObjects with the given component. */
-	public static FindAllOfType<C extends IComponent>(constr: constr<C>): GameObject[]
-	{
-		const outputArray: GameObject[] = [];
+	// /** Return all GameObjects with the given component. */
+	// public static FindAllOfType<C extends IComponent>(constr: constr<C>): GameObject[]
+	// {
+	// 	const outputArray: GameObject[] = [];
 
-		for (const gameObject of this._gameObjects)
-		{
-			if (gameObject.HasComponent(constr))
-			{
-				outputArray.push(gameObject);
-			}
-		}
+	// 	for (const gameObject of this._gameObjects)
+	// 	{
+	// 		if (gameObject.HasComponent(constr))
+	// 		{
+	// 			outputArray.push(gameObject);
+	// 		}
+	// 	}
 
-		return outputArray;
-	}
+	// 	return outputArray;
+	// }
 
 	/** Add a new component to this entity. */
-	public AddComponent(component: IComponent): void
+	public AddComponent(component: IComponent): GameObject
 	{
 		component.gameObject = this;
 		this._components.push(component);
+		return this;
 	}
 
 	// "C" is a generic class that conforms to IComponent.
@@ -227,7 +225,7 @@ export class GameObject extends Entity
 			this.parent.DestroyChild(this);
 		}
 
-		Game.Instance.Destroy(this);
+		//Game.Instance.Destroy(this);
 	}
 
 	public DestroyChild(child: GameObject): void

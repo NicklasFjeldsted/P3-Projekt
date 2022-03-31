@@ -30,13 +30,13 @@ export class BlackjackComponent implements OnInit, OnDestroy
     console.warn('GAME - Disposed');
     this.game.END_GAME().then(() =>
     {
-		  console.log(this.game);
+      setTimeout(()=>console.log(this.game), 200);
     });
   }
 
   ngOnInit(): void
   {
-    this.game = Game.Instance;
+    this.game = new Game();
     
     this.game.AddFeature(new BackgroundFeature());
     this.game.AddFeature(new GameInputFeature());
@@ -44,26 +44,27 @@ export class BlackjackComponent implements OnInit, OnDestroy
 
     this.networking = this.game.GetFeature(NetworkingFeature);
 
-    new GameObject('House').AddComponent(House.Instance);
+    let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
+    this.game.Instantiate(house.gameObject);
 
-    for (const seat of House.Instance.seats)
+    for (const seat of house.seats)
     {
       seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
     }
 
     this.game.BEGIN_GAME().then(() =>
     {
-      this.networking.Subscribe("DataChanged", (data) => House.Instance.UpdateSeatData(data)).then(() =>
+      this.networking.Subscribe("DataChanged", (data) => house.UpdateSeatData(data)).then(() =>
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
 
-        this.GetUser().subscribe((user) => House.Instance.CreateClient(user));
+        this.GetUser().subscribe((user) => house.CreateClient(user));
       });
       
-      this.networking.Subscribe("SyncTurn", (data) => House.Instance.SyncTurn(data));
-      this.networking.Subscribe("SyncPlaying", (data) => House.Instance.SyncPlaying(data));
+      this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
+      this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
 
-      this.networking.Subscribe("HouseCards", (data) => House.Instance.HouseCards(data));
+      this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
 
       console.log(this.game);
     });

@@ -28,6 +28,7 @@ export class Seat extends MonoBehaviour
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
 	private standButtonCollider: ColliderComponent;
+	private house: House;
 
 	public Start(): void
 	{
@@ -36,6 +37,7 @@ export class Seat extends MonoBehaviour
 		this.standButtonCollider.gameObject.transform.Translate(new Vector3(50, 0, 0));
 		this.standButtonCollider.Size = new Vector2(50, 30);
 		this.hitButtonCollider.Size = new Vector2(50, 30);
+		this.house = this.gameObject.parent.GetComponent(House);
 	}
 
 	public Awake(): void
@@ -44,33 +46,38 @@ export class Seat extends MonoBehaviour
 		this.gameObject.AddComponent(new ColliderComponent());
 		
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
+		this.gameObject.game.Instantiate(seatText);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
 		this.seatText = seatText.GetComponent(TextComponent);
 
 		let cardsChild = new GameObject(`${this.gameObject.gameObjectName}'s Child`);
+		this.gameObject.game.Instantiate(cardsChild);
 		cardsChild.SetParent(this.gameObject);
 		cardsChild.AddComponent(new TextComponent(' '));
 		cardsChild.transform.Translate(new Vector3(0, -30, 0));
 		this.childTextComponent = cardsChild.GetComponent(TextComponent);
 
 		let buttons = new GameObject(`${this.gameObject.gameObjectName}'s buttons`);
+		this.gameObject.game.Instantiate(buttons);
 		buttons.SetParent(this.gameObject);
 		buttons.transform.Translate(new Vector3(0, -60, 0));
 		
 		let hitButton = new GameObject(`${buttons.gameObjectName}'s Hit Button`);
+		this.gameObject.game.Instantiate(hitButton);
 		hitButton.SetParent(buttons);
 		hitButton.AddComponent(new TextComponent("Hit"));
 		hitButton.AddComponent(new ColliderComponent());
 		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
 
 		let standButton = new GameObject(`${buttons.gameObjectName}'s Stand Button`);
+		this.gameObject.game.Instantiate(standButton);
 		standButton.SetParent(buttons);
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
 
-		Game.Instance.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
+		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
 	}
 
 	public Update(deltaTime: number): void
@@ -140,7 +147,7 @@ export class Seat extends MonoBehaviour
 	{
 		if (!this.Player)
 		{
-			this.Player = House.Instance.client;
+			this.Player = this.house.client;
 			this.Player.data.seated = true;
 			this.Player.data.seatIndex = this.seatIndex;
 	

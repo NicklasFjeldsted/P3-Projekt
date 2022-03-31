@@ -2,19 +2,11 @@ import { GameObject } from '../gameObject';
 import { Entity, Vector3 } from '../utils';
 import { NetworkingFeature } from './components';
 
+type AbstractFeature<T> = Function & { prototype: T; };
+type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
+
 export class Game extends Entity
 {
-	private static _instance: Game | null;
-	public static get Instance(): Game
-	{
-		if (!Game._instance)
-		{
-			Game._instance = new Game();
-		}
-
-		return Game._instance;
-	}
-
 	private _entities: Entity[] = [];
 
 	public get Entities(): Entity[]
@@ -26,12 +18,24 @@ export class Game extends Entity
 	private _break: boolean = false;
 
 	/** Instantiates a GameObject in the game. */
-	public Instantiate(gameObject: GameObject, position?: Vector3): void
+	public Instantiate(gameObject: GameObject): void
 	{
-		this.Entities.push(gameObject);
-		if (position)
+		gameObject.game = this;
+		this._entities.push(gameObject);
+	}
+
+	/** Remove a Entity from this game. */
+	public RemoveEntity<C extends Entity>(constr: constr<C>): void
+	{
+		for (let i = 0; i < this._entities.length; i++)
 		{
-			gameObject.transform.position = position;
+			const entity = this._entities[ i ];
+
+			if (entity instanceof constr)
+			{
+				this._entities.splice(i, 1);
+				return;
+			}
 		}
 	}
 

@@ -45,12 +45,16 @@ export class NetworkingFeature implements IFeature
 		});
 	}
 
-	public StopConnection(): Promise<boolean>
+	public async StopConnection(): Promise<void>
 	{
-		return new Promise<boolean>((resolve, reject) =>
-			this.hubConnection!.stop()
-				.then(() => resolve(true))
-				.catch((error) => { console.log(error); reject(false); }));
+		try
+		{
+			return await this.hubConnection!.stop();
+		}
+		catch (error)
+		{
+			return console.error("Error while stopping connection" + error);
+		}
 	}
 
 	Awake(): void
