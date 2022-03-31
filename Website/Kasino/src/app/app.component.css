@@ -123,13 +123,13 @@
 	display: block!important;;
 }
 
-.footer 
+.footer
 {
-  position: fixed;
+  position: relative;
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(58, 58, 58);
+  background-color: rgb(29, 29, 29);
   color: white;
   text-align: center;
 }
