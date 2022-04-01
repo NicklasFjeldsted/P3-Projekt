@@ -1,5 +1,5 @@
 export interface IDisposable
 {
 	/** Disposes all references. */
-	Dispose(): void;
+	Dispose(): Promise<void> | void;
 }

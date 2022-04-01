@@ -2,7 +2,6 @@ import { Game } from "../game/game";
 import { Entity, IComponent, Transform, Vector2, Vector3 } from "../utils";
 
 type AbstractComponent<T> = Function & { prototype: T; };
-
 type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
 
 export class GameObject extends Entity
@@ -198,6 +197,14 @@ export class GameObject extends Entity
 		{
 			toRemove.gameObject = null;
 			this._components.splice(index, 1);
+			if (!this.HasComponent(toRemove.constructor))
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Disposed`, 'color: #32a852;');
+			}
+			else
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Persisted`, 'color: #ff0000;');
+			}
 		}
 	}
 
@@ -225,7 +232,7 @@ export class GameObject extends Entity
 			this.parent.DestroyChild(this);
 		}
 
-		//Game.Instance.Destroy(this);
+		this.game.Destroy(this);
 	}
 
 	public DestroyChild(child: GameObject): void
@@ -250,19 +257,41 @@ export class GameObject extends Entity
 		}
 	}
 
-	public override Dispose(): void
+	public override async Dispose(): Promise<void>
 	{
-		for (const component of this.Components)
+		await new Promise<void>((resolve) =>
 		{
-			component.Dispose();
-		}
+			console.groupCollapsed(`${this.gameObjectName} - Disposing`);
+			var interval = setInterval(() =>
+			{
+				if (!this.disposable)
+					return;
 
-		for (const child of this.Children)
+				resolve();
+				clearInterval(interval);
+
+			}, 100);
+
+			for (const component of this.Components)
+			{
+				component.Dispose();
+			}
+			console.groupEnd();
+		}).then(() =>
 		{
-			child.Dispose();
-		}
+			console.groupCollapsed(`${this.entityId} - Remainders`);
+			for (const property in this)
+			{
+				console.log(property);
+			}
+			console.groupEnd();
+			this.Destroy();
+		});
+	}
 
-		this.Destroy();
+	public override get disposable(): boolean
+	{
+		return this._components.length === 0;
 	}
 
 	// This function is a part of the start up of the game loop.

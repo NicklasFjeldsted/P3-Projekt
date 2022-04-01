@@ -7,7 +7,7 @@ export class NetworkingFeature implements IFeature
 {
 	public Entity: Game;
 
-	public hubConnection: signalR.HubConnection | null;
+	public hubConnection: signalR.HubConnection;
 
 	public async StartConnection(): Promise<void>
 	{
@@ -15,7 +15,7 @@ export class NetworkingFeature implements IFeature
 		.withUrl(environment.hubURL + "/Blackjack", {})
 		.configureLogging(new ServerLogger())
 		.build();
-		
+
 	  try
 	  {
 		return await this.hubConnection.start();
@@ -28,7 +28,7 @@ export class NetworkingFeature implements IFeature
   
 	public SendData(func: string, data: string): void
 	{
-	  this.hubConnection!.send(func, data);
+	  this.hubConnection.send(func, data);
 	}
   
 	public GetData(func: string): void
@@ -45,16 +45,24 @@ export class NetworkingFeature implements IFeature
 		});
 	}
 
-	public async StopConnection(): Promise<void>
+	public async Unsubscribe(func: string): Promise<void>
 	{
-		try
+		return await new Promise((resolve) =>
 		{
-			return await this.hubConnection!.stop();
-		}
-		catch (error)
+			this.hubConnection.off(func);
+			resolve();
+		});
+	}
+
+	public StopConnection(): Promise<boolean>
+	{
+		return new Promise<boolean>((resolve) =>
 		{
-			return console.error("Error while stopping connection" + error);
-		}
+			this.hubConnection!.stop().then(() =>
+			{
+				resolve(true);
+			});
+		});
 	}
 
 	Awake(): void
@@ -74,6 +82,6 @@ export class NetworkingFeature implements IFeature
 
 	Dispose(): void
 	{
-		this.Entity.RemoveFeature(NetworkingFeature);
+		//this.Entity.RemoveFeature(NetworkingFeature);
 	}
 }

@@ -12,7 +12,7 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 	/** This is a unique identifier for this Entity. */
 	public entityId: string;
 
-	constructor(){ this.entityId = Guid.newGuid() }
+	constructor() { this.entityId = Guid.newGuid(); }
 
 	// Create a protected array of IFeature.
 	/** This is the entire array of features associated with this entity. */
@@ -102,10 +102,37 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 
 	public Dispose(): void
 	{
-		for (const feature of this.Features)
+		new Promise<void>((resolve) =>
 		{
-			feature.Dispose();
-		}
+			var interval = setInterval(() =>
+			{
+				console.info(`${this.constructor.name} - Disposable: ${this.disposable}`);
+				if (!this.disposable)
+					return;
+
+				resolve();
+				clearInterval(interval);
+
+			}, 100);
+
+			for (const feature of this.Features)
+			{
+				feature.Dispose();
+			}
+		}).then(() =>
+		{
+			console.groupCollapsed(`${this.entityId} - Remainders`);
+			for (const property in this)
+			{
+				console.log(property);
+			}
+			console.groupEnd();
+		});
+	}
+
+	public get disposable(): boolean
+	{
+		return this._features.length === 0;
 	}
 
 	// This function is a part of the start up of the game loop.

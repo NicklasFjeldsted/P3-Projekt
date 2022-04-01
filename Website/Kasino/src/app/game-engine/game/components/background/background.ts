@@ -22,7 +22,11 @@ export class BackgroundFeature implements IFeature
 
 	Dispose(): void
 	{
-		this.Entity.RemoveFeature(BackgroundFeature);
+		for (const prop in this)
+		{
+			delete this[ prop ];
+		}
+		//this.Entity.RemoveFeature(BackgroundFeature);
 	}
 	
 	private Draw(): void

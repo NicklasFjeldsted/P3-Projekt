@@ -7,8 +7,25 @@ export class ColliderComponent implements IComponent
 {
 	public gameObject: GameObject;
 	
-	private start: Vector2;
-	private end: Vector2;
+	private _start: Vector2 | null;
+	private _end: Vector2 | null;
+
+	public get start(): Vector2
+	{
+		if (this._start)
+		{
+			return this._start;
+		}
+		throw new Error(`${this.gameObject.gameObjectName}'s ${this.constructor.name} - start is null!`);
+	}
+	public get end(): Vector2
+	{
+		if (this._end)
+		{
+			return this._end;
+		}
+		throw new Error(`${this.gameObject.gameObjectName}'s ${this.constructor.name} - end is null!`);
+	}
 
 	public get Size(): Vector2
 	{
@@ -26,14 +43,14 @@ export class ColliderComponent implements IComponent
 
 	constructor()
 	{
-		this.start = new Vector2(0, 0);
-		this.end = new Vector2(100, 100);
+		this._start = new Vector2(0, 0);
+		this._end = new Vector2(100, 100);
 		//this.Size = startSize ? startSize : new Vector2(100, 100);
 	}
 
 	Awake(): void
 	{
-		this.start = this.gameObject.transform.position;
+		this._start = this.gameObject.transform.position;
 		this.Size = new Vector2(100, 100);
 	}
 
@@ -44,15 +61,15 @@ export class ColliderComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
-		this.start = this.gameObject.transform.position;
+		this._start = this.gameObject.transform.position;
 		this.DEBUG_Clear();
 		this.DEBUG_Draw();
 	}
 
 	Dispose(): void
 	{
-		this.start.Dispose();
-		this.end.Dispose();
+		this._start = null;
+		this._end = null;
 		this.gameObject.RemoveComponent(ColliderComponent);
 	}
 

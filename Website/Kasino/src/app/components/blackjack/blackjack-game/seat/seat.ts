@@ -6,12 +6,6 @@ import { Player, PlayerData } from "../player";
 export class Seat extends MonoBehaviour
 {
 	public Player: Player | null;
-
-	override Dispose(): void
-	{
-		this.Player = null;
-		super.Dispose();
-	}
 	
 	public get Occupied(): boolean
 	{

@@ -75,7 +75,7 @@ export class Game extends Entity
 		});
 	}
 
-	public END_GAME(): Promise<void>
+	public END_GAME(): Promise<boolean>
 	{
 		return new Promise((resolve) =>
 		{
@@ -86,29 +86,52 @@ export class Game extends Entity
 				networking.StopConnection()
 				.then(() =>
 				{
-					this.Dispose();
+					this.Dispose().then(() =>
+					{
+						resolve(true);
+					}).catch(() =>
+					{
+						resolve(false);
+					});
 				})
-				.finally(() =>
-				{
-					resolve();
-				});
 			}
 			else
 			{
-				this.Dispose();
-				resolve();
+				this.Dispose().then(() =>
+				{
+					resolve(true);
+				}).catch(() =>
+				{
+					resolve(false);
+				});
 			}
 		})
 	}
 
-	public override Dispose(): void
+	public override Dispose(): Promise<void>
 	{
-		super.Dispose();
-
-		for (const entity of this.Entities)
+		return new Promise<void>((resolve, reject) =>
 		{
-			entity.Dispose();
-		}
+			try
+			{
+				console.groupCollapsed("GAME - Disposal Logs")
+				for (let i = 0; i < this.Entities.length; i++)
+				{
+					this._entities[ i ].Dispose();
+					
+					if (i === this._entities.length - 1)
+					{
+						resolve();
+					}
+				}
+				console.groupEnd();
+			}
+			catch (error)
+			{
+				console.error(error);
+				reject();
+			}
+		});
 	}
 
 	// Start up the game and get the start time.
@@ -153,6 +176,12 @@ export class Game extends Entity
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
+		if (this._break)
+		{
+			console.warn("GAME - Loop stopped");
+			return;
+		}
+
 		// deltaTime will look something like 0.283192 milliseconds
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 
@@ -166,11 +195,6 @@ export class Game extends Entity
 
 		this._lastTimestamp = Date.now();
 
-		if (this._break)
-		{
-			return;
-		}
-		
 		window.requestAnimationFrame(() => this.Update());
 	}
 }

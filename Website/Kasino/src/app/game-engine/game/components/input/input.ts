@@ -24,7 +24,11 @@ export class GameInputFeature implements IFeature
 
 	Dispose(): void
 	{
-		this.Entity.RemoveFeature(GameInputFeature);
+		for (const prop in this)
+		{
+			delete this[ prop ];
+		}
+		//this.Entity.RemoveFeature(GameInputFeature);
 	}
 
 	private HandleClick(event: MouseEvent): void

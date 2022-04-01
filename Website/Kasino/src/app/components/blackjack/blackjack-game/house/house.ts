@@ -22,8 +22,8 @@ export class House extends MonoBehaviour
 	}
 
 
-	private IsPlaying: boolean;
-	private SeatTurn: number;
+	private IsPlaying: boolean = false;
+	private SeatTurn: number = -1;
 
 	private childText: TextComponent;
 	private houseCards: Card[] = [];
@@ -37,8 +37,15 @@ export class House extends MonoBehaviour
 		return output;
 	}
 
-	public client: Player;
-	public clients: PlayerData[];
+	private _client: Player | null = null;
+	public get client(): Player
+	{
+		if (this._client)
+		{
+			return this._client;
+		}
+		throw new Error(`${this.gameObject.gameObjectName} > ${this.constructor.name} - player is null!`);
+	}
 
 	public static OnDeal: Subject<number> = new Subject<number>();
 
@@ -85,6 +92,13 @@ export class House extends MonoBehaviour
 		}
 	}
 
+	public override Dispose(): void
+	{
+		//this._client = null;
+		//this.seats.forEach(seat => seat.Dispose());
+		//this.gameObject.RemoveComponent(this.constructor);
+	}
+
 	public SyncPlaying(data: string): void
 	{
 		this.IsPlaying = JSON.parse(data);
@@ -99,8 +113,6 @@ export class House extends MonoBehaviour
 	{
 		// Convert the incoming playerDataJsonString to a Json Object and Index it by the connection id.
 		var playerData: PlayerData[] = JSON.parse(playerDataString);
-
-		this.clients = playerData;
 
 		for (const key in playerData)
 		{
@@ -142,7 +154,7 @@ export class House extends MonoBehaviour
 
 	public CreateClient(user: IUser)
 	{
-		this.client = new Player();
+		this._client = new Player();
 		this.client.data.email = user.email;
 		this.client.data.fullName = user.fullName;
 		Player.OnDataChanged.next(this.client.data);

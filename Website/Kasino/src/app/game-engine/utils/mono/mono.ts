@@ -19,6 +19,14 @@ export abstract class MonoBehaviour implements IComponent
 
 	public Dispose(): void
 	{
+		console.groupCollapsed(`${this.constructor.name} - References`);
+		for (const [key, value] of Object.entries(this))
+		{
+			console.groupCollapsed(`%c${key}`, 'color: #ff8400;');
+			console.log(value);
+			console.groupEnd();
+		}
+		console.groupEnd();
 		this.gameObject.RemoveComponent(MonoBehaviour);
 	}
 }

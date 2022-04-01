@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature } from 'src/app/game-engine';
 import { IUser } from 'src/app/interfaces/User';
@@ -15,7 +15,7 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 @Injectable({ providedIn: 'root' })
 
-export class BlackjackComponent implements OnInit, OnDestroy
+export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
   constructor(private http: HttpClient)
   { 
@@ -27,11 +27,7 @@ export class BlackjackComponent implements OnInit, OnDestroy
 
   ngOnDestroy(): void
   {
-    console.warn('GAME - Disposed');
-    this.game.END_GAME().then(() =>
-    {
-      setTimeout(()=>console.log(this.game), 200);
-    });
+
   }
 
   ngOnInit(): void
@@ -75,13 +71,20 @@ export class BlackjackComponent implements OnInit, OnDestroy
     return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
   }
 
-  // public canDeactivate(
-  //   component: BlackjackComponent,
-  //   currentRoute: ActivatedRouteSnapshot,
-  //   currentState: RouterStateSnapshot,
-  //   nextState?: RouterStateSnapshot
-  // ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
-  // {
-  //   return component.networking.KILL();
-  // }
+  public canDeactivate(
+    component: BlackjackComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
+  {
+    console.warn('GAME - Disposed');
+    component.networking.Unsubscribe('JoinSeat');
+    component.networking.Unsubscribe('DataChanged');
+    component.networking.Unsubscribe('UpdatePlayerData');
+    component.networking.Unsubscribe('SyncTurn');
+    component.networking.Unsubscribe('SyncPlaying');
+    component.networking.Unsubscribe('HouseCards');
+    return component.game.END_GAME();
+  }
 }

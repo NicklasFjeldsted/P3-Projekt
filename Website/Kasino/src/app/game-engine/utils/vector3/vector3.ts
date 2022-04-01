@@ -1,11 +1,4 @@
-import { IDisposable } from "../lifecycle";
-
-export class Vector3 implements IDisposable
+export class Vector3
 {
 	constructor(public x: number, public y: number, public z: number) { }
-
-	Dispose(): void
-	{
-		
-	}
 }
