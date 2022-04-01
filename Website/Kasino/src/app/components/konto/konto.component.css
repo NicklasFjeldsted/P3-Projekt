@@ -1,7 +1,25 @@
 :host {
   height: 100%;
   width: 100%;
-  background-image: url("../../../assets/media/casino.jpg");
+  background: #efefef;
+}
+
+.left-side {
+  position: absolute;
+  height: 100%;
+  width: calc((100% - 695px) / 2 );
+  top: 0;
+  background-color: red;
+}
+
+.sidenav {
+  position: absolute;
+  width: 200px;
+  height: 100%;
+  padding-top: 103px;
+  background-color: grey;
+  right: 0;
+
 }
 
 .form-control {
@@ -253,4 +271,3 @@
 .bottom-buttons > #deaktiver:hover {
   box-shadow: 1px 1px 15px -5px #e78553;
 }
-
