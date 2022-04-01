@@ -8,7 +8,8 @@
 
 .container
 {
-	overflow: auto;
+  min-width: 1200px;
+	overflow: hidden;
 }
 
 .searchbar-container
@@ -106,3 +107,4 @@
 	transform: translateY(-1px) scale(1.03);
 	background-color: #D4EFDF;
 }
+
