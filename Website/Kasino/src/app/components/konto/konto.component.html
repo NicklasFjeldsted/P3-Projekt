@@ -1,51 +1,74 @@
 <form id="login" method="get" class="form-control h-center">
-  <div class="column flow-down">
+  <div class="column flow-down main">
     <div class="form-header">
       <h1>Min Konto</h1>
     </div>
     <div class="form-body">
       <div class="customer-title">
-        <h2>Hej med dig</h2>
-        <p>Konto-id: </p>
+        <h2>{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</h2>
+        <p>Konto-id: {{this.accountId}} </p>
       </div>
     </div>
-    <div class="row">
-      <div class="column">
-        <a (click)="openIndbetal()"><button class="btn top orange" >Indbetal</button></a>
+    <div class="grid-buttons">
+      <button (click)="openIndbetal()" class="grid-button" id="indbetal">Indbetal</button>
+      <button (click)="openUdbetal()" class="grid-button" id="udbetal">Udbetal</button>
+      <button (click)="openLogout()" class="grid-button" id="logud">Log ud</button>
+    </div>
+    <div class="balance-title">Saldo</div>
+    <div class="balance-account">
+      <div class="balance-circle"><div class="circle"><span>=</span></div></div>
+      <div class="balance">100 kr</div>
+    </div>
+    <div class="konto-title">Dine kontaktoplysninger</div>
+    <div class="konto-oplysninger">
+      <div class="form-row flow-down">
+        <div class="row-logo"><i class="fa-solid fa-id-card"></i></div>
+        <div class="row-info">
+          <div class="row-title">Konto-id</div>
+          <div class="row-content">{{this.accountId}}</div>
+        </div>
       </div>
-      <div class="column">
-        <a (click)="openUdbetal()"><button class="btn top white">Udbetal</button></a>
+
+      <div class="form-row-divider"></div>
+
+      <div class="form-row flow-down">
+        <div class="row-logo"><i class="fa-solid fa-user"></i></div>
+        <div class="row-info">
+          <div class="row-title">Navn</div>
+          <div class="row-content">{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</div>
+        </div>
       </div>
-      <div class="column">
-        <a (click)="openLogout()"><button class="btn top">Log ud</button></a>
+
+      <div class="form-row-divider"></div>
+
+      <div class="form-row flow-down">
+        <div class="row-logo"><i class="fa-solid fa-mobile-screen"></i></div>
+        <div class="row-info">
+          <div class="row-title">Telefonnummer</div>
+          <div class="row-content">{{this.accountInfo.phoneNumber}}</div>
+        </div>
       </div>
-    </div>
-    <div class="form-row flow-down">
-      <label for="balance">Balance</label>
-      <input type="text" name="balance" id="balance" class="form-input" [value]="this.currentBalance + ' kr'" readonly/>
-    </div>
-    <div class="row">
-      <div class="column">
-        <h4 class="h4">Dine kontooplysninger</h4>
+
+      <div class="form-row-divider"></div>
+
+      <div class="form-row flow-down">
+        <div class="row-logo"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="row-info">
+          <div class="row-title">Adresse</div>
+          <div class="row-content">{{this.accountInfo.address}}</div>
+        </div>
       </div>
+      <div class="form-row-divider"></div>
     </div>
-    <div class="form-row flow-down">
-      <label for="fuldeNavn">Navn</label>
-      <input type="text" name="fuldeNavn" id="fuldeNavn" class="form-input" [value]="this.accountInfo.firstName + ' ' + this.accountInfo.lastName" readonly/>
+
+    <div class="form-row flow-down user-email">
+      <div class="email-title">Logget ind som</div>
+      <div class="email">{{this.accountInfo.email}}</div>
     </div>
-    <div class="form-row flow-down">
-      <label for="tlf">Telefonnummer</label>
-      <input type="text" name="tlf" id="tlf" class="form-input" [value]="this.accountInfo.phoneNumber" readonly/>
-    </div>
-    <div class="form-row flow-down">
-      <label for="adresse">Adresse</label>
-      <input type="text" name="adresse" id="adresse" class="form-input" [value]="this.accountInfo.address" readonly/>
-    </div>
-    <div class="form-row flow-down">
-      <a (click)="openLogout()"><button class="btn">Log ud</button></a>
-    </div>
-    <div class="form-row flow-down">
-      <a (click)="openLogout()"><button class="form-submit bot bg-orange">Deaktiver konto</button></a> <!--Linket skal ændres når vi kan deativer en konto-->
+
+    <div class="form-row flow-down bottom-buttons">
+      <button class="bottom-button" id="logud" (click)="openLogout()">Log ud</button>
+      <button class="bottom-button" id="deaktiver" (click)="openLogout()">Deaktiver konto</button>
     </div>
   </div>
 </form>

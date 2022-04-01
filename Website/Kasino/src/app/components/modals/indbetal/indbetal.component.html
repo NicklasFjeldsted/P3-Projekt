@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" [@openClose]="isOpen ? 'open' : 'close'" [ngStyle]="{'max-height':f['amount'].value < 100 ? '650px' : '625px' }" id="indbetalForm" method="post" class="form-control h-center v-center">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" [@openClose]="isOpen ? 'open' : 'close'" [ngStyle]="{'max-height': (f['amount'].value < 100 && this.form.hasError ? '650px' : this.form.hasError && submitted ? '625px' : '580px') }" id="indbetalForm" method="post" class="form-control h-center v-center">
 	<div class="form-header bg-green">
 		<svg (click)="close()" xmlns="http://www.w3.org/2000/svg" class="v-center" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet"><path data-path="close" fill-rule="evenodd" d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"></path></svg>
 

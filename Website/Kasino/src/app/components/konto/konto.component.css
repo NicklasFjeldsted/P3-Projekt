@@ -1,13 +1,13 @@
 :host
 {
-  height: 85%;
+  height: 100%;
   width: 100%;
   background-image: url("../../../assets/media/casino.jpg");
 }
 
 .form-control {
   max-width: 600px;
-  padding: 90px 60px 60px;
+  padding: 60px 60px 60px;
   height: 100%;
   background-color: #fff;
   border: none;
@@ -15,12 +15,10 @@
 }
 
 .form-header {
-  height: 15%;
-  margin-top: 20px;
-  margin-bottom: -5px;
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
+  margin: 0;
 }
 
 .form-header > h1 {
@@ -35,6 +33,227 @@
 
 .customer-title > h2 {
   margin: 0;
+  font-size: 1.3rem;
+  font-weight: 300;
+}
+
+.customer-title > p {
+  margin: 0;
+  font-size: .75rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.grid-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(calc(200px - 1em), 1fr));
+  gap: 1em;
+  height: 50px;
+}
+
+.grid-button {
+  height: 100%;
+  width: 100%;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.grid-buttons #indbetal {
+  background: #e78553;
+  border: 1px solid #e78553;
+}
+.grid-buttons #udbetal {
+  background: #fff;
+  color: #249752;
+  border: 1px solid #249752;
+}
+.grid-buttons #logud {
+  background-color: #249752;
+  color: #fff;
+  border: 1px solid #249752;
+}
+
+.grid-button[id="indbetal"]:hover {
+  box-shadow: 1px 1px 15px -5px #e78553;
+}
+
+.grid-button[id="udbetal"]:hover {
+  box-shadow: 1px 1px 15px -5px #249752;
+}
+
+.grid-button[id="logud"]:hover {
+  box-shadow: 1px 1px 15px -5px #249752;
+}
+
+
+.balance-account {
+  display:flex;
+  flex-direction: row;
+  width: 100%;
+  height: 7%;
+  gap: 2em;
+}
+
+.balance-account > .balance-circle {
+  width: 7.5%;
+  text-align: center;
+  display:flex;
+  justify-content: right;
+}
+
+.balance-circle > .circle {
+
+  border-radius: 50%;
+  background-color: #249752;
+  width: 30px;
+  height: 30px;
+  display:flex;
+  justify-content: center;
+}
+
+.circle > span {
+  padding: .3em;
+  color: #fff;
+}
+
+.balance-account {
+  text-align: center;
+  align-items: center;
+}
+
+.balance {
+  font-size: 2em;
+  text-align: center;
+  font-weight: 900;
+}
+
+.konto-oplysninger {
+  height: auto;
+  width: 100%;
+  position: relative;
+}
+
+.konto-title, .balance-title {
+  display:flex;
+  text-align: left;
+  color: #015536;
+  font-size: 1rem;
+  font-weight: 500;
+  align-items: flex-end;
+}
+
+.form-row {
+  flex-direction: row;
+  max-height: 64px;
+}
+
+.form-row-divider {
+  width: 100%;
+  height: 1px;
+  background-color: #838383;
+  width: calc(100% - 72px);
+  position: absolute;
+  right: 0;
+  left: auto;
+
+}
+
+.row-logo {
+  height: 64px;
+  width: 72px;
+  display:flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+}
+
+.row-logo > i {
+  font-size: 1.5em;
+  filter: invert(59%) sepia(0%) saturate(0%) hue-rotate(136deg) brightness(87%) contrast(92%);
+}
+
+.row-info {
+  text-align: left;
+  padding: 1pc 1pc 1pc 0;
+  width: 100%;
+  height: 100%;
+}
+
+.row-info > .row-title {
+  margin: 0;
+  font-weight: 300;
+  font-size: 9pt;
+  color: #838383;
+}
+
+.row-info > .row-content {
+  margin: 0;
+  font-weight: 300;
+  font-size: 1pc;
+  color: #838383;
+}
+
+.form-row {
+  margin: 0;
+}
+
+.main {
+  gap: 1em;
+}
+
+.user-email {
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.user-email > .email-title {
+  font-size: .75rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #838383;
+}
+
+.user-email > .email {
+  font-size: 1rem;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.bottom-buttons {
+  width: 100%;
+  height: 200px;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.bottom-button {
+  width: 100%;
+  font-size: .875rem;
+  padding: 1pc;
+  border-radius: 50px;
+  height: 56px;
+}
+
+.bottom-buttons > #logud {
+  background-color: #249752;
+  color: #fff;
+  border: 1px solid #249752;
+  cursor: pointer;
+}
+
+.bottom-buttons > #deaktiver {
+  background: #e78553;
+  border: 1px solid #e78553;
+  cursor: pointer;
+}
+
+.bottom-buttons > #logud:hover {
+  box-shadow: 1px 1px 15px -5px #249752;
+}
+
+.bottom-buttons > #deaktiver:hover {
+  box-shadow: 1px 1px 15px -5px #e78553;
 }
 
 .form-submit

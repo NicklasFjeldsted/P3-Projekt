@@ -19,9 +19,11 @@ export class KontoComponent implements OnInit {
 
   accountInfo: AccountInfo;
   currentBalance: number | null;
+  accountId: number | null;
 
   constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, private dialog: DialogService) {
     this.accountInfo = {
+      email: '',
       phoneNumber: 0,
       firstName: '',
       lastName: '',
@@ -50,6 +52,7 @@ export class KontoComponent implements OnInit {
     this.authenticationService.decodeToken().subscribe({
       next: (userBalance) => {
         this.currentBalance = userBalance.balance;
+        this.accountId = userBalance.customerID;
       },
       error: (error) => {
         console.log(error)
