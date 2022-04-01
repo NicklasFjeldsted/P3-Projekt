@@ -1,4 +1,4 @@
-.logout-container {
+.deaktiver-container {
 	max-width: 300px;
 	position: absolute;
 	top: 50px!important;
@@ -10,12 +10,12 @@
 	opacity: 0;
 }
 
-.logout-header {
+.deaktiver-header {
 	height: 40px;
 	text-align: center;
 }
 
-.logout-buttons {
+.deaktiver-buttons {
 	display:grid;
 	grid-template-columns: repeat(2, minmax(calc(150px - 10px - .5em), 1fr));
 	height: 50px;
@@ -24,7 +24,7 @@
 	align-items: center;
 }
 
-.logout-buttons > button {
+.deaktiver-buttons > button {
 	height: 40px;
 	border-radius: 30px;
 	outline: none!important;
@@ -34,21 +34,21 @@
 	font-weight: 500;
 }
 
-.logout-buttons > #logout {
+.deaktiver-buttons > #deaktiver {
 	background-color: #e78553;
 	color: #fff;
 }
-.logout-buttons > #logout:hover {
+.deaktiver-buttons > #deaktiver:hover {
 	box-shadow: .5px .5px 10px #e78553;
   cursor: pointer;
 }
 
-.logout-buttons > #close-logout {
+.deaktiver-buttons > #close-deaktiver {
 	background-color: #d3d3d3;
 	color: black;
   cursor: pointer;
 }
 
-.logout-buttons > #close-logout:hover {
+.deaktiver-buttons > #close-deaktiver:hover {
 	box-shadow: .5px .5px 10px #d3d3d3;
 }
