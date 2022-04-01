@@ -40,11 +40,13 @@
 }
 .logout-buttons > #logout:hover {
 	box-shadow: .5px .5px 10px #e78553;
+  cursor: pointer;
 }
 
 .logout-buttons > #close-logout {
 	background-color: #d3d3d3;
 	color: black;
+  cursor: pointer;
 }
 
 .logout-buttons > #close-logout:hover {
