@@ -40,11 +40,13 @@
 }
 .deaktiver-buttons > #deaktiver:hover {
 	box-shadow: .5px .5px 10px #e78553;
+  cursor: pointer;
 }
 
 .deaktiver-buttons > #close-deaktiver {
 	background-color: #d3d3d3;
 	color: black;
+  cursor: pointer;
 }
 
 .deaktiver-buttons > #close-deaktiver:hover {
