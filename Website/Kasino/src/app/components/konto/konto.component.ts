@@ -8,6 +8,7 @@ import { IndbetalComponent } from '../modals/indbetal/indbetal.component';
 import { UdbetalComponent } from '../modals/udbetal/udbetal.component';
 import { DialogService } from '../modals/dialog.service';
 import { LogoutComponent } from '../modals/logout/logout.component';
+import { DeaktiverComponent } from '../modals/deaktiver/deaktiver.component';
 
 
 @Component({
@@ -67,5 +68,9 @@ export class KontoComponent implements OnInit {
 
   openLogout() {
     this.dialog.open(LogoutComponent);
+  }
+
+  openDeaktiver() {
+    this.dialog.open(DeaktiverComponent);
   }
 }

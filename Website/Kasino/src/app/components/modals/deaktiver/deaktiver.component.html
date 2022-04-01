@@ -1,0 +1,9 @@
+<div class="deaktiver-container h-center" [@openClose]="isOpen ? 'open' : 'closed'">
+	<div class="deaktiver-header">
+		<h2>Vil du gerne deaktiver din konto?</h2>
+	</div>
+	<div class="deaktiver-buttons">
+		<button id="close-deaktiver" (click)="close()">Luk</button>
+		<button id="deaktiver" (click)="deaktiver()">Deaktiver</button>
+	</div>
+</div>
