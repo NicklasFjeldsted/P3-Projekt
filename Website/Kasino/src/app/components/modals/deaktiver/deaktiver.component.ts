@@ -11,7 +11,6 @@ import { DialogRef } from '../dialog-ref';
     trigger('openClose', [
       state('open', style({
         opacity: 1,
-
       })),
       state('closed', style({
         opacity: 0
