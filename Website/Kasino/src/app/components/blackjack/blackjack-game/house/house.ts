@@ -82,11 +82,7 @@ export class House extends MonoBehaviour
 			{
 				if (this.SeatTurn === seat.seatIndex)
 				{
-					seat.myTurn = true;
-				}
-				else
-				{
-					seat.myTurn = false;
+					seat.UpdateIsMyTurn(true);
 				}
 			}
 		}
@@ -94,19 +90,21 @@ export class House extends MonoBehaviour
 
 	public override Dispose(): void
 	{
-		//this._client = null;
-		//this.seats.forEach(seat => seat.Dispose());
-		//this.gameObject.RemoveComponent(this.constructor);
+		this.seats.splice(0, this.seats.length);
+		this._client = null;
+		this.gameObject.RemoveComponent(House);
 	}
 
 	public SyncPlaying(data: string): void
 	{
 		this.IsPlaying = JSON.parse(data);
+		console.log(this.IsPlaying);
 	}
-
+	
 	public SyncTurn(data: string): void
 	{
 		this.SeatTurn = JSON.parse(data);
+		console.log(this.SeatTurn);
 	}
 
 	public UpdateSeatData(playerDataString: string)

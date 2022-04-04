@@ -68,7 +68,6 @@ namespace TEC_KasinoAPI.Hubs
 		};
 
 		private static ConcurrentDictionary<string, PlayerData> connectedPlayers = new ConcurrentDictionary<string, PlayerData>();
-		private static ConcurrentDictionary<string, PlayerData> players = new ConcurrentDictionary<string, PlayerData>();
 
 		private static List<Card> availableCards = new List<Card>();
 		private static List<Card> houseCards = new List<Card>();
@@ -135,9 +134,9 @@ namespace TEC_KasinoAPI.Hubs
 
 		public async void Hit()
         {
-            if (IsPlaying && !players[Context.ConnectionId].busted)
+            if (IsPlaying && !connectedPlayers[Context.ConnectionId].busted)
 			{
-				players[ Context.ConnectionId ].cards.Append(await GenerateCard());
+				connectedPlayers[ Context.ConnectionId ].cards.Append(await GenerateCard());
             }
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
@@ -145,9 +144,9 @@ namespace TEC_KasinoAPI.Hubs
 
 		public async void Stand()
         {
-			if (IsPlaying && !players[Context.ConnectionId].busted)
+			if (IsPlaying && !connectedPlayers[Context.ConnectionId].busted)
 			{
-				players[Context.ConnectionId].stand = true;
+				connectedPlayers[Context.ConnectionId].stand = true;
 			}
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
@@ -158,7 +157,7 @@ namespace TEC_KasinoAPI.Hubs
         {
             if (IsPlaying)
             {
-				players[Context.ConnectionId].busted = true;
+				connectedPlayers[Context.ConnectionId].busted = true;
 			}
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
@@ -166,14 +165,14 @@ namespace TEC_KasinoAPI.Hubs
 
 		private async void DealCards()
         {
-            foreach (PlayerData data in players.Values.ToList())
+            foreach (PlayerData data in connectedPlayers.Values.ToList())
             {
 				data.cards.Add(await GenerateCard());
             }
 
 			houseCards.Add(await GenerateCard());
 
-			foreach (PlayerData data in players.Values.ToList())
+			foreach (PlayerData data in connectedPlayers.Values.ToList())
 			{
 				data.cards.Add(await GenerateCard());
 			}
@@ -195,8 +194,6 @@ namespace TEC_KasinoAPI.Hubs
 
 			timer.Stop();
 			timer.Dispose();
-
-			await SetPlayers();
 
 			RefillCards();
 
@@ -228,24 +225,6 @@ namespace TEC_KasinoAPI.Hubs
 					output += card.value;
                 }
 				return output;
-			});
-        }
-
-		private static async Task SetPlayers()
-        {
-			await Task.Run(() =>
-			{
-				players.Clear();
-
-				foreach (string key in connectedPlayers.Keys.ToList())
-				{
-					if (!connectedPlayers[key].seated || players.ContainsKey(key))
-					{
-						continue;
-					}
-
-					players.TryAdd(key, connectedPlayers[key]);
-				}
 			});
         }
 
@@ -282,12 +261,7 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			string id = Context.ConnectionId;
 
-            if (players.ContainsKey(Context.ConnectionId))
-            {
-				players.TryRemove(new KeyValuePair<string, PlayerData>(id, players[id]));
-            }
-
-            if (players.IsEmpty)
+            if (connectedPlayers.IsEmpty || !connectedPlayers.Any(player => player.Value.seated) )
             {
                 EndGame();
             }
@@ -298,7 +272,6 @@ namespace TEC_KasinoAPI.Hubs
 
             return base.OnDisconnectedAsync(exception);
 		}
-
 		public override Task OnConnectedAsync()
 		{
 			connectedPlayers.TryAdd(Context.ConnectionId, new PlayerData());

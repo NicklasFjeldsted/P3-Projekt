@@ -27,6 +27,12 @@ export abstract class MonoBehaviour implements IComponent
 			console.groupEnd();
 		}
 		console.groupEnd();
+
+		for (const property in this)
+		{
+			delete this[property];
+		}
+
 		this.gameObject.RemoveComponent(MonoBehaviour);
 	}
 }

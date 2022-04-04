@@ -47,6 +47,6 @@ export class SpriteRendererComponent implements IComponent
 	/** Clear a Sprite from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.Foreground.ClearRectV3(this.gameObject.transform.position!, this.gameObject.Size);
+		CanvasLayer.Foreground.ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
 	}
 }

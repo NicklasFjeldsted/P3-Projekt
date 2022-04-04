@@ -109,7 +109,7 @@ export class ColliderComponent implements IComponent
 		{
 			return;
 		}
-		
+
 		CanvasLayer.Debug.FillOutline(this.start, this.end);
 	}
 

@@ -5,7 +5,7 @@ import { Game } from "../..";
 export class GameInputFeature implements IFeature
 {
 	public Entity: Game;
-	public OnClick: Subject<Vector2> = new Subject<Vector2>();
+	public OnClick: Subject<Vector2> | null = new Subject<Vector2>();
 
 	Awake(): void
 	{
@@ -24,11 +24,8 @@ export class GameInputFeature implements IFeature
 
 	Dispose(): void
 	{
-		for (const prop in this)
-		{
-			delete this[ prop ];
-		}
-		//this.Entity.RemoveFeature(GameInputFeature);
+		this.OnClick = null;
+		this.Entity.RemoveFeature(GameInputFeature);
 	}
 
 	private HandleClick(event: MouseEvent): void
@@ -39,7 +36,7 @@ export class GameInputFeature implements IFeature
 			return;
 		}
 
-		this.OnClick.next(point);
+		this.OnClick!.next(point);
 	}
 	
 }

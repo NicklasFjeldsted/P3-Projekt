@@ -16,7 +16,19 @@ export class GameObject extends Entity
 
 	public isActive: boolean = true;
 
-	public game: Game;
+	private _game: Game | null;
+	public get game(): Game
+	{
+		if (this._game)
+		{
+			return this._game;
+		}
+		throw new Error(`${this.gameObjectName} - Null reference error!`);
+	}
+	public set game(value: Game | null)
+	{
+		this._game = value;
+	}
 
 	/** This GameObject's parent. */
 	private _parent: GameObject | null;
@@ -47,10 +59,9 @@ export class GameObject extends Entity
 	/** Set the parent of this GameObject. */
 	public SetParent(newParent: GameObject): void
 	{
-		this.transform.position = new Vector3(
+		this.transform.position = new Vector2(
 			this.transform.position!.x + newParent.transform.position!.x,
-			this.transform.position!.y + newParent.transform.position!.y,
-			this.transform.position!.z + newParent.transform.position!.z
+			this.transform.position!.y + newParent.transform.position!.y
 		);
 
 		this._parent = newParent;
@@ -66,7 +77,7 @@ export class GameObject extends Entity
 		return this.GetComponent(Transform);
 	}
 
-	private _size: Vector2 = new Vector2(100, 100);
+	private _size: Vector2 | null = new Vector2(100, 100);
 
 	/** **deprecated** 
 	 * Get the size of the GameObject.
@@ -75,7 +86,11 @@ export class GameObject extends Entity
 	 */
 	public get Size(): Vector2
 	{
-		return this._size;
+		if (this._size)
+		{
+			return this._size;
+		}
+		throw new Error(`${this.gameObjectName} - Null reference error!`);
 	}
 
 	/** **deprecated**
@@ -171,8 +186,10 @@ export class GameObject extends Entity
 	/** Remove a Component from this entity. */
 	public RemoveComponent<C extends IComponent>(constr: constr<C>): void
 	{
-		let toRemove: IComponent | undefined;
-		let index: number | undefined;
+		console.groupCollapsed(`${this.gameObjectName} - Disposing: ${constr.name}`);
+
+		let toRemove: IComponent | undefined = undefined;
+		let index: number | undefined = undefined;
 
 		// We use a for loop here with an index because we need it
 		// for splicing the index off of the components array on this GameObject.
@@ -193,19 +210,25 @@ export class GameObject extends Entity
 		}
 
 		// If we found the index and the component we want to remove we can then proceed to remove them.
-		if (toRemove && index)
+		if (toRemove && index !== undefined)
 		{
 			toRemove.gameObject = null;
 			this._components.splice(index, 1);
 			if (!this.HasComponent(toRemove.constructor))
 			{
-				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Disposed`, 'color: #32a852;');
+				console.log(`%c${toRemove.constructor.name} - Disposed`, 'color: #32a852;');
 			}
 			else
 			{
-				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Persisted`, 'color: #ff0000;');
+				console.log(`%c${toRemove.constructor.name} - Persisted`, 'color: #ff0000;');
 			}
+			console.info(`${this.gameObjectName} remaining components:`, this._components);
 		}
+		else
+		{
+			console.error(`${this.gameObjectName} does not contain a ${constr.name}.`);
+		}
+		console.groupEnd();
 	}
 
 	// This function returns true if the component array on this entity has
@@ -237,8 +260,8 @@ export class GameObject extends Entity
 
 	public DestroyChild(child: GameObject): void
 	{
-		let toRemove: GameObject | undefined;
-		let index: number | undefined;
+		let toRemove: GameObject | undefined = undefined;
+		let index: number | undefined = undefined;
 
 		for (let i = 0; i < this.Children.length; i++)
 		{
@@ -250,18 +273,18 @@ export class GameObject extends Entity
 			}
 		}
 
-		if (toRemove && index)
+		if (toRemove && index !== undefined)
 		{
 			toRemove._parent = null;
 			this._children.splice(index, 1);
 		}
 	}
 
-	public override async Dispose(): Promise<void>
+	public override Dispose(): Promise<void>
 	{
-		await new Promise<void>((resolve) =>
+		return new Promise<void>((resolve) =>
 		{
-			console.groupCollapsed(`${this.gameObjectName} - Disposing`);
+			console.groupCollapsed(`${this.gameObjectName} - Disposal logs`);
 			var interval = setInterval(() =>
 			{
 				if (!this.disposable)
@@ -272,17 +295,25 @@ export class GameObject extends Entity
 
 			}, 100);
 
+			// for (const child of this.Children)
+			// {
+			// 	child.Dispose();
+			// }
+
 			for (const component of this.Components)
 			{
 				component.Dispose();
 			}
+
+			this._size = null;
+
 			console.groupEnd();
 		}).then(() =>
 		{
-			console.groupCollapsed(`${this.entityId} - Remainders`);
-			for (const property in this)
+			console.groupCollapsed(`${this.gameObjectName} - Remainders`);
+			for (const [key, value] of Object.entries(this))
 			{
-				console.log(property);
+				console.log(`${key}:`, value);
 			}
 			console.groupEnd();
 			this.Destroy();
@@ -291,7 +322,19 @@ export class GameObject extends Entity
 
 	public override get disposable(): boolean
 	{
-		return this._components.length === 0;
+		let output = true;
+
+		if (this._components.length > 0)
+		{
+			output = false;
+		}
+
+		// if (this._children.length > 0)
+		// {
+		// 	output = false;
+		// }
+
+		return output;
 	}
 
 	// This function is a part of the start up of the game loop.
@@ -318,11 +361,6 @@ export class GameObject extends Entity
 	/** This method will be called every frame, the deltaTime is the time that passed since the last frame call. */
 	public override Update(deltaTime: number): void
 	{
-		if (this._parent)
-		{
-			this.isActive = this._parent.isActive;
-		}
-
 		for (const component of this._components)
 		{
 			component.Update(deltaTime);

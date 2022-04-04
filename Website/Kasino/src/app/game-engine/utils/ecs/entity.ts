@@ -80,6 +80,14 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 		{
 			toRemove.Entity = null;
 			this._features.splice(index, 1);
+			if (!this.HasFeature(toRemove.constructor))
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Disposed`, 'color: #32a852;');
+			}
+			else
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Persisted`, 'color: #ff0000;');
+			}
 		}
 	}
 
@@ -100,28 +108,33 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 		return false
 	}
 
-	public Dispose(): void
+	public Dispose(): Promise<void>
 	{
-		new Promise<void>((resolve) =>
+		return new Promise<void>((resolve) =>
 		{
+			console.groupCollapsed(`${this.constructor.name} - Disposal logs`);
 			var interval = setInterval(() =>
 			{
-				console.info(`${this.constructor.name} - Disposable: ${this.disposable}`);
 				if (!this.disposable)
+				{
 					return;
+				}
 
 				resolve();
 				clearInterval(interval);
 
 			}, 100);
-
-			for (const feature of this.Features)
+			
+			for (const feature of this._features)
 			{
 				feature.Dispose();
 			}
+			console.groupEnd();
+			
+			console.error(this._features);
 		}).then(() =>
 		{
-			console.groupCollapsed(`${this.entityId} - Remainders`);
+			console.groupCollapsed(`${this.constructor.name} - Remainders`);
 			for (const property in this)
 			{
 				console.log(property);
@@ -132,7 +145,7 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 
 	public get disposable(): boolean
 	{
-		return this._features.length === 0;
+		return this._features.length <= 0;
 	}
 
 	// This function is a part of the start up of the game loop.

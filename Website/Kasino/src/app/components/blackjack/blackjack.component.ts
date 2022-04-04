@@ -27,7 +27,8 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
   ngOnDestroy(): void
   {
-
+    window.location.reload();
+    //this.game.Dispose().then(() => console.warn("GAME - Disposed"));
   }
 
   ngOnInit(): void
@@ -42,14 +43,14 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
     let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
     this.game.Instantiate(house.gameObject);
-
-    for (const seat of house.seats)
-    {
-      seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
-    }
-
+    
     this.game.BEGIN_GAME().then(() =>
     {
+      for (const seat of house.seats)
+      {
+        seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
+      }
+      
       this.networking.Subscribe("DataChanged", (data) => house.UpdateSeatData(data)).then(() =>
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
@@ -61,8 +62,6 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
 
       this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
-
-      console.log(this.game);
     });
   }
 
@@ -78,6 +77,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     nextState?: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
   {
+    return true;
     console.warn('GAME - Disposed');
     component.networking.Unsubscribe('JoinSeat');
     component.networking.Unsubscribe('DataChanged');

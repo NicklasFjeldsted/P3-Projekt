@@ -1,14 +1,14 @@
 import { GameObject } from "../../gameObject";
 import { IComponent } from "../ecs";
-import { Vector3 } from "../vector3";
+import { Vector2 } from "../vector2";
 
 export class Transform implements IComponent
 {
-	private _position: Vector3 | null;
-	private _rotation: Vector3 | null;
-	private _scale: Vector3 | null;
+	private _position: Vector2 | null;
+	private _rotation: Vector2 | null;
+	private _scale: number | null;
 
-	public get position(): Vector3
+	public get position(): Vector2
 	{
 		if (this._position)
 		{
@@ -16,7 +16,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
 	}
-	public get rotation(): Vector3
+	public get rotation(): Vector2
 	{
 		if (this._rotation)
 		{
@@ -24,7 +24,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
 	}
-	public get scale(): Vector3
+	public get scale(): number
 	{
 		if (this._scale)
 		{
@@ -32,7 +32,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - scale is null!`);
 	}
-	public set position(newPosition: Vector3)
+	public set position(newPosition: Vector2)
 	{
 		if (this._position)
 		{
@@ -41,7 +41,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
 	}
-	public set rotation(newRotation: Vector3)
+	public set rotation(newRotation: Vector2)
 	{
 		if (this._rotation)
 		{
@@ -50,7 +50,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
 	}
-	public set scale(newScale: Vector3)
+	public set scale(newScale: number)
 	{
 		if (this._scale)
 		{
@@ -62,9 +62,9 @@ export class Transform implements IComponent
 
 	constructor()
 	{ 
-		this._position = new Vector3(0, 0, 0);
-		this._rotation = new Vector3(0, 0, 0);
-		this._scale = new Vector3(1, 1, 1);
+		this._position = new Vector2(0, 0);
+		this._rotation = new Vector2(0, 0);
+		this._scale = 1;
 	}
 
 	public gameObject: GameObject;
@@ -93,8 +93,8 @@ export class Transform implements IComponent
 	}
 	
 	/** Translate this Transform's position. */
-	public Translate(value: Vector3)
+	public Translate(value: Vector2)
 	{
-		this.position = new Vector3(this.position.x + value.x, this.position.y + value.y, this.position.z + value.z);
+		this.position = new Vector2(this.position.x + value.x, this.position.y + value.y);
 	}
 }

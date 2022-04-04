@@ -1,5 +1,5 @@
 import { of, Subject } from "rxjs";
-import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
 import { House } from "../house";
 import { Player, PlayerData } from "../player";
 
@@ -26,10 +26,10 @@ export class Seat extends MonoBehaviour
 
 	public Start(): void
 	{
-		this.transform.scale = new Vector3(.1, .1, .1);
+		this.transform.scale = .1;
 		this.collider = this.gameObject.GetComponent(ColliderComponent);
 		this.standButtonCollider.gameObject.transform.Translate(new Vector3(50, 0, 0));
-		this.standButtonCollider.Size = new Vector2(50, 30);
+		this.standButtonCollider.Size = new Vector2(100, 30);
 		this.hitButtonCollider.Size = new Vector2(50, 30);
 		this.house = this.gameObject.parent.GetComponent(House);
 	}
@@ -38,6 +38,7 @@ export class Seat extends MonoBehaviour
 	{
 		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.png'));
 		this.gameObject.AddComponent(new ColliderComponent());
+		//console.log(`${this.gameObject.gameObjectName} - Components: `, this.gameObject.Components);
 		
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		this.gameObject.game.Instantiate(seatText);
@@ -71,13 +72,12 @@ export class Seat extends MonoBehaviour
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
 
-		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
+		this.gameObject.game.GetFeature(GameInputFeature).OnClick!.subscribe(event => this.OnClicked(event));
 	}
 
 	public Update(deltaTime: number): void
 	{
-		// this.standButtonCollider.gameObject.isActive = this.myTurn;
-		// this.hitButtonCollider.gameObject.isActive = this.myTurn;
+
 	}
 
 	public UpdateSeat(data: PlayerData): void
@@ -114,17 +114,29 @@ export class Seat extends MonoBehaviour
 		if (this.hitButtonCollider.Hit(point))
 		{
 			console.log(`${this.gameObject.gameObjectName} hits.`);
+			this.gameObject.game.GetFeature(NetworkingFeature).Send("Hit");
 		}
-
+		
 		if (this.standButtonCollider.Hit(point))
 		{
 			console.log(`${this.gameObject.gameObjectName} stands.`);
+			this.gameObject.game.GetFeature(NetworkingFeature).Send("Stand");
 		}
+	}
+
+	public UpdateIsMyTurn(newValue: boolean)
+	{
+		this.myTurn = newValue;
+
+		this.standButtonCollider.gameObject.isActive = this.myTurn;
+		this.hitButtonCollider.gameObject.isActive = this.myTurn;
 	}
 
 	/** Display the current card value of the player sitting in this seat. */
 	public Display(): void
 	{
+		this.UpdateIsMyTurn(this.myTurn);
+
 		if (!this.Player)
 		{
 			this.childTextComponent.text = ' ';
@@ -144,7 +156,7 @@ export class Seat extends MonoBehaviour
 			this.Player = this.house.client;
 			this.Player.data.seated = true;
 			this.Player.data.seatIndex = this.seatIndex;
-	
+			
 			this.OnSeatJoined.next(this.Player.data);
 			return;
 		}

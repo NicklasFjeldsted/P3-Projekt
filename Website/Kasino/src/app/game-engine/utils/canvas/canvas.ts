@@ -125,7 +125,7 @@ export class Canvas implements IAwake
 		this._context.clearRect(start.x, start.y, size.x, size.y);
 	}
 	/** Clear a rect from the canvas. */
-	public ClearRectV3(start: Vector3, size: Vector2): void
+	public ClearRectV3(start: Vector2, size: Vector2): void
 	{
 		this._context.clearRect(start.x, start.y, size.x, size.y);
 	}
@@ -154,8 +154,8 @@ export class Canvas implements IAwake
 			throw new Error('Image source not specified.');
 		}
 
-		const width = image.naturalHeight * transform.scale.x;
-		const height = image.naturalHeight * transform.scale.y;
+		const width = image.naturalHeight * transform.scale;
+		const height = image.naturalHeight * transform.scale;
 		this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
 		if (color)
 		{
@@ -164,7 +164,7 @@ export class Canvas implements IAwake
 		return new Vector2(width, height);
 	}
 
-	private recolorImage(image: HTMLImageElement, width: number, height: number, position: Vector3, newColor: Color)
+	private recolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color)
 	{
 		// pull the entire image into an array of pixel data
 		var imageData = this._context.getImageData(position.x, position.y, width, height);

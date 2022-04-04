@@ -42,6 +42,7 @@ export class Game extends Entity
 	/** Destroys a GameObject from the game. */
 	public Destroy(gameObject: GameObject): void
 	{
+		gameObject.game = null;
 		this._entities.splice(this._entities.findIndex(e => e.entityId = gameObject.entityId), 1);
 		return;
 
@@ -83,8 +84,7 @@ export class Game extends Entity
 			let networking = this.GetFeature(NetworkingFeature);
 			if (networking)
 			{
-				networking.StopConnection()
-				.then(() =>
+				networking.StopConnection().then(() =>
 				{
 					this.Dispose().then(() =>
 					{
@@ -93,7 +93,7 @@ export class Game extends Entity
 					{
 						resolve(false);
 					});
-				})
+				});
 			}
 			else
 			{
@@ -105,33 +105,46 @@ export class Game extends Entity
 					resolve(false);
 				});
 			}
-		})
+		});
 	}
 
 	public override Dispose(): Promise<void>
 	{
-		return new Promise<void>((resolve, reject) =>
+		return new Promise<void>((resolve) =>
 		{
-			try
+			var interval = setInterval(() =>
 			{
-				console.groupCollapsed("GAME - Disposal Logs")
-				for (let i = 0; i < this.Entities.length; i++)
-				{
-					this._entities[ i ].Dispose();
-					
-					if (i === this._entities.length - 1)
-					{
-						resolve();
-					}
-				}
-				console.groupEnd();
-			}
-			catch (error)
+				if (!this.disposable)
+					return;
+
+				resolve();
+				clearInterval(interval);
+			}, 100);
+
+			console.groupCollapsed("Game Entities - Disposal Logs");
+			for (const entity of this.Entities)
 			{
-				console.error(error);
-				reject();
+				entity.Dispose();
 			}
+			console.groupEnd();
 		});
+	}
+
+	public override get disposable(): boolean
+	{
+		let output = true;
+
+		if (this._entities.length > 0)
+		{
+			output = false;
+		}
+
+		if (this._features.length > 0)
+		{
+			output = false;
+		}
+
+		return output;
 	}
 
 	// Start up the game and get the start time.

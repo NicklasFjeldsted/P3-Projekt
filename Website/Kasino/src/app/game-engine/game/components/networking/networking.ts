@@ -7,7 +7,7 @@ export class NetworkingFeature implements IFeature
 {
 	public Entity: Game;
 
-	public hubConnection: signalR.HubConnection;
+	public hubConnection: signalR.HubConnection | null;
 
 	public async StartConnection(): Promise<void>
 	{
@@ -28,7 +28,11 @@ export class NetworkingFeature implements IFeature
   
 	public SendData(func: string, data: string): void
 	{
-	  this.hubConnection.send(func, data);
+	  this.hubConnection!.send(func, data);
+	}
+	public Send(func: string): void
+	{
+	  this.hubConnection!.send(func);
 	}
   
 	public GetData(func: string): void
@@ -49,7 +53,7 @@ export class NetworkingFeature implements IFeature
 	{
 		return await new Promise((resolve) =>
 		{
-			this.hubConnection.off(func);
+			this.hubConnection!.off(func);
 			resolve();
 		});
 	}
@@ -82,6 +86,8 @@ export class NetworkingFeature implements IFeature
 
 	Dispose(): void
 	{
-		//this.Entity.RemoveFeature(NetworkingFeature);
+		console.error(`${this.constructor.name} - Disposed`);
+		this.hubConnection = null;
+		this.Entity.RemoveFeature(NetworkingFeature);
 	}
 }
