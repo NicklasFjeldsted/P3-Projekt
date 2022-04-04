@@ -1,20 +1,24 @@
-:host() {
+:host() 
+{
 	height: 300px;
 	width: 100vw;
 }
 
 
-.footer {
+.footer 
+{
 	height: auto;
 	width: 100%;
 	box-shadow: 0 -.25pc 1pc rgba(0,0,0,.4);
-  	background-color: rgb(29, 29, 29);
-  	color: white;
-  	display:flex;
+  background-color: rgb(29, 29, 29);
+  color: white;
+  display:flex;
 	align-items: center;
+  min-width: 1525px;
 }
 
-.footer-icons {
+.footer-icons 
+{
 	width: 15%;
 	display: flex;
 	align-items: center;
@@ -24,7 +28,8 @@
 	overflow: hidden;
 }
 
-.footer-icons > a {
+.footer-icons > a 
+{
 	max-width: 100px;
 	min-width: 50px;
 	max-height: 100px;
@@ -35,12 +40,14 @@
 	left: 50px;
 }
 
-.footer-icons > a > img {
+.footer-icons > a > img 
+{
 	width: 100%;
 	height: auto;
 }
 
-.footer-text {
+.footer-text 
+{
   width: 75%;
   color: gray;
   padding: 2.5em;
