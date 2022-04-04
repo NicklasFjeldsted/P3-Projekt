@@ -9,6 +9,7 @@ import { UdbetalComponent } from '../modals/udbetal/udbetal.component';
 import { DialogService } from '../modals/dialog.service';
 import { LogoutComponent } from '../modals/logout/logout.component';
 import { DeaktiverComponent } from '../modals/deaktiver/deaktiver.component';
+import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel } from '@angular/forms';
 
 
 @Component({
@@ -20,9 +21,14 @@ export class KontoComponent implements OnInit {
 
   accountInfo: AccountInfo;
   currentBalance: number | null;
+  currentLimit: number | null;
   accountId: number | null;
+  depositForm: FormGroup = new FormGroup({
+    depositLimit: new FormControl()
+  });
+  kontoSite: number = 1;
 
-  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, private dialog: DialogService) {
+  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, private dialog: DialogService, private formBuilder: FormBuilder) {
     this.accountInfo = {
       email: '',
       phoneNumber: 0,
@@ -35,6 +41,14 @@ export class KontoComponent implements OnInit {
   ngOnInit(): void {
     this.showAccountInfo();
     this.getBalance();
+
+    this.depositForm = this.formBuilder.group({
+      depositLimit: new FormControl(2500)
+    });
+  }
+
+  get f(): { [key: string]: AbstractControl } {
+    return this.depositForm.controls;
   }
 
 
@@ -54,11 +68,38 @@ export class KontoComponent implements OnInit {
       next: (userBalance) => {
         this.currentBalance = userBalance.balance;
         this.accountId = userBalance.customerID;
+        this.currentLimit = userBalance.depositLimit;
+        this.f['depositLimit'].patchValue(userBalance.depositLimit);
       },
       error: (error) => {
         console.log(error)
       }
     })
+  }
+
+  // Checks if user presses letters instead of digits
+  keyPressNumbers(event: any) {
+    var charCode = (event.which) ? event.which : event.keyCode;
+    // Only Numbers 0-9
+    if ((charCode < 48 || charCode > 57)) {
+      event.preventDefault();
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  updateAmount(value: number | null, addOrSub: boolean): void {
+    if(addOrSub) {
+      this.f['depositLimit'].patchValue(this.f['depositLimit'].value + value);
+      return
+    }
+    this.f['depositLimit'].patchValue(this.f['depositLimit'].value - value!);
+    return
+  }
+
+  changeSite(site: number) {
+    this.kontoSite = site;
   }
 
   openIndbetal() {

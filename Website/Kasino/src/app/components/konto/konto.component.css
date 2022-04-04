@@ -9,17 +9,32 @@
   height: 100%;
   width: calc((100% - 695px) / 2 );
   top: 0;
-  background-color: red;
 }
 
 .sidenav {
   position: absolute;
-  width: 200px;
+  max-width: 160px;
   height: 100%;
-  padding-top: 103px;
-  background-color: grey;
+  padding-top: 140px;
   right: 0;
 
+}
+
+.sidenav-content {
+  display: grid;
+  gap: 1em;
+  width: 100%;
+  list-style: none;
+  text-align: right;
+}
+
+.sidenav-content > a {
+  text-align: right;
+  cursor: pointer;
+}
+
+.sidenav-content > a > li {
+  padding-right: 1.5em;
 }
 
 .form-control {
@@ -270,4 +285,110 @@
 
 .bottom-buttons > #deaktiver:hover {
   box-shadow: 1px 1px 15px -5px #e78553;
+}
+
+.deposit-limit {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.current-limit {
+  width: 100%;
+}
+
+.current-limit > h3 {
+  width: 100%;
+  text-align: left;
+  position: relative;
+  margin: 0;
+}
+
+.current-limit > h3 > span {
+  position: absolute;
+  right: 0;
+}
+
+.set-limit {
+  width: 100%;
+  height: 50%;
+  display: grid;
+  gap: 87.5px;
+  grid-template-columns: 50px 300px 50px;
+  align-items: center;
+}
+
+.set-limit > div {
+  height: 35%;
+  text-align: center;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.limit > input {
+  text-align: center;
+  border: 1px solid #838383;
+  width: 100%;
+  font-size: 1.5rem;
+  border-radius: 3px;
+  padding: 16px;
+}
+
+
+.set-limit > div > button {
+  border-radius: 50%;
+  background-color: #015536;
+  border: none;
+  align-items: center;
+  outline: 0;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: all .3s ease 0s;
+}
+
+.set-limit > div > button:hover {
+  background-color: #01784c;
+}
+
+.set-limit > div > button > i {
+  font-size: 40px;
+  filter: invert(93%) sepia(0%) saturate(7465%) hue-rotate(57deg) brightness(107%) contrast(110%);
+}
+
+.limit > input:focus {
+  outline: 0;
+}
+
+.submit-limit {
+  width: 100%;
+  height: 50px;
+  flex-shrink: 0;
+}
+
+.submit-limit > button {
+  width: 100%;
+  height: 100%;
+  border-radius: 50px;
+  background-color: #F08000;
+  cursor: pointer;
+  font-size: .875rem;
+  border: none;
+}
+
+.submit-limit > button:hover {
+  box-shadow: 1px 1px 15px -2px #e78553;
+}
+
+.divider {
+  width: 100%;
+  height: 7px;
+  background-color: #d8d8d8;
+}
+
+.is-selected {
+  color: #00a34a;
 }
