@@ -41,7 +41,6 @@ export class AuthenticationService
         localStorage.setItem(USER, JSON.stringify(user.id));
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
-        Broadcast.Instance.onBalanceChange.next();
         return user;
       }));
   }
@@ -60,7 +59,7 @@ export class AuthenticationService
       .pipe(map(user => {
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
-        Broadcast.Instance.onBalanceChange.next();
+        Broadcast.Instance.onBalanceChange.next(user);
         return user;
       }));
   }

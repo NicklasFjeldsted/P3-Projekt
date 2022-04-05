@@ -10,6 +10,7 @@ import { DialogService } from '../modals/dialog.service';
 import { LogoutComponent } from '../modals/logout/logout.component';
 import { DeaktiverComponent } from '../modals/deaktiver/deaktiver.component';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel } from '@angular/forms';
+import { BalanceService } from 'src/app/services/balance.service';
 
 
 @Component({
@@ -26,9 +27,10 @@ export class KontoComponent implements OnInit {
   depositForm: FormGroup = new FormGroup({
     depositLimit: new FormControl()
   });
+
   kontoSite: number = 1;
 
-  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, private dialog: DialogService, private formBuilder: FormBuilder) {
+  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, public balanceService: BalanceService, private dialog: DialogService, private formBuilder: FormBuilder) {
     this.accountInfo = {
       email: '',
       phoneNumber: 0,
@@ -73,8 +75,7 @@ export class KontoComponent implements OnInit {
       },
       error: (error) => {
         console.log(error)
-      }
-    })
+      }})
   }
 
   // Checks if user presses letters instead of digits
@@ -91,12 +92,22 @@ export class KontoComponent implements OnInit {
 
   updateAmount(value: number | null, addOrSub: boolean): void {
     if(addOrSub) {
-      this.f['depositLimit'].patchValue(this.f['depositLimit'].value + value);
-      return
+      return this.f['depositLimit'].patchValue(this.f['depositLimit'].value + value);
     }
-    this.f['depositLimit'].patchValue(this.f['depositLimit'].value - value!);
-    return
+    return this.f['depositLimit'].patchValue(this.f['depositLimit'].value - value!);
   }
+
+  updateDepositLimit(): void {
+    this.balanceService.updateDeposit(this.f['depositLimit'].value).subscribe({
+      next: (message) => {
+        console.log(message);
+      },
+      error: (error) => {
+        console.log('error' + error);
+      }
+    })
+  }
+
 
   changeSite(site: number) {
     this.kontoSite = site;

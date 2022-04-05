@@ -88,6 +88,7 @@ export class UdbetalComponent implements OnInit {
       next: (message) => {
         console.log(message);
         this.close();
+        Broadcast.Instance.onBalanceChange.next(this.f['amount']?.value);
         this.getBalance();
       },
       error: (error) => {

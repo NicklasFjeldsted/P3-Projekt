@@ -52,17 +52,16 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("update"), Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Update(int customerID, [FromBody] BalanceUpdateRequest model)
+        [HttpPut("update"), Authorize(Roles = "Customer")]
+        public async Task<IActionResult> Update([FromBody] BalanceUpdateRequest model)
         {
             // Validate the input.
             if (!ModelState.IsValid)
             {
                 return BadRequest("Invalid Model:" + model);
             }
-
             // Update the account balance
-            await _balanceService.UpdateAsync(customerID, model);
+            await _balanceService.UpdateAsync(model.CustomerID, model);
 
             // Return -> Code 200 and "Account balance was updated successfully."
             return Ok(new { message = "Account balance was updated successfully." });

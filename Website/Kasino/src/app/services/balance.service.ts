@@ -23,4 +23,9 @@ export class BalanceService {
     this.balance = {customerID: id, amount: money};
     return this.http.put<any>(`${environment.apiURL}/balance/subtract-balance`, this.balance, {withCredentials: true})
   }
+
+  public updateDeposit(depositLimit: number): Observable<any> {
+    var customerID = JSON.parse(localStorage.getItem(USER)!);
+    return this.http.put<any>(`${environment.apiURL}/balance/update`, {customerID, depositLimit}, {withCredentials: true})
+  }
 }
