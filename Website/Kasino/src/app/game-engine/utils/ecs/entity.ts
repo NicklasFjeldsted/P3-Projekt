@@ -1,19 +1,18 @@
 import { Guid } from '../guid';
-import { IUpdate, IAwake, IStart } from '../lifecycle';
+import { IUpdate, IAwake, IStart, IDisposable } from '../lifecycle';
 import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
 // This Type basicly is this "thing" must be a function AND has to extend <T>
 type AbstractFeature<T> = Function & { prototype: T; };
-
 type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
 
-export abstract class Entity implements IUpdate, IAwake, IStart
+export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 {
 	/** This is a unique identifier for this Entity. */
 	public entityId: string;
 
-	constructor(){ this.entityId = Guid.newGuid() }
+	constructor() { this.entityId = Guid.newGuid(); }
 
 	// Create a protected array of IFeature.
 	/** This is the entire array of features associated with this entity. */
@@ -28,6 +27,7 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 	/** Add a new feature to this entity. */
 	public AddFeature(feature: IFeature): void
 	{
+		feature.Entity = this;
 		this._features.push(feature);
 	}
 
@@ -80,6 +80,14 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 		{
 			toRemove.Entity = null;
 			this._features.splice(index, 1);
+			if (!this.HasFeature(toRemove.constructor))
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Disposed`, 'color: #32a852;');
+			}
+			else
+			{
+				console.log(`%c${toRemove.constructor.name}: ${toRemove.constructor.prototype} - Persisted`, 'color: #ff0000;');
+			}
 		}
 	}
 
@@ -100,6 +108,46 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 		return false
 	}
 
+	public Dispose(): Promise<void>
+	{
+		return new Promise<void>((resolve) =>
+		{
+			console.groupCollapsed(`${this.constructor.name} - Disposal logs`);
+			var interval = setInterval(() =>
+			{
+				if (!this.disposable)
+				{
+					return;
+				}
+
+				resolve();
+				clearInterval(interval);
+
+			}, 100);
+			
+			for (const feature of this._features)
+			{
+				feature.Dispose();
+			}
+			console.groupEnd();
+			
+			console.error(this._features);
+		}).then(() =>
+		{
+			console.groupCollapsed(`${this.constructor.name} - Remainders`);
+			for (const property in this)
+			{
+				console.log(property);
+			}
+			console.groupEnd();
+		});
+	}
+
+	public get disposable(): boolean
+	{
+		return this._features.length <= 0;
+	}
+
 	// This function is a part of the start up of the game loop.
 	// This entity will also call the Awake function of all the features in this entities feature array.
 	/** This is the first call made to this entity when the game compiles. */
@@ -113,7 +161,10 @@ export abstract class Entity implements IUpdate, IAwake, IStart
 
 	public Start(): void
 	{
-		
+		for (const feature of this._features)
+		{
+			feature.Start();
+		}
 	}
 
 	// This function is a part of the game loop and will be called everyframe.

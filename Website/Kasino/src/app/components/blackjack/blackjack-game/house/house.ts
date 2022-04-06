@@ -1,22 +1,12 @@
 import { Subject } from "rxjs";
 import { GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
+import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
 
 export class House extends MonoBehaviour
 {
-	private static _instance: House;
-	public static get Instance()
-	{
-		if (!House._instance)
-		{
-			House._instance = new House();
-		}
-
-		return House._instance;
-	}
-
 	public seats: Seat[] = [];
 	public get OccupiedSeats(): Seat[]
 	{
@@ -32,8 +22,8 @@ export class House extends MonoBehaviour
 	}
 
 
-	private IsPlaying: boolean;
-	private SeatTurn: number;
+	private IsPlaying: boolean = false;
+	private SeatTurn: number = -1;
 
 	private childText: TextComponent;
 	private houseCards: Card[] = [];
@@ -47,16 +37,14 @@ export class House extends MonoBehaviour
 		return output;
 	}
 
-	public _localPlayer: Player;
-
-	constructor()
+	private _client: Player | null = null;
+	public get client(): Player
 	{
-		super();
-		this.CreateSeat(1, new Vector3(0, 500, 0));
-		for (let i = 1; i < 9; i++)
+		if (this._client)
 		{
-			this.CreateSeat(i+1, new Vector3(i * 107, 500, 0));
+			return this._client;
 		}
+		throw new Error(`${this.gameObject.gameObjectName} > ${this.constructor.name} - player is null!`);
 	}
 
 	public static OnDeal: Subject<number> = new Subject<number>();
@@ -68,71 +56,113 @@ export class House extends MonoBehaviour
 
 	Awake(): void
 	{
+		this.CreateSeat(1, new Vector3(0, 500, 0));
+		for (let i = 1; i < 9; i++)
+		{
+			this.CreateSeat(i+1, new Vector3(i * 107, 500, 0));
+		}
+
 		let cardChild = new GameObject('House Cards');
+		this.gameObject.game.Instantiate(cardChild);
+
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
+
 		cardChild.transform.Translate(new Vector3(450, 50, 0));
 		cardChild.SetParent(this.gameObject);
+
 		this.childText.text = ' ';
 	}
 	
 	Update(deltaTime: number): void
 	{
-
-	}
-
-	public SyncPlaying(data: string): void
-	{
-		this.IsPlaying = JSON.parse(data).IsPlaying;
-	}
-
-	public SyncTurn(data: string): void
-	{
-		this.SeatTurn = JSON.parse(data).SeatTurnIndex;
-	}
-
-	public UpdateSeats(playerDataString: string)
-	{
-		// The changes that happen to seats with a key of the connection id.
-		var playerData: PlayerData[] = JSON.parse(playerDataString);
-		for (const key in playerData)
+		if (this.IsPlaying)
 		{
-			if (playerData.hasOwnProperty(key))
+			for (const seat of this.seats)
 			{
-				for (const seat of this.seats)
+				seat.UpdateIsMyTurn(false);
+
+				if (this.SeatTurn === seat.seatIndex)
 				{
-					if (seat.seatIndex === playerData[ key ].seatIndex)
-					{
-						seat.UpdateSeat(playerData[ key ]);
-					}
-
-					if (seat.seatIndex != playerData[key].seatIndex)
-					{
-						seat.ResetSeat();
-					}
-
-					if (!this._localPlayer)
-					{
-						if (seat.Occupied)
-						{
-							seat.gameObject.isActive = false;
-						}
-					}
-					else
-					{
-						if (seat.Occupied)
-						{
-							seat.gameObject.isActive = true;
-						}
-					}
+					seat.UpdateIsMyTurn(true);
 				}
 			}
 		}
 	}
 
+	public override Dispose(): void
+	{
+		this.seats.splice(0, this.seats.length);
+		this._client = null;
+		this.gameObject.RemoveComponent(House);
+	}
+
+	public SyncPlaying(data: string): void
+	{
+		this.IsPlaying = JSON.parse(data);
+	}
+	
+	public SyncTurn(data: string): void
+	{
+		this.SeatTurn = JSON.parse(data);
+	}
+
+	public UpdateSeatData(playerDataString: string)
+	{
+		// Convert the incoming playerDataJsonString to a Json Object and Index it by the connection id.
+		var playerData: PlayerData[] = JSON.parse(playerDataString);
+
+		for (const key in playerData)
+		{
+			for (const seat of this.seats)
+			{
+				this.ShouldReset(playerData, seat).then((result) =>
+				{
+					if (result)
+					{
+						seat.ResetSeat();
+					}
+					else if (!result && seat.seatIndex === playerData[ key ].seatIndex)
+					{
+						seat.UpdateSeat(playerData[key]);
+					}
+				})
+				.finally(() =>
+				{
+					seat.Display();
+				});
+			}
+		}
+	}
+
+	private async ShouldReset(data: PlayerData[], seat: Seat): Promise<boolean>
+	{
+		return await new Promise<boolean>((resolve) =>
+		{
+			for (const key in data)
+			{
+				if (seat.seatIndex == data[ key ].seatIndex)
+				{
+					return resolve(false);
+				}
+			}
+			return resolve(true);
+		});
+	}
+
+	public CreateClient(user: IUser)
+	{
+		this._client = new Player();
+		this.client.data.email = user.email;
+		this.client.data.fullName = user.fullName;
+		Player.OnDataChanged.next(this.client.data);
+	}
+
 	private CreateSeat(id: number, position: Vector3): GameObject
 	{
 		let seat: GameObject = new GameObject(`Seat - ${id}`);
+		this.gameObject.game.Instantiate(seat);
+		seat.SetParent(this.gameObject);
 		seat.AddComponent(new Seat());
 		seat.GetComponent(Seat).seatIndex = id;
 		seat.transform.position = position;
@@ -140,9 +170,27 @@ export class House extends MonoBehaviour
 		return seat;
 	}
 
+	/** This functions checks if the house already holds that card. */
+	public IsDuplicate(card: Card): boolean
+	{
+		for (const hcard of this.houseCards)
+		{
+			if (card.id === hcard.id)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public HouseCards(data: string): void
 	{
-		this.houseCards.push(JSON.parse(data));
+		let parsedData: any[] = JSON.parse(data);
+		this.houseCards = [];
+		for (const key in parsedData)
+		{
+			this.houseCards.push(parsedData[key]);
+		}
 		this.childText.text = this.HeldValue.toString();
 	}
 

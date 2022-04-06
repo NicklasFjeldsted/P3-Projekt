@@ -7,11 +7,11 @@ export class TextComponent implements IComponent
 {
 	public gameObject: GameObject;
 
-	public text: string = "Empty Text";
+	public text: string;
 
 	constructor(private startText?: string)
 	{
-		startText ? this.text = startText : null
+		this.text = startText ? startText : "Empty Text";
 	}
 
 	Start(): void
@@ -30,6 +30,12 @@ export class TextComponent implements IComponent
 		this.Draw();
 	}
 
+	Dispose(): void
+	{
+		console.log(`${this.constructor.name} - Disposal`);
+		this.gameObject.RemoveComponent(TextComponent);
+	}
+
 	/** Draw Text to the canvas. */
 	private Draw(): void
 	{
@@ -37,7 +43,7 @@ export class TextComponent implements IComponent
 		{
 			return;
 		}
-		
+
 		let cachedWidth: TextMetrics = CanvasLayer.UI.DrawText(this.text, this.gameObject.transform);
 		this.gameObject.Size = new Vector2(cachedWidth.width, 30);
 	}

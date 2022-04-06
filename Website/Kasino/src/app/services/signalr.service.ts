@@ -31,11 +31,6 @@ export class SignalrService
     }
   }
 
-  public OnDisconnect()
-  {
-    this.hubConnection
-  }
-
   public GetUser(): Observable<IUser>
   {
     return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");

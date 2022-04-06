@@ -106,7 +106,12 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 builder.Services.AddScoped<IDataService, DataService>();
-builder.Services.AddSingleton<IUserIdProvider, IdBasedUserIdProvider>();
+
+builder.WebHost.ConfigureLogging(logging =>
+{
+	logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
+	logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
+});
 
 // Build the web application
 WebApplication app = builder.Build();

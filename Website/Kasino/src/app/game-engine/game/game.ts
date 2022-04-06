@@ -2,19 +2,11 @@ import { GameObject } from '../gameObject';
 import { Entity, Vector3 } from '../utils';
 import { NetworkingFeature } from './components';
 
+type AbstractFeature<T> = Function & { prototype: T; };
+type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
+
 export class Game extends Entity
 {
-	private static _instance: Game;
-	public static get Instance(): Game
-	{
-		if (!Game._instance)
-		{
-			Game._instance = new Game();
-		}
-
-		return Game._instance;
-	}
-
 	private _entities: Entity[] = [];
 
 	public get Entities(): Entity[]
@@ -22,29 +14,37 @@ export class Game extends Entity
 		return this._entities;
 	}
 
-	private _lastTimestamp = 0;
+	private _lastTimestamp: number = 0;
+	private _break: boolean = false;
 
 	/** Instantiates a GameObject in the game. */
-	public Instantiate(gameObject: GameObject, position?: Vector3): void
+	public Instantiate(gameObject: GameObject): void
 	{
-		if (position)
+		gameObject.game = this;
+		this._entities.push(gameObject);
+	}
+
+	/** Remove a Entity from this game. */
+	public RemoveEntity<C extends Entity>(constr: constr<C>): void
+	{
+		for (let i = 0; i < this._entities.length; i++)
 		{
-			gameObject.transform.position = position;
+			const entity = this._entities[ i ];
+
+			if (entity instanceof constr)
+			{
+				this._entities.splice(i, 1);
+				return;
+			}
 		}
-		this.Entities.push(gameObject);
 	}
 
 	/** Destroys a GameObject from the game. */
 	public Destroy(gameObject: GameObject): void
 	{
-		for (let i = 0; i < this.Entities.length; i++)
-		{
-			if (this.Entities[i].entityId === gameObject.entityId)
-			{
-				this.Entities.splice(i, 1);
-				return;
-			}
-		}
+		gameObject.game = null;
+		this._entities.splice(this._entities.findIndex(e => e.entityId = gameObject.entityId), 1);
+		return;
 
 		throw new Error(`Could not find ${gameObject.gameObjectName} on this ${this.entityId} entity.`);
 	}
@@ -52,8 +52,9 @@ export class Game extends Entity
 	/** This is how the game is started up, it will run the functions to begin the game loop and initialization. */
 	public BEGIN_GAME(): Promise<void>
 	{
-		return new Promise((resolve, reject) =>
+		return new Promise((resolve) =>
 		{
+			this._break = false;
 			let networking = this.GetFeature(NetworkingFeature);
 			if (networking)
 			{
@@ -73,6 +74,77 @@ export class Game extends Entity
 				resolve();
 			}
 		});
+	}
+
+	public END_GAME(): Promise<boolean>
+	{
+		return new Promise((resolve) =>
+		{
+			this._break = true;
+			let networking = this.GetFeature(NetworkingFeature);
+			if (networking)
+			{
+				networking.StopConnection().then(() =>
+				{
+					this.Dispose().then(() =>
+					{
+						resolve(true);
+					}).catch(() =>
+					{
+						resolve(false);
+					});
+				});
+			}
+			else
+			{
+				this.Dispose().then(() =>
+				{
+					resolve(true);
+				}).catch(() =>
+				{
+					resolve(false);
+				});
+			}
+		});
+	}
+
+	public override Dispose(): Promise<void>
+	{
+		return new Promise<void>((resolve) =>
+		{
+			var interval = setInterval(() =>
+			{
+				if (!this.disposable)
+					return;
+
+				resolve();
+				clearInterval(interval);
+			}, 100);
+
+			console.groupCollapsed("Game Entities - Disposal Logs");
+			for (const entity of this.Entities)
+			{
+				entity.Dispose();
+			}
+			console.groupEnd();
+		});
+	}
+
+	public override get disposable(): boolean
+	{
+		let output = true;
+
+		if (this._entities.length > 0)
+		{
+			output = false;
+		}
+
+		if (this._features.length > 0)
+		{
+			output = false;
+		}
+
+		return output;
 	}
 
 	// Start up the game and get the start time.
@@ -117,6 +189,12 @@ export class Game extends Entity
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
+		if (this._break)
+		{
+			console.warn("GAME - Loop stopped");
+			return;
+		}
+
 		// deltaTime will look something like 0.283192 milliseconds
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 

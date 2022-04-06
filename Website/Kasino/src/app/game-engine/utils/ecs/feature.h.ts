@@ -1,7 +1,7 @@
-import { IAwake, IStart, IUpdate } from "../lifecycle";
+import { IAwake, IDisposable, IStart, IUpdate } from "../lifecycle";
 import { Entity } from "./entity";
 
-export interface IFeature extends IAwake, IUpdate, IStart
+export interface IFeature extends IAwake, IUpdate, IStart, IDisposable
 {
 	Entity: Entity | null;
 }

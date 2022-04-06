@@ -12,3 +12,5 @@ export * from './guid';
 export * from './mono';
 export * from './sprite';
 export * from './collider';
+export * from './beforeunload';
+export * from './logging';

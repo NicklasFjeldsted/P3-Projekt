@@ -56,8 +56,8 @@ export class CanvasLayer
 	/** Create a new canvas. */
 	private static InitCanvas(style: Partial<CSSStyleDeclaration>): Canvas
 	{
-		const size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
-		const canvas = new Canvas(new Vector2(960, 600));
+		let size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
+		let canvas = new Canvas(new Vector2(960, 600));
 
 		canvas.Awake();
 		canvas.SetStyle(style);

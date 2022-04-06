@@ -1,6 +1,10 @@
-import { Component, Injectable, OnInit } from '@angular/core';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
-import { AuthenticationGuard } from 'src/app/services/authentication-guard.service';
+import { HttpClient } from '@angular/common/http';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature } from 'src/app/game-engine';
+import { IUser } from 'src/app/interfaces/User';
+import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
@@ -11,41 +15,76 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 @Injectable({ providedIn: 'root' })
 
-export class BlackjackComponent implements OnInit
+export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
-  constructor(private authenticationGuard: AuthenticationGuard) { }
- 
+  constructor(private http: HttpClient)
+  { 
+
+  }
+
   private networking: NetworkingFeature;
+  private game: Game;
+
+  ngOnDestroy(): void
+  {
+    window.location.reload();
+    //this.game.Dispose().then(() => console.warn("GAME - Disposed"));
+  }
 
   ngOnInit(): void
   {
-    const game: Game = Game.Instance;
+    this.game = new Game();
     
-    game.AddFeature(new BackgroundFeature());
-    game.AddFeature(new GameInputFeature());
-    game.AddFeature(new NetworkingFeature());
+    this.game.AddFeature(new BackgroundFeature());
+    this.game.AddFeature(new GameInputFeature());
+    this.game.AddFeature(new NetworkingFeature());
 
-    this.networking = game.GetFeature(NetworkingFeature);
+    this.networking = this.game.GetFeature(NetworkingFeature);
 
-    const house: GameObject = new GameObject('House');
-    house.AddComponent(House.Instance);
+    let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
+    this.game.Instantiate(house.gameObject);
 
-    for (const seat of House.Instance.seats)
+    this.game.BEGIN_GAME().then(() =>
     {
-      seat.OnSeatJoined.subscribe((player: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(player)));
-    }
-
-    game.BEGIN_GAME().then(() =>
-    {
-      this.networking.Subscribe("SeatsChanged", (data) => House.Instance.UpdateSeats(data)).then(() =>
+      for (const seat of house.seats)
       {
-        this.networking.GetData("GetData");
+        seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
+      }
+      
+      this.networking.Subscribe("DataChanged", (data) => house.UpdateSeatData(data)).then(() =>
+      {
+        Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
+
+        this.GetUser().subscribe((user) => house.CreateClient(user));
       });
+      
+      this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
+      this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
 
-      this.networking.Subscribe("SyncTurn", (data) => House.Instance.SyncTurn(data));
-      this.networking.Subscribe("SyncPlaying", (data) => House.Instance.SyncPlaying(data));
-
-      this.networking.Subscribe("HouseCards", (data) => House.Instance.HouseCards(data));
+      this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
     });
+  }
+
+  public GetUser(): Observable<IUser>
+  {
+    return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
+  }
+
+  public canDeactivate(
+    component: BlackjackComponent,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
+  {
+    component.networking.Unsubscribe('JoinSeat');
+    component.networking.Unsubscribe('DataChanged');
+    component.networking.Unsubscribe('UpdatePlayerData');
+    component.networking.Unsubscribe('SyncTurn');
+    component.networking.Unsubscribe('SyncPlaying');
+    component.networking.Unsubscribe('HouseCards');
+    component.networking.StopConnection();
+    console.warn('GAME - Disposed');
+    return component.game.END_GAME();
   }
 }

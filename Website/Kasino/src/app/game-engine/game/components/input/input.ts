@@ -1,11 +1,11 @@
 import { Subject } from "rxjs";
-import { CanvasLayer, Vector2, OnclickComponent, IFeature } from "src/app/game-engine/utils";
+import { CanvasLayer, Vector2, IFeature } from "src/app/game-engine/utils";
 import { Game } from "../..";
 
 export class GameInputFeature implements IFeature
 {
 	public Entity: Game;
-	public static OnClick: Subject<Vector2> = new Subject<Vector2>();
+	public OnClick: Subject<Vector2> | null = new Subject<Vector2>();
 
 	Awake(): void
 	{
@@ -22,6 +22,12 @@ export class GameInputFeature implements IFeature
 
 	}
 
+	Dispose(): void
+	{
+		this.OnClick = null;
+		this.Entity.RemoveFeature(GameInputFeature);
+	}
+
 	private HandleClick(event: MouseEvent): void
 	{
 		const point: Vector2 | null = CanvasLayer.Background.CalculateLocalPointFrom(new Vector2(event.clientX, event.clientY));
@@ -30,7 +36,7 @@ export class GameInputFeature implements IFeature
 			return;
 		}
 
-		GameInputFeature.OnClick.next(point);
+		this.OnClick!.next(point);
 	}
 	
 }

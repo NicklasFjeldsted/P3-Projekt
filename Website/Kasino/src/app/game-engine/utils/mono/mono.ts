@@ -8,7 +8,7 @@ export abstract class MonoBehaviour implements IComponent
 
 	public get transform(): Transform
 	{
-		return this.gameObject.transform;
+		return this.gameObject!.transform;
 	}
 
 	public abstract Start(): void;
@@ -17,4 +17,22 @@ export abstract class MonoBehaviour implements IComponent
 
 	public abstract Update(deltaTime: number): void;
 
+	public Dispose(): void
+	{
+		console.groupCollapsed(`${this.constructor.name} - References`);
+		for (const [key, value] of Object.entries(this))
+		{
+			console.groupCollapsed(`%c${key}`, 'color: #ff8400;');
+			console.log(value);
+			console.groupEnd();
+		}
+		console.groupEnd();
+
+		for (const property in this)
+		{
+			delete this[property];
+		}
+
+		this.gameObject.RemoveComponent(MonoBehaviour);
+	}
 }
