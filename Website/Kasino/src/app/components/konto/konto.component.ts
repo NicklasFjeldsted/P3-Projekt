@@ -101,6 +101,8 @@ export class KontoComponent implements OnInit {
     this.balanceService.updateDeposit(this.f['depositLimit'].value).subscribe({
       next: (message) => {
         console.log(message);
+        alert("Din indbetalingsgrænse er blvet opdateret");
+        window.location.reload();
       },
       error: (error) => {
         console.log('error' + error);
