@@ -30,6 +30,7 @@ import { VelkomstbonusserComponent } from './components/helpcenter-components/ve
 import { IndbetalComponent } from './components/modals/indbetal/indbetal.component';
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 import { AngularMaterialModuleModule } from './modules/angular-material-module/angular-material-module.module';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -54,6 +55,7 @@ import { AngularMaterialModuleModule } from './modules/angular-material-module/a
     VelkomstbonusserComponent,
     IndbetalComponent,
     UdbetalComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

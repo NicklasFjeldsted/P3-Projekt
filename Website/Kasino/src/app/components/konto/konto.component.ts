@@ -27,8 +27,9 @@ export class KontoComponent implements OnInit {
   depositForm: FormGroup = new FormGroup({
     depositLimit: new FormControl()
   });
-
   kontoSite: number = 1;
+
+  hasUpdateLimit: boolean = false;
 
   constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, public balanceService: BalanceService, private dialog: DialogService, private formBuilder: FormBuilder) {
     this.accountInfo = {
@@ -85,7 +86,8 @@ export class KontoComponent implements OnInit {
     if ((charCode < 48 || charCode > 57)) {
       event.preventDefault();
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }
@@ -101,15 +103,14 @@ export class KontoComponent implements OnInit {
     this.balanceService.updateDeposit(this.f['depositLimit'].value).subscribe({
       next: (message) => {
         console.log(message);
-        alert("Din indbetalingsgrænse er blvet opdateret");
-        window.location.reload();
+        this.getBalance();
+        this.hasUpdateLimit = true;
       },
       error: (error) => {
         console.log('error' + error);
       }
     })
   }
-
 
   changeSite(site: number) {
     this.kontoSite = site;

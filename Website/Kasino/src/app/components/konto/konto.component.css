@@ -392,3 +392,8 @@
 .is-selected {
   color: #00a34a;
 }
+
+.invalid-feedback {
+  text-align: center;
+  font-size: 1em;
+}

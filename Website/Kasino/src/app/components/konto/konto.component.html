@@ -83,6 +83,20 @@
   </div>
 </form>
 
+<form id="deposit" method="get" class="form-control h-center"  *ngIf="kontoSite == 2">
+  <div class="column flow-down main">
+    <div class="form-header">
+      <h1>Transatkionshistorik</h1>
+    </div>
+    <div class="form-body">
+      <div class="customer-title">
+        <h2>{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</h2>
+        <p>Konto-id: {{this.accountId}} </p>
+      </div>
+    </div>
+  </div>
+</form>
+
 <form id="deposit" method="get" class="form-control h-center" [formGroup]="depositForm" *ngIf="kontoSite == 3">
   <div class="column flow-down main">
     <div class="form-header">
@@ -111,7 +125,7 @@
         </div>
       </div>
       <div class="submit-limit">
-        <button [disabled]="f['depositLimit'].value < 1000" (click)="updateDepositLimit()">Ændrer din indbetalingsgrænse til {{f['depositLimit'].value}} kr</button>
+        <button [disabled]="f['depositLimit'].value < 1000 || hasUpdateLimit == true" (click)="updateDepositLimit()">Ændrer din indbetalingsgrænse til {{f['depositLimit'].value}} kr</button>
       </div>
     </div>
   </div>
