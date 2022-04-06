@@ -1,5 +1,5 @@
-import { of, Subject } from "rxjs";
-import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { Subject } from "rxjs";
+import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
 import { House } from "../house";
 import { Player, PlayerData } from "../player";
 
@@ -111,15 +111,18 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
+		if (this.house.client != this.Player)
+		{
+			return;
+		}
+
 		if (this.hitButtonCollider.Hit(point))
 		{
-			console.log(`${this.gameObject.gameObjectName} hits.`);
 			this.gameObject.game.GetFeature(NetworkingFeature).Send("Hit");
 		}
 		
 		if (this.standButtonCollider.Hit(point))
 		{
-			console.log(`${this.gameObject.gameObjectName} stands.`);
 			this.gameObject.game.GetFeature(NetworkingFeature).Send("Stand");
 		}
 	}

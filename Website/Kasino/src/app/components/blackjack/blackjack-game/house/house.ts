@@ -80,6 +80,8 @@ export class House extends MonoBehaviour
 		{
 			for (const seat of this.seats)
 			{
+				seat.UpdateIsMyTurn(false);
+
 				if (this.SeatTurn === seat.seatIndex)
 				{
 					seat.UpdateIsMyTurn(true);
@@ -98,13 +100,11 @@ export class House extends MonoBehaviour
 	public SyncPlaying(data: string): void
 	{
 		this.IsPlaying = JSON.parse(data);
-		console.log(this.IsPlaying);
 	}
 	
 	public SyncTurn(data: string): void
 	{
 		this.SeatTurn = JSON.parse(data);
-		console.log(this.SeatTurn);
 	}
 
 	public UpdateSeatData(playerDataString: string)
@@ -170,9 +170,27 @@ export class House extends MonoBehaviour
 		return seat;
 	}
 
+	/** This functions checks if the house already holds that card. */
+	public IsDuplicate(card: Card): boolean
+	{
+		for (const hcard of this.houseCards)
+		{
+			if (card.id === hcard.id)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public HouseCards(data: string): void
 	{
-		this.houseCards.push(JSON.parse(data));
+		let parsedData: any[] = JSON.parse(data);
+		this.houseCards = [];
+		for (const key in parsedData)
+		{
+			this.houseCards.push(parsedData[key]);
+		}
 		this.childText.text = this.HeldValue.toString();
 	}
 

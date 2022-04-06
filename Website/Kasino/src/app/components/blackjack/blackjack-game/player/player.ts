@@ -58,13 +58,9 @@ export class Player
 	/** This functions updates the card of this player. */
 	private UpdateCards(cards: Card[]): void
 	{
+		this.data.cards = [];
 		for (const card of cards)
 		{
-			if (this.IsDuplicate(card))
-			{
-				continue;
-			}
-
 			this.data.cards.push(card);
 		}
 	}

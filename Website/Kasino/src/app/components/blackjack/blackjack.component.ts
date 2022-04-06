@@ -43,7 +43,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
     let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
     this.game.Instantiate(house.gameObject);
-    
+
     this.game.BEGIN_GAME().then(() =>
     {
       for (const seat of house.seats)
@@ -77,14 +77,14 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     nextState?: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
   {
-    return true;
-    console.warn('GAME - Disposed');
     component.networking.Unsubscribe('JoinSeat');
     component.networking.Unsubscribe('DataChanged');
     component.networking.Unsubscribe('UpdatePlayerData');
     component.networking.Unsubscribe('SyncTurn');
     component.networking.Unsubscribe('SyncPlaying');
     component.networking.Unsubscribe('HouseCards');
+    component.networking.StopConnection();
+    console.warn('GAME - Disposed');
     return component.game.END_GAME();
   }
 }
