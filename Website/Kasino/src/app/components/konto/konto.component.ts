@@ -105,6 +105,16 @@ export class KontoComponent implements OnInit {
         console.log(message);
         this.getBalance();
         this.hasUpdateLimit = true;
+        if (this.currentLimit === this.f['depositLimit'].value)
+        {
+          alert("Du har ikke ændret din indbetalingsgrænse");
+        }
+        else
+        {
+          console.log(message);
+          alert("Din indbetalingsgrænse er blvet opdateret");
+          window.location.reload();
+        }
       },
       error: (error) => {
         console.log('error' + error);
@@ -132,3 +142,5 @@ export class KontoComponent implements OnInit {
     this.dialog.open(DeaktiverComponent);
   }
 }
+
+
