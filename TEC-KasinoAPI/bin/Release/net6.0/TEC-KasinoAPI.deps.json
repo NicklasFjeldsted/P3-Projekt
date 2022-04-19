@@ -23,6 +23,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration": "6.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.2",
           "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore": "6.0.2",
+          "Newtonsoft.Json": "13.0.1",
           "Owin": "1.0.0",
           "Swashbuckle.AspNetCore": "6.3.0",
           "Swashbuckle.AspNetCore.Filters": "7.0.2",

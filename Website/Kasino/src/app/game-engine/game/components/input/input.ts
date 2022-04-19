@@ -30,7 +30,7 @@ export class GameInputFeature implements IFeature
 
 	private HandleClick(event: MouseEvent): void
 	{
-		const point: Vector2 | null = CanvasLayer.Background.CalculateLocalPointFrom(new Vector2(event.clientX, event.clientY));
+		const point: Vector2 | null = CanvasLayer.GetLayer(0).CalculateLocalPointFrom(new Vector2(event.clientX, event.clientY));
 		if (!point)
 		{
 			return;

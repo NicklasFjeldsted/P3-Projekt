@@ -10487,6 +10487,7 @@
       "Microsoft.VisualStudio.Web.CodeGeneration >= 6.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.2",
       "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore >= 6.0.2",
+      "Newtonsoft.Json >= 13.0.1",
       "Owin >= 1.0.0",
       "Swashbuckle.AspNetCore >= 6.3.0",
       "Swashbuckle.AspNetCore.Filters >= 7.0.2",
@@ -10507,6 +10508,9 @@
       "packagesPath": "C:\\Users\\Nicklas\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
         "C:\\Users\\Nicklas\\Desktop\\P3-Projekt\\TEC-KasinoAPI\\NuGet.Config",
         "C:\\Users\\Nicklas\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -10597,6 +10601,10 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore": {
             "target": "Package",
             "version": "[6.0.2, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[13.0.1, )"
           },
           "Owin": {
             "target": "Package",

@@ -19,6 +19,7 @@ export class PlayerData implements IPlayerData
 	public seated: boolean;
 	public stand: boolean;
 	public busted: boolean;
+	public winner: boolean;
 	public cards: Card[];
 
 	constructor(name?: string)
@@ -28,6 +29,7 @@ export class PlayerData implements IPlayerData
 		this.seated = false;
 		this.stand = false;
 		this.busted = false;
+		this.winner = false;
 		this.cards = [];
 	}
 }
@@ -73,6 +75,7 @@ export class Player
 		this.data.seated = newData.seated;
 		this.data.stand = newData.stand;
 		this.data.busted = newData.busted;
+		this.data.winner = newData.winner;
 		this.UpdateCards(newData.cards);
 	}
 

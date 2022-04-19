@@ -1,6 +1,6 @@
 import { Subject } from "rxjs";
 import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
-import { House } from "../house";
+import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
@@ -18,6 +18,7 @@ export class Seat extends MonoBehaviour
 	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
 	
 	private childTextComponent: TextComponent;
+	private resultTextChildComponent: TextComponent;
 	private seatText: TextComponent;
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
@@ -71,6 +72,14 @@ export class Seat extends MonoBehaviour
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
+
+		let resultTextChild = new GameObject(`${this.gameObject.gameObjectName}'s Result Child`);
+		this.gameObject.game.Instantiate(resultTextChild);
+		resultTextChild.SetParent(this.gameObject);
+		resultTextChild.AddComponent(new TextComponent('@result'));
+		resultTextChild.transform.Translate(new Vector2(0, -90));
+		this.resultTextChildComponent = resultTextChild.GetComponent(TextComponent);
+		this.resultTextChildComponent.renderLayer = -1;
 
 		this.gameObject.game.GetFeature(GameInputFeature).OnClick!.subscribe(event => this.OnClicked(event));
 	}
@@ -135,7 +144,7 @@ export class Seat extends MonoBehaviour
 		this.hitButtonCollider.gameObject.isActive = this.myTurn;
 	}
 
-	/** Display the current card value of the player sitting in this seat. */
+	/** Display this seat. */
 	public Display(): void
 	{
 		this.UpdateIsMyTurn(this.myTurn);
@@ -143,17 +152,40 @@ export class Seat extends MonoBehaviour
 		if (!this.Player)
 		{
 			this.childTextComponent.text = ' ';
+			this.resultTextChildComponent.text = ' ';
 			this.seatText.text = this.gameObject.gameObjectName;
 			return;
 		}
 
-		this.childTextComponent.text = this.Player.cardValues.toString();
-		this.seatText.text = this.Player.data.fullName;
+		if (this.house.stage == GameStage.Ended)
+		{
+			if (this.Player.data.winner == true)
+			{
+				this.resultTextChildComponent.text = "WIN!";
+			}
+			else if(this.Player.data.winner == false)
+			{
+				this.resultTextChildComponent.text = "LOSE!";
+			}
+		}
+		else if (this.house.stage == GameStage.Started)
+		{
+			this.resultTextChildComponent.text = ' ';
+			this.childTextComponent.text = this.Player.cardValues.toString();
+			this.seatText.text = this.Player.data.fullName;
+		}
+		else if (this.house.stage == GameStage.Off)
+		{
+			this.resultTextChildComponent.text = ' ';
+			this.seatText.text = this.Player.data.fullName;
+		}
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */
 	public JoinSeat(): void
 	{
+		if (this.house.stage == GameStage.Started) return;
+
 		if (!this.Player)
 		{
 			this.Player = this.house.client;

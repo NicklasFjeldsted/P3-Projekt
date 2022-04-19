@@ -110,11 +110,11 @@ export class ColliderComponent implements IComponent
 			return;
 		}
 
-		CanvasLayer.Debug.FillOutline(this.start, this.end);
+		CanvasLayer.GetLayer(2).FillOutline(this.start, this.end);
 	}
 
 	public DEBUG_Clear(): void
 	{
-		CanvasLayer.Debug.ClearRect(this.start, this.Size);
+		CanvasLayer.GetLayer(2).ClearRect(this.start, this.Size);
 	}
 }
