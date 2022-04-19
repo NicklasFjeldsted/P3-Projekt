@@ -46,13 +46,13 @@ namespace TEC_KasinoAPI.Services
 		/// <exception cref="KeyNotFoundException"></exception>
 		public async Task<List<Transaction>> GetByIdAsync(int customerID)
 		{
+			List<Transaction> transactions = await _context.Transactions.Where(x => x.CustomerID == customerID).ToListAsync();
+
 			// Checks if theres any transactions existing with the associated id
-			if (await _context.Transactions.AnyAsync(x => x.CustomerID != customerID))
+			if (transactions.Count == 0)
 			{
 				throw new KeyNotFoundException("No transactions found");
 			}
-
-			List<Transaction> transactions = await _context.Transactions.Where(x => x.CustomerID == customerID).ToListAsync();
 
 			return transactions;
 		}

@@ -3,6 +3,7 @@ import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, 
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ChangeBalance } from 'src/app/interfaces/changeBalance';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BalanceService } from 'src/app/services/balance.service';
 import { TransactionService } from 'src/app/services/transaction.service';
 import { DialogRef } from '../dialog-ref';
@@ -31,6 +32,7 @@ export class IndbetalComponent implements OnInit {
   isOpen: boolean = true;
   submitted: boolean = false;
   isCardValid: boolean = true;
+  currentLimit: number | null;
 
   @ViewChild("focusBtn") btn: ElementRef;
 
@@ -42,7 +44,7 @@ export class IndbetalComponent implements OnInit {
     amount: new FormControl(),
   });
 
-  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private transaction: TransactionService) { }
+  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, public authenticationService: AuthenticationService, private router: Router, private builder: FormBuilder, private balance: BalanceService, private transaction: TransactionService) { }
 
   ngOnInit(): void {
     this.showFocus();
@@ -82,6 +84,11 @@ export class IndbetalComponent implements OnInit {
       this.isCardValid = true;
       return;
     }
+
+    if(this.f['amount']?.value > this.currentLimit!) {
+      alert("Deposit amount has exceeded your deposit limit!");
+      return;
+    }
     //this.form.patchValue({cardNumber: formatCard});
     this.balance.addBalance(this.f['amount']?.value).subscribe({
       next: (response) => {
@@ -99,7 +106,17 @@ export class IndbetalComponent implements OnInit {
     })
     return;
   }
-// 5497-7453-2614-4515
+
+  getBalance(): void {
+    this.authenticationService.decodeToken().subscribe({
+      next: (userBalance) => {
+        this.currentLimit = userBalance.depositLimit;
+      },
+      error: (error) => {
+        console.log(error)
+      }})
+  }
+
   // Updates the amount value to the specified buttons value
   updateAmount(value: number): void {
     this.form.patchValue({amount: value});

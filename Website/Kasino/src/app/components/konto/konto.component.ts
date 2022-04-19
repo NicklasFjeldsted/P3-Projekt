@@ -29,7 +29,7 @@ export class KontoComponent implements OnInit {
   depositForm: FormGroup = new FormGroup({
     depositLimit: new FormControl()
   });
-  kontoSite: number = 2;
+  kontoSite: number = 1;
 
   transactionList: Transaction[] = [];
   hasUpdateLimit: boolean = false;
@@ -116,7 +116,7 @@ export class KontoComponent implements OnInit {
         else
         {
           console.log(message);
-          alert("Din indbetalingsgrænse er blvet opdateret");
+          alert("Din indbetalingsgrænse er blevet opdateret");
           window.location.reload();
         }
       },
@@ -129,9 +129,9 @@ export class KontoComponent implements OnInit {
   getTransactions(id: number): void {
     this.transaction.getAllById(id).subscribe({
       next: (transactions) => {
+        this.transactionList = [];
         transactions.forEach(element => {
           this.transactionList.push(element);
-          console.log(element);
         });
       }, error: (error) => {
         console.log(error);
@@ -141,6 +141,7 @@ export class KontoComponent implements OnInit {
 
   changeSite(site: number) {
     this.kontoSite = site;
+    this.getBalance();
   }
 
   openIndbetal() {
