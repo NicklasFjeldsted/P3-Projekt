@@ -90,7 +90,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: white!important;
+  color: white;
   font-family: 'Montserrat', sans-serif!important;
   font-weight: 500;
 }
@@ -98,6 +98,18 @@
 .link-game > svg, .link-game > img, #logo, #testright
 {
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+.column > .link-game {
+  transition: all 0.3s ease 0s;
+}
+
+.column > .link-game:hover {
+  color: #d3d3d3;
+}
+
+.column > .link-game:hover > svg, .column > .link-game:hover > img {
+  filter: invert(95%) sepia(1%) saturate(0%) hue-rotate(171deg) brightness(88%) contrast(97%);
 }
 
 .sideNav-button 
