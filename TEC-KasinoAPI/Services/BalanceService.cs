@@ -141,7 +141,7 @@ namespace TEC_KasinoAPI.Services
             accountBalance.Balance -= model.Amount;
 
             // Make the difference string.
-            string difference = "+" + model.Amount;
+            string difference = "-" + model.Amount;
 
             // Update the AccountBalance entity with the changes from the accountBalance object.
             await _context.AccountBalances.UpdateAsync(accountBalance);

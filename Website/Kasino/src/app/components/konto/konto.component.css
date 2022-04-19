@@ -402,5 +402,23 @@
   width: 100%;
   margin: 0;
   height: 500px;
+}
+
+.transaction-list {
+  width: 100%;
+  height: 100%;
+}
+
+.transaction-list > table {
+  width: 100%;
+}
+
+table, th, td {
   border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.transaction-list th {
+  width: 25%;
+  align-content: center;
 }

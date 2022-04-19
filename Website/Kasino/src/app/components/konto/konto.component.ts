@@ -11,6 +11,8 @@ import { LogoutComponent } from '../modals/logout/logout.component';
 import { DeaktiverComponent } from '../modals/deaktiver/deaktiver.component';
 import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel } from '@angular/forms';
 import { BalanceService } from 'src/app/services/balance.service';
+import { Transaction } from 'src/app/interfaces/transaction';
+import { TransactionService } from 'src/app/services/transaction.service';
 
 
 @Component({
@@ -29,9 +31,10 @@ export class KontoComponent implements OnInit {
   });
   kontoSite: number = 2;
 
+  transactionList: Transaction[] = [];
   hasUpdateLimit: boolean = false;
 
-  constructor(public customerService: CustomerService, public authenticationService: AuthenticationService, public balanceService: BalanceService, private dialog: DialogService, private formBuilder: FormBuilder) {
+  constructor(public customerService: CustomerService, private transaction: TransactionService, public authenticationService: AuthenticationService, public balanceService: BalanceService, private dialog: DialogService, private formBuilder: FormBuilder) {
     this.accountInfo = {
       email: '',
       phoneNumber: 0,
@@ -73,6 +76,7 @@ export class KontoComponent implements OnInit {
         this.accountId = userBalance.customerID;
         this.currentLimit = userBalance.depositLimit;
         this.f['depositLimit'].patchValue(userBalance.depositLimit);
+        this.getTransactions(this.accountId!)
       },
       error: (error) => {
         console.log(error)
@@ -118,6 +122,19 @@ export class KontoComponent implements OnInit {
       },
       error: (error) => {
         console.log('error' + error);
+      }
+    })
+  }
+
+  getTransactions(id: number): void {
+    this.transaction.getAllById(id).subscribe({
+      next: (transactions) => {
+        transactions.forEach(element => {
+          this.transactionList.push(element);
+          console.log(element);
+        });
+      }, error: (error) => {
+        console.log(error);
       }
     })
   }

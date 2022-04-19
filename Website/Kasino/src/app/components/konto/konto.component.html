@@ -97,9 +97,22 @@
     <div class="transaction-container">
       <div class="transaction-list">
         <table>
-          <tr>
-
-          </tr>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Transaction Date</th>
+              <th>Amount</th>
+              <th>Balance</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transactions of transactionList">
+              <td>{{ transactions.transactionID }}</td>
+              <td>{{ transactions.transactionDate | date:'dd/MM/yyyy HH:mm' }}</td>
+              <td [style]="transactions.amount.startsWith('+') ? 'background-color: lightgreen;' : 'background-color: #ff7f7f;'">{{ transactions.amount }}</td>
+              <td>{{ transactions.currentBalance }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
