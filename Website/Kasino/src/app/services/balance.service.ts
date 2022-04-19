@@ -12,20 +12,20 @@ export class BalanceService {
   balance: ChangeBalance;
   constructor(private http: HttpClient) { }
 
+  id: number = JSON.parse(localStorage.getItem(USER)!);
+
   public addBalance(money: number): Observable<any> {
-    var id = JSON.parse(localStorage.getItem(USER)!);
-    this.balance = {customerID: id, amount: money};
+    this.balance = { customerID: this.id, amount: money };
     return this.http.put<any>(`${environment.apiURL}/balance/add-balance`, this.balance, {withCredentials: true});
   }
 
   public subtractBalance(money: number): Observable<any> {
-    var id = JSON.parse(localStorage.getItem(USER)!);
-    this.balance = {customerID: id, amount: money};
+    this.balance = { customerID: this.id, amount: money };
     return this.http.put<any>(`${environment.apiURL}/balance/subtract-balance`, this.balance, {withCredentials: true})
   }
 
   public updateDeposit(depositLimit: number): Observable<any> {
-    var customerID = JSON.parse(localStorage.getItem(USER)!);
+    let customerID = this.id;
     return this.http.put<any>(`${environment.apiURL}/balance/update`, {customerID, depositLimit}, {withCredentials: true})
   }
 }

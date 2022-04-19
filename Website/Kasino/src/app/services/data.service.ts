@@ -11,8 +11,8 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
+  // Gets all countries
   public GetCountries(): Observable<Country[]> {
     return this.http.get<Country[]>(`${environment.apiURL}/data/Countries`);
   }
-
 }
