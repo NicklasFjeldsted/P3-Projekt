@@ -55,7 +55,7 @@ import { FooterComponent } from './components/footer/footer.component';
     VelkomstbonusserComponent,
     IndbetalComponent,
     UdbetalComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
