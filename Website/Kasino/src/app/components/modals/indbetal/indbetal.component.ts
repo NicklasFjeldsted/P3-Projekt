@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { ChangeBalance } from 'src/app/interfaces/changeBalance';
 import { BalanceService } from 'src/app/services/balance.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 import { DialogRef } from '../dialog-ref';
 import { DIALOG_DATA } from '../dialog-tokens';
 import { DialogService } from '../dialog.service';
@@ -41,7 +42,7 @@ export class IndbetalComponent implements OnInit {
     amount: new FormControl(),
   });
 
-  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService) { }
+  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private transaction: TransactionService) { }
 
   ngOnInit(): void {
     this.showFocus();
@@ -83,10 +84,14 @@ export class IndbetalComponent implements OnInit {
     }
     //this.form.patchValue({cardNumber: formatCard});
     this.balance.addBalance(this.f['amount']?.value).subscribe({
-      next: (message) => {
-        console.log(message);
-        this.close();
-        window.location.reload();
+      next: (response) => {
+        this.transaction.AddTransaction(response).subscribe({
+          next: (message) => {
+            console.log(message);
+            this.close();
+            window.location.reload();
+          }
+        });
       },
       error: (error) => {
         console.log(error);

@@ -106,6 +106,7 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<IBalanceService, BalanceService>();
 builder.Services.AddScoped<IDataService, DataService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.WebHost.ConfigureLogging(logging =>
 {

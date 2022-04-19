@@ -27,7 +27,7 @@ export class KontoComponent implements OnInit {
   depositForm: FormGroup = new FormGroup({
     depositLimit: new FormControl()
   });
-  kontoSite: number = 1;
+  kontoSite: number = 2;
 
   hasUpdateLimit: boolean = false;
 
