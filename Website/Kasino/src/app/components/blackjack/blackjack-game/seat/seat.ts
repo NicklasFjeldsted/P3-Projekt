@@ -177,6 +177,7 @@ export class Seat extends MonoBehaviour
 		else if (this.house.stage == GameStage.Off)
 		{
 			this.resultTextChildComponent.text = ' ';
+			this.seatText.text = this.Player.data.fullName;
 		}
 	}
 
