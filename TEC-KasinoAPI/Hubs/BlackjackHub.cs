@@ -274,6 +274,12 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			string id = Context.ConnectionId;
 
+			if (seatTurnIndex == connectedPlayers[id].seatIndex)
+			{
+				SwitchTurn();
+				Task.Run(async () => await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex)));
+			}
+
 			connectedPlayers.TryRemove(new KeyValuePair<string, PlayerData>(id, connectedPlayers[id]));
 
 			if (connectedPlayers.IsEmpty || !connectedPlayers.Any(player => player.Value.seated))

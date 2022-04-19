@@ -75,6 +75,7 @@ export class Player
 		this.data.seated = newData.seated;
 		this.data.stand = newData.stand;
 		this.data.busted = newData.busted;
+		this.data.winner = newData.winner;
 		this.UpdateCards(newData.cards);
 	}
 

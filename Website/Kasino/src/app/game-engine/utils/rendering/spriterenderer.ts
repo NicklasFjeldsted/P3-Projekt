@@ -41,12 +41,12 @@ export class SpriteRendererComponent implements IComponent
 		{
 			return;
 		}
-		this.gameObject.Size = CanvasLayer.Foreground.DrawImage(this.image!, this.gameObject.transform);
+		this.gameObject.Size = CanvasLayer.GetLayer(1).DrawImage(this.image!, this.gameObject.transform);
 	}
 
 	/** Clear a Sprite from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.Foreground.ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
+		CanvasLayer.GetLayer(1).ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
 	}
 }

@@ -17,7 +17,8 @@ export class Seat extends MonoBehaviour
 	
 	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
 	
-	public childTextComponent: TextComponent;
+	private childTextComponent: TextComponent;
+	private resultTextChildComponent: TextComponent;
 	private seatText: TextComponent;
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
@@ -71,6 +72,14 @@ export class Seat extends MonoBehaviour
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
+
+		let resultTextChild = new GameObject(`${this.gameObject.gameObjectName}'s Result Child`);
+		this.gameObject.game.Instantiate(resultTextChild);
+		resultTextChild.SetParent(this.gameObject);
+		resultTextChild.AddComponent(new TextComponent('@result'));
+		resultTextChild.transform.Translate(new Vector2(0, -90));
+		this.resultTextChildComponent = resultTextChild.GetComponent(TextComponent);
+		this.resultTextChildComponent.renderLayer = -1;
 
 		this.gameObject.game.GetFeature(GameInputFeature).OnClick!.subscribe(event => this.OnClicked(event));
 	}
@@ -135,40 +144,47 @@ export class Seat extends MonoBehaviour
 		this.hitButtonCollider.gameObject.isActive = this.myTurn;
 	}
 
-	/** Display the current card value of the player sitting in this seat. */
+	/** Display this seat. */
 	public Display(): void
 	{
+		this.UpdateIsMyTurn(this.myTurn);
+
 		if (!this.Player)
 		{
 			this.childTextComponent.text = ' ';
+			this.resultTextChildComponent.text = ' ';
 			this.seatText.text = this.gameObject.gameObjectName;
 			return;
 		}
 
-		if (this.house.stage == 2)
+		if (this.house.stage == GameStage.Ended)
 		{
-			console.log(this.Player.data.winner);
 			if (this.Player.data.winner == true)
 			{
-				this.childTextComponent.text = "WIN";
-				console.log(this.Player.data.fullName + " WINS!");
+				this.resultTextChildComponent.text = "WIN!";
 			}
 			else if(this.Player.data.winner == false)
 			{
-				this.childTextComponent.text = "LOSE";
-				console.log(this.Player.data.fullName + " LOSE!");
+				this.resultTextChildComponent.text = "LOSE!";
 			}
 		}
-		else if (this.house.stage == 1)
+		else if (this.house.stage == GameStage.Started)
 		{
+			this.resultTextChildComponent.text = ' ';
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.seatText.text = this.Player.data.fullName;
+		}
+		else if (this.house.stage == GameStage.Off)
+		{
+			this.resultTextChildComponent.text = ' ';
 		}
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */
 	public JoinSeat(): void
 	{
+		if (this.house.stage == GameStage.Started) return;
+
 		if (!this.Player)
 		{
 			this.Player = this.house.client;
