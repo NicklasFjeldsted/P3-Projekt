@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BalanceService } from 'src/app/services/balance.service';
+import { TransactionService } from 'src/app/services/transaction.service';
 import { Broadcast } from '../../header/broadcast';
 import { DialogRef } from '../dialog-ref';
 import { DIALOG_DATA } from '../dialog-tokens';
@@ -42,7 +43,7 @@ export class UdbetalComponent implements OnInit {
     amount: new FormControl(),
   });
 
-  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private authenticationService: AuthenticationService) { }
+  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private authenticationService: AuthenticationService, private transaction: TransactionService) { }
 
   ngOnInit(): void {
     Broadcast.Instance.onBalanceChange.subscribe(event => this.getBalance());
@@ -85,11 +86,15 @@ export class UdbetalComponent implements OnInit {
     }
 
     this.balance.subtractBalance(this.f['amount']?.value).subscribe({
-      next: (message) => {
-        console.log(message);
-        this.close();
-        Broadcast.Instance.onBalanceChange.next(this.f['amount']?.value);
-        this.getBalance();
+      next: (response) => {
+        this.transaction.AddTransaction(response).subscribe({
+          next: (message) => {
+            console.log(message);
+            this.close();
+            Broadcast.Instance.onBalanceChange.next(this.f['amount']?.value);
+            this.getBalance();
+          }
+        })
       },
       error: (error) => {
         console.log(error);

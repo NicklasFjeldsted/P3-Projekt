@@ -92,8 +92,7 @@ namespace TEC_KasinoAPI.Migrations
 
                     b.Property<string>("CPRNumber")
                         .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int?>("CountryID")
                         .IsRequired()
@@ -120,7 +119,6 @@ namespace TEC_KasinoAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PhoneNumber")
-                        .HasMaxLength(8)
                         .HasColumnType("int");
 
                     b.Property<DateTime>("RegisterDate")
@@ -166,9 +164,6 @@ namespace TEC_KasinoAPI.Migrations
                     b.Property<string>("Amount")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("BalanceCustomerID")
-                        .HasColumnType("int");
-
                     b.Property<double>("CurrentBalance")
                         .HasColumnType("float");
 
@@ -180,7 +175,7 @@ namespace TEC_KasinoAPI.Migrations
 
                     b.HasKey("TransactionID");
 
-                    b.HasIndex("BalanceCustomerID");
+                    b.HasIndex("CustomerID");
 
                     b.ToTable("Transactions");
                 });
@@ -280,11 +275,11 @@ namespace TEC_KasinoAPI.Migrations
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.Transaction", b =>
                 {
-                    b.HasOne("TEC_KasinoAPI.Models.AccountBalance", "Balance")
+                    b.HasOne("TEC_KasinoAPI.Models.AccountBalance", "Customer")
                         .WithMany("Transactions")
-                        .HasForeignKey("BalanceCustomerID");
+                        .HasForeignKey("CustomerID");
 
-                    b.Navigation("Balance");
+                    b.Navigation("Customer");
                 });
 
             modelBuilder.Entity("TEC_KasinoAPI.Models.AccountBalance", b =>
