@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using TEC_KasinoAPI.Models;
-using Newtonsoft.Json;
 using System.Timers;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Collections.Concurrent;
 using System.Collections;
+using Newtonsoft.Json;
 
 namespace TEC_KasinoAPI.Hubs
 {
