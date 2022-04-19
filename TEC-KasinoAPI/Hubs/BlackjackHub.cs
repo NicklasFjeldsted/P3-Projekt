@@ -419,6 +419,12 @@ namespace TEC_KasinoAPI.Hubs
 			if (IsPlaying || !CheckPlayers())
 				return;
 
+			await _hubContext.Clients.All.SendAsync("GameStarted");
+
+			houseCards.Clear();
+
+			ResetPlayers();
+
 			StopTimer();
 
 			SetTurnOrder();
@@ -428,10 +434,8 @@ namespace TEC_KasinoAPI.Hubs
 			DealCards();
 
 			SwitchTurn();
-			Debug.WriteLine("BlackjackHub: {0}", turnOrder.Count);
 
 			await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
-			await _hubContext.Clients.All.SendAsync("GameStarted");
 		}
 
 		/// <summary>
@@ -448,37 +452,26 @@ namespace TEC_KasinoAPI.Hubs
 
 			if (houseBust)
             {
-				Debug.WriteLine("BlackjackHub: House Busted! - {0}", CalculateValue(houseCards.Values));
-				Debug.WriteLine("BlackjackHub: Winners:");
 				foreach(var player in connectedPlayers.Values)
                 {
 					if (!player.seated) continue;
 					if (player.busted) continue;
 
-					Debug.WriteLine(player.fullName);
+					player.winner = true;
 				}
-				Debug.WriteLine("");
             }
             else
             {
-				Debug.WriteLine("BlackjackHub: House - {0}", CalculateValue(houseCards.Values));
-				Debug.WriteLine("BlackjackHub: Winners:");
-				foreach(PlayerData player in CalculateWinners())
-                {
-					Debug.WriteLine(player.fullName);
-                }
-				Debug.WriteLine("");
+				CalculateWinners();
 			}
 
-			houseCards.Clear();
-
-			ResetPlayers();
-
-			ResetTimer();
+			seatTurnIndex = -1;
 
 			await _hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
 			await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 			await _hubContext.Clients.All.SendAsync("GameEnded");
+
+			ResetTimer();
 		}
         #endregion
 
@@ -492,6 +485,7 @@ namespace TEC_KasinoAPI.Hubs
 			{
 				data.busted = false;
 				data.stand = false;
+				data.winner = false;
 				data.cards.Clear();
 			}
 		}
@@ -499,11 +493,8 @@ namespace TEC_KasinoAPI.Hubs
 		/// <summary>
 		/// Calculates the winners by comparing held card values to the house's held card values.
 		/// </summary>
-		/// <returns><see cref="List{T}"/>: a new list of the PlayerData of the winners.</returns>
-		private static List<PlayerData> CalculateWinners()
+		private static void CalculateWinners()
         {
-			List<PlayerData> result = new List<PlayerData>();
-
 			// "pair" is of type KeyValuePair<string, PlayerData>
 			foreach(var pair in connectedPlayers)
             {
@@ -513,9 +504,12 @@ namespace TEC_KasinoAPI.Hubs
 
 				if (CalculateValue(pair.Value.cards) < CalculateValue(houseCards.Values)) continue;
 
-				result.Add(pair.Value);
+				PlayerData oldData = new PlayerData(pair.Value);
+
+				pair.Value.winner = true;
+
+				connectedPlayers.TryUpdate(pair.Key, pair.Value, oldData);
             }
-			return result;
         }
 
 		/// <summary>

@@ -5,6 +5,13 @@ import { Card } from "../cards";
 import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
 
+export enum GameStage
+{
+	Off,
+	Started,
+	Ended
+}
+
 export class House extends MonoBehaviour
 {
 	public seats: Seat[] = [];
@@ -21,8 +28,8 @@ export class House extends MonoBehaviour
 		return output;
 	}
 
-
-	private IsPlaying: boolean = false;
+	public IsPlaying: boolean = false;
+	public stage: GameStage = GameStage.Off;
 	private SeatTurn: number = -1;
 
 	private childText: TextComponent;
@@ -133,6 +140,16 @@ export class House extends MonoBehaviour
 				});
 			}
 		}
+	}
+
+	public GameEnded(): void
+	{
+		this.stage = GameStage.Ended;
+	}
+
+	public GameStarted(): void
+	{
+		this.stage = GameStage.Started;
 	}
 
 	private async ShouldReset(data: PlayerData[], seat: Seat): Promise<boolean>

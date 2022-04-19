@@ -1,6 +1,6 @@
 import { Subject } from "rxjs";
 import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
-import { House } from "../house";
+import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
@@ -17,7 +17,7 @@ export class Seat extends MonoBehaviour
 	
 	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
 	
-	private childTextComponent: TextComponent;
+	public childTextComponent: TextComponent;
 	private seatText: TextComponent;
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
@@ -138,8 +138,6 @@ export class Seat extends MonoBehaviour
 	/** Display the current card value of the player sitting in this seat. */
 	public Display(): void
 	{
-		this.UpdateIsMyTurn(this.myTurn);
-
 		if (!this.Player)
 		{
 			this.childTextComponent.text = ' ';
@@ -147,8 +145,25 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-		this.childTextComponent.text = this.Player.cardValues.toString();
-		this.seatText.text = this.Player.data.fullName;
+		if (this.house.stage == 2)
+		{
+			console.log(this.Player.data.winner);
+			if (this.Player.data.winner == true)
+			{
+				this.childTextComponent.text = "WIN";
+				console.log(this.Player.data.fullName + " WINS!");
+			}
+			else if(this.Player.data.winner == false)
+			{
+				this.childTextComponent.text = "LOSE";
+				console.log(this.Player.data.fullName + " LOSE!");
+			}
+		}
+		else if (this.house.stage == 1)
+		{
+			this.childTextComponent.text = this.Player.cardValues.toString();
+			this.seatText.text = this.Player.data.fullName;
+		}
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */
