@@ -61,6 +61,8 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
       this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
 
+      this.networking.Subscribe("GameEnded", (data) => console.log(data));
+
       this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
     });
   }
@@ -82,9 +84,9 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     component.networking.Unsubscribe('UpdatePlayerData');
     component.networking.Unsubscribe('SyncTurn');
     component.networking.Unsubscribe('SyncPlaying');
+    component.networking.Unsubscribe('GameEnded');
     component.networking.Unsubscribe('HouseCards');
-    component.networking.StopConnection();
     console.warn('GAME - Disposed');
-    return component.game.END_GAME();
+    return component.networking.StopConnection();
   }
 }
