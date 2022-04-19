@@ -57,8 +57,8 @@ namespace TEC_KasinoAPI.Migrations
                     Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CountryID = table.Column<int>(type: "int", nullable: false),
-                    PhoneNumber = table.Column<int>(type: "int", maxLength: 8, nullable: false),
-                    CPRNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
+                    PhoneNumber = table.Column<int>(type: "int", nullable: false),
+                    CPRNumber = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -145,7 +145,6 @@ namespace TEC_KasinoAPI.Migrations
                     TransactionID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerID = table.Column<int>(type: "int", nullable: true),
-                    BalanceCustomerID = table.Column<int>(type: "int", nullable: true),
                     TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Amount = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CurrentBalance = table.Column<double>(type: "float", nullable: false)
@@ -154,8 +153,8 @@ namespace TEC_KasinoAPI.Migrations
                 {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionID);
                     table.ForeignKey(
-                        name: "FK_Transactions_AccountBalances_BalanceCustomerID",
-                        column: x => x.BalanceCustomerID,
+                        name: "FK_Transactions_AccountBalances_CustomerID",
+                        column: x => x.CustomerID,
                         principalTable: "AccountBalances",
                         principalColumn: "CustomerID");
                 });
@@ -181,9 +180,9 @@ namespace TEC_KasinoAPI.Migrations
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transactions_BalanceCustomerID",
+                name: "IX_Transactions_CustomerID",
                 table: "Transactions",
-                column: "BalanceCustomerID");
+                column: "CustomerID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

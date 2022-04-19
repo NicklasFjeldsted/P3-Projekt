@@ -50,6 +50,7 @@ namespace TEC_KasinoAPI.Data
 				e.HasAlternateKey(e => e.CountryName).HasName("UN_Countries_CountryName");
 			});
 
+
 			//builder.Entity<ZipCode>() // Same applies here
 			//.HasMany(e => e.Customers)
 			//.WithOne(e => e.ZipCode);
