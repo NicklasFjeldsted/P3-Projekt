@@ -7,7 +7,7 @@
 img
 {
   width: 100%;
-  border: 1px solid black;
+  border-radius: 3px;
 }
 
 p
@@ -22,9 +22,28 @@ p
   margin: 10px;
 }
 
+.announcer-container {
+  width: 100%;
+  height: 360px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.announcer-displayer {
+  width: 100%;
+  height: 100%;
+}
+
+.announcer-displayer > img {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+}
+
 .game-container {
-  position: absolute;
-  top: 10%;
+  position: relative;
+  top: 5%;
   width: 100%;
   display: flex;
   align-items: center;
@@ -35,38 +54,82 @@ p
 .grid-container {
   display: grid;
   width: 80%;
-	font-size: 16px;
   height: inherit;
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-	grid-auto-rows: min-content;
-	grid-gap: 2em;
+	font-size: 16px;
+  grid-template-areas:
+    'a a b c d'
+    'a a e f g';
+  grid-template-rows: repeat(2, 1fr);
+	grid-template-columns: repeat(5, 1fr);
+	grid-gap: 1em;
 	text-align: center;
 	align-items: center;
 }
+.grid-container:nth-child(1) {
+  grid-area: a;
+  background-color: black;
+  opacity: .5;
+}
+
+.grid-container:nth-child(2) {
+  grid-area: b;
+}
+
+.grid-container:nth-child(3) {
+  grid-area: c;
+}
+
+.grid-container:nth-child(4) {
+  grid-area: d;
+}
+
+.grid-container:nth-child(5) {
+  grid-area: e;
+}
+
+.grid-container:nth-child(6) {
+  grid-area: f;
+}
+.grid-container:nth-child(7) {
+  grid-area: g;
+}
 
 .grid-item {
-  height: inherit;
-  display: flex;
-  flex-direction: row;
+  display: block;
+  position: relative;
   align-items: center;
   justify-content: center;
 }
 
 .overlay {
   position: absolute;
-  background-color: #008CBA;
+  left: 0;
+  right: 0;
+  top: calc(100% - 4.5px);
+  background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) -4.5px,rgba(0,0,0,.4));
   overflow: hidden;
   width: 100%;
   height: 0;
-  transition: .5s ease;
+  transition: .25s ease;
+  border-radius: 3px;
 }
 
 .grid-item:hover .overlay {
-  height: 100%;
+  top: 0;
+  height: calc(100% - 4.5px);
+  cursor: pointer;
 }
-.text {
-  color: black;
-  font-size: 20px;
+
+.grid-item > .overlay > i {
+  font-size: 5em;
+}
+
+.grid-item > .overlay > i:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: transform ease-in,-webkit-transform ease-in;
+}
+.play-icon {
+  color: #fff;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -74,4 +137,11 @@ p
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.display-text {
+  color: #fff;
+  position: relative;
+  top: 10%;
+  font-size: 1.75em;
 }
