@@ -49,6 +49,7 @@ export class IndbetalComponent implements OnInit {
   ngOnInit(): void {
     this.showFocus();
     this.isOpen = true;
+    this.getBalance();
 
     // Gives form validators
     this.form = this.builder.group({
@@ -76,12 +77,8 @@ export class IndbetalComponent implements OnInit {
   // Submits the deposit request
   onSubmit() {
     this.submitted = true;
-    if(this.form.invalid) {
-      if(!this.isValid()) {
-        this.isCardValid = false;
-        return;
-      }
-      this.isCardValid = true;
+    if(!this.isValid()) {
+      this.isCardValid = false;
       return;
     }
 
