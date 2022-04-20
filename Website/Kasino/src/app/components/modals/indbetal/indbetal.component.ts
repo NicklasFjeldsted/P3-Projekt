@@ -52,9 +52,9 @@ export class IndbetalComponent implements OnInit {
 
     // Gives form validators
     this.form = this.builder.group({
-      cardName: ['', Validators.required],
-      cardNumber: ['', [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
-      expDate: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+      cardName: ['Nicklas', Validators.required],
+      cardNumber: ['5497-7453-2614-4515', [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
+      expDate: ['12/24', [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
       cvv: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       amount: [null, Validators.required],
     })

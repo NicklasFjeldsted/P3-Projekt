@@ -20,6 +20,12 @@
 
 }
 
+.sidenav > i {
+  position: absolute;
+  right: 0;
+
+}
+
 .sidenav-content {
   display: grid;
   gap: 1em;

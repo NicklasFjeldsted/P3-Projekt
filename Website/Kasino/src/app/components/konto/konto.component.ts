@@ -57,7 +57,7 @@ export class KontoComponent implements OnInit {
     return this.depositForm.controls;
   }
 
-
+  // Gets userdata from API Call
   private showAccountInfo(): void {
     this.authenticationService.getAccount().subscribe({
       next: (userInfo) => {
@@ -69,6 +69,7 @@ export class KontoComponent implements OnInit {
     })
   }
 
+  // Gets user information from token and decrypts the data
   getBalance(): void {
     this.authenticationService.decodeToken().subscribe({
       next: (userBalance) => {
@@ -96,6 +97,7 @@ export class KontoComponent implements OnInit {
     }
   }
 
+  // Onclick function which changes users depositlimit
   updateAmount(value: number | null, addOrSub: boolean): void {
     if(addOrSub) {
       return this.f['depositLimit'].patchValue(this.f['depositLimit'].value + value);
@@ -103,29 +105,28 @@ export class KontoComponent implements OnInit {
     return this.f['depositLimit'].patchValue(this.f['depositLimit'].value - value!);
   }
 
+  // Updates users deposit limit
   updateDepositLimit(): void {
     this.balanceService.updateDeposit(this.f['depositLimit'].value).subscribe({
       next: (message) => {
         console.log(message);
         this.getBalance();
         this.hasUpdateLimit = true;
-        if (this.currentLimit === this.f['depositLimit'].value)
-        {
+        if (this.currentLimit === this.f['depositLimit'].value) {
           alert("Du har ikke ændret din indbetalingsgrænse");
         }
-        else
-        {
+        else {
           console.log(message);
           alert("Din indbetalingsgrænse er blevet opdateret");
           window.location.reload();
-        }
-      },
+        }},
       error: (error) => {
         console.log('error' + error);
       }
     })
   }
 
+  // API call for transactions on a given id, which data response is put in a array
   getTransactions(id: number): void {
     this.transaction.getAllById(id).subscribe({
       next: (transactions) => {
@@ -139,23 +140,28 @@ export class KontoComponent implements OnInit {
     })
   }
 
+  // Onclick function which changes the site
   changeSite(site: number) {
     this.kontoSite = site;
     this.getBalance();
   }
 
+  // Onclick function which opens a component
   openIndbetal() {
     this.dialog.open(IndbetalComponent);
   }
 
+  // Onclick function which opens a component
   openUdbetal() {
     this.dialog.open(UdbetalComponent);
   }
 
+  // Onclick function which opens a component
   openLogout() {
     this.dialog.open(LogoutComponent);
   }
 
+  // Onclick function which opens a component
   openDeaktiver() {
     this.dialog.open(DeaktiverComponent);
   }
