@@ -253,3 +253,8 @@ nav > .wrapper > .nav-wrapper {
   color: #DCDCDC;
 }
 
+.overlayText
+{
+  height: 70%;
+  color: white;
+}
