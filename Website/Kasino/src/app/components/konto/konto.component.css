@@ -3,6 +3,8 @@
   width: 100%;
   background: #efefef;
   display: flex;
+  position: relative;
+  overflow: hidden;
 }
 
 .left-side {
