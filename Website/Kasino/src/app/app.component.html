@@ -19,8 +19,8 @@
 
 <div class="container">
   <app-header class="header" (onSideNavToggle)="openSideNav()"></app-header>
-  <div class="fill-row" style="overflow:hidden;">
-    <router-outlet></router-outlet>
+  <div class="fill-row" id="component-container" style="overflow:hidden;">
+    <router-outlet (activate)="onActivate()"></router-outlet>
   </div>
   <app-footer style="overflow:hidden;"></app-footer>
 </div>

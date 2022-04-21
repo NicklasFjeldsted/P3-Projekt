@@ -3,46 +3,70 @@
     <img src="../../../assets/media/kasino-banner.png">
   </div>
 </div>
-<div class="navbar-divider"></div>
 <div class="game-container">
-  <div class="grid-container">
-    <div class="grid-item game">
-      <img src="../../../assets/media/TEC-Bonus.png">
-    </div>
-    <div class="grid-item game">
-      <img src="../../../assets/media/blackjack-picture.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="blackjack"></i>
+  <nav>
+    <div class="wrapper">
+      <div class="nav-wrapper">
+        <ul class="navbar" id="navbar">
+          <li class="active" (click)="addActive(0)">Udvalgte</li>
+          <li (click)="addActive(1)">Casino</li>
+          <li (click)="addActive(2)">Spilleautomater</li>
+        </ul>
       </div>
     </div>
-    <div class="grid-item game">
-      <img src="../../../assets/media/roulette-picture.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
+  </nav>
+  <div class="feature-section">
+    <div class="feature-promotion content-wrapper">
+      <div class="promotion">
+        <img src="../../../assets/media/promotion1.png">
+        <div class="promotion-text">
+          <div class="title">Modtag din velkomstbonus ved første indbetaling</div>
+          <div class="subtitle"></div>
+          <div class="footer">
+            <a class="footer-button">Tilmeld dig</a>
+            <span class="footer-text">18+ | Kun nye spillere | Vælg ét ud af 2 (2) velkomsttilbud | Regler og vilkår er gældende pr. velkomsttilbud</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="grid-item game">
-      <img src="../../../assets/media/slots-picture.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
-      </div>
-    </div>
-    <div class="grid-item game coming">
-      <img src="../../../assets/kommersnart.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
-      </div>
-    </div>
-    <div class="grid-item game coming">
-      <img src="../../../assets/kommersnart.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
-      </div>
-    </div>
-    <div class="grid-item game coming">
-      <img src="../../../assets/kommersnart.png">
-      <div class="overlay">
-        <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
+    <div class="feature-content content-wrapper">
+      <div class="content-grid">
+        <div class="feature-game">
+          <img src="../../../assets/media/blackjack.webp">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon" routerLink="blackjack"></i>
+          </div>
+        </div>
+        <div class="feature-game">
+          <img src="../../../assets/media/roulette-game.png">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon" routerLink="roulette"></i>
+          </div>
+        </div>
+        <div class="feature-game">
+          <img src="../../../assets/media/slots-game.jpg">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
+        <div class="feature-game coming">
+          <img src="../../../assets/game-pictures/bookofthedead.jpg">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
+        <div class="feature-game coming">
+          <img src="../../../assets/game-pictures/gonzosquest.jpg">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
+        <div class="feature-game coming">
+          <img src="../../../assets/game-pictures/megamoolah.png">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>

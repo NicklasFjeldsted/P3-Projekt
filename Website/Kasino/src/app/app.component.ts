@@ -36,6 +36,7 @@ export class AppComponent implements OnInit
 
   sideNav: HTMLElement;
   backDrop: HTMLElement;
+  hasVisited = false;
 
   ngOnInit(): void {
     this.sideNav = document.getElementById('sideNav')!;
@@ -61,5 +62,14 @@ export class AppComponent implements OnInit
     this.router.navigate([site]);
   }
 
+  onActivate(){
+    if(document.getElementsByTagName('app-home').length == 0 || this.hasVisited == true) {
+      document.getElementById('component-container')!.style.height = '100%';
+    }
+    else if(document.getElementsByTagName('app-home').length != 0){
+      this.hasVisited = true;
+      document.getElementById('component-container')!.style.height = '1500px';
+    }
+  }
 
 }
