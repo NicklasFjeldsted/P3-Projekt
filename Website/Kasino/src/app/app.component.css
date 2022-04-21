@@ -8,7 +8,7 @@
 	width: 100%;
 	background-color: black;
 	opacity: 0.50;
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 }
