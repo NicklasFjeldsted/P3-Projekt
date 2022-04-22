@@ -192,12 +192,11 @@ nav > .wrapper > .nav-wrapper {
 
 .feature-game .overlay {
   position: absolute;
-  left: -3px;
   right: 0;
   top: 100%;
   background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 0,rgba(0,0,0,.4));
   overflow: hidden;
-  width: 256px;
+  width: 250px;
   height: 0;
   transition: .15s linear;
   border-radius: 3px;
@@ -207,13 +206,14 @@ nav > .wrapper > .nav-wrapper {
 }
 
 .feature-game > img {
-  width: 256px;
-  height: 192px;
+  max-width: 256px;
+  width: 100%;
+  height: auto;
 }
 
 .feature-game:hover .overlay {
   top: 0;
-  height: 192px;
+  height: 188px;
   cursor: pointer;
 }
 
