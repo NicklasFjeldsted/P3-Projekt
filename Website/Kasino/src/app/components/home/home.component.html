@@ -3,156 +3,345 @@
     <img src="../../../assets/media/kasino-banner.png">
   </div>
 </div>
-<div class="game-container">
+<div class="game-container" [ngSwitch]="category">
   <nav>
     <div class="wrapper">
       <div class="nav-wrapper">
         <ul class="navbar" id="navbar">
           <li class="active" (click)="addActive(0)">Udvalgte</li>
-          <li (click)="addActive(1)">Casino</li>
+          <li (click)="addActive(1)">Klassisk Casino</li>
           <li (click)="addActive(2)">Spilleautomater</li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="featured-section">
-    <div class="featured-game-grid">
-      <div class="promotion">
-        <img src="../../../assets/media/promotion1.png">
-        <div class="promotion-text">
-          <div class="title">Modtag din velkomstbonus ved første indbetaling</div>
-          <div class="subtitle"></div>
-          <div class="footer">
-            <a class="footer-button" routerLink="tilmeld">Tilmeld dig</a>
-            <span class="footer-text">18+ | Kun nye spillere | Vælg ét ud af 2 (2) velkomsttilbud | Regler og vilkår er gældende pr. velkomsttilbud</span>
+
+  <!-- Udvalgte kategori -->
+
+  <div class="featured-category" *ngSwitchCase="'0'">
+    <div class="featured-section">
+      <div class="featured-game-grid">
+        <div class="promotion">
+          <img src="../../../assets/media/promotion1.png">
+          <div class="promotion-text">
+            <div class="title">Modtag din velkomstbonus ved første indbetaling</div>
+            <div class="subtitle"></div>
+            <div class="footer">
+              <a class="footer-button" routerLink="tilmeld">Tilmeld dig</a>
+              <span class="footer-text">18+ | Kun nye spillere | Vælg ét ud af 2 (2) velkomsttilbud | Regler og vilkår er gældende pr. velkomsttilbud</span>
+            </div>
+          </div>
+        </div>
+        <div class="featured-game">
+          <img src="../../../assets/media/blackjack.webp">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon" routerLink="blackjack"></i>
+          </div>
+        </div>
+        <div class="featured-game">
+          <img src="../../../assets/media/roulette-game.png">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon" routerLink="roulette"></i>
+          </div>
+        </div>
+        <div class="featured-game">
+          <img src="../../../assets/media/slots-game.jpg">
+          <div class="overlay">
+            <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
+          </div>
+        </div>
+        <div class="featured-game coming">
+          <img src="../../../assets/game-pictures/bookofthedead.jpg">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="featured-game coming">
+          <img src="../../../assets/game-pictures/gonzosquest.jpg">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="featured-game coming">
+          <img src="../../../assets/game-pictures/megamoolah.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
           </div>
         </div>
       </div>
-      <div class="featured-game">
-        <img src="../../../assets/media/blackjack.webp">
-        <div class="overlay">
-          <i class="fa-solid fa-circle-play play-icon" routerLink="blackjack"></i>
+    </div>
+    <div class="casino-game-section">
+      <div class="casino-game-grid">
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="featured-game">
-        <img src="../../../assets/media/roulette-game.png">
-        <div class="overlay">
-          <i class="fa-solid fa-circle-play play-icon" routerLink="roulette"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="featured-game">
-        <img src="../../../assets/media/slots-game.jpg">
-        <div class="overlay">
-          <i class="fa-solid fa-circle-play play-icon" routerLink="slots"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="featured-game coming">
-        <img src="../../../assets/game-pictures/bookofthedead.jpg">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="featured-game coming">
-        <img src="../../../assets/game-pictures/gonzosquest.jpg">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="featured-game coming">
-        <img src="../../../assets/game-pictures/megamoolah.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+              <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+              <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div class="casino-game-section">
-    <div class="casino-game-grid">
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+
+<!-- Klassisk casino kategori -->
+
+  <div class="casino-category" *ngSwitchCase="'1'">
+    <div class="casino-game-section">
+      <div class="casino-game-grid">
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+              <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+          <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
       </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+    </div>
+  </div>
+  <!-- Spilleautomater kategori -->
+  <div class="slots-category" *ngSwitchCase="'2'">
+    <div class="casino-game-section">
+      <div class="casino-game-grid">
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-            <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+              <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-      <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
-      </div>
-            <div class="casino-game coming">
-        <img src="../../../assets/game-pictures/kommersnart.png">
-        <div class="overlay">
-          <div class="overlay-text">Coming soon!</div>
-          <i class="fa-solid"></i>
+        <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
+        </div>
+          <div class="casino-game coming">
+          <img src="../../../assets/game-pictures/kommersnart.png">
+          <div class="overlay">
+            <div class="overlay-text">Coming soon!</div>
+            <i class="fa-solid"></i>
+          </div>
         </div>
       </div>
     </div>

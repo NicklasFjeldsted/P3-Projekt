@@ -46,8 +46,11 @@ p
   position: relative;
   width: 100%;
   overflow: hidden;
-  height: 100%;
+  height: auto;
+  margin-bottom: 25px;
 }
+
+/* navbar section */
 
 .game-container > nav {
   width: 100%;
@@ -108,7 +111,7 @@ nav > .wrapper > .nav-wrapper {
   color: #fff;
 }
 
-/* GRID SECTION */
+/* Grid section */
 
 .featured-section, .casino-game-section {
   width: 1600px;
@@ -144,7 +147,7 @@ nav > .wrapper > .nav-wrapper {
 }
 
 
-/* Promotion section*/
+/* Promotion slider section*/
 
 .featured-game-grid > .promotion {
   grid-area: a;

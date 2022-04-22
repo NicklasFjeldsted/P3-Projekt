@@ -12,6 +12,7 @@ export class HomeComponent
 {
   loading = false;
   users: User[];
+  category: number = 0;
 
   constructor(private customerService: CustomerService) { }
 
@@ -19,6 +20,7 @@ export class HomeComponent
 
   addActive(id: number): void {
     const nav = document.getElementById("navbar")!.children;
+    this.category = id;
     for(let i = 0; i < 3; i++) {
       if(nav[i].classList.contains('active')) {
         nav[i].classList.remove('active');
