@@ -86,10 +86,21 @@ nav > .wrapper > .nav-wrapper {
   font-size: .875rem;
   display: inline-block;
   vertical-align: bottom;
-  padding: 15px 9pt;
-  margin-bottom: -2px;
-  border-bottom: 5px solid transparent;
+  padding: 18px 9pt;
   transition: color .25s ease-in-out;
+}
+
+.navbar > li.active::before {
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #e78553;
+  border-radius: 6px;
+  transform: translate(-50%);
 }
 
 .navbar > li:hover {

@@ -5,16 +5,16 @@
 }
 
 
-.footer 
+.footer
 {
 	height: auto;
 	width: 100%;
 	box-shadow: 0 -.25pc 1pc rgba(0,0,0,.4);
-  background-color: rgb(29, 29, 29);
-  color: white;
-  display:flex;
+	background-color: rgb(29, 29, 29);
+	color: white;
+	display:flex;
 	align-items: center;
-  min-width: 1525px;
+	min-width: 1525px;
 }
 
 .footer-icons 
