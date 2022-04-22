@@ -249,6 +249,6 @@ nav > .wrapper > .nav-wrapper {
 
 .overlayText
 {
-  height: 70%;
+  font: bold;
   color: white;
 }
