@@ -1,12 +1,14 @@
 import { GameObject } from "../../gameObject";
 import { CanvasLayer } from "../canvas";
 import { IComponent } from "../ecs";
+import { Vector2 } from "../vector2";
 
 export class SpriteRendererComponent implements IComponent
 {
 	public gameObject: GameObject;
 
 	public image: string | null;
+	public layer: number | undefined;
 
 	constructor(private imageSource?: string)
 	{
@@ -31,6 +33,7 @@ export class SpriteRendererComponent implements IComponent
 
 	Dispose(): void
 	{
+		this.Clear();
 		this.gameObject.RemoveComponent(SpriteRendererComponent);
 	}
 
@@ -41,12 +44,18 @@ export class SpriteRendererComponent implements IComponent
 		{
 			return;
 		}
-		this.gameObject.Size = CanvasLayer.GetLayer(1).DrawImage(this.image!, this.gameObject.transform);
+
+		if (this.image == null)
+		{
+			this.Clear();
+			return;
+		}
+		this.gameObject.Size = CanvasLayer.GetLayer(this.layer ? this.layer : 1).DrawImage(this.image!, this.gameObject.transform);
 	}
 
 	/** Clear a Sprite from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.GetLayer(1).ClearRectV3(this.gameObject.transform.position, this.gameObject.Size);
+		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRectV3(this.gameObject.transform.position, new Vector2(this.gameObject.Size.x + 1, this.gameObject.Size.y + 1));
 	}
 }

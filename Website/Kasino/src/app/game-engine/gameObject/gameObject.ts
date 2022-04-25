@@ -250,6 +250,11 @@ export class GameObject extends Entity
 
 	public Destroy(): void
 	{
+		for (let component of this._components)
+		{
+			component.Dispose();
+		}
+
 		if (this._parent)
 		{
 			this.parent.DestroyChild(this);
