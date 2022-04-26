@@ -25,7 +25,8 @@ a, span {
 	max-width: 25%;
 	display: flex;
 	align-items: center;
-	padding-left: 10px;
+	padding-left: 40px;
+  padding-right: 40px;
 	flex-direction: row;
 	gap: 2.5em;
 }
