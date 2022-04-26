@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
 
@@ -28,11 +28,7 @@ export class Seat extends MonoBehaviour
 
 	public Start(): void
 	{
-		this.transform.scale = .1;
 		this.collider = this.gameObject.GetComponent(ColliderComponent);
-		this.standButtonCollider.gameObject.transform.Translate(new Vector3(50, 0, 0));
-		this.standButtonCollider.Size = new Vector2(100, 30);
-		this.hitButtonCollider.Size = new Vector2(50, 30);
 		this.house = this.gameObject.parent.GetComponent(House);
 	}
 
@@ -43,13 +39,13 @@ export class Seat extends MonoBehaviour
 			this.CreateCardDisplay(i);
 		}
 
-
 		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.png'));
 		this.gameObject.AddComponent(new ColliderComponent());
 		//console.log(`${this.gameObject.gameObjectName} - Components: `, this.gameObject.Components);
 		
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		this.gameObject.game.Instantiate(seatText);
+		seatText.transform.scale = new Vector2(100, 30);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
 		this.seatText = seatText.GetComponent(TextComponent);
@@ -58,30 +54,37 @@ export class Seat extends MonoBehaviour
 		this.gameObject.game.Instantiate(cardsChild);
 		cardsChild.SetParent(this.gameObject);
 		cardsChild.AddComponent(new TextComponent(' '));
-		cardsChild.transform.Translate(new Vector3(0, -30, 0));
+		cardsChild.transform.Translate(new Vector2(0, -30));
 		this.childTextComponent = cardsChild.GetComponent(TextComponent);
 
 		let buttons = new GameObject(`${this.gameObject.gameObjectName}'s buttons`);
 		this.gameObject.game.Instantiate(buttons);
+		buttons.transform.scale = new Vector2(100, 30);
 		buttons.SetParent(this.gameObject);
-		buttons.transform.Translate(new Vector3(0, -60, 0));
+		buttons.transform.Translate(new Vector2(0, -60));
+		buttons.AddComponent(new SpriteRendererComponent('../../../../../assets/announcer.jpg'));
 		
 		let hitButton = new GameObject(`${buttons.gameObjectName}'s Hit Button`);
 		this.gameObject.game.Instantiate(hitButton);
 		hitButton.SetParent(buttons);
+		hitButton.transform.scale = new Vector2(50, 30);
+		hitButton.transform.Translate(new Vector2(0, 24));
 		hitButton.AddComponent(new TextComponent("Hit"));
 		hitButton.AddComponent(new ColliderComponent());
 		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
-
+		
 		let standButton = new GameObject(`${buttons.gameObjectName}'s Stand Button`);
 		this.gameObject.game.Instantiate(standButton);
 		standButton.SetParent(buttons);
+		standButton.transform.scale = new Vector2(50, 30);
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
+		standButton.transform.Translate(new Vector2(50, 0));
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
 
 		let resultTextChild = new GameObject(`${this.gameObject.gameObjectName}'s Result Child`);
 		this.gameObject.game.Instantiate(resultTextChild);
+		resultTextChild.transform.scale = new Vector2(100, 30);
 		resultTextChild.SetParent(this.gameObject);
 		resultTextChild.AddComponent(new TextComponent('@result'));
 		resultTextChild.transform.Translate(new Vector2(0, -90));
@@ -143,7 +146,7 @@ export class Seat extends MonoBehaviour
 		}
 	}
 
-	public UpdateIsMyTurn(newValue: boolean)
+	public UpdateIsMyTurn(newValue: boolean): void
 	{
 		this.myTurn = newValue;
 
@@ -231,8 +234,6 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-
-
 		throw new Error(`${this.gameObject.gameObjectName} - NO CARD OBJECT! - `);
 	}
 
@@ -244,41 +245,34 @@ export class Seat extends MonoBehaviour
 		}
 	}
 
-	private get cleared(): boolean
-	{
-		let output = 0;
-		
-		for (let displayCard of this.displayedCards)
-		{
-			if (displayCard.GetComponent(SpriteRendererComponent).image == null) output++;
-		}
-
-		return output >= this.displayedCards.length;
-	}
-
+	/** Creates the object that displays the card. */
 	private CreateCardDisplay(index: number): void
 	{
 		let cardChild = new GameObject(`${this.gameObject.gameObjectName}'s CARD - ${index+1}`);
 		this.gameObject.game.Instantiate(cardChild);
 		this.displayedCards.push(cardChild);
 
-		cardChild.transform.scale = 0.08;
+		cardChild.transform.scale = new Vector2(-85, -85);
 		cardChild.SetParent(this.gameObject);
+
+		let positionY: number = -160;
 
 		if (this.displayedCards.length < 2)
 		{
-			cardChild.transform.Translate(new Vector2(0, -120));
+			cardChild.transform.Translate(new Vector2(0, positionY));
 		}
 		else
 		{
-			let position: number = index * 15;
-			cardChild.transform.Translate(new Vector2(position, -120));
+			let position: number = index * 22;
+			cardChild.transform.Translate(new Vector2(position, positionY));
 		}
 
 		cardChild.AddComponent(new SpriteRendererComponent());
 		let layer: number = this.displayedCards.length - 15;
 		let renderer = cardChild.GetComponent(SpriteRendererComponent);
 		renderer.layer = layer;
+		renderer.shadow = true;
+		renderer.shadowSize = 10;
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */

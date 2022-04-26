@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { GameObject, MonoBehaviour, TextComponent, Vector3 } from "src/app/game-engine";
+import { GameObject, MonoBehaviour, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 import { Player, PlayerData } from "../player";
@@ -63,10 +63,10 @@ export class House extends MonoBehaviour
 
 	Awake(): void
 	{
-		this.CreateSeat(1, new Vector3(0, 500, 0));
-		for (let i = 1; i < 9; i++)
+		let offset: number = 200;
+		for (let i = 0; i < 5; i++)
 		{
-			this.CreateSeat(i+1, new Vector3(i * 107, 500, 0));
+			this.CreateSeat(i+1, new Vector2(i * offset + 80, 550));
 		}
 
 		let cardChild = new GameObject('House Cards');
@@ -75,7 +75,7 @@ export class House extends MonoBehaviour
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
 
-		cardChild.transform.Translate(new Vector3(450, 50, 0));
+		cardChild.transform.Translate(new Vector2(450, 50));
 		cardChild.SetParent(this.gameObject);
 
 		this.childText.text = ' ';
@@ -175,13 +175,14 @@ export class House extends MonoBehaviour
 		Player.OnDataChanged.next(this.client.data);
 	}
 
-	private CreateSeat(id: number, position: Vector3): GameObject
+	private CreateSeat(id: number, position: Vector2): GameObject
 	{
 		let seat: GameObject = new GameObject(`Seat - ${id}`);
 		this.gameObject.game.Instantiate(seat);
 		seat.SetParent(this.gameObject);
 		seat.AddComponent(new Seat());
 		seat.GetComponent(Seat).seatIndex = id;
+		seat.transform.scale = new Vector2(100, 100);
 		seat.transform.position = position;
 		this.seats.push(seat.GetComponent(Seat));
 		return seat;

@@ -1,5 +1,4 @@
 import { Vector2, IAwake, Color, Transform } from "src/app/game-engine";
-import { Vector3 } from "../vector3";
 
 export class Canvas implements IAwake
 {
@@ -90,7 +89,7 @@ export class Canvas implements IAwake
 	}
 
 	/** Draws a square on the canvas. */
-	public FillRect(start: Vector2, size: Vector2, color: Color): void
+	public FillRect(start: Vector2, size: Vector2, color: Color = new Color(50, 205, 50, 1)): void
 	{
 		this._context.beginPath();
 		this._context.fillStyle = color.AsString();
@@ -98,15 +97,12 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
-	public FillOutline(start: Vector2, end: Vector2, color: Color = new Color(50, 205, 50, 1)): void
+	/** Draws a box on the canvas. */
+	public StrokeRect(start: Vector2, width: number, height: number, color: Color = new Color(50, 205, 50, 1)): void
 	{
 		this._context.beginPath();
 		this._context.strokeStyle = color.AsString();
-		this._context.moveTo(start.x, start.y);
-		this._context.lineTo(start.x, end.y);
-		this._context.lineTo(end.x, end.y);
-		this._context.lineTo(end.x, start.y);
-		this._context.lineTo(start.x, start.y);
+		this._context.rect(start.x, start.y, width, height);
 		this._context.stroke();
 	}
 
@@ -120,14 +116,9 @@ export class Canvas implements IAwake
 	}
 
 	/** Clear a rect from the canvas. */
-	public ClearRect(start: Vector2, size: Vector2): void
+	public ClearRect(start: Vector2, width: number, height: number): void
 	{
-		this._context.clearRect(start.x, start.y, size.x, size.y);
-	}
-	/** Clear a rect from the canvas. */
-	public ClearRectV3(start: Vector2, size: Vector2): void
-	{
-		this._context.clearRect(start.x, start.y, size.x, size.y);
+		this._context.clearRect(start.x, start.y, width, height);
 	}
 
 	public ClearCanvas(): void
@@ -136,35 +127,38 @@ export class Canvas implements IAwake
 	}
 
 	/** Draw text the canvas and return the width of it. */
-	public DrawText(text: string, transform: Transform, color?: Color): TextMetrics
+	public DrawText(text: string, position: Vector2, color?: Color): TextMetrics
 	{
 		this._context.font = "24px Arial";
-		this._context.fillText(text, transform.position.x, transform.position.y + 20);
+		this._context.fillText(text, position.x, position.y);
 		return this._context.measureText(text);
 	}
 
 	/** Draws and image to the canvas. */
-	public DrawImage(source: string, transform: Transform, color?: Color): Vector2
+	public DrawImage(source: string, center: Vector2, width: number, height: number, color?: Color): void
 	{
 		let image = new Image();
 		image.src = source;
 
-		if (image.src === '') 
+		if (image.src === '')
 		{
 			throw new Error('Image source not specified.');
 		}
 
-		const width = image.naturalHeight * transform.scale;
-		const height = image.naturalHeight * transform.scale;
-		this._context.drawImage(image, transform.position.x, transform.position.y, width, height);
-		if (color)
+		this._context.drawImage(image, center.x, center.y, width, height);
+
+		if (this.IsInverted(width, height))
 		{
-			this.recolorImage(image, width, height, transform.position, color);
+			this.RecolorImage(image, width, height, center, new Color(255, 0, 0, 1));
 		}
-		return new Vector2(width, height);
+		else if (color)
+		{
+			this.RecolorImage(image, width, height, center, color);
+		}
 	}
 
-	private recolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color)
+	/** Overlays a new color on the image. */
+	private RecolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color)
 	{
 		// pull the entire image into an array of pixel data
 		var imageData = this._context.getImageData(position.x, position.y, width, height);
@@ -180,5 +174,18 @@ export class Canvas implements IAwake
 		}
 		// put the altered data back on the canvas  
 		this._context.putImageData(imageData, position.x, position.y);
+	}
+
+	/** Checks if the image rendered has been inverted. I.E. it folds over itself. */
+	private IsInverted(width: number, height: number): boolean
+	{
+		if (width.toString().includes('-') || height.toString().includes('-'))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }

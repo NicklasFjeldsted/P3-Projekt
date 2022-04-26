@@ -1,5 +1,5 @@
 import { Game } from "../game/game";
-import { Entity, IComponent, Transform, Vector2, Vector3 } from "../utils";
+import { Entity, IComponent, Transform, Vector2 } from "../utils";
 
 type AbstractComponent<T> = Function & { prototype: T; };
 type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };
@@ -60,8 +60,8 @@ export class GameObject extends Entity
 	public SetParent(newParent: GameObject): void
 	{
 		this.transform.position = new Vector2(
-			this.transform.position!.x + newParent.transform.position!.x,
-			this.transform.position!.y + newParent.transform.position!.y
+			newParent.transform.position.x + this.transform.position.x,
+			newParent.transform.position.y + this.transform.position.y
 		);
 
 		this._parent = newParent;
@@ -75,34 +75,6 @@ export class GameObject extends Entity
 	public get transform(): Transform
 	{
 		return this.GetComponent(Transform);
-	}
-
-	private _size: Vector2 | null = new Vector2(100, 100);
-
-	/** **deprecated** 
-	 * Get the size of the GameObject.
-	 * 
-	 * This is the overall Width and Height of the GameObject.
-	 */
-	public get Size(): Vector2
-	{
-		if (this._size)
-		{
-			return this._size;
-		}
-		throw new Error(`${this.gameObjectName} - Null reference error!`);
-	}
-
-	/** **deprecated**
-	 * Set the size of the GameObject.
-	 * 
-	 * This is the overall Width and Height of the GameObject.
-	 * 
-	 * This is **ONLY** supposed to be set by a rendering component.
-	*/
-	public set Size(value: Vector2)
-	{
-		this._size = value;
 	}
 
 	// Create a protected array of IComponents.
@@ -156,9 +128,15 @@ export class GameObject extends Entity
 	// }
 
 	/** Add a new component to this entity. */
-	public AddComponent(component: IComponent): GameObject
+	public AddComponent(component: IComponent, index?: number): GameObject
 	{
 		component.gameObject = this;
+		if (index)
+		{
+			this._components.splice(index, 0, component);
+			return this;
+		}
+
 		this._components.push(component);
 		return this;
 	}
@@ -310,7 +288,7 @@ export class GameObject extends Entity
 				component.Dispose();
 			}
 
-			this._size = null;
+			//this._size = null;
 
 			console.groupEnd();
 		}).then(() =>

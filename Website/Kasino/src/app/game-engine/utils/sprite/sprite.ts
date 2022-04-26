@@ -1,4 +1,4 @@
-import { Vector3 } from "../vector3";
+import { Vector2 } from "../vector2";
 
 export class Sprite
 {
@@ -17,12 +17,11 @@ export class Sprite
 	}
 
 	/** Public getter for the Size of this Sprite. */
-	public get Size(): Vector3
+	public get Size(): Vector2
 	{
-		return new Vector3(
+		return new Vector2(
 			this._image.naturalWidth - this._image.width,
-			this._image.naturalHeight - this._image.height,
-			0
+			this._image.naturalHeight - this._image.height
 		)
 	}
 }

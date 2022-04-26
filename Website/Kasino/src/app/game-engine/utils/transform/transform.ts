@@ -6,8 +6,12 @@ export class Transform implements IComponent
 {
 	private _position: Vector2 | null;
 	private _rotation: Vector2 | null;
-	private _scale: number | null;
+	private _scale: Vector2 | null;
 
+	public get center(): Vector2
+	{
+		return new Vector2(this.position.x - this.scale.x / 2, this.position.y - this.scale.y / 2);
+	}
 	public get position(): Vector2
 	{
 		if (this._position)
@@ -24,7 +28,7 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
 	}
-	public get scale(): number
+	public get scale(): Vector2
 	{
 		if (this._scale)
 		{
@@ -32,29 +36,29 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - scale is null!`);
 	}
-	public set position(newPosition: Vector2)
+	public set position(value: Vector2)
 	{
 		if (this._position)
 		{
-			this._position = newPosition;
+			this._position = value;
 			return;
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
 	}
-	public set rotation(newRotation: Vector2)
+	public set rotation(value: Vector2)
 	{
 		if (this._rotation)
 		{
-			this._rotation = newRotation;
+			this._rotation = value;
 			return;
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
 	}
-	public set scale(newScale: number)
+	public set scale(value: Vector2)
 	{
 		if (this._scale)
 		{
-			this._scale = newScale;
+			this._scale = value;
 			return;
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - scale is null!`);
@@ -64,7 +68,7 @@ export class Transform implements IComponent
 	{ 
 		this._position = new Vector2(0, 0);
 		this._rotation = new Vector2(0, 0);
-		this._scale = 1;
+		this._scale = new Vector2(0, 0);
 	}
 
 	public gameObject: GameObject;
@@ -90,6 +94,20 @@ export class Transform implements IComponent
 		this._rotation = null
 		this._scale = null;
 		this.gameObject.RemoveComponent(Transform);
+	}
+
+	public Equals(value1: Vector2, value2: Vector2): boolean
+	{
+		if (value1.x == value2.x || value1.y == value2.y)
+		{
+			return true;
+		}
+		else if (value2.x == value1.x || value2.y == value1.y)
+		{
+			return true;
+		}
+
+		return false;
 	}
 	
 	/** Translate this Transform's position. */

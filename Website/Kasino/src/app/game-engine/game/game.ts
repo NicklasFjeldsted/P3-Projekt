@@ -1,5 +1,5 @@
 import { GameObject } from '../gameObject';
-import { Entity, Vector3 } from '../utils';
+import { CanvasLayer, Entity, Vector2 } from '../utils';
 import { NetworkingFeature } from './components';
 
 type AbstractFeature<T> = Function & { prototype: T; };
