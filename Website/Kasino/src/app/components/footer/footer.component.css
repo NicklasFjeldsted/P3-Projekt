@@ -1,61 +1,46 @@
-:host() 
+:host
 {
 	height: 300px;
 	width: 100vw;
 }
 
+a, span {
+	color: #777;
+}
 
 .footer
 {
+	max-width: 100%;
 	height: auto;
-	width: 100%;
 	box-shadow: 0 -.25pc 1pc rgba(0,0,0,.4);
 	background-color: rgb(29, 29, 29);
 	color: white;
 	display:flex;
+	flex-direction: row;
 	align-items: center;
-	min-width: 1525px;
 }
 
 .footer-icons 
 {
-	width: 15%;
+	max-width: 25%;
 	display: flex;
 	align-items: center;
+	padding-left: 10px;
 	flex-direction: row;
 	gap: 2.5em;
-	height: fit-content;
-	overflow: hidden;
-}
-
-.footer-icons > a 
-{
-	max-width: 100px;
-	min-width: 50px;
-	max-height: 100px;
-	min-height: 50px;
-	display:flex;
-	align-items: center;
-	position: relative;
-	left: 50px;
-}
-
-.footer-icons > a > img 
-{
-	width: 100%;
-	height: auto;
 }
 
 .footer-text 
 {
-  width: 75%;
+  max-width: 75%;
   color: gray;
   padding: 2.5em;
   font-size: .8125rem;
   color: #444;
 }
 
-.footer-text > p > span, .footer-text > p > span > a {
-	color: #777;
+@media (max-width: 850px) {
+	.footer-icons {
+		flex-direction: column;
+	}
 }
-
