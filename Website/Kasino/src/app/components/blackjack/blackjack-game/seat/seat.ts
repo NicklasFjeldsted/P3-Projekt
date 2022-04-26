@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
+import { ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2, Vector3 } from "src/app/game-engine";
 import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
 
@@ -24,6 +24,7 @@ export class Seat extends MonoBehaviour
 	private hitButtonCollider: ColliderComponent;
 	private standButtonCollider: ColliderComponent;
 	private house: House;
+	private displayedCards: GameObject[] = [];
 
 	public Start(): void
 	{
@@ -37,6 +38,12 @@ export class Seat extends MonoBehaviour
 
 	public Awake(): void
 	{
+		for (let i = 0; i < 6; i++)
+		{
+			this.CreateCardDisplay(i);
+		}
+
+
 		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.png'));
 		this.gameObject.AddComponent(new ColliderComponent());
 		//console.log(`${this.gameObject.gameObjectName} - Components: `, this.gameObject.Components);
@@ -154,11 +161,13 @@ export class Seat extends MonoBehaviour
 			this.childTextComponent.text = ' ';
 			this.resultTextChildComponent.text = ' ';
 			this.seatText.text = this.gameObject.gameObjectName;
+			this.ClearCards();
 			return;
 		}
 
 		if (this.house.stage == GameStage.Ended)
 		{
+			setTimeout(() => this.ClearCards(), 4000);
 			if (this.Player.data.winner == true)
 			{
 				this.resultTextChildComponent.text = "WIN!";
@@ -173,12 +182,103 @@ export class Seat extends MonoBehaviour
 			this.resultTextChildComponent.text = ' ';
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.seatText.text = this.Player.data.fullName;
+			for (let card of this.Player.data.cards)
+			{
+				if (!this.IsCardDisplayed(card.id))
+				{
+					this.DisplayCard(card.id);
+				}
+			}
 		}
 		else if (this.house.stage == GameStage.Off)
 		{
 			this.resultTextChildComponent.text = ' ';
 			this.seatText.text = this.Player.data.fullName;
+			this.ClearCards();
 		}
+	}
+
+	private IsCardDisplayed(cardID: number): boolean
+	{
+		for (let displayCard of this.displayedCards)
+		{
+			let renderer = displayCard.GetComponent(SpriteRendererComponent);
+
+			if (renderer.image == null) continue;
+
+			if (!renderer.image.includes(`${cardID}`)) continue;
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/** Loads a card PNG and displays it. */
+	private DisplayCard(cardID: number): void
+	{
+		if (!this.Player) return;
+
+		let imagePath: string = `../../../../../assets/media/blackjack-game/cards/${cardID}.png`;
+		
+		for (let displayCard of this.displayedCards)
+		{
+			let renderer = displayCard.GetComponent(SpriteRendererComponent);
+
+			if (renderer.image != null) continue;
+
+			renderer.image = imagePath;
+			return;
+		}
+
+
+
+		throw new Error(`${this.gameObject.gameObjectName} - NO CARD OBJECT! - `);
+	}
+
+	private ClearCards(): void
+	{
+		for (let displayCard of this.displayedCards)
+		{
+			displayCard.GetComponent(SpriteRendererComponent).image = null;
+		}
+	}
+
+	private get cleared(): boolean
+	{
+		let output = 0;
+		
+		for (let displayCard of this.displayedCards)
+		{
+			if (displayCard.GetComponent(SpriteRendererComponent).image == null) output++;
+		}
+
+		return output >= this.displayedCards.length;
+	}
+
+	private CreateCardDisplay(index: number): void
+	{
+		let cardChild = new GameObject(`${this.gameObject.gameObjectName}'s CARD - ${index+1}`);
+		this.gameObject.game.Instantiate(cardChild);
+		this.displayedCards.push(cardChild);
+
+		cardChild.transform.scale = 0.08;
+		cardChild.SetParent(this.gameObject);
+
+		if (this.displayedCards.length < 2)
+		{
+			cardChild.transform.Translate(new Vector2(0, -120));
+		}
+		else
+		{
+			let position: number = index * 15;
+			cardChild.transform.Translate(new Vector2(position, -120));
+		}
+
+		cardChild.AddComponent(new SpriteRendererComponent());
+		let layer: number = this.displayedCards.length - 15;
+		let renderer = cardChild.GetComponent(SpriteRendererComponent);
+		renderer.layer = layer;
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */

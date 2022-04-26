@@ -45,7 +45,6 @@ export class ColliderComponent implements IComponent
 	{
 		this._start = new Vector2(0, 0);
 		this._end = new Vector2(100, 100);
-		//this.Size = startSize ? startSize : new Vector2(100, 100);
 	}
 
 	Awake(): void
