@@ -185,7 +185,6 @@
 .right nav {
   max-width: 100%;
   height: auto;
-  display: flex;
 }
 
 @media (max-width: 680px) {
