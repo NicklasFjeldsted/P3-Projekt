@@ -97,12 +97,27 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
+	public RoundedRect(start: Vector2, size: Vector2, radius: number, color: Color = new Color(50, 205, 50, 1)): void
+	{
+		if (size.x < 2 * radius) radius = size.x / 2;
+		if (size.y < 2 * radius) radius = size.y / 2;
+		this._context.beginPath();
+		this._context.fillStyle = color.AsString();
+		this._context.moveTo(start.x + radius, start.y);
+		this._context.arcTo(start.x + size.x, start.y, start.x + size.x, start.y + size.x, radius);
+		this._context.arcTo(start.x + size.x, start.y + size.x, start.x, start.y + size.x, radius);
+		this._context.arcTo(start.x, start.y + size.x, start.x, start.y, radius);
+		this._context.arcTo(start.x, start.y, start.x + size.x, start.y, radius);
+		this._context.closePath();
+		this._context.fill();
+	}
+
 	/** Draws a box on the canvas. */
-	public StrokeRect(start: Vector2, width: number, height: number, color: Color = new Color(50, 205, 50, 1)): void
+	public StrokeRect(start: Vector2, size: Vector2, color: Color = new Color(50, 205, 50, 1)): void
 	{
 		this._context.beginPath();
 		this._context.strokeStyle = color.AsString();
-		this._context.rect(start.x, start.y, width, height);
+		this._context.rect(start.x, start.y, size.x, size.y);
 		this._context.stroke();
 	}
 
@@ -116,9 +131,9 @@ export class Canvas implements IAwake
 	}
 
 	/** Clear a rect from the canvas. */
-	public ClearRect(start: Vector2, width: number, height: number): void
+	public ClearRect(start: Vector2, size: Vector2): void
 	{
-		this._context.clearRect(start.x, start.y, width, height);
+		this._context.clearRect(start.x, start.y, size.x, size.y);
 	}
 
 	public ClearCanvas(): void
@@ -130,12 +145,20 @@ export class Canvas implements IAwake
 	public DrawText(text: string, position: Vector2, color?: Color): TextMetrics
 	{
 		this._context.font = "24px Arial";
+		this._context.textAlign = "center";
+		this._context.textBaseline = "middle";
 		this._context.fillText(text, position.x, position.y);
 		return this._context.measureText(text);
 	}
 
+	/** Return the pixel width of a string. */
+	public MeasureText(text: string): number
+	{
+		return this._context.measureText(text).width;
+	}
+
 	/** Draws and image to the canvas. */
-	public DrawImage(source: string, center: Vector2, width: number, height: number, color?: Color): void
+	public DrawImage(source: string, start: Vector2, size: Vector2, color?: Color): void
 	{
 		let image = new Image();
 		image.src = source;
@@ -145,15 +168,15 @@ export class Canvas implements IAwake
 			throw new Error('Image source not specified.');
 		}
 
-		this._context.drawImage(image, center.x, center.y, width, height);
+		this._context.drawImage(image, start.x, start.y, size.x, size.y);
 
-		if (this.IsInverted(width, height))
+		if (this.IsInverted(size.x, size.y))
 		{
-			this.RecolorImage(image, width, height, center, new Color(255, 0, 0, 1));
+			this.RecolorImage(image, size.x, size.y, start, new Color(255, 0, 0, 1));
 		}
 		else if (color)
 		{
-			this.RecolorImage(image, width, height, center, color);
+			this.RecolorImage(image, size.x, size.y, start, color);
 		}
 	}
 

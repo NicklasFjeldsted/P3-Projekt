@@ -8,15 +8,20 @@ export class Transform implements IComponent
 	private _rotation: Vector2 | null;
 	private _scale: Vector2 | null;
 
-	public get center(): Vector2
-	{
-		return new Vector2(this.position.x - this.scale.x / 2, this.position.y - this.scale.y / 2);
-	}
 	public get position(): Vector2
 	{
 		if (this._position)
 		{
 			return this._position;
+		}
+		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
+	}
+	public set position(value: Vector2)
+	{
+		if (this._position)
+		{
+			this._position = value;
+			return;
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
 	}
@@ -28,23 +33,6 @@ export class Transform implements IComponent
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
 	}
-	public get scale(): Vector2
-	{
-		if (this._scale)
-		{
-			return this._scale;
-		}
-		throw new Error(`${this.gameObject.gameObjectName}'s transform - scale is null!`);
-	}
-	public set position(value: Vector2)
-	{
-		if (this._position)
-		{
-			this._position = value;
-			return;
-		}
-		throw new Error(`${this.gameObject.gameObjectName}'s transform - position is null!`);
-	}
 	public set rotation(value: Vector2)
 	{
 		if (this._rotation)
@@ -53,6 +41,14 @@ export class Transform implements IComponent
 			return;
 		}
 		throw new Error(`${this.gameObject.gameObjectName}'s transform - rotation is null!`);
+	}
+	public get scale(): Vector2
+	{
+		if (this._scale)
+		{
+			return this._scale;
+		}
+		throw new Error(`${this.gameObject.gameObjectName}'s transform - scale is null!`);
 	}
 	public set scale(value: Vector2)
 	{
@@ -85,7 +81,7 @@ export class Transform implements IComponent
 
 	Update(deltaTime: number): void
 	{
-		
+
 	}
 
 	Dispose(): void
@@ -114,5 +110,9 @@ export class Transform implements IComponent
 	public Translate(value: Vector2)
 	{
 		this.position = new Vector2(this.position.x + value.x, this.position.y + value.y);
+		for (let child of this.gameObject.Children)
+		{
+			child.transform.Translate(new Vector2(this.position.x, this.position.y));
+		}
 	}
 }

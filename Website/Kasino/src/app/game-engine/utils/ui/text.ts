@@ -1,5 +1,5 @@
 import { GameObject } from "../../gameObject";
-import { CanvasLayer } from "../canvas";
+import { Canvas, CanvasLayer } from "../canvas";
 import { IComponent } from "../ecs";
 import { RectTransform } from "../rectTransform";
 import { Vector2 } from "../vector2";
@@ -13,6 +13,20 @@ export class TextComponent implements IComponent
 
 	public rectTransform: RectTransform;
 
+	private offset: number = 5;
+
+	private _width: number = 0;
+
+	public get width(): number
+	{
+		return this._width;
+	}
+
+	public set width(value: number)
+	{
+		this._width = value;
+	}
+
 	constructor(private startText?: string)
 	{
 		this.text = startText ? startText : "Empty Text";
@@ -20,7 +34,7 @@ export class TextComponent implements IComponent
 
 	Start(): void
 	{
-
+		//this.gameObject.transform.scale = new Vector2(this.width, 30);
 	}
 
 	Awake(): void
@@ -55,12 +69,12 @@ export class TextComponent implements IComponent
 			return;
 		}
 
-		let textMetrics: TextMetrics = CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center);
+		this.width = CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center).width;
 	}
 
 	/** Clear Text from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.GetLayer(this.renderLayer).ClearRect(this.rectTransform.center, this.rectTransform.width, this.rectTransform.height);
+		CanvasLayer.GetLayer(this.renderLayer).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}
 }
