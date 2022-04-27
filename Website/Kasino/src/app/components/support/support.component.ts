@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SupportComponent implements OnInit {
 
+  helpSite: number = 0;
+
   constructor() { }
 
   ngOnInit(): void { }
+
+  changeSite(site: number) {
+    this.helpSite = site;
+  }
 }

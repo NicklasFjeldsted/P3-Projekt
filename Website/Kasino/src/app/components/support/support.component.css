@@ -108,3 +108,30 @@
 	background-color: #D4EFDF;
 }
 
+.bg-img
+{
+  background-image: url("../../../assets/casinoblur.jpg");
+}
+
+.generalt 
+{
+  height: 800px;
+}
+
+#generalt, #help-indbetaling, #help-login, #help-udbetaling, #velkomstbonusser
+{
+  height: 100%;
+  width: 100%;
+}
+
+.pdf 
+{
+  height: 100%;
+	width: 100%;
+	transform: scale(1.01);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	outline: none!important;
+}
+
