@@ -24,7 +24,12 @@ export class ColliderComponent implements IComponent
 
 	Start(): void
 	{
-
+		// console.groupCollapsed(this.gameObject.gameObjectName)
+		// console.log("Start:", this.rectTransform.start);
+		// console.log("End:", this.rectTransform.end);
+		// // console.log("size", this.rectTransform.size);
+		// // console.log("scale", this.gameObject.transform.scale);
+		// console.groupEnd();
 	}
 
 	Update(deltaTime: number): void
@@ -44,22 +49,22 @@ export class ColliderComponent implements IComponent
 		{
 			return false;
 		}
-
+		
 		if (point.x < this.rectTransform.start.x)
 		{
 			return false;
 		}
-
-		if (point.x > this.rectTransform.start.x)
+		
+		if (point.x > this.rectTransform.end.x)
 		{
 			return false;
 		}
-
-		if (point.y < this.rectTransform.end.y)
+		
+		if (point.y < this.rectTransform.start.y)
 		{
 			return false;
 		}
-
+		
 		if (point.y > this.rectTransform.end.y)
 		{
 			return false;
@@ -75,11 +80,11 @@ export class ColliderComponent implements IComponent
 			return;
 		}
 
-		CanvasLayer.GetLayer(2).StrokeRect(this.rectTransform.center, this.rectTransform.width, this.rectTransform.height);
+		CanvasLayer.GetLayer(2).StrokeRect(this.rectTransform.start, this.rectTransform.size);
 	}
 
 	public DEBUG_Clear(): void
 	{
-		CanvasLayer.GetLayer(2).ClearRect(this.rectTransform.center, this.rectTransform.width, this.rectTransform.height);
+		CanvasLayer.GetLayer(2).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}
 }

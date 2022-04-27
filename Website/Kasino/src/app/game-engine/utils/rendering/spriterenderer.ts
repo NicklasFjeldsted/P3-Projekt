@@ -102,12 +102,13 @@ export class SpriteRendererComponent implements IComponent
 		{
 			return;
 		}
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).DrawImage(this.image, this.rectTransform.center, this.rectTransform.width, this.rectTransform.height);
+
+		CanvasLayer.GetLayer(this.layer ? this.layer : 1).DrawImage(this.image, this.rectTransform.start, this.rectTransform.size);
 	}
 
 	/** Clear a Sprite from the canvas. */
 	private Clear(): void
 	{
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRect(this.rectTransform.center, this.rectTransform.width, this.rectTransform.height);
+		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}
 }

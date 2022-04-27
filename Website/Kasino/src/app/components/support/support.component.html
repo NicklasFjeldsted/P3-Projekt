@@ -1,19 +1,55 @@
-<div class="container">
-	<div class="searchbar-container">
+<div class="featured-sites" [ngSwitch]="helpSite">
+
+  <div class="container" >
+    <div class="searchbar-container">
 		<div class="searchbar">
-			<h1>Hvordan kan vi hjælpe?</h1>
+      <h1>Hvordan kan vi hjælpe?</h1>
 			<input class="input-searchbar" placeholder="Søg">
 		</div>
 	</div>
-
-	<div class="category-container h-center">
-		<section class="grid-container">
-			<a routerLink="/generalt"><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
-      <a routerLink="/help-indbetaling"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
-			<a routerLink="/help-udbetaling"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Udbetaling</div></a>
-			<a routerLink="/help-login"><div class="grid-item"><i class="fa-regular fa-id-card"></i>Registrering og log ind</div></a>
+  
+	<div class="category-container h-center" *ngSwitchCase="'0'">
+    <section class="grid-container">
+      <a (click)="changeSite(1)" ><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
+      <a (click)="changeSite(2)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
+			<a (click)="changeSite(3)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Udbetaling</div></a>
+			<a (click)="changeSite(4)"><div class="grid-item"><i class="fa-regular fa-id-card"></i>Registrering og log ind</div></a>
 			<a routerLink="/reglerOgBetingelser"><div class="grid-item"><i class="fa-solid fa-scroll"></i>Spilleregler</div></a>
-			<a routerLink="/velkomstbonusser"><div class="grid-item"><i class="fa-regular fa-gem"></i>Velkomstbonusser</div></a>
+			<a (click)="changeSite(5)"><div class="grid-item"><i class="fa-regular fa-gem"></i>Velkomstbonusser</div></a>
 		</section>
 	</div>
+  
+  <div class="bg-img">
+
+    <div class="generalt form-control  h-center" *ngSwitchCase="'1'">
+      <div id="generalt">
+        <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+        </div>
+      </div>
+      
+      <div class="generalt form-control  h-center" *ngSwitchCase="'2'">
+        <div id="help-indbetaling">
+          <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+          </div>
+        </div>
+        
+        <div class="generalt form-control  h-center" *ngSwitchCase="'3'">
+          <div id="help-login">
+            <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+            </div>
+          </div>
+          
+          <div class="generalt form-control  h-center" *ngSwitchCase="'4'">
+    <div id="help-udbetaling">
+      <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    </div>
+  </div>
+  
+  <div class="generalt form-control  h-center" *ngSwitchCase="'5'">
+    <div id="velkomstbonusser">
+      <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+      </div>
+    </div>
+  </div>
 </div>
+  

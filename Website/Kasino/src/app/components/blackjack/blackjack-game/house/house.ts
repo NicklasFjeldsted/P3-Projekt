@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { GameObject, MonoBehaviour, TextComponent, Vector2 } from "src/app/game-engine";
+import { GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 import { Player, PlayerData } from "../player";
@@ -75,8 +75,9 @@ export class House extends MonoBehaviour
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
 
-		cardChild.transform.Translate(new Vector2(450, 50));
 		cardChild.SetParent(this.gameObject);
+		cardChild.transform.Translate(new Vector2(450, 50));
+		cardChild.transform.scale = new Vector2(100, 100);
 
 		this.childText.text = ' ';
 	}
@@ -144,6 +145,7 @@ export class House extends MonoBehaviour
 
 	public GameEnded(): void
 	{
+		this.SeatTurn = 0;
 		this.stage = GameStage.Ended;
 	}
 
