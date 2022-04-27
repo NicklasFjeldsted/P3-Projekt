@@ -1,133 +1,170 @@
-<form data-multi-step class="multi-step-form form-control v-center h-center" [formGroup]="form" (ngSubmit)="signUp()" [ngStyle]="{'height': (step == 1 && nextSubmit ? '85%' : step == 2 && submitted ? '90%' : '75%')}">
-	<h3 class="step-title" *ngIf="step == 1">Trin 1 ud af 2</h3><h3 class="step-title" *ngIf="step == 2">Trin 2 ud af 2</h3>
-	<div class="data-input">
-		<div *ngIf="step == 1" class="card">
-			<h1 class="card-title">Udfyld dine oplysninger nedenfor</h1>
-			<br>
-			<div class="form-group card-1">
-				<i class="fa fa-envelope fa-2x"></i>
-				<input type="email" name="email" id="email" placeholder="E-mail" formControlName="email" [ngClass]="{ 'is-invalid': nextSubmit && f['email'].errors}">
+<form data-multi-step class="multi-step-form" [formGroup]="form" (ngSubmit)="signUp()" [ngSwitch]="step">
+  <div class="step-title" *ngSwitchCase="'1'">Trin 1 ud af 2</div>
+  <div class="step-title" *ngSwitchCase="'2'">Trin 2 ud af 2</div>
+  <div class="form-wrapper">
+    <div class="form-content">
+      <div class="form-input-container">
+        <div class="input-title">Udfyld dine oplysninger nedenfor</div>
+        <section class="input-section" *ngSwitchCase="'1'">
+          <div class="input-group">
+            <i class="fa fa-envelope"></i>
+            <input type="text" placeholder="E-mail" formControlName="email" [ngClass]="{ 'is-invalid': nextSubmit && f['email'].errors }" />
 
-				<div *ngIf="nextSubmit && f['email'].errors" class="invalid-feedback">
-					<div *ngIf="f['email'].errors['required']">Indtast en e-mail</div>
-					<div *ngIf="f['email'].errors['pattern']">Indtast en korrekt e-mail</div>
-				</div>
+            <div *ngIf="nextSubmit && f['email'].errors" class="invalid-feedback">
+              <div *ngIf="f['email'].errors['required']">Indtast en e-mail</div>
+              <div *ngIf="f['email'].errors['pattern']">Indtast en korrekt e-mail</div>
+            </div>
+          </div>
+          <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input
+              type="password"
+              placeholder="Adgangskode"
+              formControlName="password"
+              minlength="8"
+              [ngClass]="{ 'is-invalid': nextSubmit && f['password'].errors }"
+            />
 
-			</div>
-			<div class="form-group card-1">
-				<i class="fa fa-lock fa-2x"></i>
-				<input type="password" name="password" id="password" placeholder="Adgangskode" formControlName="password" minlength="8" [ngClass]="{ 'is-invalid': nextSubmit && f['password'].errors}">
+            <div *ngIf="nextSubmit && f['password'].errors" class="invalid-feedback">
+              <div *ngIf="f['password'].errors['required']">Indtast en adgangskode</div>
+              <div *ngIf="f['password'].errors['minlength']">Adgangskode skal mindst have 8 tegn</div>
+            </div>
+          </div>
+          <div class="input-group">
+            <i class="fa fa-flag"></i>
+            <input placeholder="Land" formControlName="countryID" [ngClass]="{ 'is-invalid': nextSubmit && f['countryID'].errors }" />
+            <div *ngIf="nextSubmit && f['countryID'].errors" class="invalid-feedback">
+              <div *ngIf="f['countryID'].errors['required']">Indtast dit land</div>
+            </div>
+          </div>
+          <div class="input-group">
+            <i class="fa fa-phone"></i>
+            <input
+              type="text"
+              name="PhoneNumber"
+              id="PhoneNumber"
+              placeholder="Mobilnummer"
+              formControlName="phoneNumber"
+              minlength="8"
+              maxlength="8"
+              [ngClass]="{ 'is-invalid': nextSubmit && f['phoneNumber'].errors }"
+            />
 
-				<div *ngIf="nextSubmit && f['password'].errors" class="invalid-feedback">
-					<div *ngIf="f['password'].errors['required']">Indtast en adgangskode</div>
-					<div *ngIf="f['password'].errors['minlength']">Adgangskode skal mindst have 8 tegn</div>
-				</div>
+            <div *ngIf="nextSubmit && f['phoneNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['phoneNumber'].errors['required']">Indtast dit telefonnummer</div>
+              <div *ngIf="f['phoneNumber'].errors['minlength']">Skal mindst have 8 tegn</div>
+            </div>
+          </div>
 
-			</div>
-			<div class="form-group card-1">
-				<i class="fa fa-flag fa-2x"></i>
-				<input type="country" name="country" id="country" placeholder="Land" formControlName="countryID" [ngClass]="{ 'is-invalid': nextSubmit && f['countryID'].errors}">
-				<div *ngIf="nextSubmit && f['countryID'].errors" class="invalid-feedback">
-					<div *ngIf="f['countryID'].errors['required']">Indtast dit land</div>
-				</div>
-			</div>
-			<div class="form-group card-1">
-				<i class="fa fa-regular fa-phone fa-2x"></i>
-				<input type="PhoneNumber" name="PhoneNumber" id="PhoneNumber" placeholder="Mobilnummer" formControlName="phoneNumber" minlength="8"  maxlength="8" [ngClass]="{ 'is-invalid': nextSubmit && f['phoneNumber'].errors}">
+          <div class="input-group buttons">
+            <button type="button" (click)="goNext()">Næste</button>
+          </div>
+          <div class="input-group">
+            <p>Har du allerede en konto? <a routerLink="/login">Log ind</a></p>
+          </div>
+        </section>
+        <section id="input-section-2" class="input-section" *ngSwitchCase="'2'">
+          <div class="input-group">
+            <div *ngIf="submitted && f['cprNumber'].errors" class="invalid-feedback">
+              <div *ngIf="f['cprNumber'].errors['required']">Indtast dit CPR nummer</div>
+              <div *ngIf="f['cprNumber'].errors['minlength']">CPR nummer skal have 10 tegn</div>
+            </div>
+            <input
+              type="text"
+              placeholder="Indtast venligst dit CPR nummer"
+              formControlName="cprNumber"
+              [ngClass]="{ 'is-invalid': submitted && f['cprNumber'].errors }"
+            />
+          </div>
+          <div class="input-group">
+            <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+              <div *ngIf="f['firstName'].errors['required']">Indtast dit fornavn</div>
+            </div>
+            <input type="text" placeholder="Fornavn" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />
+          </div>
+          <div class="input-group">
+            <div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
+              <div *ngIf="f['lastName'].errors['required']">Indtast dit efternavn</div>
+            </div>
+            <input type="text" placeholder="Efternavn" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors }" />
+          </div>
 
-				<div *ngIf="nextSubmit && f['phoneNumber'].errors" class="invalid-feedback">
-					<div *ngIf="f['phoneNumber'].errors['required']">Indtast dit telefonnummer</div>
-					<div *ngIf="f['phoneNumber'].errors['minlength']">Skal mindst have 8 tegn</div>
-				</div>
+          <div class="input-group">
+            <div *ngIf="(submitted && f['address'].errors) || (submitted && f['zipCodeID'].errors)" class="invalid-feedback">
+              <span>Indtast din adresse og postnummer</span>
+            </div>
+            <div class="input-group location">
+              <input
+                type="text"
+                name="Address"
+                id="address"
+                placeholder="Adresse"
+                formControlName="address"
+                [ngClass]="{ 'is-invalid': submitted && f['address'].errors }"
+              />
+              <input
+                type="text"
+                name="ZipCode"
+                id="zipcode"
+                placeholder="Postnr"
+                formControlName="zipCodeID"
+                minlength="4"
+                maxlength="4"
+                [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors }"
+              />
+            </div>
+          </div>
 
-			</div>
-			<div class="form-group buttons">
-				<button type="button" (click)="goNext()">Næste</button>
-			</div>
-			<div class="form-group card-1">
-				<p>Har du allerede en konto? <a routerLink="/login">Log ind</a></p>
-			</div>
-		</div>
-		<div class="card" *ngIf="step == 2">
-			<div class="form-group card-2">
-				<input type="CprNumber" name="CprNumber" id="CprNumber" placeholder="Indtast venligst dit CPR nummer"  formControlName="cprNumber" [ngClass]="{ 'is-invalid': submitted && f['cprNumber'].errors}" >
-
-				<div *ngIf="submitted && f['cprNumber'].errors" class="invalid-feedback">
-					<div *ngIf="f['cprNumber'].errors['required']">Indtast dit CPR nummer</div>
-					<div *ngIf="f['cprNumber'].errors['minlength']">CPR nummer skal have 10 tegn</div>
-				</div>
-
-			</div>
-			<div class="form-group card-2">
-				<input type="FirstName" name="FirstName" id="FirstName" placeholder="Fornavn" formControlName="firstName" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors}">
-
-				<div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
-					<div *ngIf="f['firstName'].errors['required']">Indtast dit fornavn</div>
-				</div>
-
-			</div>
-			<div class="form-group card-2">
-				<input type="LastName" name="LastName" id="LastName" placeholder="Efternavn" formControlName="lastName" [ngClass]="{ 'is-invalid': submitted && f['lastName'].errors}" >
-
-				<div *ngIf="submitted && f['lastName'].errors" class="invalid-feedback">
-					<div *ngIf="f['lastName'].errors['required']">Indtast dit efternavn</div>
-				</div>
-
-			</div>
-
-			<div class="form-group card-2">
-				<div class="form-group location card-2">
-					<input type="Address" name="Address" id="Address" placeholder="Adresse" formControlName="address" [ngClass]="{ 'is-invalid': submitted && f['address'].errors}">
-					<input type="ZipCode" name="ZipCode" id="ZipCode" placeholder="Postnr" formControlName="zipCodeID" minlength="4" maxlength="4" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">
-				</div>
-
-				<div *ngIf="submitted && f['address'].errors || submitted && f['zipCodeID'].errors" class="invalid-feedback">
-					<span>Indtast din adresse og postnummer</span>
-				</div>
-
-			</div>
-
-			<div class="form-group gender card-2">
-				<div class="gender-buttons">
-					<div class="gender-input-container" style="outline: none;">
-						<i class="fa fa-mars" [class.active-i]="this.form.get('genderID')?.value === 1"></i>
-						<input type="button" id="mand" (click)="setGender(1)" value="Mand" [class.active]="this.form.get('genderID')?.value === 1">
-					</div>
-					<span class="gender-input-container">
-						<i class="fa fa-venus" [class.active-i]="this.form.get('genderID')?.value === 2"></i>
-						<input type="button" id="kvinde" (click)="setGender(2)" value="Kvinde" [class.active]="this.form.get('genderID')?.value === 2">
-					</span>
-				</div>
-				<div *ngIf="this.form.get('genderID')?.value === null && submitted" class="invalid-feedback">
-					<span>Vælg køn</span>
-				</div>
-			</div>
-			<div class="form-group rights buttons">
-				<label for="check" style="margin-top:10px"><input type="checkbox" name="check" formControlName="acceptTerms" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors}">Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label>
-				<div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
-					<div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
-				</div>
-				<button type="submit" style="margin-top:10px">Opret Konto</button>
-			</div>
-		</div>
-	</div>
-
-	<div class="picture">
-		<div class="info">
-			<div class="info-group">
-				<img id="image" src="casino.jpg" alt="">
-			</div>
-			<h2 class="picture-title">Vælg mellem 2 forskellige velkomsttilbud</h2>
-			<p>Ved oprettelse af en konto hos TEC-Kasino kan du vælge mellem to velkomstbonusser ved første indbetaling.</p>
-			<b style="font-weight: 700; font-size: .8125rem; line-height: 1.5;">Casino velkomsttilbud:</b>
-			<ul style="list-style-position: outside; margin-left: 50px; vertical-align: middle;">
-				<br>
-				<li>100% oveni din første indbetaling, op til 1.000 kr.</li>
-				<li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig. Går op til 500 kr.</li>
-			</ul>
-			<br>
-			<a routerLink="/reglerOgBetingelser"><h4>Regler og betingelser</h4></a>
-			<br>
-		</div>
-	</div>
+          <div class="input-group">
+            <div *ngIf="this.form.get('genderID')?.value === null && submitted" class="invalid-feedback">
+              <span>Vælg køn</span>
+            </div>
+            <div class="gender">
+              <div class="gender-button" id="gender-button-0" (click)="setGender(0)">
+                <i class="fa fa-mars"></i>
+                <input type="button" />
+                <span>Mand</span>
+              </div>
+              <div class="gender-button" id="gender-button-1" (click)="setGender(1)">
+                <i class="fa fa-venus"></i>
+                <input type="button" />
+                <span>Kvinde</span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group rights buttons">
+            <label for="check"
+              ><input
+                type="checkbox"
+                name="check"
+                formControlName="acceptTerms"
+                [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors }"
+              />Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label
+            >
+            <div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
+              <div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
+            </div>
+          </div>
+          <div class="input-group">
+            <button type="submit">Opret Konto</button>
+          </div>
+        </section>
+      </div>
+      <div class="form-information-container">
+        <div class="information-picture"></div>
+        <div class="information-text">
+          <div class="group-text">
+            <div class="text-header">Vælg mellem 2 forskellige velkomsttilbud</div>
+            <div class="text-content">Ved oprettelse af en konto hos TEC-Kasino kan du vælge mellem to velkomstbonusser ved første indbetaling.</div>
+          </div>
+          <div class="offer">
+            <ul style="list-style-position: outside">
+              <li>100% oveni din første indbetaling, op til 1.000 kr.</li>
+              <li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig. Går op til 500 kr.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </form>

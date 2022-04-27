@@ -1,10 +1,17 @@
 <div class="left-side">
   <div class="sidenav">
-    <i [ngStyle]="{'top': (kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px')}" class="fa-solid fa-caret-left"></i>
+    <i
+      [ngStyle]="{ top: kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px' }"
+      class="fa-solid fa-caret-left"
+    ></i>
     <ul class="sidenav-content">
-      <a (click)="changeSite(1)"><li [ngClass]="{'is-selected': kontoSite == 1}">Konto</li></a>
-      <a (click)="changeSite(2)"><li [ngClass]="{'is-selected': kontoSite == 2}">Transaktionshistorik</li></a>
-      <a (click)="changeSite(3)"><li [ngClass]="{'is-selected': kontoSite == 3}">Indbetalingsgrænse</li></a>
+      <a (click)="changeSite(1)"><li [ngClass]="{ 'is-selected': kontoSite == 1 }">Konto</li></a>
+      <a (click)="changeSite(2)"
+        ><li [ngClass]="{ 'is-selected': kontoSite == 2 }">Transaktionshistorik</li></a
+      >
+      <a (click)="changeSite(3)"
+        ><li [ngClass]="{ 'is-selected': kontoSite == 3 }">Indbetalingsgrænse</li></a
+      >
     </ul>
   </div>
 </div>
@@ -16,8 +23,8 @@
     </div>
     <div class="form-body">
       <div class="customer-title">
-        <h2>{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</h2>
-        <p>Konto-id: {{this.accountId}} </p>
+        <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
+        <p>Konto-id: {{ this.accountId }}</p>
       </div>
     </div>
     <div class="grid-buttons">
@@ -27,8 +34,10 @@
     </div>
     <div class="balance-title">Saldo</div>
     <div class="balance-account">
-      <div class="balance-circle"><div class="circle"><span>=</span></div></div>
-      <div class="balance">{{this.currentBalance}} kr</div>
+      <div class="balance-circle">
+        <div class="circle"><span>=</span></div>
+      </div>
+      <div class="balance">{{ this.currentBalance }} kr</div>
     </div>
     <div class="konto-title">Dine kontaktoplysninger</div>
     <div class="konto-oplysninger">
@@ -36,7 +45,7 @@
         <div class="row-logo"><i class="fa-solid fa-id-card"></i></div>
         <div class="row-info">
           <div class="row-title">Konto-id</div>
-          <div class="row-content">{{this.accountId}}</div>
+          <div class="row-content">{{ this.accountId }}</div>
         </div>
       </div>
 
@@ -46,7 +55,9 @@
         <div class="row-logo"><i class="fa-solid fa-user"></i></div>
         <div class="row-info">
           <div class="row-title">Navn</div>
-          <div class="row-content">{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</div>
+          <div class="row-content">
+            {{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}
+          </div>
         </div>
       </div>
 
@@ -56,7 +67,7 @@
         <div class="row-logo"><i class="fa-solid fa-mobile-screen"></i></div>
         <div class="row-info">
           <div class="row-title">Telefonnummer</div>
-          <div class="row-content">{{this.accountInfo.phoneNumber}}</div>
+          <div class="row-content">{{ this.accountInfo.phoneNumber }}</div>
         </div>
       </div>
 
@@ -66,7 +77,7 @@
         <div class="row-logo"><i class="fa-solid fa-location-dot"></i></div>
         <div class="row-info">
           <div class="row-title">Adresse</div>
-          <div class="row-content">{{this.accountInfo.address}}</div>
+          <div class="row-content">{{ this.accountInfo.address }}</div>
         </div>
       </div>
       <div class="form-row-divider"></div>
@@ -74,25 +85,27 @@
 
     <div class="form-row flow-down user-email">
       <div class="email-title">Logget ind som</div>
-      <div class="email">{{this.accountInfo.email}}</div>
+      <div class="email">{{ this.accountInfo.email }}</div>
     </div>
 
     <div class="form-row flow-down bottom-buttons">
       <button class="bottom-button" id="logud" (click)="openLogout()">Log ud</button>
-      <button class="bottom-button" id="deaktiver" (click)="openDeaktiver()">Deaktiver konto</button>
+      <button class="bottom-button" id="deaktiver" (click)="openDeaktiver()">
+        Deaktiver konto
+      </button>
     </div>
   </div>
 </form>
 
-<form id="transaktion" method="get" class="form-control h-center"  *ngIf="kontoSite == 2" >
+<form id="transaktion" method="get" class="form-control h-center" *ngIf="kontoSite == 2">
   <div class="column flow-down main">
     <div class="form-header">
       <h1>Transaktionshistorik</h1>
     </div>
     <div class="form-body">
       <div class="customer-title">
-        <h2>{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</h2>
-        <p>Konto-id: {{this.accountId}} </p>
+        <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
+        <p>Konto-id: {{ this.accountId }}</p>
       </div>
     </div>
     <div class="transaction-container">
@@ -109,8 +122,16 @@
           <tbody>
             <tr *ngFor="let transactions of transactionList">
               <td>{{ transactions.transactionID }}</td>
-              <td>{{ transactions.transactionDate | date:'dd/MM/yyyy HH:mm' }}</td>
-              <td [style]="transactions.amount.startsWith('+') ? 'background-color: lightgreen;' : 'background-color: #ff7f7f;'">{{ transactions.amount }}</td>
+              <td>{{ transactions.transactionDate | date: "dd/MM/yyyy HH:mm" }}</td>
+              <td
+                [style]="
+                  transactions.amount.startsWith('+')
+                    ? 'background-color: lightgreen;'
+                    : 'background-color: #ff7f7f;'
+                "
+              >
+                {{ transactions.amount }}
+              </td>
               <td>{{ transactions.currentBalance }}</td>
             </tr>
           </tbody>
@@ -120,20 +141,28 @@
   </div>
 </form>
 
-<form id="deposit" method="get" class="form-control h-center" [formGroup]="depositForm" *ngIf="kontoSite == 3">
+<form
+  id="deposit"
+  method="get"
+  class="form-control h-center"
+  [formGroup]="depositForm"
+  *ngIf="kontoSite == 3"
+>
   <div class="column flow-down main">
     <div class="form-header">
       <h1>Indstil indbetalingsgrænse</h1>
     </div>
     <div class="form-body">
       <div class="customer-title">
-        <h2>{{this.accountInfo.firstName + ' ' + this.accountInfo.lastName}}</h2>
-        <p>Konto-id: {{this.accountId}} </p>
+        <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
+        <p>Konto-id: {{ this.accountId }}</p>
       </div>
     </div>
     <div class="deposit-limit">
       <div class="current-limit">
-        <h3>Nuværende indbetalingsgrænse: <span>{{this.currentLimit}} kr</span></h3>
+        <h3>
+          Nuværende indbetalingsgrænse: <span>{{ this.currentLimit }} kr</span>
+        </h3>
         <div class="divider"></div>
       </div>
       <div class="set-limit">
@@ -141,14 +170,24 @@
           <button (click)="updateAmount(25, false)"><i class="fa-solid fa-minus"></i></button>
         </div>
         <div class="limit">
-          <input type="text" formControlName="depositLimit" (keypress)="keyPressNumbers($event)" [value]="f['depositLimit'].value">
+          <input
+            type="text"
+            formControlName="depositLimit"
+            (keypress)="keyPressNumbers($event)"
+            [value]="f['depositLimit'].value"
+          />
         </div>
         <div class="plus">
           <button (click)="updateAmount(25, true)"><i class="fa-solid fa-plus"></i></button>
         </div>
       </div>
       <div class="submit-limit">
-        <button [disabled]="f['depositLimit'].value < 1000 || hasUpdateLimit == true" (click)="updateDepositLimit()">Ændrer din indbetalingsgrænse til {{f['depositLimit'].value}} kr</button>
+        <button
+          [disabled]="f['depositLimit'].value < 1000 || hasUpdateLimit == true"
+          (click)="updateDepositLimit()"
+        >
+          Ændrer din indbetalingsgrænse til {{ f["depositLimit"].value }} kr
+        </button>
       </div>
     </div>
   </div>

@@ -13,9 +13,8 @@ img {
   aspect-ratio: 16 / 3;
   background-image: url("../../../assets/media/kasino-banner.png");
   background-repeat: no-repeat;
-  background-size:contain;
-  background-position:center;
-
+  background-size: contain;
+  background-position: center;
 }
 
 .game-container {
@@ -44,7 +43,7 @@ nav {
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden;
-  margin: 0 auto;
+  margin-inline: auto;
 }
 
 ul {
@@ -59,11 +58,11 @@ ul {
 
 li {
   position: relative;
-  font-size: .875rem;
+  font-size: 0.875rem;
   display: inline-block;
   vertical-align: bottom;
   padding: 18px 9pt;
-  transition: color .25s ease-in-out;
+  transition: color 0.25s ease-in-out;
 }
 
 li.active::before {
@@ -86,20 +85,23 @@ li:hover {
 
 /* Grid section */
 
-.featured-section, .casino-game-section {
+.featured-section,
+.casino-game-section {
   max-width: 1600px;
   height: auto;
   margin: 0 auto;
 }
 
-.featured-game-grid, .casino-game-grid {
+.featured-game-grid,
+.casino-game-grid {
   display: grid;
   padding: 1em;
   grid-template-columns: repeat(6, 1fr);
   grid-gap: 1em;
 }
 
-.casino-game, .featured-game {
+.casino-game,
+.featured-game {
   display: flex;
   position: relative;
 }
@@ -119,20 +121,30 @@ li:hover {
   right: 0;
   color: #fff;
   padding: 8px;
-  background: linear-gradient(90deg,rgba(0,0,0,.75) 1%,rgba(0,0,0,.75) 15%,rgba(0,0,0,.4) 66%,transparent);
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.75) 1%,
+    rgba(0, 0, 0, 0.75) 15%,
+    rgba(0, 0, 0, 0.4) 66%,
+    transparent
+  );
+}
+
+.promotion > img {
+  height: 100%;
 }
 
 .promotion-text > .title {
   font-size: 21px;
   font-weight: 500;
-  text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   line-height: 1.2;
 }
 
 .promotion-text > .subtitle {
   font-size: 16px;
   font-weight: 300;
-  text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   line-height: 1.2;
 }
 
@@ -154,7 +166,7 @@ li:hover {
   line-height: 24px;
   text-align: center;
   white-space: nowrap;
-  transition: all .3s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 
 .footer-button:hover {
@@ -172,18 +184,19 @@ li:hover {
   position: absolute;
   right: 0;
   top: 100%;
-  background: linear-gradient(180deg,transparent 0,rgba(0,0,0,.4) 0,rgba(0,0,0,.4));
+  background: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.4));
   width: 100%;
   height: 0;
   overflow: hidden;
-  transition: .15s linear;
+  transition: 0.15s linear;
   border-radius: 3px;
   justify-content: center;
   align-items: center;
   display: flex;
 }
 
-.featured-game:hover > .overlay, .casino-game:hover > .overlay {
+.featured-game:hover > .overlay,
+.casino-game:hover > .overlay {
   top: 0;
   height: 100%;
   cursor: pointer;
@@ -194,7 +207,7 @@ li:hover {
 }
 
 .play-icon {
-  color: #DCDCDC;
+  color: #dcdcdc;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -202,7 +215,7 @@ li:hover {
   text-align: center;
 }
 
-.overlay > .play-icon:hover{
+.overlay > .play-icon:hover {
   transform: translate(-50%, -50%) scale(1.1);
   color: #fff;
   transition: all ease-in;
@@ -216,7 +229,7 @@ li:hover {
 
 .not-released > .overlay > i:hover {
   transform: translate(-50%, -50%) scale(1);
-  color: #DCDCDC;
+  color: #dcdcdc;
 }
 
 .casino-game-grid > .not-released {
@@ -232,7 +245,8 @@ li:hover {
 /* Media queries */
 
 @media (max-width: 1200px) {
-  .featured-game-grid, .casino-game-grid {
+  .featured-game-grid,
+  .casino-game-grid {
     grid-template-columns: repeat(5, 1fr);
   }
 
@@ -243,13 +257,15 @@ li:hover {
 }
 
 @media (max-width: 960px) {
-  .featured-game-grid, .casino-game-grid {
+  .featured-game-grid,
+  .casino-game-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .featured-game-grid, .casino-game-grid {
+  .featured-game-grid,
+  .casino-game-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -264,7 +280,8 @@ li:hover {
 }
 
 @media (max-width: 480px) {
-  .featured-game-grid, .casino-game-grid {
+  .featured-game-grid,
+  .casino-game-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 

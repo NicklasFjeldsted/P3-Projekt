@@ -1,132 +1,116 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
-.back-drop 
-{
-	display: none;
-	z-index: 900;
-	height: 100%;
-	width: 100%;
-	background-color: black;
-	opacity: 0.50;
-	position: fixed;
-	top: 0;
-	left: 0;
+.back-drop {
+  display: none;
+  z-index: 900;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
-.sidenav 
-{
-	z-index: 1000;
-	width: 250px;
-	height: 100vh;
-	background-color: white;
-	position: fixed;
-	top: 0;
+.sidenav {
+  z-index: 1000;
+  width: 250px;
+  height: 100vh;
+  background-color: white;
+  position: fixed;
+  top: 0;
 }
 
-.active 
-{
-	display: block!important;
+.active {
+  display: block !important;
 }
 
-.sidenav-content 
-{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	align-items: center;
+.sidenav-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  align-items: center;
 }
 
-.sidenav-list 
-{
-	width: 100%;
-	height: 50%;
-	list-style: none;
-	text-align: center;
-	margin: 0 auto;
+.sidenav-list {
+  width: 100%;
+  height: 50%;
+  list-style: none;
+  text-align: center;
+  margin: 0 auto;
 }
 
 p {
-	margin: 0;
+  margin: 0;
 }
 
-.sidenav-item 
-{
-	width: 100%;
-	height: 50px;
-	font-size: 1.1rem;
-	font-weight: 200;
-	display: flex;
-    align-items: center;
-	font-family: 'Montserrat', sans-serif;
-	cursor: pointer;
+.sidenav-item {
+  width: 100%;
+  height: 50px;
+  font-size: 1.1rem;
+  font-weight: 200;
+  display: flex;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  cursor: pointer;
 }
 
-.sidenav-item > a 
-{
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	display: flex;
-	font-family: 'Montserrat', sans-serif;
+.sidenav-item > a {
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  font-family: "Montserrat", sans-serif;
 }
 
-.sidenav-item > span
-{
-	margin-left: .25rem;
+.sidenav-item > span {
+  margin-left: 0.25rem;
 }
 
-.sidenav-item > a > i 
-{
-	margin-right: .5rem;
+.sidenav-item > a > i {
+  margin-right: 0.5rem;
 }
 
-.sidenav-info 
-{
-	text-align: left;
-	height: 30px;
-	font-family: 'Montserrat', sans-serif;
-	font-size: .875rem;
-	font-weight: 500;
-	color: #222;
-	line-height: 1pc;
+.sidenav-info {
+  text-align: left;
+  height: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #222;
+  line-height: 1pc;
 }
 
-.sidenav-info > a > span 
-{
-	padding-left: 1pc;
-	padding-right: 3pc;
+.sidenav-info > a > span {
+  padding-left: 1pc;
+  padding-right: 3pc;
 }
 
-.sidenav-item > a > i 
-{
-	width: 50px;
-	color: green;
-	font-size: 1.6rem;
+.sidenav-item > a > i {
+  width: 50px;
+  color: green;
+  font-size: 1.6rem;
 }
 
-.sidenav-item:hover 
-{
-	background-color: hsla(0,0%,82.7%,.5);
+.sidenav-item:hover {
+  background-color: hsla(0, 0%, 82.7%, 0.5);
 }
 
-.sidenav-list > li:nth-child(4) 
-{
-	border-top: 1px solid #808080;
+.sidenav-list > li:nth-child(4) {
+  border-top: 1px solid #808080;
 }
 
-.modal 
-{
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	display:none;
+.modal {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
 }
 
-.open 
-{
-	display: block!important;
+.open {
+  display: block !important;
 }
 
 .fill-row {
-	box-shadow: 0 5px 10px rgba(0,0,0,.4);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }

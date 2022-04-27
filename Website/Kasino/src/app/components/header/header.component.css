@@ -1,20 +1,16 @@
-:host
-{
-  display:flex;
+:host {
+  display: flex;
   flex-direction: column;
   height: 15%;
 }
 
-@media only screen and (max-width: 600px)
-{
-  .center-row
-  {
+@media only screen and (max-width: 600px) {
+  .center-row {
     width: 100%;
   }
 }
 
-.navigation .row
-{
+.navigation .row {
   padding: 4px;
   margin: 0;
   border-bottom: 1px solid lightgreen;
@@ -23,40 +19,35 @@
   width: 100%;
 }
 
-.dropdown
-{
+.dropdown {
   display: inline-block;
   margin-left: 20px;
   padding: 10px;
 }
 
-.kasino-logo
-{
+.kasino-logo {
   color: white;
 }
 
-.dropdown-content
-{
+.dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   padding: 12px 16px;
   z-index: 999;
 }
 
-.dropdown:hover .dropdown-content
-{
+.dropdown:hover .dropdown-content {
   display: block;
   background-color: rgb(44, 42, 42);
 }
 
-.header
-{
+.header {
   background-color: #015536;
   border-bottom: 0;
-  box-shadow: 0 0 1pc rgba(0,0,0,.4);
+  box-shadow: 0 0 1pc rgba(0, 0, 0, 0.4);
   z-index: 5;
   flex: 1;
 }
@@ -66,20 +57,17 @@
   min-width: 100px;
 }
 
-#logo 
-{
+#logo {
   max-width: 100%;
   height: auto;
   z-index: 1;
 }
 
-.tilmeld
-{
-  background-color: #F08000;
+.tilmeld {
+  background-color: #f08000;
 }
 
-.games
-{
+.games {
   background-color: #05372c;
   border: 1px solid #05372c;
   z-index: 2;
@@ -87,24 +75,25 @@
   height: 75px;
 }
 
-.dropdown-content a
-{
+.dropdown-content a {
   color: white;
 }
 
-.link-game 
-{
+.link-game {
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
-  font-family: 'Montserrat', sans-serif!important;
+  font-family: "Montserrat", sans-serif !important;
   font-weight: 500;
 }
 
-.link-game > svg, .link-game > img, #logo, #testright
-{
-  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+.link-game > svg,
+.link-game > img,
+#logo,
+#testright {
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg)
+    brightness(104%) contrast(104%);
 }
 
 .column > .link-game {
@@ -115,12 +104,13 @@
   color: #d3d3d3;
 }
 
-.column > .link-game:hover > svg, .column > .link-game:hover > img {
-  filter: invert(95%) sepia(1%) saturate(0%) hue-rotate(171deg) brightness(88%) contrast(97%);
+.column > .link-game:hover > svg,
+.column > .link-game:hover > img {
+  filter: invert(95%) sepia(1%) saturate(0%) hue-rotate(171deg) brightness(88%)
+    contrast(97%);
 }
 
-.sideNav-button 
-{
+.sideNav-button {
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -129,39 +119,32 @@
 .login {
   background-color: transparent;
   border: 1px solid transparent;
-  outline: none!important;
-  transition: all .3s ease 0s;
+  outline: none !important;
+  transition: all 0.3s ease 0s;
 }
 
 .login:hover {
   border: 1px solid #fff;
-  box-shadow: none!important;
+  box-shadow: none !important;
 }
 
-
-
-#balance 
-{
+#balance {
   box-shadow: none;
   width: 150px;
 }
 
-.deposit 
-{
+.deposit {
   position: relative;
-  padding-right: .3em;
-
+  padding-right: 0.3em;
 }
 
-.deposit > i 
-{
+.deposit > i {
   position: relative;
   padding-left: 10px;
   right: 0px;
   font-size: 1.6em;
   top: 4px;
 }
-
 
 .logout > i {
   font-size: 1.2em;
@@ -171,15 +154,12 @@
   transform: rotate(180deg);
 }
 
-
-.saldo
-{
-  background-color: #F08000;
+.saldo {
+  background-color: #f08000;
 }
 
-.saldo:hover
-{
-  box-shadow: 0px 0px 10px #F08000;
+.saldo:hover {
+  box-shadow: 0px 0px 10px #f08000;
 }
 
 .right nav {
@@ -196,7 +176,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   .btn {
     font-size: 10px;
   }

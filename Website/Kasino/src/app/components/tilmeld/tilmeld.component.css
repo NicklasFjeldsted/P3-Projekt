@@ -1,347 +1,297 @@
-:host
-{
-	width: 100%;
-	height: 85%;
-	display: block;
-	background-image: url("../../../assets/casinoblur.jpg");
+:host {
+  width: 100%;
+  display: block;
+  background-image: url("../../../assets/casinoblur.jpg");
 }
 
-.main-container
-{
-	width: 40%;
-	max-width: 40;
-	top: 10%;
-	margin: auto;
-	left:26%;
-	position: fixed;
-	padding: 80px;
+.multi-step-form {
+  max-width: 40%;
+  height: auto;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 7px;
+  border: none;
 }
 
-.form-control
-{
-	border-radius: 7px;
-	background-color: #fff;
-	border: none;
-	max-width: 40%;
+.form-wrapper {
+  padding: 20px;
 }
 
-.picture
-{
-	float:right;
-	width: 45%;
-	padding: 10px;
+.form-content {
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
 
-.info
-{
-	width: calc(100% - 16px);
-	padding: .5rem;
-	margin:auto;
+.form-content > * {
+  flex-basis: 50%;
 }
 
-#image
-{
-	margin-top: 10px;
-	width: 100%;
-	height: 150px;
+.form-input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
-/* Input */
-.data-input
-{
-	float:left;
-	width: 45%;
-	padding: 10px;
-}
-
-.card
-{
-	background-color: white;
-	padding: .5rem;
-	margin:auto;
-	display: flex;
-	flex-direction: column;
-	row-gap: .75em;
-}
-
-.active
-{
-	border: 1px solid #7dc198!important;
-	color: #249752!important;
-	background-color: #ebf6ef!important;
-	outline: none!important;
-}
-
-.active-i
-{
-	color: #249752!important;
-	background-color: #ebf6ef!important;
-}
-
-.card-title
-{
-	font-size: 1.5rem;
+.input-title {
+  font-size: 1.5rem;
   font-weight: 100;
   line-height: 1.5;
-	margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-	display: block;
-	text-align: left;
-	letter-spacing: normal;
-  word-spacing: normal;
-  text-rendering: auto;
-	margin: 0;
 }
 
-.form-group
-{
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	flex: 20%;
+.input-section {
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
-.form-group:last-child
-{
-	margin: 0;
+.input-group {
+  width: 100%;
+  display: flex;
+  position: relative;
+  flex-direction: column;
 }
 
-.form-group > label
-{
-	font-weight: bold;
-	font-size: .8em;
-	color: #333;
-}
-
-.form-group > i
-{
-	color: #e0e0e0;
-	background: transparent;
-	position: absolute;
-  width: 60px;
-	height: 64px;
-	margin:auto;
-	margin-top: 9px;
-	margin-left: 0px;
+.input-group > input[type="text"] {
+  width: 100%;
+  padding: 4.5% 4.5% 4.5% 18%;
+  outline: 0;
+  border: 1px solid #e3e3e3;
   box-sizing: border-box;
 }
 
-.card-1 > input
-{
-	padding: 1pc 1pc 1pc 60px;
+#input-section-2 > .input-group > input[type="text"],
+.location > input[type="text"] {
+  padding-left: 1em;
 }
 
-.card-2 > input
-{
-	height: 56px;
-	padding: 0px 15px;
+.input-group > input:focus {
+  border: 1px solid #808080;
 }
 
-.form-group > input
-{
-	font-size: 0.875rem;
-	border: 1px solid #e3e3e3;
-  border-radius: 3px;
-	line-height: normal;
-	outline: none;
+.input-group > i {
+  position: absolute;
+  font-size: 30px;
+  top: 10px;
+  left: 15px;
+  color: #e0e0e0;
 }
 
-.buttons > button
-{
-	width: 100%;
-	font-size: .875rem;
-	height: 50px;
-	line-height: 24px;
-	border-radius: 50px;
-	color: #313233;
-	font-weight: 800;
-	background-color: #F08000;
-	border: 3px solid #F08000;
-	margin: auto;
-  	cursor: pointer;
+.location {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 }
 
-.step-title
-{
-	color: white;
+.location > #address {
+  width: 75%;
+}
+
+.location > #zipcode {
+  width: 25%;
+}
+
+.gender {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.gender > * {
+  flex: 1;
+}
+
+.gender-button {
+  position: relative;
+  width: 100%;
+}
+
+.gender-button > i {
+  font-size: 1em;
+  position: absolute;
+  margin: auto;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.gender-button > input {
+  width: inherit;
+  padding: 12.5%;
+}
+
+.gender-button > span {
+  font-size: 1em;
+  cursor: default;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.active {
+  border: 1px solid #7dc198;
+  color: #249752;
+  background-color: #ebf6ef;
+  outline: none;
+}
+
+.active-i {
+  color: #249752;
+  background-color: #ebf6ef;
+}
+
+.information-picture {
+  background-image: url("../../../assets/media/casino.jpg");
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+button[type="submit"] {
+  width: 100%;
+  font-size: 1em;
+  padding: 4%;
+  border-radius: 50px;
+  color: #313233;
+  font-weight: 800;
+  background-color: #f08000;
+  border: 3px solid #f08000;
+  cursor: pointer;
+}
+
+.step-title {
+  color: white;
   line-height: 1;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-	vertical-align: center;
-	font-size: 1.3rem;
-	background-color: #015536;
-	height: 40px;
-	padding-top: 20px;
-	border-bottom: 1px solid #015536;
+  vertical-align: center;
+  font-size: 1.3rem;
+  background-color: #015536;
+  height: 40px;
+  padding-top: 20px;
+  border-bottom: 1px solid #015536;
 }
 
-.picture-title
-{
-  font-size: 1.2rem;
-  margin-bottom: 0;
-  font-weight: 550;
-  display: block;
-	line-height: 1.5;
-	margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+.gender-input-container > input:focus {
+  outline: none;
+  border: 1px solid #808080;
 }
 
-.multi-step-form
-{
-	overflow:hidden;
+.gender-buttons {
+  width: 100%;
+  height: 70px;
+  display: flex;
+  gap: 0.5em;
 }
 
-p
-{
-	font-size: .8125rem;
-  font-weight: 300;
-  line-height: 1.5;
-	display: block;
- 	margin-block-start: 1em;
-  margin-block-end: 1em;
-	margin-inline-start: 0px;
- 	margin-inline-end: 0px;
+.gender-buttons input {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #dcdcdc;
+  background-color: white;
+  border-radius: 2.5px;
 }
 
-li
-{
- 	font-size: .8125rem;
- 	font-weight: 300;
-  line-height: 1.5;
-	font-family: Montserrat,sans-serif;
-	margin-right: 25px;
- 	margin-left: -30px;
+.rights input {
+  vertical-align: middle;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 
-.location
-{
-	display: flex;
-	flex-direction: row;
-	gap: .5em;
+.rights input[type="checkbox"]:disabled {
+  outline: none;
+  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
 
-.location #Address
-{
-	width: 75%;
+.gender-input-container:focus-within {
+  color: #249752 !important;
 }
 
-.gender-input-container > input:focus 
-{
-	outline:none;
-	border: 1px solid #808080;
+.billed {
+  width: 50%;
+  height: 100px;
+  background-color: black;
+  float: right;
 }
 
-.location #ZipCode
-{
-	width: 25%;
+.invalid-feedback {
+  color: red;
+  font-size: 0.6rem;
+  text-align: left;
 }
 
-.form-group .gender
-{
-	display: flex;
-	flex-direction: row;
-}
-
-.gender-buttons
-{
-	width: 100%;
-	height: 70px;
-	display: flex;
-	gap: .5em;
-}
-
-.gender-buttons input
-{
-	width: 100%;
-	height: 100%;
-	border: 1px solid #DCDCDC;
-	background-color: white;
-	border-radius: 2.5px;
-}
-
-.rights input
-{
-	vertical-align:middle;
-	width: 20px;
-	height: 20px;
-	margin-right: 10px;
-}
-
-.rights input[type="checkbox"]:disabled 
-{
-	outline: none;
-	box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
-}
-
-.gender-input-container:focus-within
-{
-	color: #249752!important;
-}
-
-.billed
-{
-	width: 50%;
-	height: 100px;
-	background-color: black;
-	float:right;
-
-}
-
-.invalid-feedback 
-{
-	color:red;
-	font-size: 0.6rem;
-	text-align: left;
-}
-
-form
-{
+form {
   box-shadow: black 0px 0px 100px 5px;
 }
 
-.form-group > p > a 
-{
-	color: #015536;
-	border: none;
-	background: none;
-	font-size: 14px;
-	text-decoration: underline;
+.form-group > p > a {
+  color: #015536;
+  border: none;
+  background: none;
+  font-size: 14px;
+  text-decoration: underline;
 }
 
-.is-invalid 
-{
-	background-color: #ffeeeb;
-	border: 1px solid #f00!important;
-	color:#FF0000;
+.is-invalid {
+  background-color: #ffeeeb;
+  border: 1px solid #f00 !important;
+  color: #ff0000;
 }
 
-.form-group > input:focus 
-{
-	border: 1px solid #808080;
+.form-group > input:focus {
+  border: 1px solid #808080;
 }
 
-.gender-input-container
-{
-	position: relative;
-	flex: 1;
+.gender-input-container {
+  position: relative;
+  flex: 1;
 }
 
-.gender-input-container > input 
-{
-	padding-bottom: 20px;
+.gender-input-container > input {
+  padding-bottom: 20px;
 }
 
-.gender-input-container > i 
-{
-	opacity: 20%;
-	position: absolute;
-	top: 55%;
-	left: 46%;
+.gender-input-container > i {
+  opacity: 20%;
+  position: absolute;
+  top: 55%;
+  left: 46%;
 }
 
+@media (max-width: 1200px) {
+  .gender-button > i {
+    font-size: 0;
+  }
+  .multi-step-form {
+    max-width: 60%;
+  }
+}
+
+@media (max-width: 960px) {
+  .multi-step-form {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .multi-step-form {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .multi-step-form {
+    max-width: 100%;
+  }
+}
