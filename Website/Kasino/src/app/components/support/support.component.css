@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@600&display=swap');
 
-:host()
+:host
 {
 	width: 100%;
 	height: 100%;
