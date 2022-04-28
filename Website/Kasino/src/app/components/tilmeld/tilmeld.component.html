@@ -1,3 +1,4 @@
+<div class="spacing"></div>
 <form data-multi-step class="multi-step-form" [formGroup]="form" (ngSubmit)="signUp()" [ngSwitch]="step">
   <div class="step-title" *ngSwitchCase="'1'">Trin 1 ud af 2</div>
   <div class="step-title" *ngSwitchCase="'2'">Trin 2 ud af 2</div>
@@ -32,7 +33,7 @@
           </div>
           <div class="input-group">
             <i class="fa fa-flag"></i>
-            <input placeholder="Land" formControlName="countryID" [ngClass]="{ 'is-invalid': nextSubmit && f['countryID'].errors }" />
+            <input type="text" placeholder="Land" formControlName="countryID" [ngClass]="{ 'is-invalid': nextSubmit && f['countryID'].errors }" />
             <div *ngIf="nextSubmit && f['countryID'].errors" class="invalid-feedback">
               <div *ngIf="f['countryID'].errors['required']">Indtast dit land</div>
             </div>
@@ -60,7 +61,7 @@
             <button type="button" (click)="goNext()">Næste</button>
           </div>
           <div class="input-group">
-            <p>Har du allerede en konto? <a routerLink="/login">Log ind</a></p>
+            <p class="login-text">Har du allerede en konto? <a routerLink="/login">Log ind</a></p>
           </div>
         </section>
         <section id="input-section-2" class="input-section" *ngSwitchCase="'2'">
@@ -121,26 +122,22 @@
             </div>
             <div class="gender">
               <div class="gender-button" id="gender-button-0" (click)="setGender(0)">
-                <i class="fa fa-mars"></i>
+                <i class="fa fa-mars" type="icon"></i>
                 <input type="button" />
-                <span>Mand</span>
+                <span type="span">Mand</span>
               </div>
               <div class="gender-button" id="gender-button-1" (click)="setGender(1)">
-                <i class="fa fa-venus"></i>
+                <i class="fa fa-venus" type="icon"></i>
                 <input type="button" />
-                <span>Kvinde</span>
+                <span type="span">Kvinde</span>
               </div>
             </div>
           </div>
           <div class="input-group rights buttons">
-            <label for="check"
-              ><input
-                type="checkbox"
-                name="check"
-                formControlName="acceptTerms"
-                [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors }"
-              />Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</label
-            >
+            <div class="checkbox-container">
+              <input type="checkbox" name="check" formControlName="acceptTerms" [ngClass]="{ 'is-invalid': submitted && f['zipCodeID'].errors }" />
+            </div>
+            <div class="checkbox-text">Ved at afkrydse dette felt bekræfter jeg, at jeg er over 18 år</div>
             <div *ngIf="submitted && f['acceptTerms'].errors" class="invalid-feedback">
               <div *ngIf="f['acceptTerms'].errors['required']">* You must accept your rights</div>
             </div>
@@ -158,7 +155,8 @@
             <div class="text-content">Ved oprettelse af en konto hos TEC-Kasino kan du vælge mellem to velkomstbonusser ved første indbetaling.</div>
           </div>
           <div class="offer">
-            <ul style="list-style-position: outside">
+            TEC-Kasino velkomsttilbud:
+            <ul>
               <li>100% oveni din første indbetaling, op til 1.000 kr.</li>
               <li>Få hele din første indbetaling tilbage, hvis du skulle være uheldig. Går op til 500 kr.</li>
             </ul>
@@ -168,3 +166,4 @@
     </div>
   </div>
 </form>
+<div class="spacing"></div>

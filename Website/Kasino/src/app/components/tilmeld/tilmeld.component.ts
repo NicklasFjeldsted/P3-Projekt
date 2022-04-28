@@ -27,7 +27,7 @@ export class TilmeldComponent implements OnInit {
     acceptTerms: new FormControl(false),
   });
 
-  step: any = 2; // Current step on form
+  step: any = 1; // Current step on form
   nextSubmit: boolean = false; // checks if client has pressed next on form
   acceptRights: boolean = false; // checks if client has accepted their rights
   submitted: boolean = false; // checks if client has submitted form
@@ -130,18 +130,14 @@ export class TilmeldComponent implements OnInit {
     this.form.patchValue({ genderID: genderid });
     const buttonMale = document.getElementById("gender-button-0")!.children;
     const buttonFemale = document.getElementById("gender-button-1")!.children;
-    if (genderid == 0) {
-      buttonMale[0].classList.add("active-i");
-      buttonMale[1].classList.add("active");
-
-      buttonFemale[0].classList.remove("active-i");
-      buttonFemale[1].classList.remove("active");
-    } else {
-      buttonFemale[0].classList.add("active-i");
-      buttonFemale[1].classList.add("active");
-
-      buttonMale[0].classList.remove("active-i");
-      buttonMale[1].classList.remove("active");
+    for (let i = 0; i < 3; i++) {
+      if (genderid == 0) {
+        buttonMale[i].classList.add("active");
+        buttonFemale[i].classList.remove("active");
+      } else {
+        buttonFemale[i].classList.add("active");
+        buttonMale[i].classList.remove("active");
+      }
     }
   }
 }

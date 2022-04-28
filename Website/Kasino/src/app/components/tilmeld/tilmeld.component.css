@@ -1,16 +1,20 @@
 :host {
   width: 100%;
   display: block;
+  height: auto;
   background-image: url("../../../assets/casinoblur.jpg");
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .multi-step-form {
-  max-width: 40%;
+  max-width: 45%;
   height: auto;
   margin: auto;
   background-color: #fff;
   border-radius: 7px;
-  border: none;
+  box-shadow: black 0px 0px 100px 5px;
 }
 
 .form-wrapper {
@@ -22,7 +26,7 @@
   height: auto;
   display: flex;
   flex-direction: row;
-  gap: 1em;
+  gap: 7.5%;
 }
 
 .form-content > * {
@@ -56,7 +60,8 @@
   flex-direction: column;
 }
 
-.input-group > input[type="text"] {
+.input-group > input[type="text"],
+.input-group > input[type="password"] {
   width: 100%;
   padding: 4.5% 4.5% 4.5% 18%;
   outline: 0;
@@ -79,6 +84,15 @@
   top: 10px;
   left: 15px;
   color: #e0e0e0;
+}
+
+.login-text {
+  text-align: center;
+}
+
+.login-text > a {
+  color: #015536;
+  text-decoration: underline;
 }
 
 .location {
@@ -122,6 +136,9 @@
 .gender-button > input {
   width: inherit;
   padding: 12.5%;
+  border: 1px solid #e3e3e3;
+  background-color: transparent;
+  outline: none;
 }
 
 .gender-button > span {
@@ -133,28 +150,19 @@
   transform: translate(-50%, -50%);
 }
 
-.active {
-  border: 1px solid #7dc198;
-  color: #249752;
-  background-color: #ebf6ef;
-  outline: none;
+.active[type="icon"] {
+  color: #249752 !important;
 }
 
-.active-i {
-  color: #249752;
-  background-color: #ebf6ef;
+.active[type="button"] {
+  border: 1px solid #7dc198 !important;
 }
 
-.information-picture {
-  background-image: url("../../../assets/media/casino.jpg");
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-size: contain;
+.active[type="span"] {
+  color: #249752 !important;
 }
 
+.buttons > button,
 button[type="submit"] {
   width: 100%;
   font-size: 1em;
@@ -171,58 +179,24 @@ button[type="submit"] {
   color: white;
   line-height: 1;
   text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  vertical-align: center;
   font-size: 1.3rem;
   background-color: #015536;
-  height: 40px;
-  padding-top: 20px;
-  border-bottom: 1px solid #015536;
+  padding: 2.5%;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
 }
 
-.gender-input-container > input:focus {
-  outline: none;
-  border: 1px solid #808080;
-}
-
-.gender-buttons {
-  width: 100%;
-  height: 70px;
+.rights {
   display: flex;
-  gap: 0.5em;
+  flex-direction: row;
 }
 
-.gender-buttons input {
-  width: 100%;
-  height: 100%;
-  border: 1px solid #dcdcdc;
-  background-color: white;
-  border-radius: 2.5px;
+.checkbox-container {
+  width: 10%;
 }
 
-.rights input {
-  vertical-align: middle;
-  width: 20px;
-  height: 20px;
-  margin-right: 10px;
-}
-
-.rights input[type="checkbox"]:disabled {
-  outline: none;
-  box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
-}
-
-.gender-input-container:focus-within {
-  color: #249752 !important;
-}
-
-.billed {
-  width: 50%;
-  height: 100px;
-  background-color: black;
-  float: right;
+.checkbox-text {
+  width: 90%;
 }
 
 .invalid-feedback {
@@ -231,42 +205,53 @@ button[type="submit"] {
   text-align: left;
 }
 
-form {
-  box-shadow: black 0px 0px 100px 5px;
-}
-
-.form-group > p > a {
-  color: #015536;
-  border: none;
-  background: none;
-  font-size: 14px;
-  text-decoration: underline;
-}
-
 .is-invalid {
   background-color: #ffeeeb;
-  border: 1px solid #f00 !important;
+  border: 1px solid #f00;
   color: #ff0000;
 }
 
-.form-group > input:focus {
-  border: 1px solid #808080;
+.information-picture {
+  background-image: url("../../../assets/media/casino.jpg");
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
-.gender-input-container {
-  position: relative;
-  flex: 1;
+.text-header {
+  padding-top: 2.5%;
+  font-size: 18px;
+  font-weight: 500;
 }
 
-.gender-input-container > input {
-  padding-bottom: 20px;
+.text-content {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  line-height: 1.5;
+  padding: 5% 0;
 }
 
-.gender-input-container > i {
-  opacity: 20%;
-  position: absolute;
-  top: 55%;
-  left: 46%;
+.offer {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.offer > ul {
+  padding: 5%;
+}
+
+@media (max-width: 1600px) {
+  .input-group > input[type="text"],
+  .input-group > input[type="password"] {
+    padding-left: 1em;
+  }
+  .input-group > i {
+    font-size: 0px;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -274,13 +259,7 @@ form {
     font-size: 0;
   }
   .multi-step-form {
-    max-width: 60%;
-  }
-}
-
-@media (max-width: 960px) {
-  .multi-step-form {
-    max-width: 70%;
+    max-width: 55%;
   }
 }
 
@@ -293,5 +272,8 @@ form {
 @media (max-width: 480px) {
   .multi-step-form {
     max-width: 100%;
+  }
+  .form-content {
+    flex-wrap: wrap;
   }
 }
