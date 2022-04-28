@@ -20,26 +20,28 @@ import { DialogRef } from '../dialog-ref';
     ])
   ]
 })
-export class LogoutComponent implements OnInit {
+
+export class LogoutComponent implements OnInit 
+{
 
   isOpen: boolean = true;
   constructor(private dialogRef: DialogRef, public authenticationService: AuthenticationService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.isOpen = true;
   }
 
-  logout(): void {
+  logout(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
     this.authenticationService.logout();
   }
 
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }
-
-
-
 }

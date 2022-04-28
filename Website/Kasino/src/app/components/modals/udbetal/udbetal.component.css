@@ -1,42 +1,50 @@
-:host {
+:host 
+{
   width: 100%;
   height: 100%;
 }
 
-.overlay-backdrop {
+.overlay-backdrop 
+{
   opacity: 25%;
   background-color: grey;
 }
 
-.form-control {
+.form-control 
+{
   opacity: 0;
   max-width: 500px;
   position: absolute !important;
   border: none;
 }
 
-.column-header {
+.column-header 
+{
   max-width: calc(100% - 65px);
   color: #fff;
 }
 
-.column-header > h2 {
+.column-header > h2 
+{
   font-size: 1.5em;
   margin: 0;
 }
 
-.input-section {
+.input-section 
+{
   row-gap: 1em;
 }
 
-.form-header {
+.form-header 
+{
   justify-content: left;
   max-height: 50px;
   background-color: #015536 !important;
   margin: 0 !important;
 }
 
-svg {
+svg 
+{
   width: 30px;
   height: 30px;
   cursor: pointer;
@@ -45,28 +53,34 @@ svg {
   filter: invert(100%) sepia(0%) saturate(7483%) hue-rotate(208deg) brightness(114%) contrast(104%);
 }
 
-.form-row {
+.form-row 
+{
   align-items: baseline;
 }
 
-.flow-down {
+.flow-down 
+{
   height: auto;
 }
 
-.form-input {
+.form-input 
+{
   max-width: 384px;
 }
 
-.form-input {
+.form-input 
+{
   margin: 0;
 }
 
-.card {
+.card 
+{
   display: flex;
   justify-content: center;
 }
 
-.card-credentials {
+.card-credentials 
+{
   display: grid;
   font-size: 16px;
   gap: 2rem;
@@ -74,11 +88,13 @@ svg {
   grid-template-columns: repeat(auto-fit, minmax(166.6px, 1fr));
 }
 
-.card-credentials > div > input {
+.card-credentials > div > input 
+{
   width: calc(100% - 16px);
 }
 
-.amount-selection {
+.amount-selection 
+{
   width: 100%;
   height: auto;
   display: flex;
@@ -86,7 +102,8 @@ svg {
   margin-bottom: 1rem;
 }
 
-.amount-grid {
+.amount-grid 
+{
   display: grid;
   font-size: 16px;
   max-width: 400px;
@@ -98,7 +115,8 @@ svg {
   align-items: center;
 }
 
-.grid-item {
+.grid-item 
+{
   background-color: #fff;
   text-align: center;
   color: black;
@@ -114,7 +132,8 @@ svg {
   outline: none;
 }
 
-.grid-item > p {
+.grid-item > p 
+{
   text-align: center;
   z-index: 3;
   top: 50%;
@@ -124,7 +143,8 @@ svg {
   transition: 0.8s ease;
 }
 
-.grid-item .left {
+.grid-item .left 
+{
   width: 51%;
   position: absolute;
   height: 100%;
@@ -139,7 +159,9 @@ svg {
   transition: all ease 0.8s;
   z-index: 1;
 }
-.grid-item .right {
+
+.grid-item .right 
+{
   width: 50.75%;
   position: absolute;
   height: 100%;
@@ -155,22 +177,27 @@ svg {
   z-index: 1;
 }
 
-.grid-item:hover {
+.grid-item:hover 
+{
   box-shadow: 0.5px 0.5px 10px -5px #015536;
 }
 
-.grid-item:focus > p {
+.grid-item:focus > p 
+{
   color: #fff;
 }
 
-.grid-item:focus .left {
+.grid-item:focus .left 
+{
   box-shadow: inset 100px 0 0 0 #015536;
 }
-.grid-item:focus .right {
+.grid-item:focus .right 
+{
   box-shadow: inset -100px 0 0 0 #015536;
 }
 
-.form-submit {
+.form-submit 
+{
   width: 80%;
   border-radius: 50px;
   background-color: #f08000;
@@ -180,26 +207,31 @@ svg {
   font-size: 1rem;
 }
 
-.form-submit:disabled {
+.form-submit:disabled 
+{
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.row #change {
+.row #change 
+{
   background-color: #fff;
   border: 2px solid #015536;
   color: #015536;
 }
 
-.change {
+.change 
+{
   align-items: flex-end !important;
 }
 
-.submit-form {
+.submit-form 
+{
   max-height: 120px;
 }
 
-#submit {
+#submit 
+{
   max-height: 75px;
   height: auto;
 }

@@ -2,24 +2,28 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReglerOgBetingelserComponent } from './reglerOgBetingelser.component';
 
-describe('ReglerOgBetingelserComponent', () => {
+describe('ReglerOgBetingelserComponent', () => 
+{
   let component: ReglerOgBetingelserComponent;
   let fixture: ComponentFixture<ReglerOgBetingelserComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => 
+  {
     await TestBed.configureTestingModule({
       declarations: [ ReglerOgBetingelserComponent ]
     })
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(() => 
+  {
     fixture = TestBed.createComponent(ReglerOgBetingelserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', () => 
+  {
     expect(component).toBeTruthy();
   });
 });

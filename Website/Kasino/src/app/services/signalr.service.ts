@@ -50,5 +50,4 @@ export class SignalrService
   {
     this.hubConnection.on(func, (data) => action(data));
   }
-
 }

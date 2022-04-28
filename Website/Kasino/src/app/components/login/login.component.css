@@ -17,7 +17,8 @@
   display: block;
 }
 
-.form-header h2 {
+.form-header h2 
+{
   margin: auto;
   font-size: 1.7rem;
   font-weight: 500;
@@ -30,20 +31,25 @@ form
   box-shadow: black 0px 0px 100px 5px;
 }
 
-.form-row {
+.form-row 
+{
   height: 56px;
   font-size: 1pc;
   border: none;
   width: 500px;
 }
-.form-control {
+
+.form-control 
+{
   background: #f9f9f9;
   max-width: 600px!important;
   min-width: 300px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.form-input {
+
+.form-input 
+{
   max-width: 500px;
   min-width: 160px;
   width: 74.5%;
@@ -57,12 +63,13 @@ form
   background-color: transparent;
 }
 
-
-.v-center {
+.v-center 
+{
 	top: 35%!important;
 }
 
-.form-row > i {
+.form-row > i 
+{
 	color: #DCDCDC;
 	position: absolute;
   left: 34px;
@@ -70,7 +77,8 @@ form
 
 }
 
-.form-row button{
+.form-row button
+{
   max-width: 100%;
   margin: 0;
   width: 450px;
@@ -80,16 +88,18 @@ form
   padding: 1pc 0;
 }
 
-
-.form-row > button:focus, button:hover {
+.form-row > button:focus, button:hover 
+{
   outline: none;
   box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.1);
 }
 
-.form-row input:focus {
+.form-row input:focus 
+{
   outline: none;
   border: 1px solid #808080 !important;
 }
+
 .form-control
 {
   max-height: 415px;
@@ -121,11 +131,13 @@ form
   gap: 3%;
 }
 
-
-.form-links {
+.form-links 
+{
   width: 75%;
 }
-.form-links a {
+
+.form-links a 
+{
   width: 225px;
   display:inline-block;
   color: #015536;
@@ -136,20 +148,21 @@ form
   margin: 0;
   margin-top: 0px;
   text-decoration: underline;
-
 }
 
-.is-invalid {
+.is-invalid 
+{
 	background-color: #ffeeeb;
 	border: 1px solid #f00!important;
 	color:#FF0000;
 }
-.invalid-feedback {
+
+.invalid-feedback 
+{
 	color:red;
 	font-size: 0.6rem;
 	text-align: left;
   width: 90%;
-
 }
 
 /* Only applies if the device's screen width is less than 600px. */

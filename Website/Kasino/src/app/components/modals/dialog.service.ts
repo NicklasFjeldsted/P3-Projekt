@@ -6,14 +6,16 @@ import { DialogRef } from './dialog-ref';
 import { DIALOG_DATA } from './dialog-tokens';
 import { IndbetalComponent } from './indbetal/indbetal.component';
 
-export interface DialogConfig {
+export interface DialogConfig 
+{
   data?: any;
 }
 
 @Injectable({
   providedIn: 'root',
 })
-export class DialogService {
+export class DialogService 
+{
 
   public showIndbetal = new Subject<boolean>();
 
@@ -21,7 +23,8 @@ export class DialogService {
   constructor(private overlay: Overlay, private injector: Injector) {}
 
   // Open modal
-  open<T>(component: ComponentType<T>, config?: DialogConfig): DialogRef {
+  open<T>(component: ComponentType<T>, config?: DialogConfig): DialogRef 
+  {
     // Globally centered position strategy
     const positionStrategy = this.overlay
       .position()

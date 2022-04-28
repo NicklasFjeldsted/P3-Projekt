@@ -26,7 +26,8 @@ import { DIALOG_DATA } from '../dialog-tokens';
     ])
   ]
 })
-export class UdbetalComponent implements OnInit {
+export class UdbetalComponent implements OnInit 
+{
 
   isOpen: boolean = true;
   submitted: boolean = false;
@@ -45,7 +46,8 @@ export class UdbetalComponent implements OnInit {
 
   constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, private router: Router, private builder: FormBuilder, private balance: BalanceService, private authenticationService: AuthenticationService, private transaction: TransactionService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     Broadcast.Instance.onBalanceChange.subscribe(event => this.getBalance());
     this.getBalance();
     this.showFocus();
@@ -62,22 +64,26 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Closes dialog(modal)
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }
 
   // Gets controls from form
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.form.controls;
   }
 
-
   // Submits the deposit request
-  onSubmit() {
+  onSubmit() 
+  {
     this.submitted = true;
-    if(this.form.invalid) {
-      if(!this.isValid()) {
+    if(this.form.invalid) 
+    {
+      if(!this.isValid()) 
+      {
         this.isCardValid = false;
         return;
       }
@@ -95,7 +101,8 @@ export class UdbetalComponent implements OnInit {
           }
         })
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error);
       }
     })
@@ -103,23 +110,27 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Updates the amount value to the specified buttons value
-  updateAmount(value: number | null): void {
+  updateAmount(value: number | null): void 
+  {
     this.form.patchValue({amount: value});
   }
 
   // Checks if the card number is valid through the use of Luhn algorithm
-  isValid() {
+  isValid() 
+  {
     let digits:string = this.f['cardNumber']?.value.split('-').join('');
     if (/[^0-9-\s]+/.test(digits)) return false;
 
     var nCheck = 0, nDigit = 0, bEven = false;
     digits = digits.replace(/\D/g, "");
 
-    for (var n = digits.length - 1; n >= 0; n--) {
+    for (var n = digits.length - 1; n >= 0; n--) 
+    {
         var cDigit = digits.charAt(n),
             nDigit = parseInt(cDigit, 10);
 
-        if (bEven) {
+        if (bEven) 
+        {
             if ((nDigit *= 2) > 9) nDigit -= 9;
         }
 
@@ -130,9 +141,11 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Adds dashes in between every fourth digit
-  addDashes(): void {
+  addDashes(): void 
+  {
     var ele = this.f['cardNumber'].value;
-    if(ele === undefined) {
+    if(ele === undefined) 
+    {
       return
     }
 
@@ -153,34 +166,42 @@ export class UdbetalComponent implements OnInit {
     this.form.patchValue({expDate: finalVal});
   }
 
-
   // Focuces one of the buttons and adds its value to amount
-  showFocus(){
-    setTimeout(()=>{ // this will make the execution after the above boolean has changed
+  showFocus()
+  {
+    setTimeout(()=>
+    { // this will make the execution after the above boolean has changed
       this.btn.nativeElement.focus();
       this.updateAmount(50);
     },0);
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any) {
+  keyPressNumbers(event: any) 
+  {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if ((charCode < 48 || charCode > 57)) {
+    if ((charCode < 48 || charCode > 57)) 
+    {
       event.preventDefault();
       return false;
-    } else {
+    } 
+    else 
+    {
       return true;
     }
   }
 
-  getBalance(): void {
+  getBalance(): void 
+  {
     this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+      next: (userBalance) => 
+      {
         this.currentBalance = userBalance.balance;
         console.log(this.currentBalance);
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error)
       }
     })

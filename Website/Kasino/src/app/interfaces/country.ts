@@ -1,4 +1,5 @@
-export interface Country {
+export interface Country 
+{
 	countryID: number;
 	countryName: string;
 }

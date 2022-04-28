@@ -27,7 +27,8 @@ import { Router } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit 
+{
   constructor(private router: Router) {}
 
   isIndbetalOpen = false;
@@ -38,12 +39,14 @@ export class AppComponent implements OnInit {
   backDrop: HTMLElement;
   hasVisited = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.sideNav = document.getElementById("sideNav")!;
     this.backDrop = document.getElementById("backdrop")!;
   }
 
-  closeSideNav(): void {
+  closeSideNav(): void 
+  {
     if (this.sideNav.classList.contains("active")) {
       this.isSidenavOpen = !this.isSidenavOpen;
       this.sideNav.classList.remove("active");
@@ -51,20 +54,26 @@ export class AppComponent implements OnInit {
     }
   }
 
-  openSideNav(): void {
+  openSideNav(): void 
+  {
     this.isSidenavOpen = !this.isSidenavOpen;
     this.sideNav.classList.add("active");
     this.backDrop.classList.add("active");
   }
 
-  goToLink(site: string) {
+  goToLink(site: string) 
+  {
     this.router.navigate([site]);
   }
 
-  onActivate() {
-    if (document.getElementsByTagName("app-home").length == 0 || this.hasVisited == true) {
+  onActivate() 
+  {
+    if (document.getElementsByTagName("app-home").length == 0 || this.hasVisited == true) 
+    {
       document.getElementById("component-container")!.style.height = "100%";
-    } else if (document.getElementsByTagName("app-home").length != 0) {
+    } 
+    else if (document.getElementsByTagName("app-home").length != 0) 
+    {
       this.hasVisited = true;
       document.getElementById("component-container")!.style.height = "1500px";
     }
