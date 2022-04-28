@@ -18,8 +18,8 @@ import { DialogService } from '../dialog.service';
     trigger('openClose', [
       state('open', style({
         opacity: 1,
-
       })),
+      
       state('closed', style({
         opacity: 0
       })),
@@ -28,7 +28,8 @@ import { DialogService } from '../dialog.service';
   ]
 })
 
-export class IndbetalComponent implements OnInit {
+export class IndbetalComponent implements OnInit 
+{
   isOpen: boolean = true;
   submitted: boolean = false;
   isCardValid: boolean = true;
@@ -46,7 +47,8 @@ export class IndbetalComponent implements OnInit {
 
   constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: string, public authenticationService: AuthenticationService, private router: Router, private builder: FormBuilder, private balance: BalanceService, private transaction: TransactionService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.showFocus();
     this.isOpen = true;
     this.getBalance();
@@ -73,19 +75,22 @@ export class IndbetalComponent implements OnInit {
     return this.form.controls;
   }
 
-
   // Submits the deposit request
-  onSubmit() {
+  onSubmit() 
+  {
     this.submitted = true;
-    if(!this.isValid()) {
+    if(!this.isValid()) 
+    {
       this.isCardValid = false;
       return;
     }
 
-    if(this.f['amount']?.value > this.currentLimit!) {
+    if(this.f['amount']?.value > this.currentLimit!) 
+    {
       alert("Deposit amount has exceeded your deposit limit!");
       return;
     }
+
     //this.form.patchValue({cardNumber: formatCard});
     this.balance.addBalance(this.f['amount']?.value).subscribe({
       next: (response) => {
@@ -97,30 +102,36 @@ export class IndbetalComponent implements OnInit {
           }
         });
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error);
       }
     })
     return;
   }
 
-  getBalance(): void {
+  getBalance(): void 
+  {
     this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+      next: (userBalance) => 
+      {
         this.currentLimit = userBalance.depositLimit;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error)
       }})
   }
 
   // Updates the amount value to the specified buttons value
-  updateAmount(value: number): void {
+  updateAmount(value: number): void 
+  {
     this.form.patchValue({amount: value});
   }
 
   // Checks if the card number is valid through the use of Luhn algorithm
-  isValid() {
+  isValid() 
+  {
     let digits:string = this.f['cardNumber']?.value.split('-').join('');
     if (/[^0-9-\s]+/.test(digits)) return false;
 
@@ -143,9 +154,11 @@ export class IndbetalComponent implements OnInit {
   }
 
   // Adds dashes in between every fourth digit
-  addDashes(): void {
+  addDashes(): void 
+  {
     var ele = this.f['cardNumber'].value;
-    if(ele === undefined) {
+    if(ele === undefined) 
+    {
       return
     }
 
@@ -155,9 +168,11 @@ export class IndbetalComponent implements OnInit {
   }
 
   // Add a slash in between month and year
-  addSlash(): void {
+  addSlash(): void 
+  {
     var ele = this.f['expDate']?.value;
-    if(ele === undefined) {
+    if(ele === undefined) 
+    {
       return
     }
     ele = ele.split('/').join('');
@@ -168,21 +183,27 @@ export class IndbetalComponent implements OnInit {
 
 
   // Focuces one of the buttons and adds its value to amount
-  showFocus(){
-    setTimeout(()=>{ // this will make the execution after the above boolean has changed
+  showFocus()
+  {
+    setTimeout(()=>
+    { // this will make the execution after the above boolean has changed
       this.btn.nativeElement.focus();
       this.updateAmount(150);
     },0);
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any) {
+  keyPressNumbers(event: any) 
+  {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if ((charCode < 48 || charCode > 57)) {
+    if ((charCode < 48 || charCode > 57)) 
+    {
       event.preventDefault();
       return false;
-    } else {
+    } 
+    else 
+    {
       return true;
     }
   }

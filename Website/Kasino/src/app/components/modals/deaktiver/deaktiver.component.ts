@@ -20,8 +20,8 @@ import { DialogRef } from '../dialog-ref';
   ]
 })
 
-export class DeaktiverComponent implements OnInit {
-
+export class DeaktiverComponent implements OnInit 
+{
   isOpen: boolean = true;
   constructor(private dialogRef: DialogRef, public authenticationService: AuthenticationService) { }
 
@@ -30,13 +30,15 @@ export class DeaktiverComponent implements OnInit {
     this.isOpen = true;
   }
 
-  deaktiver(): void {
+  deaktiver(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
     this.authenticationService.logout();
   }
 
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }

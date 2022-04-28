@@ -29,6 +29,7 @@
 				<div *ngIf="f['cardNumber'].errors['minlength']">Kortnummeret skal have 16 cifre</div>
 			</div>
 		</div>
+
 		<div class="form-row center card">
 			<div class="form-row card-credentials">
 				<div class="form-row flow-down">
@@ -41,6 +42,7 @@
 						<div *ngIf="f['expDate'].errors['minlength']">Udløbsdatoen skal have både måned og år</div>
 					</div>
 				</div>
+
 				<div class="form-row flow-down">
 					<label for="" class="form-label">Kontrolcifre/CVV</label>
 					<input class="form-input" formControlName="cvv" [ngClass]="{ 'is-invalid': submitted && f['cvv'].errors, 'is-valid': submitted && !f['cvv'].errors}" placeholder="123">
@@ -53,6 +55,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="form-row flow-down">
 			<label for="" class="form-label">Beløb</label>
 			<input class="form-input" formControlName="amount" maxlength="6" (keypress)="keyPressNumbers($event)" [ngClass]="{ 'is-invalid': f['amount'].value < 100, 'is-valid': submitted && f['amount'].value >= 100}">
@@ -62,6 +65,7 @@
 			</div>
 		</div>
 	</div>
+
 	<br>
 	<div class="amount-selection">
 		<div class="amount-grid">
@@ -73,6 +77,7 @@
 			<button type="button" class="grid-item" (click)="updateAmount(2500)"><span class="left"></span><p>2500 kr</p><span class="right"></span></button>
 		</div>
 	</div>
+  
 	<div class="column flow-down submit-form">
 		<div class="row center">
 			<button type="submit" id="submit" class="form-submit" [disabled]="f['amount'].value < 100">Indbetal {{f['amount'].value}} kr på min konto</button>

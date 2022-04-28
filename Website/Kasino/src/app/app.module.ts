@@ -64,7 +64,8 @@ import { FooterComponent } from './components/footer/footer.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {
+export class AppModule 
+{
   constructor() { }
 }
 // "outputPath": "//10.0.6.2/www",

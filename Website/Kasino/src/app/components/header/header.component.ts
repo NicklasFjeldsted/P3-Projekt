@@ -21,31 +21,37 @@ export class HeaderComponent implements OnInit
 
   currentBalance: number | null;
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     Broadcast.Instance.onBalanceChange.subscribe(event => this.getBalance());
   }
 
-  emitSideNavToggle(): void {
+  emitSideNavToggle(): void 
+  {
     this.onSideNavToggle.emit();
   }
 
-  getBalance(): void {
+  getBalance(): void 
+  {
     this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+      next: (userBalance) => 
+      {
         this.currentBalance = userBalance.balance;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error)
       }
     })
   }
 
-  openIndbetal() {
+  openIndbetal() 
+  {
     this.dialog.open(IndbetalComponent);
   }
 
-  openLogout() {
+  openLogout() 
+  {
     this.dialog.open(LogoutComponent);
   }
 }
-

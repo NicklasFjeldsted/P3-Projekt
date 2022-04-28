@@ -12,10 +12,12 @@
 {
   background-color: green!important;
 }
+
 .bg-orange
 {
   background-color: #F08000!important;
 }
+
 .bg-white
 {
   background-color: white!important;
@@ -300,20 +302,24 @@ form a
   margin-bottom: 10px;
 }
 
-.cdk-overlay-backdrop {
+.cdk-overlay-backdrop 
+{
   z-index: 400;
   animation: fade-in .4s;
 }
 
-.animateOut {
+.animateOut 
+{
   animation: fade-out .4s!important;
 }
 
-@keyframes fade-in {
+@keyframes fade-in 
+{
   from { background-color: rgba(0,0,0, 0); }
   to   { background-color: rgba(0,0,0, 0.32); }
 }
-@keyframes fade-out {
+@keyframes fade-out 
+{
   from { background-color: rgba(0,0,0, 0.32); }
   to   { background-color: rgba(0,0,0, 0); }
 }
@@ -331,7 +337,8 @@ form a
   }
 }
 
-.is-valid {
+.is-valid 
+{
   border: 1px solid #015536;
 	box-shadow: #015536 0px 0px 1px;
 }

@@ -2,24 +2,28 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IndstillingerComponent } from './indstillinger.component';
 
-describe('IndstillingerComponent', () => {
+describe('IndstillingerComponent', () => 
+{
   let component: IndstillingerComponent;
   let fixture: ComponentFixture<IndstillingerComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => 
+  {
     await TestBed.configureTestingModule({
       declarations: [ IndstillingerComponent ]
     })
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(() => 
+  {
     fixture = TestBed.createComponent(IndstillingerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', () => 
+  {
     expect(component).toBeTruthy();
   });
 });

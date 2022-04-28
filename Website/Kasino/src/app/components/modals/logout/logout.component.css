@@ -1,4 +1,5 @@
-.logout-container {
+.logout-container 
+{
 	max-width: 300px;
 	position: absolute;
 	top: 50px!important;
@@ -10,12 +11,14 @@
 	opacity: 0;
 }
 
-.logout-header {
+.logout-header 
+{
 	height: 40px;
 	text-align: center;
 }
 
-.logout-buttons {
+.logout-buttons 
+{
 	display:grid;
 	grid-template-columns: repeat(2, minmax(calc(150px - 10px - .5em), 1fr));
 	height: 50px;
@@ -24,7 +27,8 @@
 	align-items: center;
 }
 
-.logout-buttons > button {
+.logout-buttons > button 
+{
 	height: 40px;
 	border-radius: 30px;
 	outline: none!important;
@@ -34,21 +38,25 @@
 	font-weight: 500;
 }
 
-.logout-buttons > #logout {
+.logout-buttons > #logout 
+{
 	background-color: #e78553;
 	color: #fff;
 }
-.logout-buttons > #logout:hover {
+.logout-buttons > #logout:hover 
+{
 	box-shadow: .5px .5px 10px #e78553;
   cursor: pointer;
 }
 
-.logout-buttons > #close-logout {
+.logout-buttons > #close-logout 
+{
 	background-color: #d3d3d3;
 	color: black;
   cursor: pointer;
 }
 
-.logout-buttons > #close-logout:hover {
+.logout-buttons > #close-logout:hover 
+{
 	box-shadow: .5px .5px 10px #d3d3d3;
 }

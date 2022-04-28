@@ -1,4 +1,5 @@
-export interface AccountInfo {
+export interface AccountInfo 
+{
 	email: string,
 	phoneNumber: number,
 	firstName: string,

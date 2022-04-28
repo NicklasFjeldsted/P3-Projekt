@@ -2,24 +2,28 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UdbetalComponent } from './udbetal.component';
 
-describe('UdbetalComponent', () => {
+describe('UdbetalComponent', () => 
+{
   let component: UdbetalComponent;
   let fixture: ComponentFixture<UdbetalComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => 
+  {
     await TestBed.configureTestingModule({
       declarations: [ UdbetalComponent ]
     })
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(() => 
+  {
     fixture = TestBed.createComponent(UdbetalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', () => 
+  {
     expect(component).toBeTruthy();
   });
 });

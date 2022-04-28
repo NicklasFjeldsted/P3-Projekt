@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './roulette.component.html',
   styleUrls: ['./roulette.component.css']
 })
-export class RouletteComponent implements OnInit {
-
+export class RouletteComponent implements OnInit
+{
   constructor() { }
 
   ngOnInit(): void { }

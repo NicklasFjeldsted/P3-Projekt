@@ -2,24 +2,28 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SlotsComponent } from './slots.component';
 
-describe('SlotsComponent', () => {
+describe('SlotsComponent', () => 
+{
   let component: SlotsComponent;
   let fixture: ComponentFixture<SlotsComponent>;
 
-  beforeEach(async () => {
+  beforeEach(async () => 
+  {
     await TestBed.configureTestingModule({
       declarations: [ SlotsComponent ]
     })
     .compileComponents();
   });
 
-  beforeEach(() => {
+  beforeEach(() => 
+  {
     fixture = TestBed.createComponent(SlotsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create', () => 
+  {
     expect(component).toBeTruthy();
   });
 });

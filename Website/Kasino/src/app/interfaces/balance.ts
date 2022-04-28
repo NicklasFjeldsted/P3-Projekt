@@ -1,5 +1,5 @@
-export class Balance {
-
+export class Balance 
+{
 	constructor()
 	{
 		this.customerID = null;
@@ -7,6 +7,7 @@ export class Balance {
 		this.depositLimit = null;
 		this.transactions = null;
 	}
+  
 	customerID: number | null;
 	balance: number | null;
 	depositLimit: number | null;

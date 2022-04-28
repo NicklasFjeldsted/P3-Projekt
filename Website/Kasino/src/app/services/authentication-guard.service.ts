@@ -11,11 +11,13 @@ export class AuthenticationGuard implements CanActivate
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
     return this.authenticationService.refreshToken()
-      .pipe(map(user => {
-        let result: boolean = user.jwtToken == null ? false : true;
-        return result;
+      .pipe(map(user => 
+      {
+      let result: boolean = user.jwtToken == null ? false : true;
+      return result;
     }),
-    catchError(error => {
+    catchError(error => 
+    {
       this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
       throw new Error(error);
     }))
