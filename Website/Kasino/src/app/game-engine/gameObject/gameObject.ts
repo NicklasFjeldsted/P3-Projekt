@@ -59,10 +59,7 @@ export class GameObject extends Entity
 	/** Set the parent of this GameObject. */
 	public SetParent(newParent: GameObject): void
 	{
-		this.transform.position = new Vector2(
-			newParent.transform.position.x + this.transform.position.x,
-			newParent.transform.position.y + this.transform.position.y
-		);
+		this.transform.position = newParent.transform.position;
 
 		this._parent = newParent;
 		this._parent._children.push(this);

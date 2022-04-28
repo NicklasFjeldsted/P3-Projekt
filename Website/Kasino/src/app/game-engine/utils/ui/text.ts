@@ -29,7 +29,7 @@ export class TextComponent implements IComponent
 
 	constructor(private startText?: string)
 	{
-		this.text = startText ? startText : "Empty Text";
+		this.text = startText ? startText : " ";
 	}
 
 	Start(): void
@@ -70,6 +70,7 @@ export class TextComponent implements IComponent
 		}
 
 		this.width = CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center).width;
+		//this.gameObject.transform.scale = new Vector2(this.width + 10, 30);
 	}
 
 	/** Clear Text from the canvas. */

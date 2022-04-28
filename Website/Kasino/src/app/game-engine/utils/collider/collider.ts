@@ -34,8 +34,8 @@ export class ColliderComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
-		this.DEBUG_Clear();
-		this.DEBUG_Draw();
+		// this.DEBUG_Clear();
+		// this.DEBUG_Draw();
 	}
 
 	Dispose(): void

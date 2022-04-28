@@ -42,20 +42,7 @@ export class SpriteRendererComponent implements IComponent
 
 	Update(deltaTime: number): void
 	{
-		if (this.shadow)
-		{
-			this.ClearShadow();
-		}
-
 		this.Clear();
-
-		this.Draw();
-
-		if (this.shadow)
-		{
-			this.DrawShadow();
-		}
-
 		this.Draw();
 	}
 

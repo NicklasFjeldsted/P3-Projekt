@@ -339,7 +339,7 @@ namespace TEC_KasinoAPI.Hubs
         /// <returns></returns>
         public async Task Hit()
         {
-            if (IsPlaying && !connectedPlayers[Context.ConnectionId].busted)
+            if (IsPlaying)
 			{
 				connectedPlayers[Context.ConnectionId].cards.Add(GenerateCard());
 				if(CalculateValue(connectedPlayers[Context.ConnectionId].cards.ToList()) > 21)

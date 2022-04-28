@@ -97,19 +97,66 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
-	public RoundedRect(start: Vector2, size: Vector2, radius: number, color: Color = new Color(50, 205, 50, 1)): void
+	public RoundedRect(
+		start: Vector2,
+		size: Vector2,
+		radius: any,
+		fill: boolean = true,
+		outline: boolean = false,
+		fillColor: Color = new Color(50, 205, 50, 1),
+		outlineWidth: number = 5,
+		outlineColor: Color = new Color(0, 0, 0, 1)): void
 	{
-		if (size.x < 2 * radius) radius = size.x / 2;
-		if (size.y < 2 * radius) radius = size.y / 2;
+		this._context.lineWidth = outlineWidth;
+		this._context.strokeStyle = outlineColor.AsString();
+		this._context.fillStyle = fillColor.AsString();
+
+		//outlineWidth = Math.min(Math.min(size.x, 1), Math.min(size.y, 1), outlineWidth);
+		
+		if (typeof radius === 'number') {
+			radius = { tl: radius, tr: radius, br: radius, bl: radius };
+		}
+		else {
+			var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+			for (var side in defaultRadius)
+			{
+				radius[ side ] = radius[ side ] || radius[ side ];
+			}
+		}
+
 		this._context.beginPath();
-		this._context.fillStyle = color.AsString();
-		this._context.moveTo(start.x + radius, start.y);
-		this._context.arcTo(start.x + size.x, start.y, start.x + size.x, start.y + size.x, radius);
-		this._context.arcTo(start.x + size.x, start.y + size.x, start.x, start.y + size.x, radius);
-		this._context.arcTo(start.x, start.y + size.x, start.x, start.y, radius);
-		this._context.arcTo(start.x, start.y, start.x + size.x, start.y, radius);
+		this._context.moveTo(start.x + radius.tl, start.y);
+		this._context.lineTo(start.x + size.x - radius.tr, start.y);
+		this._context.quadraticCurveTo(start.x + size.x, start.y, start.x + size.x, start.y + radius.tr);
+		this._context.lineTo(start.x + size.x, start.y + size.y - radius.br);
+		this._context.quadraticCurveTo(start.x + size.x, start.y + size.y, start.x + size.x - radius.br, start.y + size.y);
+		this._context.lineTo(start.x + radius.bl, start.y + size.y);
+		this._context.quadraticCurveTo(start.x, start.y + size.y, start.x, start.y + size.y - radius.bl);
+		this._context.lineTo(start.x, start.y + radius.tl);
+		this._context.quadraticCurveTo(start.x, start.y, start.x + radius.tl, start.y);
 		this._context.closePath();
-		this._context.fill();
+
+		if (fill)
+		{
+			this._context.fill();
+		}
+
+		if (outline)
+		{
+			let ow = outlineWidth / 2;
+			this._context.beginPath();
+			this._context.moveTo(start.x + radius.tl + ow, start.y + ow);
+			this._context.lineTo(start.x + size.x - radius.tr - ow, start.y + ow);
+			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + ow, start.x + size.x - ow, start.y + radius.tr);
+			this._context.lineTo(start.x + size.x - ow, start.y + size.y - radius.br - ow);
+			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + size.y - ow, start.x + size.x - radius.br, start.y + size.y - ow);
+			this._context.lineTo(start.x + radius.bl, start.y + size.y - ow);
+			this._context.quadraticCurveTo(start.x + ow, start.y + size.y - ow, start.x + ow, start.y + size.y - radius.bl);
+			this._context.lineTo(start.x + ow, start.y + radius.tl);
+			this._context.quadraticCurveTo(start.x + ow, start.y + ow, start.x + radius.tl, start.y + ow);
+			this._context.closePath();
+			this._context.stroke();
+		}
 	}
 
 	/** Draws a box on the canvas. */

@@ -10,6 +10,12 @@ export class ShapeRendererComponent implements IComponent
 	public gameObject: GameObject;
 
 	public layer: number | undefined;
+	public radius: any = 10;
+	public fill: boolean = true;
+	public outline: boolean = false;
+	public fillColor: Color = new Color(255, 255, 255, 1);
+	public outlineColor: Color = new Color(0, 0, 0, 1);
+	public outlineWidth: number = 5;
 
 	public rectTransform: RectTransform;
 
@@ -55,7 +61,16 @@ export class ShapeRendererComponent implements IComponent
 			return;
 		}
 
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).RoundedRect(this.rectTransform.start, new Vector2(80, 30), 3);
+		CanvasLayer.GetLayer(this.layer ? this.layer : 1).RoundedRect(
+			this.rectTransform.start,
+			this.rectTransform.size,
+			this.radius,
+			this.fill,
+			this.outline,
+			this.fillColor,
+			this.outlineWidth,
+			this.outlineColor
+		);
 	}
 
 	/** Clear a Shape from the canvas. */
