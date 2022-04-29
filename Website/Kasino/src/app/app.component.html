@@ -1,7 +1,7 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 </style>
-<div class="back-drop" id="backdrop" (click)="closeSideNav()"></div>
+<div class="back-drop noselect" id="backdrop" (click)="closeSideNav()"></div>
 <div class="sidenav" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
     <ul class="sidenav-list">
@@ -30,7 +30,7 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container noselect">
   <app-header class="header" (onSideNavToggle)="openSideNav()"></app-header>
   <router-outlet></router-outlet>
   <app-footer style="overflow: hidden"></app-footer>
