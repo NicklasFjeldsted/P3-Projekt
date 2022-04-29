@@ -1,33 +1,24 @@
-import { GameObject } from "../../gameObject";
-import { Canvas, CanvasLayer } from "../canvas";
-import { Color } from "../color";
-import { IComponent } from "../ecs";
+import { CanvasLayer } from "../canvas";
 import { RectTransform } from "../rectTransform";
-import { Vector2 } from "../vector2";
+import { Shape } from "../sprite";
+import { Rendering } from "./rendering";
 
-export class ShapeRendererComponent implements IComponent
+export class ShapeRendererComponent extends Rendering
 {
-	public gameObject: GameObject;
-
 	public layer: number | undefined;
-	public radius: any = 10;
-	public fill: boolean = true;
-	public outline: boolean = false;
-	public fillColor: Color = new Color(255, 255, 255, 1);
-	public outlineColor: Color = new Color(0, 0, 0, 1);
-	public outlineWidth: number = 5;
+
+	public shape: Shape | undefined;
+
+	constructor(private _shape?: Shape)
+	{
+		super();
+		if (_shape)
+		{
+			this.shape = _shape;
+		}
+	}
 
 	public rectTransform: RectTransform;
-
-	constructor(private imageSource?: string)
-	{
-		//this.image = imageSource ? imageSource : null;
-	}
-
-	Start(): void
-	{
-
-	}
 
 	Awake(): void
 	{
@@ -39,42 +30,32 @@ export class ShapeRendererComponent implements IComponent
 		{
 			this.gameObject.AddComponent(new RectTransform(), 1).GetComponent(RectTransform).Awake();
 		}
+
+		this.RegisterRenderer();
 	}
+
+	Start(): void
+	{
+
+	}
+
 
 	Update(deltaTime: number): void
 	{
-		this.Clear();
-		this.Draw();
+
 	}
 
-	Dispose(): void
+	Draw(): void
 	{
-		this.Clear();
-		this.gameObject.RemoveComponent(ShapeRendererComponent);
-	}
-
-	/** Draw a Shape to the canvas. */
-	private Draw(): void
-	{
-		if (!this.gameObject.isActive)
+		if (!this.gameObject.isActive || !this.shape)
 		{
 			return;
 		}
 
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).RoundedRect(
-			this.rectTransform.start,
-			this.rectTransform.size,
-			this.radius,
-			this.fill,
-			this.outline,
-			this.fillColor,
-			this.outlineWidth,
-			this.outlineColor
-		);
+		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ExtendedRect(this.rectTransform.start, this.rectTransform.size, this.shape);
 	}
 
-	/** Clear a Shape from the canvas. */
-	private Clear(): void
+	Clear(): void
 	{
 		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}

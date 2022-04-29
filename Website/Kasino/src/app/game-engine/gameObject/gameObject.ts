@@ -225,11 +225,6 @@ export class GameObject extends Entity
 
 	public Destroy(): void
 	{
-		for (let component of this._components)
-		{
-			component.Dispose();
-		}
-
 		if (this._parent)
 		{
 			this.parent.DestroyChild(this);
@@ -258,46 +253,6 @@ export class GameObject extends Entity
 			toRemove._parent = null;
 			this._children.splice(index, 1);
 		}
-	}
-
-	public override Dispose(): Promise<void>
-	{
-		return new Promise<void>((resolve) =>
-		{
-			console.groupCollapsed(`${this.gameObjectName} - Disposal logs`);
-			var interval = setInterval(() =>
-			{
-				if (!this.disposable)
-					return;
-
-				resolve();
-				clearInterval(interval);
-
-			}, 100);
-
-			// for (const child of this.Children)
-			// {
-			// 	child.Dispose();
-			// }
-
-			for (const component of this.Components)
-			{
-				component.Dispose();
-			}
-
-			//this._size = null;
-
-			console.groupEnd();
-		}).then(() =>
-		{
-			console.groupCollapsed(`${this.gameObjectName} - Remainders`);
-			for (const [key, value] of Object.entries(this))
-			{
-				console.log(`${key}:`, value);
-			}
-			console.groupEnd();
-			this.Destroy();
-		});
 	}
 
 	public override get disposable(): boolean

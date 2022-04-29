@@ -1,27 +1,29 @@
+import { Color } from "../color";
 import { Vector2 } from "../vector2";
 
 export class Sprite
 {
-	private _image: HTMLImageElement;
 
-	public set ImageSrc(source: string)
-	{
-		this._image.src = source;
-	}
+}
 
-	public get Image(): HTMLImageElement
-	{
-		let output: HTMLImageElement = new HTMLImageElement();
-		output.src = this._image.src;
-		return output;
-	}
+export interface CustomRadius
+{
+	/** Top Left Corner. */
+	tl: number;
+	/** Top Right Corner. */
+	tr: number;
+	/** Bottom Right Corner. */
+	br: number;
+	/** Bottom Left Corner. */
+	bl: number;
+}
 
-	/** Public getter for the Size of this Sprite. */
-	public get Size(): Vector2
-	{
-		return new Vector2(
-			this._image.naturalWidth - this._image.width,
-			this._image.naturalHeight - this._image.height
-		)
-	}
+export class Shape
+{
+	radius: number | CustomRadius = 10;
+	fill: boolean = true;
+	outline: boolean = false;
+	fillColor: Color = new Color(50, 205, 50, 1);
+	outlineWidth: number = 5;
+	outlineColor: Color = new Color(0, 0, 0, 1);
 }

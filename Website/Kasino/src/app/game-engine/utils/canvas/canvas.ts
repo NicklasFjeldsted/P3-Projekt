@@ -1,4 +1,4 @@
-import { Vector2, IAwake, Color, Transform } from "src/app/game-engine";
+import { Vector2, IAwake, Color, Shape, CustomRadius } from "src/app/game-engine";
 
 export class Canvas implements IAwake
 {
@@ -88,7 +88,7 @@ export class Canvas implements IAwake
 		}
 	}
 
-	/** Draws a square on the canvas. */
+	/** Draws a rect on the canvas. */
 	public FillRect(start: Vector2, size: Vector2, color: Color = new Color(50, 205, 50, 1)): void
 	{
 		this._context.beginPath();
@@ -97,63 +97,55 @@ export class Canvas implements IAwake
 		this._context.fill();
 	}
 
-	public RoundedRect(
-		start: Vector2,
-		size: Vector2,
-		radius: any,
-		fill: boolean = true,
-		outline: boolean = false,
-		fillColor: Color = new Color(50, 205, 50, 1),
-		outlineWidth: number = 5,
-		outlineColor: Color = new Color(0, 0, 0, 1)): void
+	/** Draw a custom rect on the canvas. */
+	public ExtendedRect(start: Vector2, size: Vector2, shape: Shape): void
 	{
-		this._context.lineWidth = outlineWidth;
-		this._context.strokeStyle = outlineColor.AsString();
-		this._context.fillStyle = fillColor.AsString();
+		let localRadius: CustomRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+		this._context.lineWidth = shape.outlineWidth;
+		this._context.strokeStyle = shape.outlineColor.AsString();
+		this._context.fillStyle = shape.fillColor.AsString();
 
 		//outlineWidth = Math.min(Math.min(size.x, 1), Math.min(size.y, 1), outlineWidth);
 		
-		if (typeof radius === 'number') {
-			radius = { tl: radius, tr: radius, br: radius, bl: radius };
+		if (typeof shape.radius === 'number')
+		{
+			localRadius = { tl: shape.radius, tr: shape.radius, br: shape.radius, bl: shape.radius };
 		}
-		else {
-			var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
-			for (var side in defaultRadius)
-			{
-				radius[ side ] = radius[ side ] || radius[ side ];
-			}
+		else
+		{
+			localRadius = Object.assign(localRadius, shape.radius);
 		}
 
 		this._context.beginPath();
-		this._context.moveTo(start.x + radius.tl, start.y);
-		this._context.lineTo(start.x + size.x - radius.tr, start.y);
-		this._context.quadraticCurveTo(start.x + size.x, start.y, start.x + size.x, start.y + radius.tr);
-		this._context.lineTo(start.x + size.x, start.y + size.y - radius.br);
-		this._context.quadraticCurveTo(start.x + size.x, start.y + size.y, start.x + size.x - radius.br, start.y + size.y);
-		this._context.lineTo(start.x + radius.bl, start.y + size.y);
-		this._context.quadraticCurveTo(start.x, start.y + size.y, start.x, start.y + size.y - radius.bl);
-		this._context.lineTo(start.x, start.y + radius.tl);
-		this._context.quadraticCurveTo(start.x, start.y, start.x + radius.tl, start.y);
+		this._context.moveTo(start.x + localRadius.tl, start.y);
+		this._context.lineTo(start.x + size.x - localRadius.tr, start.y);
+		this._context.quadraticCurveTo(start.x + size.x, start.y, start.x + size.x, start.y + localRadius.tr);
+		this._context.lineTo(start.x + size.x, start.y + size.y - localRadius.br);
+		this._context.quadraticCurveTo(start.x + size.x, start.y + size.y, start.x + size.x - localRadius.br, start.y + size.y);
+		this._context.lineTo(start.x + localRadius.bl, start.y + size.y);
+		this._context.quadraticCurveTo(start.x, start.y + size.y, start.x, start.y + size.y - localRadius.bl);
+		this._context.lineTo(start.x, start.y + localRadius.tl);
+		this._context.quadraticCurveTo(start.x, start.y, start.x + localRadius.tl, start.y);
 		this._context.closePath();
 
-		if (fill)
+		if (shape.fill)
 		{
 			this._context.fill();
 		}
 
-		if (outline)
+		if (shape.outline)
 		{
-			let ow = outlineWidth / 2;
+			let ow = shape.outlineWidth / 2;
 			this._context.beginPath();
-			this._context.moveTo(start.x + radius.tl + ow, start.y + ow);
-			this._context.lineTo(start.x + size.x - radius.tr - ow, start.y + ow);
-			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + ow, start.x + size.x - ow, start.y + radius.tr);
-			this._context.lineTo(start.x + size.x - ow, start.y + size.y - radius.br - ow);
-			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + size.y - ow, start.x + size.x - radius.br, start.y + size.y - ow);
-			this._context.lineTo(start.x + radius.bl, start.y + size.y - ow);
-			this._context.quadraticCurveTo(start.x + ow, start.y + size.y - ow, start.x + ow, start.y + size.y - radius.bl);
-			this._context.lineTo(start.x + ow, start.y + radius.tl);
-			this._context.quadraticCurveTo(start.x + ow, start.y + ow, start.x + radius.tl, start.y + ow);
+			this._context.moveTo(start.x + localRadius.tl + ow, start.y + ow);
+			this._context.lineTo(start.x + size.x - localRadius.tr - ow, start.y + ow);
+			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + ow, start.x + size.x - ow, start.y + localRadius.tr);
+			this._context.lineTo(start.x + size.x - ow, start.y + size.y - localRadius.br - ow);
+			this._context.quadraticCurveTo(start.x + size.x - ow, start.y + size.y - ow, start.x + size.x - localRadius.br, start.y + size.y - ow);
+			this._context.lineTo(start.x + localRadius.bl, start.y + size.y - ow);
+			this._context.quadraticCurveTo(start.x + ow, start.y + size.y - ow, start.x + ow, start.y + size.y - localRadius.bl);
+			this._context.lineTo(start.x + ow, start.y + localRadius.tl);
+			this._context.quadraticCurveTo(start.x + ow, start.y + ow, start.x + localRadius.tl, start.y + ow);
 			this._context.closePath();
 			this._context.stroke();
 		}
@@ -180,9 +172,13 @@ export class Canvas implements IAwake
 	/** Clear a rect from the canvas. */
 	public ClearRect(start: Vector2, size: Vector2): void
 	{
-		this._context.clearRect(start.x, start.y, size.x, size.y);
+		let _start = new Vector2(start.x, start.y);
+		let _size = new Vector2(size.x, size.y);
+
+		this._context.clearRect(_start.x, _start.y, _size.x + 1, _size.y + 1);
 	}
 
+	/** Clears an entire canvas. */
 	public ClearCanvas(): void
 	{
 		this._context.clearRect(0, 0, this._element.width, this._element.height);

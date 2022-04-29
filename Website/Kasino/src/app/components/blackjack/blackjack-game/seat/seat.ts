@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { CanvasLayer, ColliderComponent, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, RectTransform, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { ShapeRendererComponent } from "src/app/game-engine/utils/rendering/shaperenderer";
 import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
@@ -46,15 +46,21 @@ export class Seat extends MonoBehaviour
 		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.svg'));
 		this.gameObject.AddComponent(new ColliderComponent());
 
+		let buttonShape: Shape = new Shape();
+		buttonShape.outline = true;
+		buttonShape.outlineWidth = 2;
+
+		let nameShape: Shape = new Shape();
+		nameShape.outline = true;
+		nameShape.outlineWidth = 3;
+
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		this.gameObject.game.Instantiate(seatText);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
-		let seatTextShape = seatText.AddComponent(new ShapeRendererComponent()).GetComponent(ShapeRendererComponent);
+		let seatTextShape = seatText.AddComponent(new ShapeRendererComponent(nameShape)).GetComponent(ShapeRendererComponent);
 		this.seatText = seatText.GetComponent(TextComponent);
 		seatTextShape.layer = 2;
-		seatTextShape.outline = true;
-		seatTextShape.outlineWidth = 3;
 
 		let cardValuesChild = new GameObject(`${this.gameObject.gameObjectName}'s "Card Values Child"`);
 		this.gameObject.game.Instantiate(cardValuesChild);
@@ -78,9 +84,7 @@ export class Seat extends MonoBehaviour
 		hitButton.AddComponent(new TextComponent("Hit"));
 		hitButton.AddComponent(new ColliderComponent());
 		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
-		let hitButtonShape = hitButton.AddComponent(new ShapeRendererComponent()).GetComponent(ShapeRendererComponent);
-		hitButtonShape.outline = true;
-		hitButtonShape.outlineWidth = 2;
+		hitButton.AddComponent(new ShapeRendererComponent(buttonShape));
 		
 		let standButton = new GameObject(`${buttons.gameObjectName}'s Stand Button`);
 		this.gameObject.game.Instantiate(standButton);
@@ -90,9 +94,7 @@ export class Seat extends MonoBehaviour
 		standButton.AddComponent(new TextComponent("Stand"));
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
-		let standButtonShape = standButton.AddComponent(new ShapeRendererComponent()).GetComponent(ShapeRendererComponent);
-		standButtonShape.outline = true;
-		standButtonShape.outlineWidth = 2;
+		standButton.AddComponent(new ShapeRendererComponent(buttonShape));
 
 		let resultTextChild = new GameObject(`${this.gameObject.gameObjectName}'s Result Child`);
 		this.gameObject.game.Instantiate(resultTextChild);
