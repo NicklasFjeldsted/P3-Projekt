@@ -1,8 +1,8 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 </style>
-<div class="back-drop noselect" id="backdrop" (click)="closeSideNav()"></div>
-<div class="sidenav" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
+<div class="back-drop" id="backdrop" (click)="closeSideNav()"></div>
+<div class="sidenav noselect" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
     <ul class="sidenav-list">
       <li class="sidenav-item">
