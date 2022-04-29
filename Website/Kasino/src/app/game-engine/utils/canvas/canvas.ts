@@ -185,13 +185,33 @@ export class Canvas implements IAwake
 	}
 
 	/** Draw text the canvas and return the width of it. */
-	public DrawText(text: string, position: Vector2, color?: Color): TextMetrics
+	public DrawText(text: string, position: Vector2, fontSize: number = 16, maxWidth?: number, fit: boolean = false, color?: Color): void
 	{
-		this._context.font = "24px Arial";
+		let _margin: number = 0;
+
 		this._context.textAlign = "center";
 		this._context.textBaseline = "middle";
-		this._context.fillText(text, position.x, position.y);
-		return this._context.measureText(text);
+		
+		let desiredWidth = maxWidth ? maxWidth : this._context.measureText(text).width;
+
+		if (fit)
+		{
+			do
+			{
+				fontSize--;
+				_margin = Math.round(fontSize / 2);
+				this._context.font = `${fontSize}px Arial`;
+			}
+			while (this._context.measureText(text).width > desiredWidth - _margin);
+		}
+		else
+		{
+			_margin = Math.round(fontSize / 2);
+			this._context.font = `${fontSize}px Arial`;
+		}
+
+
+		this._context.fillText(text, position.x, position.y, desiredWidth - _margin);
 	}
 
 	/** Return the pixel width of a string. */

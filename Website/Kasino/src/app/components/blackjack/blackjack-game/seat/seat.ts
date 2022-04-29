@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { ShapeRendererComponent } from "src/app/game-engine/utils/rendering/shaperenderer";
 import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
@@ -43,7 +43,13 @@ export class Seat extends MonoBehaviour
 			this.CreateCardDisplay(i);
 		}
 
-		this.gameObject.AddComponent(new SpriteRendererComponent('../../../../../assets/media/blackjack-game/circle.svg'));
+		let seatShape: Shape = new Shape();
+		seatShape.fillColor = new Color(255, 255, 255);
+		seatShape.radius = 20;
+		seatShape.outline = true;
+		seatShape.outlineWidth = 2;
+
+		this.gameObject.AddComponent(new ShapeRendererComponent(seatShape));
 		this.gameObject.AddComponent(new ColliderComponent());
 
 		let buttonShape: Shape = new Shape();
@@ -52,7 +58,7 @@ export class Seat extends MonoBehaviour
 
 		let nameShape: Shape = new Shape();
 		nameShape.outline = true;
-		nameShape.outlineWidth = 3;
+		nameShape.outlineWidth = 2;
 
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
 		this.gameObject.game.Instantiate(seatText);
@@ -60,7 +66,10 @@ export class Seat extends MonoBehaviour
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
 		let seatTextShape = seatText.AddComponent(new ShapeRendererComponent(nameShape)).GetComponent(ShapeRendererComponent);
 		this.seatText = seatText.GetComponent(TextComponent);
+		this.seatText.fit = true;
 		seatTextShape.layer = 2;
+		seatText.transform.Translate(new Vector2(0, 25));
+		seatText.transform.scale = new Vector2(110, 30);
 
 		let cardValuesChild = new GameObject(`${this.gameObject.gameObjectName}'s "Card Values Child"`);
 		this.gameObject.game.Instantiate(cardValuesChild);
@@ -69,6 +78,8 @@ export class Seat extends MonoBehaviour
 		cardValuesChild.transform.scale = new Vector2(50, 30);
 		cardValuesChild.AddComponent(new TextComponent());
 		this.childTextComponent = cardValuesChild.GetComponent(TextComponent);
+		this.childTextComponent.fit = true;
+		this.childTextComponent.fontSize = 24;
 
 		let buttons = new GameObject(`${this.gameObject.gameObjectName}'s buttons`);
 		this.gameObject.game.Instantiate(buttons);
@@ -110,7 +121,7 @@ export class Seat extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
-		this.seatText.gameObject.transform.scale = new Vector2(this.seatText.width + 10, 30);
+
 	}
 
 	/** Update this seats player's data with new data. */

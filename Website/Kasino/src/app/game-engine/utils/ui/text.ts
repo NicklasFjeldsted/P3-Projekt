@@ -9,7 +9,8 @@ export class TextComponent extends Rendering
 
 	public rectTransform: RectTransform;
 
-	private offset: number = 5;
+	public fontSize: number | undefined;
+	public fit: boolean = false;
 
 	private _width: number = 0;
 
@@ -61,8 +62,7 @@ export class TextComponent extends Rendering
 			return;
 		}
 
-		this.width = CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center).width;
-		//this.gameObject.transform.scale = new Vector2(this.width + 10, 30);
+		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit);
 	}
 
 	/** Clear Text from the canvas. */
