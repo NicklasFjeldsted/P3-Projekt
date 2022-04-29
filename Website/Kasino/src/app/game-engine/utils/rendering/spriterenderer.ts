@@ -1,14 +1,10 @@
-import { GameObject } from "../../gameObject";
-import { Canvas, CanvasLayer } from "../canvas";
+import { CanvasLayer } from "../canvas";
 import { Color } from "../color";
-import { IComponent } from "../ecs";
 import { RectTransform } from "../rectTransform";
-import { Vector2 } from "../vector2";
+import { Rendering } from "./rendering";
 
-export class SpriteRendererComponent implements IComponent
+export class SpriteRendererComponent extends Rendering
 {
-	public gameObject: GameObject;
-
 	public image: string | null;
 	public layer: number | undefined;
 	public shadow: boolean = false;
@@ -20,6 +16,7 @@ export class SpriteRendererComponent implements IComponent
 
 	constructor(private imageSource?: string)
 	{
+		super();
 		this.image = imageSource ? imageSource : null;
 	}
 
@@ -38,12 +35,13 @@ export class SpriteRendererComponent implements IComponent
 		{
 			this.gameObject.AddComponent(new RectTransform(), 1).GetComponent(RectTransform).Awake();
 		}
+
+		this.RegisterRenderer();
 	}
 
 	Update(deltaTime: number): void
 	{
-		this.Clear();
-		this.Draw();
+
 	}
 
 	Dispose(): void
@@ -83,7 +81,7 @@ export class SpriteRendererComponent implements IComponent
 	}
 
 	/** Draw a Sprite to the canvas. */
-	private Draw(): void
+	Draw(): void
 	{
 		if (!this.gameObject.isActive || this.image == null)
 		{
@@ -94,7 +92,7 @@ export class SpriteRendererComponent implements IComponent
 	}
 
 	/** Clear a Sprite from the canvas. */
-	private Clear(): void
+	Clear(): void
 	{
 		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}

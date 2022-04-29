@@ -1,19 +1,16 @@
-import { GameObject } from "../../gameObject";
-import { Canvas, CanvasLayer } from "../canvas";
-import { IComponent } from "../ecs";
+import { CanvasLayer } from "../canvas";
 import { RectTransform } from "../rectTransform";
-import { Vector2 } from "../vector2";
+import { Rendering } from "../rendering";
 
-export class TextComponent implements IComponent
+export class TextComponent extends Rendering
 {
-	public gameObject: GameObject;
-
 	public text: string;
 	public renderLayer: number = 3;
 
 	public rectTransform: RectTransform;
 
-	private offset: number = 5;
+	public fontSize: number | undefined;
+	public fit: boolean = false;
 
 	private _width: number = 0;
 
@@ -29,6 +26,7 @@ export class TextComponent implements IComponent
 
 	constructor(private startText?: string)
 	{
+		super();
 		this.text = startText ? startText : " ";
 	}
 
@@ -47,34 +45,28 @@ export class TextComponent implements IComponent
 		{
 			this.gameObject.AddComponent(new RectTransform(), 1).GetComponent(RectTransform).Awake();
 		}
+
+		this.RegisterRenderer();
 	}
 
 	Update(deltaTime: number): void
 	{
-		this.Clear();
-		this.Draw();
-	}
 
-	Dispose(): void
-	{
-		console.log(`${this.constructor.name} - Disposal`);
-		this.gameObject.RemoveComponent(TextComponent);
 	}
 
 	/** Draw Text to the canvas. */
-	private Draw(): void
+	Draw(): void
 	{
 		if (!this.gameObject.isActive)
 		{
 			return;
 		}
 
-		this.width = CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center).width;
-		//this.gameObject.transform.scale = new Vector2(this.width + 10, 30);
+		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit);
 	}
 
 	/** Clear Text from the canvas. */
-	private Clear(): void
+	Clear(): void
 	{
 		CanvasLayer.GetLayer(this.renderLayer).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}

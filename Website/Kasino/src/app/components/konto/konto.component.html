@@ -1,4 +1,4 @@
-<div class="left-side">
+<div class="left-side noselect">
   <div class="sidenav">
     <i
       [ngStyle]="{ top: kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px' }"
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<form id="konto" method="get" class="form-control h-center" *ngIf="kontoSite == 1">
+<form id="konto" method="get" class="form-control h-center noselect" *ngIf="kontoSite == 1">
   <div class="column flow-down main">
     <div class="form-header">
       <h1>Min Konto</h1>
@@ -97,7 +97,7 @@
   </div>
 </form>
 
-<form id="transaktion" method="get" class="form-control h-center" *ngIf="kontoSite == 2">
+<form id="transaktion" method="get" class="form-control h-center noselect" *ngIf="kontoSite == 2">
   <div class="column flow-down main">
     <div class="form-header">
       <h1>Transaktionshistorik</h1>
@@ -143,11 +143,11 @@
 <form
   id="deposit"
   method="get"
-  class="form-control h-center"
+  class="form-control h-center noselect"
   [formGroup]="depositForm"
-  *ngIf="kontoSite == 3"
->
-  <div class="column flow-down main">
+  *ngIf="kontoSite == 3">
+  
+  <div class="column flow-down main ">
     <div class="form-header">
       <h1>Indstil indbetalingsgrænse</h1>
     </div>

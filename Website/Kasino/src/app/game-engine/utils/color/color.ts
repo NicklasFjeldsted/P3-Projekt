@@ -23,7 +23,7 @@ export class Color
 	}
 
 	// Create the color object.
-	constructor(r: number, g: number, b: number, a: number)
+	constructor(r: number, g: number, b: number, a: number = 1)
 	{
 		if (!Color.IsValidChannel(r))
 		{

@@ -1,4 +1,4 @@
 export * from './game';
-export * from './gameObject';
+export * from './utils/gameObject';
 export * from './settings';
 export * from './utils';

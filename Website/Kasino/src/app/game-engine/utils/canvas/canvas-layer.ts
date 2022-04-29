@@ -6,6 +6,7 @@ export class CanvasLayer
 
 	private constructor() { }
 
+	/** Returns a canvas with the Z-Index of the index parameter. */
 	public static GetLayer(index: number): Canvas
 	{
 		if (!this._layers[ index ])
@@ -19,8 +20,7 @@ export class CanvasLayer
 	/** Create a new canvas. */
 	private static InitCanvas(style: Partial<CSSStyleDeclaration>): Canvas
 	{
-		let size = (Settings.grid.nodeSize + Settings.grid.nodeOffset) * Settings.grid.dimension + Settings.grid.nodeOffset;
-		let canvas = new Canvas(new Vector2(960, 600));
+		let canvas = new Canvas(new Vector2(Settings.canvas.width, Settings.canvas.height));
 
 		canvas.Awake();
 		canvas.SetStyle(style);

@@ -1,4 +1,4 @@
-import { GameObject } from "../../gameObject";
+import { GameObject } from "../gameObject";
 import { CanvasLayer } from "../canvas";
 import { IComponent } from "../ecs";
 import { RectTransform } from "../rectTransform";

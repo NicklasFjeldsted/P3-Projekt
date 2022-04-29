@@ -1,5 +1,5 @@
-import { GameObject } from '../gameObject';
-import { CanvasLayer, Entity, Vector2 } from '../utils';
+import { GameObject } from '../utils/gameObject';
+import { CanvasLayer, Entity, IRendering, Vector2 } from '../utils';
 import { NetworkingFeature } from './components';
 
 type AbstractFeature<T> = Function & { prototype: T; };
@@ -14,8 +14,14 @@ export class Game extends Entity
 		return this._entities;
 	}
 
+	private _renders: IRendering[] = [];
+
+	public get Renders(): IRendering[]
+	{
+		return this._renders;
+	}
+
 	private _lastTimestamp: number = 0;
-	private _break: boolean = false;
 
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject): void
@@ -24,7 +30,12 @@ export class Game extends Entity
 		this._entities.push(gameObject);
 	}
 
-	/** Remove a Entity from this game. */
+	public RegisterRenderer(renderer: IRendering)
+	{
+		this._renders.push(renderer);
+	}
+
+	/** Remove an Entity from this game. */
 	public RemoveEntity<C extends Entity>(constr: constr<C>): void
 	{
 		for (let i = 0; i < this._entities.length; i++)
@@ -54,7 +65,6 @@ export class Game extends Entity
 	{
 		return new Promise((resolve) =>
 		{
-			this._break = false;
 			let networking = this.GetFeature(NetworkingFeature);
 			if (networking)
 			{
@@ -73,60 +83,6 @@ export class Game extends Entity
 				this.Awake();
 				resolve();
 			}
-		});
-	}
-
-	public END_GAME(): Promise<boolean>
-	{
-		return new Promise((resolve) =>
-		{
-			this._break = true;
-			let networking = this.GetFeature(NetworkingFeature);
-			if (networking)
-			{
-				networking.StopConnection().then(() =>
-				{
-					this.Dispose().then(() =>
-					{
-						resolve(true);
-					}).catch(() =>
-					{
-						resolve(false);
-					});
-				});
-			}
-			else
-			{
-				this.Dispose().then(() =>
-				{
-					resolve(true);
-				}).catch(() =>
-				{
-					resolve(false);
-				});
-			}
-		});
-	}
-
-	public override Dispose(): Promise<void>
-	{
-		return new Promise<void>((resolve) =>
-		{
-			var interval = setInterval(() =>
-			{
-				if (!this.disposable)
-					return;
-
-				resolve();
-				clearInterval(interval);
-			}, 100);
-
-			console.groupCollapsed("Game Entities - Disposal Logs");
-			for (const entity of this.Entities)
-			{
-				entity.Dispose();
-			}
-			console.groupEnd();
 		});
 	}
 
@@ -189,21 +145,27 @@ export class Game extends Entity
 	// Update the game everyframe and calculate the new deltaTime.
 	public override Update(): void
 	{
-		if (this._break)
-		{
-			console.warn("GAME - Loop stopped");
-			return;
-		}
-
 		// deltaTime will look something like 0.283192 milliseconds
 		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
 
 		super.Update(deltaTime);
 
+		// Clear all renders in this game.
+		for (const renderer of this.Renders)
+		{
+			renderer.Clear();
+		}
+
 		// Update all the entities in this game.
 		for (const entity of this.Entities)
 		{
 			entity.Update(deltaTime);
+		}
+
+		// Draw all renders in this game.
+		for (const renderer of this.Renders)
+		{
+			renderer.Draw();
 		}
 
 		this._lastTimestamp = Date.now();
