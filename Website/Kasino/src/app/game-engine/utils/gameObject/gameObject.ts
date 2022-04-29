@@ -1,5 +1,5 @@
-import { Game } from "../game/game";
-import { Entity, IComponent, Transform, Vector2 } from "../utils";
+import { Game } from "../../game/game";
+import { Entity, IComponent, Transform, Vector2 } from "..";
 
 type AbstractComponent<T> = Function & { prototype: T; };
 type constr<T> = AbstractComponent<T> | { new(...args: unknown[]): T; };

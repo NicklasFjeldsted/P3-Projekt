@@ -1,4 +1,4 @@
-import { GameObject } from '../gameObject';
+import { GameObject } from '../utils/gameObject';
 import { CanvasLayer, Entity, IRendering, Vector2 } from '../utils';
 import { NetworkingFeature } from './components';
 

@@ -1,4 +1,4 @@
-import { GameObject } from "../../gameObject";
+import { GameObject } from "../gameObject";
 import { IComponent } from "../ecs";
 import { IRendering } from "./rendering.h";
 

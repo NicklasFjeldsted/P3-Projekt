@@ -1,5 +1,5 @@
 import { IUpdate, IAwake, IStart } from "../../utils/lifecycle";
-import { GameObject } from "../../gameObject";
+import { GameObject } from "../gameObject";
 
 export interface IComponent extends IAwake, IStart, IUpdate
 {
