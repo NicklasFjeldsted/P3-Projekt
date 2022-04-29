@@ -11,7 +11,8 @@ import { Country } from "src/app/interfaces/country";
   templateUrl: "./tilmeld.component.html",
   styleUrls: ["./tilmeld.component.css"],
 })
-export class TilmeldComponent implements OnInit {
+export class TilmeldComponent implements OnInit 
+{
   // Creates form
   form: FormGroup = new FormGroup({
     email: new FormControl(""),
@@ -27,7 +28,7 @@ export class TilmeldComponent implements OnInit {
     acceptTerms: new FormControl(false),
   });
 
-  step: any = 1; // Current step on form
+  step: any = 2; // Current step on form
   nextSubmit: boolean = false; // checks if client has pressed next on form
   acceptRights: boolean = false; // checks if client has accepted their rights
   submitted: boolean = false; // checks if client has submitted form
@@ -42,7 +43,8 @@ export class TilmeldComponent implements OnInit {
   ) {}
 
   // Gives form properties validators
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.form = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ["", [Validators.required, Validators.minLength(8)]],
@@ -58,11 +60,13 @@ export class TilmeldComponent implements OnInit {
     });
   }
 
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.form.controls;
   }
 
-  goNext(): void {
+  goNext(): void 
+  {
     this.nextSubmit = true;
     var countryValue = this.form.get("countryID")?.value;
     if (this.convertCountry(countryValue) == -1) {
@@ -75,18 +79,23 @@ export class TilmeldComponent implements OnInit {
     }
   }
 
-  convertCountry(countryName: string): number {
+  convertCountry(countryName: string): number 
+  {
     const countries: Country[] = JSON.parse(localStorage.getItem("countries")!);
     const country: Country | undefined = countries.find((country) => country.countryName == countryName);
-    if (country === undefined) {
+    if (country === undefined) 
+    {
       console.error("Country not found!");
       return -1;
-    } else {
+    } 
+    else 
+    {
       return country.countryID;
     }
   }
 
-  signUp(): void {
+  signUp(): void 
+  {
     this.submitted = true;
 
     this.checkGender() ? (this.validGender = false) : (this.validGender = true);
@@ -103,41 +112,55 @@ export class TilmeldComponent implements OnInit {
 
     this.custom = Object.assign(this.form.value);
     this.customerService.register(this.custom).subscribe({
-      next: () => {
+      next: () => 
+      {
         let credentials = { email: "", password: "" };
         credentials = Object.assign(credentials, this.form.value);
         this.authenticationService.login(credentials.email, credentials.password).subscribe({
-          next: () => {
+          next: () => 
+          {
             this.router.navigate([""]);
           },
-          error: (error) => {
+
+          error: (error) => 
+          {
             console.error(error);
             this.router.navigate(["login"]);
           },
         });
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error);
       },
     });
   }
 
-  checkGender(): number | undefined {
+  checkGender(): number | undefined 
+  {
     return this.form.get("genderID")?.value;
   }
 
-  setGender(genderid: Number): void {
+  setGender(genderid: Number): void 
+  {
     this.form.patchValue({ genderID: genderid });
     const buttonMale = document.getElementById("gender-button-0")!.children;
     const buttonFemale = document.getElementById("gender-button-1")!.children;
-    for (let i = 0; i < 3; i++) {
-      if (genderid == 0) {
-        buttonMale[i].classList.add("active");
-        buttonFemale[i].classList.remove("active");
-      } else {
-        buttonFemale[i].classList.add("active");
-        buttonMale[i].classList.remove("active");
-      }
+    if (genderid == 0) 
+    {
+      buttonMale[0].classList.add("active-i");
+      buttonMale[1].classList.add("active");
+
+      buttonFemale[0].classList.remove("active-i");
+      buttonFemale[1].classList.remove("active");
+    } 
+    else 
+    {
+      buttonFemale[0].classList.add("active-i");
+      buttonFemale[1].classList.add("active");
+
+      buttonMale[0].classList.remove("active-i");
+      buttonMale[1].classList.remove("active");
     }
   }
 }

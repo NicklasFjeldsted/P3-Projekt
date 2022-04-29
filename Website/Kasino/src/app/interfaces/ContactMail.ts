@@ -1,4 +1,5 @@
-export interface ContactMail {
+export interface ContactMail 
+{
 	Fullname: string,
 	Email: string,
 	Subject: string,

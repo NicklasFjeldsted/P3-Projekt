@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature, ShapeRendererComponent, Vector2 } from 'src/app/game-engine';
 import { IUser } from 'src/app/interfaces/User';
 import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';

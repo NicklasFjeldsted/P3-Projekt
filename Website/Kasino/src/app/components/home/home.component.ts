@@ -18,10 +18,13 @@ export class HomeComponent
 
   ngOnInit() { }
 
-  addActive(id: number): void {
+  addActive(id: number): void 
+  {
     const nav = document.getElementById("navbar")!.children;
     this.category = id;
-    for(let i = 0; i < 3; i++) {
+    
+    for(let i = 0; i < 3; i++) 
+    {
       if(nav[i].classList.contains('active')) {
         nav[i].classList.remove('active');
       }

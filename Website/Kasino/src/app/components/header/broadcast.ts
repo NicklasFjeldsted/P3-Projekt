@@ -12,6 +12,5 @@ export class Broadcast
 
 		return Broadcast._instance;
 	}
-
 	public onBalanceChange: Subject<number> = new Subject<number>();
 }

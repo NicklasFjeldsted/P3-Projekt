@@ -1,4 +1,5 @@
-export interface Transaction {
+export interface Transaction 
+{
 	transactionID: number,
 	customerID: number,
 	transactionDate: Date,

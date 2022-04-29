@@ -4,7 +4,8 @@
 	width: 100vw;
 }
 
-a, span {
+a, span 
+{
 	color: #777;
 }
 
@@ -40,8 +41,10 @@ a, span {
   color: #444;
 }
 
-@media (max-width: 850px) {
-	.footer-icons {
+@media (max-width: 850px) 
+{
+	.footer-icons 
+  {
 		flex-direction: column;
 	}
 }

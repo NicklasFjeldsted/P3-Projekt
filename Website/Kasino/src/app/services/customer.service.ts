@@ -15,17 +15,20 @@ export class CustomerService
   constructor(private http: HttpClient) { }
 
   // Gets all customers
-  public getAll(): Observable<User[]> {
+  public getAll(): Observable<User[]> 
+  {
     return this.http.get<User[]>(`${environment.apiURL}/Customers`);
   }
 
   // Post customer credentials
-  public register(body: CustomerRegisterRequest): Observable<any> {
+  public register(body: CustomerRegisterRequest): Observable<any> 
+  {
     return this.http.post<any>(`${environment.apiURL}/Customers/register`, body, { withCredentials: true });
   }
 
   // Post mails content
-  public sendMail(mail: ContactMail): Observable<any> {
+  public sendMail(mail: ContactMail): Observable<any> 
+  {
     return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);
   }
 }

@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './slots.component.html',
   styleUrls: ['./slots.component.css']
 })
-export class SlotsComponent implements OnInit {
-
+export class SlotsComponent implements OnInit 
+{
   constructor() { }
 
   ngOnInit(): void { }

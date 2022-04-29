@@ -5,8 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './om-os.component.html',
   styleUrls: ['./om-os.component.css']
 })
-export class OmOsComponent implements OnInit {
-
+export class OmOsComponent implements OnInit 
+{
   constructor() { }
 
   ngOnInit(): void { }

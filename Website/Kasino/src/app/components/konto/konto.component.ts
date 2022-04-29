@@ -20,8 +20,8 @@ import { TransactionService } from 'src/app/services/transaction.service';
   templateUrl: './konto.component.html',
   styleUrls: ['./konto.component.css']
 })
-export class KontoComponent implements OnInit {
-
+export class KontoComponent implements OnInit 
+{
   accountInfo: AccountInfo;
   currentBalance: number | null;
   currentLimit: number | null;
@@ -35,7 +35,8 @@ export class KontoComponent implements OnInit {
   hasUpdateLimit: boolean = false;
 
   constructor(public customerService: CustomerService, private transaction: TransactionService, public authenticationService: AuthenticationService, public balanceService: BalanceService, private dialog: DialogService, private formBuilder: FormBuilder) {
-    this.accountInfo = {
+    this.accountInfo = 
+    {
       email: '',
       phoneNumber: 0,
       firstName: '',
@@ -44,7 +45,8 @@ export class KontoComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.showAccountInfo();
     this.getBalance();
 
@@ -53,118 +55,142 @@ export class KontoComponent implements OnInit {
     });
   }
 
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.depositForm.controls;
   }
 
   // Gets userdata from API Call
-  private showAccountInfo(): void {
+  private showAccountInfo(): void 
+  {
     this.authenticationService.getAccount().subscribe({
-      next: (userInfo) => {
+      next: (userInfo) => 
+      {
         this.accountInfo = Object.assign(userInfo);
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error);
       }
     })
   }
 
   // Gets user information from token and decrypts the data
-  getBalance(): void {
+  getBalance(): void 
+  {
     this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+      next: (userBalance) => 
+      {
         this.currentBalance = userBalance.balance;
         this.accountId = userBalance.customerID;
         this.currentLimit = userBalance.depositLimit;
         this.f['depositLimit'].patchValue(userBalance.depositLimit);
         this.getTransactions(this.accountId!)
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error)
       }})
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any) {
+  keyPressNumbers(event: any) 
+  {
     var charCode = (event.which) ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if ((charCode < 48 || charCode > 57)) {
+    if ((charCode < 48 || charCode > 57)) 
+    {
       event.preventDefault();
       return false;
     }
-    else {
+    else 
+    {
       return true;
     }
   }
 
   // Onclick function which changes users depositlimit
-  updateAmount(value: number | null, addOrSub: boolean): void {
-    if(addOrSub) {
+  updateAmount(value: number | null, addOrSub: boolean): void 
+  {
+    if(addOrSub) 
+    {
       return this.f['depositLimit'].patchValue(this.f['depositLimit'].value + value);
     }
     return this.f['depositLimit'].patchValue(this.f['depositLimit'].value - value!);
   }
 
   // Updates users deposit limit
-  updateDepositLimit(): void {
+  updateDepositLimit(): void 
+  {
     this.balanceService.updateDeposit(this.f['depositLimit'].value).subscribe({
-      next: (message) => {
+      next: (message) => 
+      {
         console.log(message);
         this.getBalance();
         this.hasUpdateLimit = true;
-        if (this.currentLimit === this.f['depositLimit'].value) {
+        if (this.currentLimit === this.f['depositLimit'].value) 
+        {
           alert("Du har ikke ændret din indbetalingsgrænse");
         }
-        else {
+        else 
+        {
           console.log(message);
           alert("Din indbetalingsgrænse er blevet opdateret");
           window.location.reload();
         }},
-      error: (error) => {
+      error: (error) => 
+      {
         console.log('error' + error);
       }
     })
   }
 
   // API call for transactions on a given id, which data response is put in a array
-  getTransactions(id: number): void {
+  getTransactions(id: number): void 
+  {
     this.transaction.getAllById(id).subscribe({
-      next: (transactions) => {
+      next: (transactions) => 
+      {
         this.transactionList = [];
-        transactions.forEach(element => {
+        transactions.forEach(element => 
+        {
           this.transactionList.push(element);
         });
-      }, error: (error) => {
+      }, error: (error) => 
+      {
         console.log(error);
       }
     })
   }
 
   // Onclick function which changes the site
-  changeSite(site: number) {
+  changeSite(site: number) 
+  {
     this.kontoSite = site;
     this.getBalance();
   }
 
   // Onclick function which opens a component
-  openIndbetal() {
+  openIndbetal() 
+  {
     this.dialog.open(IndbetalComponent);
   }
 
   // Onclick function which opens a component
-  openUdbetal() {
+  openUdbetal() 
+  {
     this.dialog.open(UdbetalComponent);
   }
 
   // Onclick function which opens a component
-  openLogout() {
+  openLogout() 
+  {
     this.dialog.open(LogoutComponent);
   }
 
   // Onclick function which opens a component
-  openDeaktiver() {
+  openDeaktiver() 
+  {
     this.dialog.open(DeaktiverComponent);
   }
 }
-
-
