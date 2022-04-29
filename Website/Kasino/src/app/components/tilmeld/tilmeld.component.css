@@ -261,6 +261,9 @@ button[type="submit"] {
   .multi-step-form {
     max-width: 55%;
   }
+  .form-content {
+    gap: 3.75%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -272,8 +275,5 @@ button[type="submit"] {
 @media (max-width: 480px) {
   .multi-step-form {
     max-width: 100%;
-  }
-  .form-content {
-    flex-wrap: wrap;
   }
 }
