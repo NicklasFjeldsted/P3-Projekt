@@ -1,5 +1,4 @@
 import { Subject } from "rxjs";
-import { IUser } from "src/app/interfaces/User";
 import { Card } from "../cards";
 export interface IPlayerData
 {

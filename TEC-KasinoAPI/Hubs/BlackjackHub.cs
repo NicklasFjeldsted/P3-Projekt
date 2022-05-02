@@ -559,6 +559,11 @@ namespace TEC_KasinoAPI.Hubs
 			{
 				availableCards.AddOrUpdate(availableCards.Count, x => availableCards[x] = ALL_CARDS[i], (x,v) => v = ALL_CARDS[i]);
 			}
+
+			for (int i = 0; i < ALL_CARDS.Length; i++)
+			{
+				availableCards.AddOrUpdate(availableCards.Count, x => availableCards[x] = ALL_CARDS[i], (x,v) => v = ALL_CARDS[i]);
+			}
 		}
 
 		/// <summary>

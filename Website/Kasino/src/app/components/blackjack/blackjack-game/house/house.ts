@@ -1,7 +1,7 @@
 import { Subject } from "rxjs";
 import { GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser } from "src/app/interfaces/User";
-import { Card } from "../cards";
+import { Card, CardObject } from "../cards";
 import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
 
@@ -31,8 +31,10 @@ export class House extends MonoBehaviour
 	public IsPlaying: boolean = false;
 	public stage: GameStage = GameStage.Off;
 	private SeatTurn: number = -1;
+	private displayedCards: CardObject[] = [];
 
 	private childText: TextComponent;
+	private resultChildText: TextComponent;
 	private houseCards: Card[] = [];
 	private get HeldValue(): number
 	{
@@ -63,20 +65,33 @@ export class House extends MonoBehaviour
 
 	Awake(): void
 	{
+		this.gameObject.transform.position = new Vector2(480, 300);
+
 		let offset: number = 200;
 		for (let i = 0; i < 5; i++)
 		{
 			this.CreateSeat(i+1, new Vector2(i * offset + 80, 550));
 		}
 
+		for (let i = 0; i < 6; i++)
+		{
+			this.CreateCardDisplay(i);
+		}
+
 		let cardChild = new GameObject('House Cards');
 		this.gameObject.game.Instantiate(cardChild);
+
+		let resultChild = new GameObject('House Result Text');
+		this.gameObject.game.Instantiate(resultChild);
+		resultChild.AddComponent(new TextComponent(' '));
+		this.resultChildText = resultChild.GetComponent(TextComponent);
+		this.resultChildText.gameObject.transform.Translate(new Vector2(0, -250));
 
 		cardChild.AddComponent(new TextComponent());
 		this.childText = cardChild.GetComponent(TextComponent);
 
 		cardChild.SetParent(this.gameObject);
-		cardChild.transform.Translate(new Vector2(450, 50));
+		cardChild.transform.Translate(new Vector2(0, -230));
 		cardChild.transform.scale = new Vector2(100, 100);
 
 		this.childText.text = ' ';
@@ -113,6 +128,44 @@ export class House extends MonoBehaviour
 	public SyncTurn(data: string): void
 	{
 		this.SeatTurn = JSON.parse(data);
+	}
+
+	/** Loads a card PNG and displays it. */
+	private DisplayCard(): void
+	{
+		for (let i = 0; i < this.houseCards.length; i++)
+		{
+			this.displayedCards[ i ].gameObject.isActive = true;
+			
+			this.displayedCards[ i ].renderer.image = `../../../../../assets/media/blackjack-game/cards/${this.houseCards[ i ].id}.png`;
+			
+			this.displayedCards[ i ].ResetPosition();
+
+			this.displayedCards[ i ].transform.Translate(new Vector2(i * 22 - 40, 0));
+		}
+	}
+	
+	private ClearCards(): void
+	{
+		for (let displayCard of this.displayedCards)
+		{
+			displayCard.renderer.image = null;
+		}
+	}
+
+	/** Creates the object that displays the card. */
+	private CreateCardDisplay(index: number): void
+	{
+		let cardDisplayGameObject = new GameObject(`${this.gameObject.gameObjectName}'s CARD OBJECT - ${index}`);
+		this.gameObject.game.Instantiate(cardDisplayGameObject);
+		cardDisplayGameObject.SetParent(this.gameObject);
+		
+		cardDisplayGameObject.AddComponent(new CardObject());
+		let cardObject = cardDisplayGameObject.GetComponent(CardObject);
+		this.displayedCards.push(cardObject);
+		cardObject.transform.Translate(new Vector2(0, -160));
+		cardObject.Awake();
+		cardObject.renderer.layer = this.displayedCards.length - 15;
 	}
 
 	public UpdateSeatData(playerDataString: string)
@@ -211,7 +264,31 @@ export class House extends MonoBehaviour
 		{
 			this.houseCards.push(parsedData[key]);
 		}
+
 		this.childText.text = this.HeldValue.toString();
+
+		this.ClearCards();
+		this.DisplayCard();
+
+		if (this.stage == GameStage.Ended)
+		{
+			setTimeout(() => this.ClearCards(), 4000);
+
+			this.resultChildText.gameObject.isActive = true;
+
+			if (this.HeldValue > 21)
+			{
+				this.resultChildText.text = "HOUSE BUSTED!";
+			}
+		}
+		else if (this.stage == GameStage.Started)
+		{
+			this.resultChildText.gameObject.isActive = false;
+		}
+		else if (this.stage == GameStage.Off)
+		{
+			this.resultChildText.gameObject.isActive = false;
+		}
 	}
 
 	private HouseReveal(): void
