@@ -13,6 +13,7 @@ import { OmOsComponent } from "./components/om-os/om-os.component";
 import { RouletteComponent } from "./components/roulette/roulette.component";
 import { SlotsComponent } from "./components/slots/slots.component";
 import { AdministrationComponent } from "./components/administration/administration.component";
+import { IndstillingerComponent } from "./components/indstillinger/indstillinger.component";
 
 const routes: Routes = [
   { path: "", component: HomeComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
   { path: "support", component: SupportComponent },
   { path: "reglerOgBetingelser", component: ReglerOgBetingelserComponent },
   { path: "om-os", component: OmOsComponent },
+  { path: "indstillinger", component: IndstillingerComponent},
 
   { path: "konto", component: KontoComponent, canActivate: [AuthenticationGuard] },
   { path: "blackjack", component: BlackjackComponent, canActivate: [AuthenticationGuard], canDeactivate: [BlackjackComponent] },
