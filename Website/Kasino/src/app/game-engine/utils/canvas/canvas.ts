@@ -191,6 +191,15 @@ export class Canvas implements IAwake
 
 		this._context.textAlign = "center";
 		this._context.textBaseline = "middle";
+		if (color)
+		{
+			this._context.fillStyle = color.AsString();
+		}
+		else
+		{
+			this._context.fillStyle = "rgba(0, 0, 0, 1)";
+		}
+		
 		
 		let desiredWidth = maxWidth ? maxWidth : this._context.measureText(text).width;
 

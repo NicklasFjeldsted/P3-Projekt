@@ -1,4 +1,5 @@
 import { CanvasLayer } from "../canvas";
+import { Color } from "../color";
 import { RectTransform } from "../rectTransform";
 import { Rendering } from "../rendering";
 
@@ -11,6 +12,7 @@ export class TextComponent extends Rendering
 
 	public fontSize: number | undefined;
 	public fit: boolean = false;
+	public color: Color | undefined;
 
 	private _width: number = 0;
 
@@ -62,7 +64,7 @@ export class TextComponent extends Rendering
 			return;
 		}
 
-		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit);
+		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit, this.color);
 	}
 
 	/** Clear Text from the canvas. */

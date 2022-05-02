@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, NetworkingFeature, ShapeRendererComponent, Vector2 } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, InfoBar, NetworkingFeature, ShapeRendererComponent, Vector2 } from 'src/app/game-engine';
+import { Balance } from 'src/app/interfaces/balance';
 import { IUser } from 'src/app/interfaces/User';
 import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';
@@ -60,12 +61,18 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
         this.GetUser().subscribe((user) => house.CreateClient(user));
       });
-      
+
       this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
       this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
 
       this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
     });
+  }
+
+  public GetBalance(): void
+  {
+    let id = JSON.parse(localStorage.getItem('USER_ID')!);
+    this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
   }
 
   public GetUser(): Observable<IUser>

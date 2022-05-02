@@ -1,6 +1,7 @@
 import { Subject } from "rxjs";
 import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { ShapeRendererComponent } from "src/app/game-engine/utils/rendering/shaperenderer";
+import { Bet } from "../bet";
 import { Card, CardObject } from "../cards";
 import { GameStage, House } from "../house";
 import { Player, PlayerData } from "../player";
@@ -25,7 +26,10 @@ export class Seat extends MonoBehaviour
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
 	private standButtonCollider: ColliderComponent;
-	private house: House;
+	private decreaseButtonCollider: ColliderComponent;
+	private increaseButtonCollider: ColliderComponent;
+	public house: House;
+	private seatBet: Bet;
 	private displayedCards: CardObject[] = [];
 
 	public Start(): void
@@ -75,7 +79,7 @@ export class Seat extends MonoBehaviour
 		let cardValuesChild = new GameObject(`${this.gameObject.gameObjectName}'s "Card Values Child"`);
 		this.gameObject.game.Instantiate(cardValuesChild);
 		cardValuesChild.SetParent(this.gameObject);
-		cardValuesChild.transform.Translate(new Vector2(0, -25));
+		cardValuesChild.transform.Translate(new Vector2(0, -35));
 		cardValuesChild.transform.scale = new Vector2(50, 30);
 		cardValuesChild.AddComponent(new TextComponent());
 		this.childTextComponent = cardValuesChild.GetComponent(TextComponent);
@@ -117,6 +121,38 @@ export class Seat extends MonoBehaviour
 		this.resultTextChildComponent = resultTextChild.GetComponent(TextComponent);
 		this.resultTextChildComponent.renderLayer = -1;
 
+		let betAmount = new GameObject(`${this.gameObject.gameObjectName} - Bet Amount`);
+		this.gameObject.game.Instantiate(betAmount);
+		betAmount.SetParent(this.gameObject);
+		betAmount.AddComponent(new Bet());
+		this.seatBet = betAmount.GetComponent(Bet);
+		betAmount.transform.scale = new Vector2(100, 30);
+		betAmount.transform.Translate(new Vector2(0, -10))
+		betAmount.isActive = false;
+
+		let increaseBetAmountButton = new GameObject(`${this.gameObject.gameObjectName}'s Increase Bet Amount Button`);
+		this.gameObject.game.Instantiate(increaseBetAmountButton);
+		increaseBetAmountButton.AddComponent(new ColliderComponent());
+		increaseBetAmountButton.AddComponent(new TextComponent('+10'));
+		increaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
+		increaseBetAmountButton.transform.scale = new Vector2(30, 30)
+		increaseBetAmountButton.SetParent(betAmount);
+		increaseBetAmountButton.transform.Translate(new Vector2(-40, 0));
+		this.increaseButtonCollider = increaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+
+		let decreaseBetAmountButton = new GameObject(`${this.gameObject.gameObjectName}'s Decrease Bet Amount Button`);
+		this.gameObject.game.Instantiate(decreaseBetAmountButton);
+		decreaseBetAmountButton.AddComponent(new ColliderComponent());
+		decreaseBetAmountButton.AddComponent(new TextComponent('-10'));
+		decreaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
+		decreaseBetAmountButton.transform.scale = new Vector2(30, 30)
+		decreaseBetAmountButton.SetParent(betAmount);
+		decreaseBetAmountButton.transform.Translate(new Vector2(40, 0));
+		this.decreaseButtonCollider = decreaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+
+		this.seatBet.increaseButton = increaseBetAmountButton;
+		this.seatBet.decreaseButton = decreaseBetAmountButton;
+
 		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
 	}
 
@@ -149,6 +185,21 @@ export class Seat extends MonoBehaviour
 		{
 			if (this.Occupied)
 			{
+				if (this.house.client != this.Player)
+				{
+					return;
+				}
+
+				if (this.increaseButtonCollider.Hit(point))
+				{
+					this.seatBet.AddAmount(10);
+				}
+		
+				if (this.decreaseButtonCollider.Hit(point))
+				{
+					this.seatBet.SubtractAmount(10);
+				}
+
 				return;
 			}
 			this.JoinSeat();
@@ -199,6 +250,14 @@ export class Seat extends MonoBehaviour
 		
 		if (this.house.stage == GameStage.Ended)
 		{
+			if (this.Player)
+			{
+				this.seatBet.gameObject.isActive = true;
+			}
+			else
+			{
+				this.seatBet.gameObject.isActive = false;
+			}
 			this.resultTextChildComponent.gameObject.isActive = true;
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.DisplayCard();
@@ -218,6 +277,7 @@ export class Seat extends MonoBehaviour
 		}
 		else if (this.house.stage == GameStage.Started)
 		{
+			this.seatBet.gameObject.isActive = true;
 			this.childTextComponent.gameObject.isActive = true;
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.seatText.text = this.Player.data.fullName;
@@ -234,6 +294,14 @@ export class Seat extends MonoBehaviour
 		}
 		else if (this.house.stage == GameStage.Off)
 		{
+			if (this.Player)
+			{
+				this.seatBet.gameObject.isActive = true;
+			}
+			else
+			{
+				this.seatBet.gameObject.isActive = false;
+			}
 			this.childTextComponent.gameObject.isActive = true;
 			this.resultTextChildComponent.gameObject.isActive = false;
 			this.seatText.text = this.Player.data.fullName;

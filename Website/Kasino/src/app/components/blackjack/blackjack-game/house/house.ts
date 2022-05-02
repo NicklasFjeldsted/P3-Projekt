@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { GameObject, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { GameObject, InfoBar, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
 import { Player, PlayerData } from "../player";
@@ -70,13 +70,17 @@ export class House extends MonoBehaviour
 		let offset: number = 200;
 		for (let i = 0; i < 5; i++)
 		{
-			this.CreateSeat(i+1, new Vector2(i * offset + 80, 550));
+			this.CreateSeat(i+1, new Vector2(i * offset + 80, 525));
 		}
 
 		for (let i = 0; i < 6; i++)
 		{
 			this.CreateCardDisplay(i);
 		}
+
+		let infoBar = new GameObject('Info Bar');
+		this.gameObject.game.Instantiate(infoBar);
+		infoBar.AddComponent(new InfoBar());
 
 		let cardChild = new GameObject('House Cards');
 		this.gameObject.game.Instantiate(cardChild);
