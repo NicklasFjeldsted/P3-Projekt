@@ -489,13 +489,9 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		/// <param name="playerData"></param>
 		/// <returns></returns>
-		private async Task LockBet(int betAmount)
+		public async Task LockBet(int betAmount)
         {
-			if (!IsPlaying)
-            {
-				bets.TryAdd(Context.ConnectionId, betAmount);
-				Debug.WriteLine($"{Context.ConnectionId} - Locked in amount: {betAmount}");
-            }
+			bets.TryAdd(Context.ConnectionId, betAmount);
         }
         #endregion
 

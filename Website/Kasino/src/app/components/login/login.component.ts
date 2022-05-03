@@ -25,7 +25,15 @@ export class LoginComponent implements OnInit
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams[ 'returnUrl' ] || '/';
+    this.authenticationService.token.subscribe(x =>
+    {
+      console.log(x);
+      if (x !== '')
+      {
+        this.router.navigate([ this.returnUrl ]);
+      }
+    });
   }
 
   invalidLogin: boolean = false;
@@ -45,7 +53,7 @@ export class LoginComponent implements OnInit
       .subscribe({
         next: () =>
         {
-          this.router.navigate([ this.returnUrl ])
+          this.router.navigate([ this.returnUrl ]);
         },
         error: error =>
         {

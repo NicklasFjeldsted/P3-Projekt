@@ -20,13 +20,15 @@ export class HeaderComponent implements OnInit
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
 
   currentBalance: number | null;
+  isLoggedIn: boolean;
 
   ngOnInit(): void 
   {
     Broadcast.Instance.onBalanceChange.subscribe(event => this.getBalance());
+    this.authenticationService.token.subscribe((token) => this.isLoggedIn = token !== '');
   }
 
-  emitSideNavToggle(): void 
+  emitSideNavToggle(): void
   {
     this.onSideNavToggle.emit();
   }

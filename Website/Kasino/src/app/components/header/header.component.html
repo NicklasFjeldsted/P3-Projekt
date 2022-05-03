@@ -29,13 +29,13 @@
   </div>
 
   <!-- Right column storing our navbar. -->
-  <div class="column right">
-    <nav *ngIf="!this.authenticationService.isLoggedIn">
+  <div class="column right" [ngSwitch]="isLoggedIn">
+    <nav *ngSwitchCase="false">
       <a routerLink="/tilmeld"><button class="btn tilmeld">Tilmeld</button></a>
       <a routerLink="login"><button class="btn login">Log ind</button></a>
     </nav>
 
-    <nav *ngIf="this.authenticationService.isLoggedIn">
+    <nav *ngSwitchCase="true">
       <a class="btn deposit saldo" (click)="openIndbetal()"
         >{{ currentBalance }} kr.<i class="fa-solid fa-circle-plus"></i>
       </a>

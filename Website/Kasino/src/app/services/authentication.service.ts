@@ -7,28 +7,41 @@ import { User } from '../interfaces/User';
 import { Balance } from '../interfaces/balance';
 import { Broadcast } from '../components/header/broadcast';
 import { AccountInfo } from '../interfaces/accountInfo';
+import * as moment from 'moment';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
-  // I.E. Access Token
-  public userSubject: BehaviorSubject<string>;
-  public user: Observable<string>;
+  public accessTokenSubject: BehaviorSubject<string>;
+  public token: Observable<string>;
+  public valid: Observable<boolean>;
 
   constructor(private http: HttpClient, private router: Router)
   {
-    this.userSubject = new BehaviorSubject<string>('');
-    this.user = this.userSubject.asObservable();
+    this.accessTokenSubject = new BehaviorSubject<string>('');
+    this.token = this.accessTokenSubject.asObservable();
+    this.valid = this.token.pipe(map(token => token !== ''));
+  }
+
+  public get isLoggedIn(): Promise<boolean>
+  {
+    return new Promise<boolean>((resolve) =>
+    {
+      if (this.accessToken === '')
+      {
+        resolve(false);
+        return;
+      }
+
+      resolve(true);
+      return;
+    });
   }
 
   public get accessToken(): string
   {
-    return this.userSubject.value;
-  }
-
-  public get isLoggedIn(): boolean
-  {
-    return this.accessToken !== '';
+    return this.accessTokenSubject.value;
   }
 
   public login(email: string, password: string): Observable<User>
@@ -37,7 +50,7 @@ export class AuthenticationService
       .pipe(map(user =>
       {
         localStorage.setItem(environment.USER_ID, JSON.stringify(user.id));
-        this.userSubject.next(user.jwtToken!);
+        this.accessTokenSubject.next(user.jwtToken!);
         this.startRefreshTokenTimer();
         return user;
       }));
@@ -47,7 +60,7 @@ export class AuthenticationService
   {
     this.http.post<any>(`${environment.apiURL}/Customers/revoke-token`, {}, { withCredentials: true }).subscribe();
     this.stopRefreshTokenTimer();
-    this.userSubject.next('');
+    this.accessTokenSubject.next('');
     this.router.navigate(['/login']);
   }
 
@@ -55,7 +68,7 @@ export class AuthenticationService
   {
     return this.http.post<any>(`${environment.apiURL}/Customers/refresh-token`, {}, { withCredentials: true })
       .pipe(map(response => {
-        this.userSubject.next(response.jwtToken);
+        this.accessTokenSubject.next(response.jwtToken);
         this.startRefreshTokenTimer();
       }));
   }
@@ -72,6 +85,26 @@ export class AuthenticationService
     //const expires = new Date(jwtToken.exp * 1000);
     //const timeout = expires.getTime() - Date.now() - (60 * 1000);
     //this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
+  }
+
+  private setSession(token: string): void
+  {
+    const expiresAt = moment().add(jwtDecode(token), 'second');
+
+    sessionStorage.setItem(environment.ACCESS_TOKEN, token);
+    sessionStorage.setItem(environment.EXPIRES, JSON.stringify(expiresAt));
+  }
+
+  public Validate(): boolean
+  {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  public getExpiration(): moment.Moment
+  {
+    const expiration = sessionStorage.getItem(environment.EXPIRES);
+    const expiresAt = JSON.parse(expiration!);
+    return moment(expiresAt);
   }
 
   private stopRefreshTokenTimer(): void
