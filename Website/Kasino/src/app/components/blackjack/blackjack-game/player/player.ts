@@ -20,11 +20,13 @@ export class PlayerData implements IPlayerData
 	public busted: boolean;
 	public winner: boolean;
 	public cards: Card[];
+	public betAmount: number;
 
 	constructor(name?: string)
 	{
 		this.fullName = name ? name : "No Name";
 		this.seatIndex = -1;
+		this.betAmount = 0;
 		this.seated = false;
 		this.stand = false;
 		this.busted = false;

@@ -12,7 +12,7 @@ import { CustomerService } from 'src/app/services/customer.service';
 })
 export class GameInfobarComponent implements OnInit {
 
-  constructor(private balanceService: BalanceService, private customerService: CustomerService, private authenticationService: AuthenticationService)
+  constructor(private balanceService: BalanceService, private customerService: CustomerService)
   {
     setInterval(() => { this.time = Date.now(); }, 1);
   }

@@ -1,4 +1,4 @@
-import { GameObject, MonoBehaviour, TextComponent } from "src/app/game-engine";
+import { GameObject, MonoBehaviour, NetworkingFeature, TextComponent } from "src/app/game-engine";
 import { GameStage } from "../house";
 import { Seat } from "../seat";
 
@@ -9,6 +9,8 @@ export class Bet extends MonoBehaviour
 	public increaseButton: GameObject;
 	public decreaseButton: GameObject;
 	public seat: Seat;
+	
+	clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
 	public Start(): void
 	{
@@ -38,18 +40,22 @@ export class Bet extends MonoBehaviour
 		}
 	}
 
-	public AddAmount(amount: number)
+	public AddAmount(amount: number): void
 	{
 		this.currentBet += amount;
+		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
 	}
-
-	public SubtractAmount(amount: number)
+	
+	public SubtractAmount(amount: number): void
 	{
 		this.currentBet -= amount;
+		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+	}
+	
+	public LockBet(): void
+	{
+		if (!this.seat.Occupied) return;
+		this.gameObject.game.GetFeature(NetworkingFeature).SendData("LockBet", this.currentBet);
 	}
 
-	public UpdateText(text: number)
-	{
-		
-	}
 }

@@ -47,6 +47,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       for (const seat of house.seats)
       {
         seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
+        this.networking.Subscribe("RequestBet", () => seat.seatBet.LockBet());
       }
 
       this.networking.Subscribe("GameEnded", () => house.GameEnded());
@@ -74,6 +75,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
   {
     component.networking.Unsubscribe('JoinSeat');
+    component.networking.Unsubscribe('RequestBet');
     component.networking.Unsubscribe('DataChanged');
     component.networking.Unsubscribe('UpdatePlayerData');
     component.networking.Unsubscribe('SyncTurn');

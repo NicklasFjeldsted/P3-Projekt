@@ -10,6 +10,7 @@
         public bool busted;
         public bool winner;
         public List<Card> cards;
+        public int betAmount;
 
         public PlayerData() { }
         public PlayerData(PlayerData newData)
@@ -21,6 +22,7 @@
             stand = newData.stand;
             busted = newData.busted;
             winner = newData.winner;
+            betAmount = newData.betAmount;
             cards = newData.cards.ToList();
         }
     }

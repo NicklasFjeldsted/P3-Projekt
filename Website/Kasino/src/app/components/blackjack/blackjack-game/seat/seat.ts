@@ -29,7 +29,7 @@ export class Seat extends MonoBehaviour
 	private decreaseButtonCollider: ColliderComponent;
 	private increaseButtonCollider: ColliderComponent;
 	public house: House;
-	private seatBet: Bet;
+	public seatBet: Bet;
 	private displayedCards: CardObject[] = [];
 
 	public Start(): void

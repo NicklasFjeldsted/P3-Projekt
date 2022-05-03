@@ -102,6 +102,7 @@ namespace TEC_KasinoAPI.Hubs
         #region Persistent Data.
         // A dictionary that persists between hub instances that contains all connectedPlayer data and their connectionIds.
         private static ConcurrentDictionary<string, PlayerData> connectedPlayers = new ConcurrentDictionary<string, PlayerData>();
+        private static ConcurrentDictionary<string, int> bets = new ConcurrentDictionary<string, int>();
 
 		// A queue that persists between hub instances that contains the turn order of the game.
 		private static ConcurrentQueue<int> turnOrder = new ConcurrentQueue<int>();
@@ -425,6 +426,9 @@ namespace TEC_KasinoAPI.Hubs
 			if (IsPlaying || !CheckPlayers())
 				return;
 
+			bets.Clear();
+
+			await _hubContext.Clients.All.SendAsync("RequestBet");
 			await _hubContext.Clients.All.SendAsync("GameStarted");
 
 			houseCards.Clear();
@@ -479,6 +483,20 @@ namespace TEC_KasinoAPI.Hubs
 
 			ResetTimer();
 		}
+
+		/// <summary>
+		/// Locks in the bet.
+		/// </summary>
+		/// <param name="playerData"></param>
+		/// <returns></returns>
+		private async Task LockBet(int betAmount)
+        {
+			if (!IsPlaying)
+            {
+				bets.TryAdd(Context.ConnectionId, betAmount);
+				Debug.WriteLine($"{Context.ConnectionId} - Locked in amount: {betAmount}");
+            }
+        }
         #endregion
 
         #region Helper- & Reset Methods.

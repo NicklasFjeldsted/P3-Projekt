@@ -26,7 +26,7 @@ export class NetworkingFeature implements IFeature
 	  }
 	}
   
-	public SendData(func: string, data: string): void
+	public SendData<T>(func: string, data: T): void
 	{
 	  this.hubConnection!.send(func, data);
 	}
