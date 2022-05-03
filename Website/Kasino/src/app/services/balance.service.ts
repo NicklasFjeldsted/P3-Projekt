@@ -3,8 +3,8 @@ import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ChangeBalance } from '../interfaces/changeBalance';
+import { Balance } from '../interfaces/balance';
 
-const USER = 'USER_ID';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,7 @@ export class BalanceService
   balance: ChangeBalance;
   constructor(private http: HttpClient) { }
 
-  id: number = JSON.parse(localStorage.getItem(USER)!);
+  id: number = JSON.parse(localStorage.getItem(environment.USER_ID)!);
 
   public addBalance(money: number): Observable<any> 
   {
@@ -31,5 +31,10 @@ export class BalanceService
   {
     let customerID = this.id;
     return this.http.put<any>(`${environment.apiURL}/balance/update`, {customerID, depositLimit}, {withCredentials: true})
+  }
+
+  public getBalance(): Observable<Balance>
+  {
+    return this.http.get<Balance>(`${environment.apiURL}/Balance/${this.id}`);
   }
 }

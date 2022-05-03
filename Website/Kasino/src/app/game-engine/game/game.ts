@@ -1,6 +1,8 @@
 import { GameObject } from '../utils/gameObject';
 import { CanvasLayer, Entity, IRendering, Vector2 } from '../utils';
 import { NetworkingFeature } from './components';
+import { Balance } from 'src/app/interfaces/balance';
+import { User, UserData } from 'src/app/interfaces/User';
 
 type AbstractFeature<T> = Function & { prototype: T; };
 type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
@@ -22,6 +24,34 @@ export class Game extends Entity
 	}
 
 	private _lastTimestamp: number = 0;
+
+	private _user: UserData
+	public get user(): UserData
+	{
+		if (this._user)
+		{
+			return this._user;
+		}
+		throw new Error(`User did not load correctly!`);
+	}
+	public set user(value: UserData)
+	{
+		this._user = value;
+	}
+
+	private _balance: Balance;
+	public get balance(): Balance
+	{
+		if (this._balance)
+		{
+			return this._balance;
+		}
+		throw new Error(`User's balance did not load correctly!`);
+	}
+	public set balance(value: Balance)
+	{
+		this._balance = value;
+	}
 
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject): void
@@ -50,7 +80,7 @@ export class Game extends Entity
 		}
 	}
 
-	/** Destroys a GameObject from the game. */
+	/** **DEPRECATED** Destroys a GameObject from the game. */
 	public Destroy(gameObject: GameObject): void
 	{
 		gameObject.game = null;
@@ -61,7 +91,7 @@ export class Game extends Entity
 	}
 
 	/** This is how the game is started up, it will run the functions to begin the game loop and initialization. */
-	public BEGIN_GAME(): Promise<void>
+	public Initialize(): Promise<void>
 	{
 		return new Promise((resolve) =>
 		{
@@ -84,23 +114,6 @@ export class Game extends Entity
 				resolve();
 			}
 		});
-	}
-
-	public override get disposable(): boolean
-	{
-		let output = true;
-
-		if (this._entities.length > 0)
-		{
-			output = false;
-		}
-
-		if (this._features.length > 0)
-		{
-			output = false;
-		}
-
-		return output;
 	}
 
 	// Start up the game and get the start time.

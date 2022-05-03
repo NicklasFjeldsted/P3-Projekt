@@ -1,0 +1,16 @@
+<div id="infobar">
+	<div id="infobar-wrapper" *ngIf="this.user !== undefined && this.balance !== undefined">
+		<p>Name: {{this.user.fullName}}</p>
+		<p>Balance: {{this.balance.balance}} kr.</p>
+		<p>Time: {{this.time | date: 'HH:mm'}}</p>
+	</div>
+	<div class="infobar-error" *ngIf="this.user === undefined">
+		<p>User did not load properly!</p>
+	</div>
+	<div class="infobar-error" *ngIf="this.balance === undefined">
+		<p>Balance did not load properly!</p>
+	</div>
+	<div class="infobar-error" *ngIf="this.balance === undefined && this.user === undefined">
+		<p>User & Balance did not load properly!</p>
+	</div>
+</div>

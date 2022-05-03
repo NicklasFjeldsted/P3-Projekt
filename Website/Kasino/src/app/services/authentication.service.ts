@@ -9,7 +9,6 @@ import { HeaderComponent } from '../components/header/header.component';
 import { Broadcast } from '../components/header/broadcast';
 import { AccountInfo } from '../interfaces/accountInfo';
 
-const USER = 'USER_ID';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
@@ -37,7 +36,7 @@ export class AuthenticationService
     return this.http.post<User>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
       .pipe(map(user =>
       {
-        localStorage.setItem(USER, JSON.stringify(user.id));
+        localStorage.setItem(environment.USER_ID, JSON.stringify(user.id));
         this.userSubject.next(user);
         this.startRefreshTokenTimer();
         return user;
@@ -84,12 +83,12 @@ export class AuthenticationService
 
   public decodeToken(): Observable<Balance>
   {
-    var id = JSON.parse(localStorage.getItem(USER)!);
+    let id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
     return this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
   }
 
   public getAccount(): Observable<AccountInfo> {
-    var id = JSON.parse(localStorage.getItem(USER)!);
+    let id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
     return this.http.get<AccountInfo>(`${environment.apiURL}/Customers/${id}`);
   }
 }

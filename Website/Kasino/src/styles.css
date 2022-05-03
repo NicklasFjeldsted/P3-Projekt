@@ -24,9 +24,8 @@
 }
 
 /* Canvas styling */
-canvas {
+#game > canvas {
   margin: 0;
-  display: block;
   position: absolute;
   top: 50%;
   left: 50%;

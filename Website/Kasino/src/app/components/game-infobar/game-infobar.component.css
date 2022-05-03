@@ -1,0 +1,23 @@
+#infobar{
+	position: absolute;
+	background-color: rgb(32, 32, 32);
+	top: 82%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 960px;
+	height: 20px;
+}
+
+#infobar > #infobar-wrapper > p {
+	display: inline;
+	color: white;
+	height: 100%;
+	margin-right: 100px;
+	margin-left: 20px;
+}
+
+#infobar > .infobar-error {
+	color: red;
+	text-decoration: underline;
+	text-align: center;
+}

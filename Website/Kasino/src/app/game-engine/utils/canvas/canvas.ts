@@ -26,7 +26,7 @@ export class Canvas implements IAwake
 		canvas.setAttribute('width', `${this.Size.x}px`);
 		canvas.setAttribute('height', `${this.Size.y}px`);
 
-		document.querySelector('game')!.appendChild(canvas);
+		document.querySelector('#game')!.appendChild(canvas);
 		this._element = canvas;
 
 		const ctx = this._element.getContext('2d')!;

@@ -26,6 +26,7 @@ import { IndbetalComponent } from './components/modals/indbetal/indbetal.compone
 import { UdbetalComponent } from './components/modals/udbetal/udbetal.component';
 import { AngularMaterialModuleModule } from './modules/angular-material-module/angular-material-module.module';
 import { FooterComponent } from './components/footer/footer.component';
+import { GameInfobarComponent } from './components/game-infobar/game-infobar.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { FooterComponent } from './components/footer/footer.component';
     SlotsComponent,
     IndbetalComponent,
     UdbetalComponent,
-    FooterComponent
+    FooterComponent,
+    GameInfobarComponent
   ],
   imports: [
     BrowserModule,

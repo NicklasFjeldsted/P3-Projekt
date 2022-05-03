@@ -2,7 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from '../interfaces/User';
+import { User, UserData } from '../interfaces/User';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
 import { ContactMail } from '../interfaces/ContactMail';
 
@@ -14,19 +14,34 @@ export class CustomerService
 {
   constructor(private http: HttpClient) { }
 
-  // Gets all customers
-  public getAll(): Observable<User[]> 
+  id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
+
+
+  /** Get all customers. */
+  public getAll(): Observable<User[]>
   {
     return this.http.get<User[]>(`${environment.apiURL}/Customers`);
   }
 
-  // Post customer credentials
+  /** Get the logged in customer. */
+  public getCustomer(): Observable<User>
+  {
+    return this.http.get<User>(`${environment.apiURL}/Customers/${this.id}`)
+  }
+
+  /** Returns the user data of the logged in user. */
+  public getUser(): Observable<UserData>
+  {
+    return this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser");
+  }
+
+  /** Post customer credentials. */
   public register(body: CustomerRegisterRequest): Observable<any> 
   {
     return this.http.post<any>(`${environment.apiURL}/Customers/register`, body, { withCredentials: true });
   }
 
-  // Post mails content
+  /** Post mails content. */
   public sendMail(mail: ContactMail): Observable<any> 
   {
     return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);

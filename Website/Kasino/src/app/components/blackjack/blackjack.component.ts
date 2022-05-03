@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, CanDeactivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, IBeforeUnload, InfoBar, NetworkingFeature, ShapeRendererComponent, Vector2 } from 'src/app/game-engine';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { map, Observable } from 'rxjs';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
 import { Balance } from 'src/app/interfaces/balance';
-import { IUser } from 'src/app/interfaces/User';
+import { IUser, User } from 'src/app/interfaces/User';
 import { environment } from 'src/environments/environment';
 import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
-  selector: 'game',
+  selector: 'blackjack',
   templateUrl: './blackjack.component.html',
   styleUrls: ['./blackjack.component.css']
 })
@@ -18,13 +18,10 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
-  constructor(private http: HttpClient)
-  { 
-
-  }
+  constructor(private http: HttpClient) { }
 
   private networking: NetworkingFeature;
-  private game: Game;
+  public game: Game;
 
   ngOnDestroy(): void
   {
@@ -45,7 +42,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
     this.game.Instantiate(house.gameObject);
 
-    this.game.BEGIN_GAME().then(() =>
+    this.game.Initialize().then(() =>
     {
       for (const seat of house.seats)
       {
@@ -59,7 +56,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
 
-        this.GetUser().subscribe((user) => house.CreateClient(user));
+        house.CreateClient(this.game.user);
       });
 
       this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
@@ -67,17 +64,6 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
       this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
     });
-  }
-
-  public GetBalance(): void
-  {
-    let id = JSON.parse(localStorage.getItem('USER_ID')!);
-    this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
-  }
-
-  public GetUser(): Observable<IUser>
-  {
-    return this.http.get<IUser>(environment.apiURL + "/blackjack/GetUser");
   }
 
   public canDeactivate(

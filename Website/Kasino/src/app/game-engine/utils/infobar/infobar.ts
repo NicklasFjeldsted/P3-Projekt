@@ -38,7 +38,6 @@ export class InfoBar extends Rendering
 		this.nameObject.GetComponent(TextComponent).color = new Color(210, 210, 210);
 		this.nameObject.transform.scale = new Vector2(100, 30);
 		this.nameObject.transform.Translate(new Vector2(-450, 0));
-		this.nameObject.GetComponent(TextComponent).Awake();
 
 		this.balanceObject = new GameObject('Balance Object');
 		this.gameObject.game.Instantiate(this.balanceObject);
@@ -47,7 +46,6 @@ export class InfoBar extends Rendering
 		this.balanceObject.GetComponent(TextComponent).color = new Color(210, 210, 210);
 		this.balanceObject.transform.scale = new Vector2(100, 30);
 		this.balanceObject.transform.Translate(new Vector2(-200, 0));
-		this.balanceObject.GetComponent(TextComponent).Awake();
 	}
 
 	public ReceiveBalance(balance: Balance): void

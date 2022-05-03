@@ -4,6 +4,12 @@ export interface IUser
 	fullName: string;
 }
 
+export class UserData
+{
+  email: string;
+  fullName: string;
+}
+
 export class User
 {
   constructor()
@@ -20,4 +26,9 @@ export class User
   firstName: string | null;
   lastName: string | null;
   jwtToken: string | null;
+
+  public get fullName(): string
+  {
+    return `${this.firstName} ${this.lastName}`;
+  }
 }

@@ -1,6 +1,6 @@
 import { Subject } from "rxjs";
 import { GameObject, InfoBar, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
-import { IUser } from "src/app/interfaces/User";
+import { IUser, User, UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
 import { Player, PlayerData } from "../player";
 import { Seat } from "../seat";
@@ -78,9 +78,9 @@ export class House extends MonoBehaviour
 			this.CreateCardDisplay(i);
 		}
 
-		let infoBar = new GameObject('Info Bar');
-		this.gameObject.game.Instantiate(infoBar);
-		infoBar.AddComponent(new InfoBar());
+		// let infoBar = new GameObject('Info Bar');
+		// this.gameObject.game.Instantiate(infoBar);
+		// infoBar.AddComponent(new InfoBar());
 
 		let cardChild = new GameObject('House Cards');
 		this.gameObject.game.Instantiate(cardChild);
@@ -226,7 +226,7 @@ export class House extends MonoBehaviour
 		});
 	}
 
-	public CreateClient(user: IUser)
+	public CreateClient(user: UserData)
 	{
 		this._client = new Player();
 		this.client.data.email = user.email;
