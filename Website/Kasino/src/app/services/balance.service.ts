@@ -19,7 +19,7 @@ export class BalanceService {
     this.OnBalanceChanged = this.BalanceSubject.asObservable();
   }
 
-  id: number = JSON.parse(localStorage.getItem(environment.USER_ID)!);
+  private id: number = -1;
 
   public addBalance(money: number): Observable<any> {
     this.balance = { customerID: this.id, amount: money };
@@ -36,7 +36,9 @@ export class BalanceService {
     return this.http.put<any>(`${environment.apiURL}/balance/update`, { customerID, depositLimit }, { withCredentials: true });
   }
 
-  public getBalance(): void {
-    this.http.get<Balance>(`${environment.apiURL}/Balance/${this.id}`).subscribe((balance) => this.BalanceSubject.next(balance));
+  public getBalance(id: number): void
+  {
+    this.id = id;
+    this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`).subscribe((balance) => this.BalanceSubject.next(balance));
   }
 }

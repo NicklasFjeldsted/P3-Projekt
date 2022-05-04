@@ -23,9 +23,7 @@ import { TransactionService } from 'src/app/services/transaction.service';
 export class KontoComponent implements OnInit 
 {
   accountInfo: AccountInfo;
-  currentBalance: number | null;
-  currentLimit: number | null;
-  accountId: number | null;
+  balance: Balance = new Balance();
   depositForm: FormGroup = new FormGroup({
     depositLimit: new FormControl()
   });
@@ -48,7 +46,13 @@ export class KontoComponent implements OnInit
   ngOnInit(): void 
   {
     this.showAccountInfo();
-    this.getBalance();
+    this.balanceService.OnBalanceChanged.subscribe((balance) =>
+    {
+      if (balance.customerID !== undefined)
+      {
+        this.updateLocalBalance(balance);
+      }
+    });
 
     this.depositForm = this.formBuilder.group({
       depositLimit: new FormControl(2500)
@@ -72,25 +76,33 @@ export class KontoComponent implements OnInit
       {
         console.log(error);
       }
-    })
+    });
   }
 
   // Gets user information from token and decrypts the data
-  getBalance(): void 
+  updateLocalBalance(newBalance: Balance): void 
   {
-    this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => 
+    this.balance = newBalance;
+    this.f['depositLimit'].patchValue(this.balance.depositLimit);
+    this.updateLocalTransactions(newBalance.customerID);
+  }
+
+  // API call for transactions on a given id, which data response is put in a array
+  updateLocalTransactions(id: number): void
+  {
+    this.transaction.getAllById(id).subscribe({
+      next: (transactions) =>
       {
-        this.currentBalance = userBalance.balance;
-        this.accountId = userBalance.customerID;
-        this.currentLimit = userBalance.depositLimit;
-        this.f['depositLimit'].patchValue(userBalance.depositLimit);
-        this.getTransactions(this.accountId!)
-      },
-      error: (error) => 
+        this.transactionList = [];
+        transactions.forEach(element => 
+        {
+          this.transactionList.push(element);
+        });
+      }, error: (error) => 
       {
-        console.log(error)
-      }})
+        console.log(error);
+      }
+    })
   }
 
   // Checks if user presses letters instead of digits
@@ -126,9 +138,8 @@ export class KontoComponent implements OnInit
       next: (message) => 
       {
         console.log(message);
-        this.getBalance();
         this.hasUpdateLimit = true;
-        if (this.currentLimit === this.f['depositLimit'].value) 
+        if (this.balance.depositLimit === this.f['depositLimit'].value) 
         {
           alert("Du har ikke ændret din indbetalingsgrænse");
         }
@@ -145,29 +156,10 @@ export class KontoComponent implements OnInit
     })
   }
 
-  // API call for transactions on a given id, which data response is put in a array
-  getTransactions(id: number): void 
-  {
-    this.transaction.getAllById(id).subscribe({
-      next: (transactions) => 
-      {
-        this.transactionList = [];
-        transactions.forEach(element => 
-        {
-          this.transactionList.push(element);
-        });
-      }, error: (error) => 
-      {
-        console.log(error);
-      }
-    })
-  }
-
   // Onclick function which changes the site
   changeSite(site: number) 
   {
     this.kontoSite = site;
-    this.getBalance();
   }
 
   // Onclick function which opens a component

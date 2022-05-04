@@ -24,7 +24,7 @@
     <div class="form-body">
       <div class="customer-title">
         <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
-        <p>Konto-id: {{ this.accountId }}</p>
+        <p>Konto-id: {{ this.balance.customerID }}</p>
       </div>
     </div>
     <div class="grid-buttons">
@@ -37,7 +37,7 @@
       <div class="balance-circle">
         <div class="circle"><span>=</span></div>
       </div>
-      <div class="balance">{{ this.currentBalance }} kr</div>
+      <div class="balance">{{ this.balance.balance }} kr</div>
     </div>
     <div class="konto-title">Dine kontaktoplysninger</div>
     <div class="konto-oplysninger">
@@ -45,7 +45,7 @@
         <div class="row-logo"><i class="fa-solid fa-id-card"></i></div>
         <div class="row-info">
           <div class="row-title">Konto-id</div>
-          <div class="row-content">{{ this.accountId }}</div>
+          <div class="row-content">{{ this.balance.customerID }}</div>
         </div>
       </div>
 
@@ -105,7 +105,7 @@
     <div class="form-body">
       <div class="customer-title">
         <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
-        <p>Konto-id: {{ this.accountId }}</p>
+        <p>Konto-id: {{ this.balance.customerID }}</p>
       </div>
     </div>
     <div class="transaction-container">
@@ -154,13 +154,13 @@
     <div class="form-body">
       <div class="customer-title">
         <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
-        <p>Konto-id: {{ this.accountId }}</p>
+        <p>Konto-id: {{ this.balance.customerID }}</p>
       </div>
     </div>
     <div class="deposit-limit">
       <div class="current-limit">
         <h3>
-          Nuværende indbetalingsgrænse: <span>{{ this.currentLimit }} kr</span>
+          Nuværende indbetalingsgrænse: <span>{{ this.balance.depositLimit }} kr</span>
         </h3>
         <div class="divider"></div>
       </div>

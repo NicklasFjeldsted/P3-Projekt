@@ -127,7 +127,7 @@ export class Seat extends MonoBehaviour
 		betAmount.AddComponent(new Bet());
 		this.seatBet = betAmount.GetComponent(Bet);
 		betAmount.transform.scale = new Vector2(100, 30);
-		betAmount.transform.Translate(new Vector2(0, -10))
+		betAmount.transform.Translate(new Vector2(0, -10));
 		betAmount.isActive = false;
 
 		let increaseBetAmountButton = new GameObject(`${this.gameObject.gameObjectName}'s Increase Bet Amount Button`);
@@ -135,7 +135,7 @@ export class Seat extends MonoBehaviour
 		increaseBetAmountButton.AddComponent(new ColliderComponent());
 		increaseBetAmountButton.AddComponent(new TextComponent('+10'));
 		increaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
-		increaseBetAmountButton.transform.scale = new Vector2(30, 30)
+		increaseBetAmountButton.transform.scale = new Vector2(30, 30);
 		increaseBetAmountButton.SetParent(betAmount);
 		increaseBetAmountButton.transform.Translate(new Vector2(-40, 0));
 		this.increaseButtonCollider = increaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
@@ -145,7 +145,7 @@ export class Seat extends MonoBehaviour
 		decreaseBetAmountButton.AddComponent(new ColliderComponent());
 		decreaseBetAmountButton.AddComponent(new TextComponent('-10'));
 		decreaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
-		decreaseBetAmountButton.transform.scale = new Vector2(30, 30)
+		decreaseBetAmountButton.transform.scale = new Vector2(30, 30);
 		decreaseBetAmountButton.SetParent(betAmount);
 		decreaseBetAmountButton.transform.Translate(new Vector2(40, 0));
 		this.decreaseButtonCollider = decreaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);

@@ -38,6 +38,11 @@ export class Bet extends MonoBehaviour
 			this.increaseButton.isActive = this.gameObject.isActive;
 			this.decreaseButton.isActive = this.gameObject.isActive;
 		}
+
+		if (this.seat.house.stage == GameStage.Ended)
+		{
+			this.currentBet = 0;
+		}
 	}
 
 	public AddAmount(amount: number): void
@@ -45,17 +50,16 @@ export class Bet extends MonoBehaviour
 		this.currentBet += amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
 	}
-	
+
 	public SubtractAmount(amount: number): void
 	{
 		this.currentBet -= amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
 	}
-	
+
 	public LockBet(): void
 	{
 		if (!this.seat.Occupied) return;
 		this.gameObject.game.GetFeature(NetworkingFeature).SendData("LockBet", this.currentBet);
 	}
-
 }

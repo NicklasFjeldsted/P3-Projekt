@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
 import { Balance } from '../interfaces/balance';
 import { AccountInfo } from '../interfaces/accountInfo';
+import jwtDecode from 'jwt-decode';
+import { JwtDecodePlus } from '../helpers';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
@@ -25,12 +27,16 @@ export class AuthenticationService
     return this.accessTokenSubject.value;
   }
 
+  public get userID(): number
+  {
+    return JwtDecodePlus.jwtDecode(this.accessToken).nameid;
+  }
+
   public login(email: string, password: string): Observable<User>
   {
     return this.http.post<User>(`${environment.apiURL}/Customers/authenticate`, { email, password }, { withCredentials: true })
       .pipe(map(user =>
       {
-        localStorage.setItem(environment.USER_ID, JSON.stringify(user.id));
         this.accessTokenSubject.next(user.jwtToken!);
         this.startRefreshTokenTimer();
         return user;
@@ -48,7 +54,8 @@ export class AuthenticationService
   public refreshToken(): Observable<any>
   {
     return this.http.post<any>(`${environment.apiURL}/Customers/refresh-token`, {}, { withCredentials: true })
-      .pipe(map(response => {
+      .pipe(map(response => 
+      {
         this.accessTokenSubject.next(response.jwtToken);
         this.startRefreshTokenTimer();
       }));
@@ -75,12 +82,10 @@ export class AuthenticationService
 
   public decodeToken(): Observable<Balance>
   {
-    let id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
-    return this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
+    return this.http.get<Balance>(`${environment.apiURL}/Balance/${this.userID}`);
   }
 
   public getAccount(): Observable<AccountInfo> {
-    let id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
-    return this.http.get<AccountInfo>(`${environment.apiURL}/Customers/${id}`);
+    return this.http.get<AccountInfo>(`${environment.apiURL}/Customers/${this.userID}`);
   }
 }

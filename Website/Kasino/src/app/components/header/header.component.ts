@@ -8,6 +8,7 @@ import { Broadcast } from "./broadcast";
 import { MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
 import { BalanceService } from "src/app/services/balance.service";
 import { CustomerService } from "src/app/services/customer.service";
+import { JwtDecodePlus } from "src/app/helpers";
 
 @Component({
   selector: "app-header",
@@ -29,7 +30,7 @@ export class HeaderComponent implements OnInit {
       if (token !== '')
       {
         this.isLoggedIn = true;
-        this.balanceService.getBalance();
+        this.balanceService.getBalance(JwtDecodePlus.jwtDecode(token).nameid);
         this.customerService.getUser();
       }
       else

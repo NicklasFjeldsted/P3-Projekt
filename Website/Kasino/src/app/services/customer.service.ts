@@ -21,9 +21,6 @@ export class CustomerService
     this.OnUserDataChanged = this.UserSubject.asObservable();
   }
 
-  id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
-
-
   /** Get all customers. */
   public getAll(): Observable<User[]>
   {
@@ -31,9 +28,9 @@ export class CustomerService
   }
 
   /** Get the logged in customer. */
-  public getCustomer(): Observable<User>
+  public getCustomer(id: number): Observable<User>
   {
-    return this.http.get<User>(`${environment.apiURL}/Customers/${this.id}`)
+    return this.http.get<User>(`${environment.apiURL}/Customers/${id}`);
   }
 
   /** Returns the user data of the logged in user. */
@@ -49,7 +46,7 @@ export class CustomerService
   }
 
   /** Post mails content. */
-  public sendMail(mail: ContactMail): Observable<any> 
+  public sendMail(mail: ContactMail): Observable<any>
   {
     return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);
   }
