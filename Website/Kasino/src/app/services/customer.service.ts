@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User, UserData } from '../interfaces/User';
 import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
@@ -12,7 +12,14 @@ import { ContactMail } from '../interfaces/ContactMail';
 
 export class CustomerService
 {
-  constructor(private http: HttpClient) { }
+  private UserSubject: BehaviorSubject<UserData>;
+  public OnUserDataChanged: Observable<UserData>;
+
+  constructor(private http: HttpClient)
+  {
+    this.UserSubject = new BehaviorSubject<UserData>(new UserData());
+    this.OnUserDataChanged = this.UserSubject.asObservable();
+  }
 
   id = JSON.parse(localStorage.getItem(environment.USER_ID)!);
 
@@ -30,9 +37,9 @@ export class CustomerService
   }
 
   /** Returns the user data of the logged in user. */
-  public getUser(): Observable<UserData>
+  public getUser(): void
   {
-    return this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser");
+    this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser").subscribe((userData) => this.UserSubject.next(userData));
   }
 
   /** Post customer credentials. */

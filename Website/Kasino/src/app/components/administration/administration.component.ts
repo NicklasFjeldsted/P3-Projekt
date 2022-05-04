@@ -23,8 +23,8 @@ export class AdministrationComponent {
   }
 
   ngAfterViewInit() {
-    this.authenticationService.token.subscribe((token) => {
-      if (token !== "") {
+    this.authenticationService.OnTokenChanged.subscribe((token) => {
+      if (token !== '') {
         this.customerService.getAll().subscribe((customers) => {
           console.log(customers[1]);
           this.dataSource = new MatTableDataSource<User>(customers);

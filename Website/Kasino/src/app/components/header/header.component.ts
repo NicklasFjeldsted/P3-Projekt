@@ -7,6 +7,7 @@ import { LogoutComponent } from "../modals/logout/logout.component";
 import { Broadcast } from "./broadcast";
 import { MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
 import { BalanceService } from "src/app/services/balance.service";
+import { CustomerService } from "src/app/services/customer.service";
 
 @Component({
   selector: "app-header",
@@ -14,22 +15,29 @@ import { BalanceService } from "src/app/services/balance.service";
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public authenticationService: AuthenticationService, private dialog: DialogService, private balanceService: BalanceService) {}
+  constructor(public authenticationService: AuthenticationService, private dialog: DialogService, private balanceService: BalanceService, private customerService: CustomerService) {}
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
 
   currentBalance: number | null;
   isLoggedIn: boolean;
 
-  ngOnInit(): void {
-    this.authenticationService.token.subscribe((token) => {
-      if (token !== "") {
+  ngOnInit(): void
+  {
+    this.authenticationService.OnTokenChanged.subscribe((token) =>
+    {
+      if (token !== '')
+      {
+        this.isLoggedIn = true;
         this.balanceService.getBalance();
+        this.customerService.getUser();
+      }
+      else
+      {
+        this.isLoggedIn = false;
       }
     });
-    this.balanceService.getBalance();
     this.balanceService.OnBalanceChanged.subscribe((balance) => (this.currentBalance = balance.balance));
-    this.authenticationService.token.subscribe((token) => (this.isLoggedIn = token !== ""));
   }
 
   emitSideNavToggle(): void {

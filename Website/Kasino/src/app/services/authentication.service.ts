@@ -5,40 +5,21 @@ import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { User } from '../interfaces/User';
 import { Balance } from '../interfaces/balance';
-import { Broadcast } from '../components/header/broadcast';
 import { AccountInfo } from '../interfaces/accountInfo';
-import * as moment from 'moment';
-import jwtDecode from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService
 {
   public accessTokenSubject: BehaviorSubject<string>;
-  public token: Observable<string>;
-  public valid: Observable<boolean>;
+  public OnTokenChanged: Observable<string>;
 
   constructor(private http: HttpClient, private router: Router)
   {
     this.accessTokenSubject = new BehaviorSubject<string>('');
-    this.token = this.accessTokenSubject.asObservable();
-    this.valid = this.token.pipe(map(token => token !== ''));
+    this.OnTokenChanged = this.accessTokenSubject.asObservable();
   }
 
-  public get isLoggedIn(): Promise<boolean>
-  {
-    return new Promise<boolean>((resolve) =>
-    {
-      if (this.accessToken === '')
-      {
-        resolve(false);
-        return;
-      }
-
-      resolve(true);
-      return;
-    });
-  }
-
+  /** Gets the current value of the access token string. Returns <empty string> if there is no token. */
   public get accessToken(): string
   {
     return this.accessTokenSubject.value;
@@ -85,26 +66,6 @@ export class AuthenticationService
     //const expires = new Date(jwtToken.exp * 1000);
     //const timeout = expires.getTime() - Date.now() - (60 * 1000);
     //this.refreshTokenTimeout = setTimeout(() => this.refreshToken().subscribe(), timeout);
-  }
-
-  private setSession(token: string): void
-  {
-    const expiresAt = moment().add(jwtDecode(token), 'second');
-
-    sessionStorage.setItem(environment.ACCESS_TOKEN, token);
-    sessionStorage.setItem(environment.EXPIRES, JSON.stringify(expiresAt));
-  }
-
-  public Validate(): boolean
-  {
-    return moment().isBefore(this.getExpiration());
-  }
-
-  public getExpiration(): moment.Moment
-  {
-    const expiration = sessionStorage.getItem(environment.EXPIRES);
-    const expiresAt = JSON.parse(expiration!);
-    return moment(expiresAt);
   }
 
   private stopRefreshTokenTimer(): void

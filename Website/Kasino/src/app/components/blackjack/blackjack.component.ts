@@ -1,11 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import {  Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
 import { Balance } from 'src/app/interfaces/balance';
-import { IUser, User } from 'src/app/interfaces/User';
-import { environment } from 'src/environments/environment';
+import { BalanceService } from 'src/app/services/balance.service';
+import { CustomerService } from 'src/app/services/customer.service';
 import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
@@ -18,7 +17,7 @@ import { House, Player, PlayerData } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
-  constructor(private http: HttpClient) { }
+  constructor(private balanceService: BalanceService, private customerService: CustomerService) { }
 
   private networking: NetworkingFeature;
   public game: Game;
@@ -26,7 +25,6 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
   ngOnDestroy(): void
   {
     window.location.reload();
-    //this.game.Dispose().then(() => console.warn("GAME - Disposed"));
   }
 
   ngOnInit(): void
@@ -49,6 +47,9 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
         seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
         this.networking.Subscribe("RequestBet", () => seat.seatBet.LockBet());
       }
+
+      this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
+      this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
 
       this.networking.Subscribe("GameEnded", () => house.GameEnded());
       this.networking.Subscribe("GameStarted", () => house.GameStarted());

@@ -6,24 +6,28 @@ import { AuthenticationService } from './authentication.service';
 @Injectable({ providedIn: 'root' })
 export class AuthenticationGuard implements CanActivate
 {
-  constructor(private router: Router, private authenticationService: AuthenticationService) { }
+  constructor(private router: Router, private authenticationService: AuthenticationService)
+  {
+    this.authenticationService.OnTokenChanged.subscribe((token) =>
+    {
+      if (token !== '')
+      {
+        this.isLoggedIn = true;
+      }
+      else
+      {
+        this.isLoggedIn = false;
+      }
+    });
+  }
+  private isLoggedIn: boolean = false;
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):  Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree
   {
-    return this.authenticationService.isLoggedIn.then((x) =>
+    if (!this.isLoggedIn)
     {
-      if (!x)
-      {
-        return this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-      }
-      return true;
-    })
-    // if (this.authenticationService.Validate())
-    // {
-    //   return true;
-    // }
-    // else
-    // {
-    //   return this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-    // }
+      return this.router.navigate([ '/login' ], { queryParams: { returnUrl: state.url } });
+    }
+
+    return true;
   }
 }

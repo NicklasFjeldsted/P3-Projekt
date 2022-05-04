@@ -17,34 +17,13 @@ export class GameInfobarComponent implements OnInit {
     }, 1);
   }
 
-  @Output() OnBalanceChanged: EventEmitter<Balance> = new EventEmitter<Balance>();
-  @Output() OnUserChanged: EventEmitter<UserData> = new EventEmitter<UserData>();
-
   public user: UserData;
   public balance: Balance;
   public time: number = Date.now();
 
-  ngOnInit(): void {
-    this.getBalance();
-    this.getUser();
-  }
-
-  public getBalance(): void {
-    this.balanceService.OnBalanceChanged.subscribe((balance) => {
-      this.OnBalanceChanged.emit(balance);
-      this.balance = balance;
-    });
-  }
-
-  public getUser(): void {
-    this.customerService.getUser().subscribe({
-      next: (user) => {
-        this.OnUserChanged.emit(user);
-        this.user = user;
-      },
-      error: (error) => {
-        console.error(error);
-      },
-    });
+  ngOnInit(): void
+  {
+    this.balanceService.OnBalanceChanged.subscribe((balance) => this.balance = balance);
+    this.customerService.OnUserDataChanged.subscribe((userData) => this.user = userData);
   }
 }

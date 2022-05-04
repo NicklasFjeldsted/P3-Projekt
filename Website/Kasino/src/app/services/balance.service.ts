@@ -9,11 +9,12 @@ import { Balance } from "../interfaces/balance";
   providedIn: "root",
 })
 export class BalanceService {
-  balance: ChangeBalance;
+  private balance: ChangeBalance;
+  private BalanceSubject: BehaviorSubject<Balance>;
+  public OnBalanceChanged: Observable<Balance>;
 
-  BalanceSubject: BehaviorSubject<Balance>;
-  OnBalanceChanged: Observable<Balance>;
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient)
+  {
     this.BalanceSubject = new BehaviorSubject<Balance>(new Balance());
     this.OnBalanceChanged = this.BalanceSubject.asObservable();
   }

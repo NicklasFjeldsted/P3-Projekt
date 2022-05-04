@@ -26,10 +26,9 @@ export class LoginComponent implements OnInit
       password: ['', Validators.required]
     });
     this.returnUrl = this.route.snapshot.queryParams[ 'returnUrl' ] || '/';
-    this.authenticationService.token.subscribe(x =>
+    this.authenticationService.OnTokenChanged.subscribe((token) =>
     {
-      console.log(x);
-      if (x !== '')
+      if (token !== '')
       {
         this.router.navigate([ this.returnUrl ]);
       }
