@@ -1,0 +1,67 @@
+<div class="main-container v-center h-center" [@openClose]="isOpen ? 'open' : 'close'" [ngSwitch]="site">
+  <div class="header-container">
+    <div id="header">Edit user account</div>
+  </div>
+  <div class="navbar-container">
+    <section class="navbar" id="navbar">
+      <div class="navbar-item" (click)="addActive(0)">BASIC</div>
+      <div class="navbar-item" (click)="addActive(1)">ADVANCED</div>
+      <div class="navbar-item" (click)="addActive(2)">BALANCE</div>
+      <div class="navbar-item" (click)="addActive(3)">TRANSACTIONS</div>
+    </section>
+  </div>
+  <div class="content" id="information" *ngSwitchCase="'0'">
+    <div class="basic-information">
+      <div id="id" class="info-group">
+        <label for="input">Customer ID</label>
+        <input id="input" type="text" readonly [value]="customerAcc.customerID" />
+      </div>
+      <div class="info-group">
+        <label for="input">E-mail</label>
+        <input id="input" type="text" [value]="customerAcc.email" />
+      </div>
+      <div class="info-group">
+        <label for="input">First Name</label>
+        <input id="input" type="text" [value]="customerAcc.firstName" />
+      </div>
+      <div class="info-group">
+        <label for="input">Last Name</label>
+        <input id="input" type="text" [value]="customerAcc.lastName" />
+      </div>
+      <div class="info-group">
+        <label for="input">Mobile Number</label>
+        <input id="input" type="text" [value]="customerAcc.phoneNumber" />
+      </div>
+    </div>
+  </div>
+  <div class="content" id="information" *ngSwitchCase="'1'">
+    <div class="advanced-information">
+      <div class="info-group">
+        <label for="input">Address</label>
+        <input id="input" type="text" [value]="customerAcc.address" />
+      </div>
+      <div class="info-group">
+        <label for="input">Country</label>
+        <input id="input" type="text" [value]="customerAcc.countryID" />
+      </div>
+      <div class="info-group">
+        <label for="input">Zipcode</label>
+        <input id="input" type="text" [value]="customerAcc.zipCodeID" />
+      </div>
+      <div class="info-group">
+        <label for="input">Gender</label>
+        <input id="input" type="text" [value]="customerAcc.genderID" />
+      </div>
+      <div class="info-group">
+        <label for="input">Register Date</label>
+        <input id="input" type="text" readonly [value]="customerAcc.registerDate" />
+      </div>
+    </div>
+  </div>
+  <div class="save-container">
+    <div class="button-container">
+      <button id="cancel" (click)="close()">Cancel</button>
+      <button id="save">Save</button>
+    </div>
+  </div>
+</div>

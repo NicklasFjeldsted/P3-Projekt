@@ -31,6 +31,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { AdministrationComponent } from "./components/administration/administration.component";
+import { EditUserComponent } from "./components/modals/edit-user/edit-user.component";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdministrationComponent } from "./components/administration/administrat
     FooterComponent,
     GameInfobarComponent,
     AdministrationComponent,
+    EditUserComponent,
   ],
   imports: [
     BrowserModule,

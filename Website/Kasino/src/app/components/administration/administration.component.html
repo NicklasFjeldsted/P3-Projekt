@@ -17,7 +17,7 @@
         <mat-cell *matCellDef="let row" class="column-id"> {{ row.customerID }} </mat-cell>
       </ng-container>
 
-      <!-- Progress Column -->
+      <!-- Email Column -->
       <ng-container matColumnDef="email">
         <mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
@@ -41,11 +41,12 @@
         <mat-cell *matCellDef="let row"> {{ row.role }} </mat-cell>
       </ng-container>
 
-      <!-- Color Column -->
+      <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
-        <mat-cell *matCellDef="let row" class="actions"
-          ><button id="edit"><i class="fa-solid fa-pen-to-square"></i></button><button id="deactivate"><i class="fa-solid fa-user-slash"></i></button
+        <mat-cell #data *matCellDef="let row" class="actions"
+          ><button id="edit" (click)="openEdit(row)"><i class="fa-solid fa-pen-to-square"></i></button
+          ><button id="deactivate"><i class="fa-solid fa-user-slash"></i></button
         ></mat-cell>
       </ng-container>
 

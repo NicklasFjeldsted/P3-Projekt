@@ -26,6 +26,9 @@
       <li class="sidenav-item sidenav-info">
         <a routerLink="/reglerOgBetingelser"><span>Regler og Betingelser</span></a>
       </li>
+      <li *ngIf="role == 'Admin'" class="sidenav-item sidenav-info">
+        <a routerLink="/administration"><span>Administration</span></a>
+      </li>
     </ul>
   </div>
 </div>

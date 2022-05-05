@@ -1,53 +1,46 @@
-import { Injectable, OnInit } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { User, UserData } from '../interfaces/User';
-import { CustomerRegisterRequest } from '../interfaces/CustomerRegisterRequest';
-import { ContactMail } from '../interfaces/ContactMail';
+import { Injectable, OnInit } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject, Observable } from "rxjs";
+import { environment } from "src/environments/environment";
+import { User, UserData } from "../interfaces/User";
+import { CustomerRegisterRequest } from "../interfaces/CustomerRegisterRequest";
+import { ContactMail } from "../interfaces/ContactMail";
+import { UserAccount } from "../interfaces/UserAccount";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
-
-export class CustomerService
-{
+export class CustomerService {
   private UserSubject: BehaviorSubject<UserData>;
   public OnUserDataChanged: Observable<UserData>;
 
-  constructor(private http: HttpClient)
-  {
+  constructor(private http: HttpClient) {
     this.UserSubject = new BehaviorSubject<UserData>(new UserData());
     this.OnUserDataChanged = this.UserSubject.asObservable();
   }
 
   /** Get all customers. */
-  public getAll(): Observable<User[]>
-  {
+  public getAll(): Observable<User[]> {
     return this.http.get<User[]>(`${environment.apiURL}/Customers`);
   }
 
   /** Get the logged in customer. */
-  public getCustomer(id: number): Observable<User>
-  {
-    return this.http.get<User>(`${environment.apiURL}/Customers/${id}`);
+  public getCustomer(id: number): Observable<UserAccount> {
+    return this.http.get<UserAccount>(`${environment.apiURL}/Customers/${id}`);
   }
 
   /** Returns the user data of the logged in user. */
-  public getUser(): void
-  {
+  public getUser(): void {
     this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser").subscribe((userData) => this.UserSubject.next(userData));
   }
 
   /** Post customer credentials. */
-  public register(body: CustomerRegisterRequest): Observable<any> 
-  {
+  public register(body: CustomerRegisterRequest): Observable<any> {
     return this.http.post<any>(`${environment.apiURL}/Customers/register`, body, { withCredentials: true });
   }
 
   /** Post mails content. */
-  public sendMail(mail: ContactMail): Observable<any>
-  {
+  public sendMail(mail: ContactMail): Observable<any> {
     return this.http.post<any>(`${environment.apiURL}/Data/SendEmail`, mail);
   }
 }

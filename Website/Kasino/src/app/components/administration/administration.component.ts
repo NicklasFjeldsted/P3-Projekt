@@ -5,6 +5,8 @@ import { MatTableDataSource } from "@angular/material/table";
 import { User } from "src/app/interfaces/User";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { CustomerService } from "src/app/services/customer.service";
+import { DialogConfig, DialogService } from "../modals/dialog.service";
+import { EditUserComponent } from "../modals/edit-user/edit-user.component";
 
 @Component({
   selector: "app-administration",
@@ -18,7 +20,7 @@ export class AdministrationComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private customerService: CustomerService, private authenticationService: AuthenticationService) {
+  constructor(private customerService: CustomerService, private authenticationService: AuthenticationService, private dialog: DialogService) {
     this.dataSource = new MatTableDataSource<User>();
   }
 
@@ -40,5 +42,16 @@ export class AdministrationComponent {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+  }
+
+  openEdit(customer: any) {
+    let dialogConfig: DialogConfig = {
+      data: customer.customerID,
+    };
+    this.dialog.open(EditUserComponent, dialogConfig);
+  }
+
+  openDeactive() {
+    // this.dialog.open();
   }
 }

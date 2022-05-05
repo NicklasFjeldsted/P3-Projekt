@@ -1,6 +1,8 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+import { JwtDecodePlus } from "./helpers";
+import { AuthenticationService } from "./services/authentication.service";
 
 @Component({
   selector: "app-root",
@@ -27,11 +29,12 @@ import { Router } from "@angular/router";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent implements OnInit 
-{
-  constructor(private router: Router) {}
+export class AppComponent implements OnInit {
+  constructor(private router: Router, private authenticationService: AuthenticationService) {}
 
   isIndbetalOpen = false;
+
+  role: string = "";
 
   isSidenavOpen = false;
 
@@ -39,14 +42,19 @@ export class AppComponent implements OnInit
   backDrop: HTMLElement;
   hasVisited = false;
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
     this.sideNav = document.getElementById("sideNav")!;
     this.backDrop = document.getElementById("backdrop")!;
+    this.authenticationService.OnTokenChanged.subscribe((token) => {
+      let role = "";
+      if (token !== "") {
+        role = JwtDecodePlus.jwtDecode(token).role;
+      }
+      this.role = role;
+    });
   }
 
-  closeSideNav(): void 
-  {
+  closeSideNav(): void {
     if (this.sideNav.classList.contains("active")) {
       this.isSidenavOpen = !this.isSidenavOpen;
       this.sideNav.classList.remove("active");
@@ -54,26 +62,20 @@ export class AppComponent implements OnInit
     }
   }
 
-  openSideNav(): void 
-  {
+  openSideNav(): void {
     this.isSidenavOpen = !this.isSidenavOpen;
     this.sideNav.classList.add("active");
     this.backDrop.classList.add("active");
   }
 
-  goToLink(site: string) 
-  {
+  goToLink(site: string) {
     this.router.navigate([site]);
   }
 
-  onActivate() 
-  {
-    if (document.getElementsByTagName("app-home").length == 0 || this.hasVisited == true) 
-    {
+  onActivate() {
+    if (document.getElementsByTagName("app-home").length == 0 || this.hasVisited == true) {
       document.getElementById("component-container")!.style.height = "100%";
-    } 
-    else if (document.getElementsByTagName("app-home").length != 0) 
-    {
+    } else if (document.getElementsByTagName("app-home").length != 0) {
       this.hasVisited = true;
       document.getElementById("component-container")!.style.height = "1500px";
     }
