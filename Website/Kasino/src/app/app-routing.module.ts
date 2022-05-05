@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: "support", component: SupportComponent },
   { path: "reglerOgBetingelser", component: ReglerOgBetingelserComponent },
   { path: "om-os", component: OmOsComponent },
-  { path: "indstillinger", component: IndstillingerComponent},
+  { path: "indstillinger", component: IndstillingerComponent },
 
   { path: "konto", component: KontoComponent, canActivate: [AuthenticationGuard] },
   { path: "blackjack", component: BlackjackComponent, canActivate: [AuthenticationGuard], canDeactivate: [BlackjackComponent] },

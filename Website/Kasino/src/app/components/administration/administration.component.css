@@ -1,0 +1,99 @@
+:host {
+}
+.main-container {
+  padding: 16px;
+  background-color: #e8f4f8;
+  min-height: calc(100vh - calc(100vh * 0.15));
+}
+
+.dashboard {
+  max-width: 100%;
+  height: auto;
+  background-color: #6e8292;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+  align-items: center;
+  border: 1px solid #dfe5e9;
+  border-bottom: none;
+}
+
+.dashboard-title {
+  font-size: 2em;
+  padding: 1em 0.5em;
+  color: #fff;
+}
+
+.dashboard-subtitle {
+  color: #c7cccf;
+  font-size: 1em;
+}
+
+.table-container {
+  border: 1px solid #dfe5e9;
+  border-collapse: collapse;
+  padding: 1em;
+  background-color: #fff;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.searchbar > input {
+  padding: 5% 5% 5% 20%;
+  outline: none;
+}
+
+.searchbar > i {
+  position: absolute;
+  left: 5%;
+  font-size: 1.1em;
+  color: gray;
+}
+
+.header-id,
+.column-id {
+  flex: 0.5;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  padding-left: 0.5em;
+}
+
+.actions > button {
+  padding: 0.5em;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.05s;
+}
+
+.actions > button:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.actions > button > i {
+  font-size: 1.5em;
+}
+
+#edit {
+  background-color: #84f289;
+  border: 1px solid #84f289;
+}
+
+#deactivate {
+  background-color: #f08080;
+  border: 1px solid #f08080;
+}
