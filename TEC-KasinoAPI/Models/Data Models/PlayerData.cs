@@ -5,6 +5,7 @@
         public string fullName;
         public string email;
         public int seatIndex;
+        public int customerID;
         public bool seated;
         public bool stand;
         public bool busted;
@@ -17,6 +18,7 @@
         {
             fullName = newData.fullName;
             email = newData.email;
+            customerID = newData.customerID;
             seatIndex = newData.seatIndex;
             seated = newData.seated;
             stand = newData.stand;

@@ -169,6 +169,7 @@ export class Seat extends MonoBehaviour
 			this.Player = new Player();
 		}
 
+		data.customerID = this.gameObject.game.balance.customerID;
 		this.Player.UpdateData(data);
 	}
 
@@ -242,13 +243,13 @@ export class Seat extends MonoBehaviour
 			this.childTextComponent.gameObject.isActive = false;
 			this.resultTextChildComponent.gameObject.isActive = false;
 			this.seatText.text = this.gameObject.gameObjectName;
+			this.UpdateIsMyTurn(false);
 			this.ClearCards();
 			return;
 		}
 
-		this.UpdateIsMyTurn(this.myTurn);
 		
-		if (this.house.stage == GameStage.Ended)
+		if (this.house.CurrentStage == GameStage.Ended)
 		{
 			if (this.Player)
 			{
@@ -259,9 +260,15 @@ export class Seat extends MonoBehaviour
 				this.seatBet.gameObject.isActive = false;
 			}
 			this.resultTextChildComponent.gameObject.isActive = true;
+			this.UpdateIsMyTurn(false);
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.DisplayCard();
-			setTimeout(() => this.ClearCards(), 4000);
+			setTimeout(() =>
+			{
+				this.resultTextChildComponent.gameObject.isActive = false;
+				this.childTextComponent.gameObject.isActive = false;
+				this.ClearCards();
+			}, 4500);
 			if (this.Player.data.busted == true)
 			{
 				this.resultTextChildComponent.text = "BUST!";
@@ -275,12 +282,13 @@ export class Seat extends MonoBehaviour
 				this.resultTextChildComponent.text = "LOSE!";
 			}
 		}
-		else if (this.house.stage == GameStage.Started)
+		else if (this.house.CurrentStage == GameStage.Started)
 		{
 			this.seatBet.gameObject.isActive = true;
 			this.childTextComponent.gameObject.isActive = true;
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.seatText.text = this.Player.data.fullName;
+			this.UpdateIsMyTurn(this.myTurn);
 			this.DisplayCard();
 
 			if (!this.Player.data.busted)
@@ -292,7 +300,7 @@ export class Seat extends MonoBehaviour
 			this.resultTextChildComponent.gameObject.isActive = true;
 			this.resultTextChildComponent.text = "BUST!";
 		}
-		else if (this.house.stage == GameStage.Off)
+		else if (this.house.CurrentStage == GameStage.Off)
 		{
 			if (this.Player)
 			{
@@ -367,14 +375,13 @@ export class Seat extends MonoBehaviour
 	/** Join a seat. Throws an error if the seat already has a player. */
 	public JoinSeat(): void
 	{
-		if (this.house.stage == GameStage.Started) return;
+		if (this.house.CurrentStage == GameStage.Started) return;
 
 		if (!this.Player)
 		{
 			this.Player = this.house.client;
 			this.Player.data.seated = true;
 			this.Player.data.seatIndex = this.seatIndex;
-			
 			this.OnSeatJoined.next(this.Player.data);
 			return;
 		}

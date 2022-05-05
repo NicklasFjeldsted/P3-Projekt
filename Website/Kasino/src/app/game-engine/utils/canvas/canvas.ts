@@ -219,7 +219,6 @@ export class Canvas implements IAwake
 			this._context.font = `${fontSize}px Arial`;
 		}
 
-
 		this._context.fillText(text, position.x, position.y, desiredWidth - _margin);
 	}
 

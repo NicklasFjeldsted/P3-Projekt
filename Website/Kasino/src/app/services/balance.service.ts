@@ -41,4 +41,9 @@ export class BalanceService {
     this.id = id;
     this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`).subscribe((balance) => this.BalanceSubject.next(balance));
   }
+
+  public updateBalance(): void
+  {
+    this.http.get<Balance>(`${environment.apiURL}/Balance/${this.id}`).subscribe((balance) => this.BalanceSubject.next(balance));
+  }
 }

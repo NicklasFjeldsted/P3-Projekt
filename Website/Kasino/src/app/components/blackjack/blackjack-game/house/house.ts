@@ -1,4 +1,4 @@
-import { Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { GameObject, InfoBar, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, User, UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
@@ -29,9 +29,18 @@ export class House extends MonoBehaviour
 	}
 
 	public IsPlaying: boolean = false;
-	public stage: GameStage = GameStage.Off;
+	private StageSubject: BehaviorSubject<GameStage>;
+	public OnStageChange: Observable<GameStage>;
+	public get CurrentStage(): GameStage { return this.StageSubject.value; }
 	private SeatTurn: number = -1;
 	private displayedCards: CardObject[] = [];
+
+	constructor()
+	{
+		super();
+		this.StageSubject = new BehaviorSubject<GameStage>(GameStage.Off);
+		this.OnStageChange = this.StageSubject.asObservable();
+	}
 
 	private childText: TextComponent;
 	private resultChildText: TextComponent;
@@ -56,8 +65,6 @@ export class House extends MonoBehaviour
 		throw new Error(`${this.gameObject.gameObjectName} > ${this.constructor.name} - player is null!`);
 	}
 
-	public static OnDeal: Subject<number> = new Subject<number>();
-
 	Start(): void
 	{
 
@@ -67,20 +74,17 @@ export class House extends MonoBehaviour
 	{
 		this.gameObject.transform.position = new Vector2(480, 300);
 
+		
 		let offset: number = 200;
 		for (let i = 0; i < 5; i++)
 		{
 			this.CreateSeat(i+1, new Vector2(i * offset + 80, 525));
 		}
-
+		
 		for (let i = 0; i < 6; i++)
 		{
 			this.CreateCardDisplay(i);
 		}
-
-		// let infoBar = new GameObject('Info Bar');
-		// this.gameObject.game.Instantiate(infoBar);
-		// infoBar.AddComponent(new InfoBar());
 
 		let cardChild = new GameObject('House Cards');
 		this.gameObject.game.Instantiate(cardChild);
@@ -189,7 +193,7 @@ export class House extends MonoBehaviour
 					}
 					else if (!result && seat.seatIndex === playerData[ key ].seatIndex)
 					{
-						seat.UpdateSeat(playerData[key]);
+						seat.UpdateSeat(playerData[ key ]);
 					}
 				})
 				.finally(() =>
@@ -203,12 +207,12 @@ export class House extends MonoBehaviour
 	public GameEnded(): void
 	{
 		this.SeatTurn = 0;
-		this.stage = GameStage.Ended;
+		this.StageSubject.next(GameStage.Ended);
 	}
 
 	public GameStarted(): void
 	{
-		this.stage = GameStage.Started;
+		this.StageSubject.next(GameStage.Started);
 	}
 
 	private async ShouldReset(data: PlayerData[], seat: Seat): Promise<boolean>
@@ -230,6 +234,7 @@ export class House extends MonoBehaviour
 	{
 		this._client = new Player();
 		this.client.data.email = user.email;
+		this.client.data.customerID = this.gameObject.game.balance.customerID;
 		this.client.data.fullName = user.fullName;
 		Player.OnDataChanged.next(this.client.data);
 	}
@@ -268,35 +273,45 @@ export class House extends MonoBehaviour
 		{
 			this.houseCards.push(parsedData[key]);
 		}
-
+		this.childText.gameObject.isActive = true;
 		this.childText.text = this.HeldValue.toString();
 
 		this.ClearCards();
 		this.DisplayCard();
 
-		if (this.stage == GameStage.Ended)
+		if (this.CurrentStage == GameStage.Ended)
 		{
-			setTimeout(() => this.ClearCards(), 4000);
-
 			this.resultChildText.gameObject.isActive = true;
+			
+			setTimeout(() =>
+			{
+				this.childText.gameObject.isActive = false;
+				this.resultChildText.gameObject.isActive = false;
+				this.ClearCards();
+			}, 4500);
 
 			if (this.HeldValue > 21)
 			{
 				this.resultChildText.text = "HOUSE BUSTED!";
 			}
 		}
-		else if (this.stage == GameStage.Started)
+		else if (this.CurrentStage == GameStage.Started)
 		{
 			this.resultChildText.gameObject.isActive = false;
 		}
-		else if (this.stage == GameStage.Off)
+		else if (this.CurrentStage == GameStage.Off)
 		{
 			this.resultChildText.gameObject.isActive = false;
+			this.childText.gameObject.isActive = false;
 		}
 	}
 
-	private HouseReveal(): void
+	public GetBets(): void
 	{
-		
+		for (const seat of this.seats)
+		{
+			if (!seat.Occupied) continue;
+			seat.seatBet.LockBet();
+		}
 	}
 }
