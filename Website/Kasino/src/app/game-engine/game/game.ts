@@ -123,24 +123,19 @@ export class Game extends Entity
 		console.warn(`GAME - Awoken`);
 
 		super.Awake();
-
+		
+		console.groupCollapsed("Game Entity Override");
 		// Awake all the entities in the game.
 		for (const entity of this.Entities)
 		{
 			entity.Awake();
 		}
+		console.groupEnd();
 
 		// Delay Start by one frame to make sure all entities and components have awaken.
-		// Then delay the game loop by one frame to make sure all entities and components have executed start.
 		window.requestAnimationFrame(() =>
 		{
 			this.Start();
-			window.requestAnimationFrame(() =>
-			{
-				this._lastTimestamp = Date.now();
-			
-				this.Update();
-			});
 		});
 	}
 
@@ -148,11 +143,20 @@ export class Game extends Entity
 	{
 		super.Start();
 
+
 		// Start all the entities in the game.
 		for (const entity of this.Entities)
 		{
 			entity.Start();
 		}
+
+		// Delay the game loop by one frame to make sure all entities and components have executed start.
+		window.requestAnimationFrame(() =>
+		{
+			this._lastTimestamp = Date.now();
+		
+			this.Update();
+		});
 	}
 
 	// Update the game everyframe and calculate the new deltaTime.

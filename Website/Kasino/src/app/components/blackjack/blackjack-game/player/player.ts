@@ -13,6 +13,7 @@ export interface IPlayerData
 export class PlayerData implements IPlayerData
 {
 	public fullName: string;
+	public customerID: number;
 	public email: string;
 	public seatIndex: number;
 	public seated: boolean;
@@ -26,6 +27,7 @@ export class PlayerData implements IPlayerData
 	{
 		this.fullName = name ? name : "No Name";
 		this.seatIndex = -1;
+		this.customerID = -1;
 		this.betAmount = 0;
 		this.seated = false;
 		this.stand = false;
@@ -100,6 +102,8 @@ export class Player
 			{
 				fullName: data.fullName,
 				email: data.email,
+				winner: data.winner,
+				customerID: data.customerID,
 			  	seatIndex: data.seatIndex,
 			  	seated: data.seated,
 			  	stand: data.stand,

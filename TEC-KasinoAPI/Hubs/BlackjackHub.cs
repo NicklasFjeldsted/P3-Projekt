@@ -1,46 +1,47 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Diagnostics;
 using TEC_KasinoAPI.Models;
-using System.Timers;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
+using TEC_KasinoAPI.Data;
 using System.Collections.Concurrent;
 using System.Collections;
 using Newtonsoft.Json;
+using Timer = System.Timers.Timer;
+using System.Timers;
 
 namespace TEC_KasinoAPI.Hubs
 {
-	public class TimerPlus : System.Timers.Timer
+    public sealed class TimerPlus : Timer
     {
-		public static ConcurrentDictionary<string, TimerPlus> _timers = new ConcurrentDictionary<string, TimerPlus>();
+		private static readonly Lazy<TimerPlus> _instance = new Lazy<TimerPlus>(() => new TimerPlus(5000));
+		public static TimerPlus Instance { get { return _instance.Value; } }
+		public IHubContext<BlackjackHub> HubContext { get; set; }
 
-		private DateTime m_dueTime;
+		public TimerPlus() { }
+		public TimerPlus(double interval) : base(interval)
+		{ 
+			Elapsed += Timer_Elapsed;
+			Start();
+		}
 
-		public TimerPlus() : base() => Elapsed += ElapsedAction;
-
-		public double TimeLeft => (m_dueTime - DateTime.Now).TotalMilliseconds;
-
-		protected new void Dispose()
+		public new void Dispose()
         {
-			Elapsed -= ElapsedAction;
+			Stop();
+			Elapsed -= Timer_Elapsed;
 			base.Dispose();
-        }
+		}
 
-		public new void Start()
-        {
-			m_dueTime = DateTime.Now.AddMilliseconds(Interval);
-			base.Start();
-        }
+		private int counter = 0;
+		private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+		{
+			counter++;
 
-		private void ElapsedAction(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            if (AutoReset)
-            {
-				m_dueTime = DateTime.Now.AddMilliseconds(Interval);
-            }
-        }
-    }
-	public class BlackjackHub : Hub
+			Debug.WriteLine("\n----------------------");
+			Debug.WriteLine($"\tOnTimerEvent - {counter}");
+			Debug.WriteLine("----------------------\n");
+			await HubContext.Clients.All.SendAsync("RequestBet");
+		}
+	}
+    public class BlackjackHub : Hub
 	{
 		// An overall card array of every type of card in the game.
 		private static Card[] ALL_CARDS =
@@ -126,65 +127,43 @@ namespace TEC_KasinoAPI.Hubs
 
         // A server instance of the hub to call methods outside of a regular call.
         private readonly IHubContext<BlackjackHub> _hubContext;
+		// The context for the Database.
+		private static DatabaseContext _context;
 
-		// The timer for checking if a new round should start.
-		private TimerPlus _timer = new TimerPlus();
+		private static readonly TimerPlus _timer;
 
-		// Hub constructor that dependency injects the HubContext and starts the timer.
-		public BlackjackHub(IHubContext<BlackjackHub> hubContext)
+		// Hub constructor that dependency injects the HubContext, DatabaseContext and starts the timer.
+		public BlackjackHub(IHubContext<BlackjackHub> hubContext, DatabaseContext dbContext)
 		{
 			_hubContext = hubContext;
-			StartTimer();
+			_context = dbContext;
+			_timer.HubContext = hubContext;
 		}
 
-        #region Timer Methods & Functionality.
-		/// <summary>
-		/// Initialises the timer and start it.
-		/// </summary>
-        private void StartTimer()
+		static BlackjackHub()
         {
-			_timer = TimerPlus._timers.GetOrAdd("GameTimer", _timer);
-            _timer.Elapsed += OnTimerEvent;
-            _timer.Interval = 5000;
-            _timer.Enabled = true;
-        }
+			_timer = TimerPlus.Instance;
+			_timer.Elapsed += HubTimer_Elapsed;
+		}
 
-		/// <summary>
-		/// Resets the timer.
-		/// </summary>
-        private void ResetTimer()
-        {
-            StopTimer();
-            StartTimer();
-        }
-
-		/// <summary>
-		/// Stops the timer and kills it.
-		/// </summary>
-        private void StopTimer()
-        {
-			_timer = TimerPlus._timers.GetOrAdd("GameTimer", _timer);
-            _timer.Elapsed -= OnTimerEvent;
-            _timer.Enabled = false;
-        }
+		#region Timer Methods & Functionality.
 
 		/// <summary>
 		/// The method that is called when the timer time has elapsed.
 		/// </summary>
 		/// <param name="source"></param>
 		/// <param name="e"></param>
-        private void OnTimerEvent(object source, ElapsedEventArgs e)
+		private static void HubTimer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			var timer = (TimerPlus)source;
 			BeginGame();
 		}
-        #endregion
+		#endregion
 
-        #region Turn Handling & Sorting.
-        /// <summary>
-        /// Proceeds the turn order.
-        /// </summary>
-        public void SwitchTurn()
+		#region Turn Handling & Sorting.
+		/// <summary>
+		/// Proceeds the turn order.
+		/// </summary>
+		public static void SwitchTurn()
         {
 			turnOrder.TryDequeue(out seatTurnIndex);
 
@@ -197,7 +176,7 @@ namespace TEC_KasinoAPI.Hubs
 		/// <summary>
 		/// Handles the house turn recursivly.
 		/// </summary>
-		public async Task HandleHouseTurn()
+		public static async Task HandleHouseTurn()
         {
 			int value = CalculateValue(houseCards.Values);
 
@@ -219,7 +198,7 @@ namespace TEC_KasinoAPI.Hubs
 					EndGame();
 					break;
             }
-			await _hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
+			await _timer.HubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
 		}
 
 		/// <summary>
@@ -231,6 +210,7 @@ namespace TEC_KasinoAPI.Hubs
 			List<KeyValuePair<string, PlayerData>> players = connectedPlayers.Where(p => p.Value.seated == true).ToList();
 			foreach (var pair in players)
 			{
+				if (bets[pair.Key] <= 0) continue;
 				turnOrder.Enqueue(pair.Value.seatIndex);
 			}
 			SortQueue();
@@ -262,12 +242,6 @@ namespace TEC_KasinoAPI.Hubs
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
 
-		[Obsolete]
-		public async Task GetData()
-        {
-			await Clients.Caller.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-        }
-
 		/// <summary>
 		/// Called when a HubConnection on the client side disconnects.
 		/// </summary>
@@ -281,9 +255,10 @@ namespace TEC_KasinoAPI.Hubs
 				Task.Run(async () => await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex)));
 			}
 
+			bets.TryRemove(new KeyValuePair<string, int>(id, bets[id]));
 			connectedPlayers.TryRemove(new KeyValuePair<string, PlayerData>(id, connectedPlayers[id]));
 
-			if (connectedPlayers.IsEmpty || !connectedPlayers.Any(player => player.Value.seated))
+			if (connectedPlayers.IsEmpty || !connectedPlayers.Any(player => player.Value.seated) && !bets.Any(bet => bet.Value > 0))
 			{
 				EndGame();
 			}
@@ -299,6 +274,7 @@ namespace TEC_KasinoAPI.Hubs
 		public override Task OnConnectedAsync()
 		{
 			connectedPlayers.TryAdd(Context.ConnectionId, new PlayerData());
+			bets.TryAdd(Context.ConnectionId, 0);
 
 			return base.OnConnectedAsync();
 		}
@@ -309,14 +285,9 @@ namespace TEC_KasinoAPI.Hubs
 		/// <returns><see cref="bool"/>: true if any player data's seated bool is true otherwise false.</returns>
 		private static bool CheckPlayers()
         {
-			foreach (PlayerData seat in connectedPlayers.Values.ToList())
-			{
-				if (seat.seated)
-				{
-					return true;
-				}
-			}
-			return false;
+			bool anyBets = bets.Any(x => x.Value > 0);
+			bool anySeated = connectedPlayers.Any(x => x.Value.seated == true);
+			return anyBets && anySeated;
 		}
 
 		/// <summary>
@@ -392,7 +363,7 @@ namespace TEC_KasinoAPI.Hubs
 		/// to the server until the "HandleHouseTurn" is called.
 		/// </summary>
 		/// <returns></returns>
-		private async Task DealCards()
+		private static async Task DealCards()
         {
             foreach (PlayerData data in connectedPlayers.Values.ToList())
             {
@@ -401,7 +372,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			houseCards.TryAdd(houseCards.Count, GenerateCard());
 
-			await _hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
+			await _timer.HubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
 
 			foreach (PlayerData data in connectedPlayers.Values.ToList())
 			{
@@ -412,8 +383,8 @@ namespace TEC_KasinoAPI.Hubs
 
 			IsPlaying = true;
 
-			await _hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
-			await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
+			await _timer.HubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
+			await _timer.HubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
 
 		/// <summary>
@@ -421,31 +392,35 @@ namespace TEC_KasinoAPI.Hubs
 		/// This begins a new game handling everything in order, so a new round can begin.
 		/// </summary>
 		/// <returns></returns>
-		private async Task BeginGame()
+		private static async Task BeginGame()
         {
+
+			foreach (var player in bets)
+			{
+				Debug.WriteLine($"{player.Key} - {player.Value}");
+			}
+			Debug.WriteLine("----------------------\n");
+
 			if (IsPlaying || !CheckPlayers())
 				return;
 
-			bets.Clear();
-
-			await _hubContext.Clients.All.SendAsync("RequestBet");
-			await _hubContext.Clients.All.SendAsync("GameStarted");
+			await _timer.HubContext.Clients.All.SendAsync("GameStarted");
 
 			houseCards.Clear();
 
 			ResetPlayers();
 
-			StopTimer();
+			_timer.Stop();
 
 			SetTurnOrder();
 
 			RefillCards();
 
-			DealCards();
+			await DealCards();
 
 			SwitchTurn();
 
-			await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
+			await _timer.HubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
 		}
 
 		/// <summary>
@@ -453,7 +428,7 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		/// <param name="houseBust"></param>
 		/// <returns></returns>
-		public async Task EndGame(bool houseBust = false)
+		public static async Task EndGame(bool houseBust = false)
         {
 			if (!IsPlaying)
 				return;
@@ -475,23 +450,77 @@ namespace TEC_KasinoAPI.Hubs
 				CalculateWinners();
 			}
 
+            foreach (var player in connectedPlayers.Values)
+            {
+				if(!player.seated) continue;
+
+				string connectionID = connectedPlayers.First(x => x.Value.customerID == player.customerID).Key;
+				BalanceRequest request = new BalanceRequest(player.customerID, bets.First(x => x.Key == connectionID).Value);
+
+				bets[connectionID] = 0;
+
+				if(player.winner == true)
+                {
+					Win(request, connectionID);
+                }
+
+				if(player.winner == false)
+                {
+					Lose(request, connectionID);
+                }
+            }
+
 			seatTurnIndex = -1;
 
-			await _hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
-			await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-			await _hubContext.Clients.All.SendAsync("GameEnded");
+			await _timer.HubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
+			await _timer.HubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
+			await _timer.HubContext.Clients.All.SendAsync("GameEnded");
 
-			ResetTimer();
+			_timer.Start();
+		}
+
+		/// <summary>
+		/// Calculates and add the winnings to the player.
+		/// </summary>
+		public static async void Win(BalanceRequest request, string connectionID)
+        {
+			AccountBalance accountBalance = _context.AccountBalances.SingleOrDefault(x => x.CustomerID == request.CustomerID);
+
+			if (accountBalance == null) return;
+
+			accountBalance.Balance += request.Amount * 2;
+
+			_context.AccountBalances.Update(accountBalance);
+
+			_context.SaveChanges();
+
+			await _timer.HubContext.Clients.Client(connectionID).SendAsync("UpdateBalance");
+		}
+
+		/// <summary>
+		/// Calculates and removes the loses from the player.
+		/// </summary>
+		public static async void Lose(BalanceRequest request, string connectionID)
+        {
+			AccountBalance accountBalance = _context.AccountBalances.SingleOrDefault(x => x.CustomerID == request.CustomerID);
+
+			if (accountBalance == null) return;
+
+			accountBalance.Balance -= request.Amount;
+
+			_context.AccountBalances.Update(accountBalance);
+
+			_context.SaveChanges();
+
+			await _timer.HubContext.Clients.Client(connectionID).SendAsync("UpdateBalance");
 		}
 
 		/// <summary>
 		/// Locks in the bet.
 		/// </summary>
-		/// <param name="playerData"></param>
-		/// <returns></returns>
-		public async Task LockBet(int betAmount)
+		public void LockBet(int betAmount)
         {
-			bets.TryAdd(Context.ConnectionId, betAmount);
+			bets.AddOrUpdate(Context.ConnectionId, key => bets[key] = betAmount, (key, value) => bets[key] = betAmount);
         }
         #endregion
 
@@ -506,6 +535,7 @@ namespace TEC_KasinoAPI.Hubs
 				data.busted = false;
 				data.stand = false;
 				data.winner = false;
+				data.betAmount = 0;
 				data.cards.Clear();
 			}
 		}

@@ -45,26 +45,27 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       for (const seat of house.seats)
       {
         seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
-        this.networking.Subscribe("RequestBet", () => seat.seatBet.LockBet());
       }
-
+      
+      this.networking.Subscribe("RequestBet", () => house.GetBets());
       this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
       this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
 
       this.networking.Subscribe("GameEnded", () => house.GameEnded());
       this.networking.Subscribe("GameStarted", () => house.GameStarted());
+      this.networking.Subscribe("UpdateBalance", () => this.balanceService.updateBalance());
       
-      this.networking.Subscribe("DataChanged", (data) => house.UpdateSeatData(data)).then(() =>
+      this.networking.Subscribe("DataChanged", (data: string) => house.UpdateSeatData(data)).then(() =>
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
-
-        house.CreateClient(this.game.user);
+        
+        setTimeout(() => house.CreateClient(this.game.user), 100);
       });
 
-      this.networking.Subscribe("SyncTurn", (data) => house.SyncTurn(data));
-      this.networking.Subscribe("SyncPlaying", (data) => house.SyncPlaying(data));
+      this.networking.Subscribe("SyncTurn", (data: string) => house.SyncTurn(data));
+      this.networking.Subscribe("SyncPlaying", (data: string) => house.SyncPlaying(data));
 
-      this.networking.Subscribe("HouseCards", (data) => house.HouseCards(data));
+      this.networking.Subscribe("HouseCards", (data: string) => house.HouseCards(data));
     });
   }
 
@@ -75,15 +76,6 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     nextState?: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree>
   {
-    component.networking.Unsubscribe('JoinSeat');
-    component.networking.Unsubscribe('RequestBet');
-    component.networking.Unsubscribe('DataChanged');
-    component.networking.Unsubscribe('UpdatePlayerData');
-    component.networking.Unsubscribe('SyncTurn');
-    component.networking.Unsubscribe('SyncPlaying');
-    component.networking.Unsubscribe('GameEnded');
-    component.networking.Unsubscribe('GameStarted');
-    component.networking.Unsubscribe('HouseCards');
     return component.networking.StopConnection();
   }
 }

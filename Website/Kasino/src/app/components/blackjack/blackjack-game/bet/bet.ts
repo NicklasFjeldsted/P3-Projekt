@@ -9,12 +9,19 @@ export class Bet extends MonoBehaviour
 	public increaseButton: GameObject;
 	public decreaseButton: GameObject;
 	public seat: Seat;
+	private lockedIn: boolean = false;
 	
 	clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
 	public Start(): void
 	{
-
+		this.seat.house.OnStageChange.subscribe((stage) =>
+		{
+			if (stage == GameStage.Ended)
+			{
+				this.currentBet = 0;
+			}
+		});
 	}
 
 	public Awake(): void
@@ -27,21 +34,27 @@ export class Bet extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
-		this.text.text = `${this.currentBet}kr.`;
-		if (this.seat.house.stage == GameStage.Started)
-		{
-			this.increaseButton.isActive = false;
-			this.decreaseButton.isActive = false;
-		}
-		else
-		{
-			this.increaseButton.isActive = this.gameObject.isActive;
-			this.decreaseButton.isActive = this.gameObject.isActive;
-		}
+		if (!this.seat.Occupied) return;
 
-		if (this.seat.house.stage == GameStage.Ended)
+		this.text.text = `${this.currentBet}kr.`;
+
+		switch (this.seat.house.CurrentStage)
 		{
-			this.currentBet = 0;
+			case GameStage.Off:
+				this.increaseButton.isActive = !this.lockedIn;
+				this.decreaseButton.isActive = !this.lockedIn;
+				break;
+			
+			case GameStage.Started:
+				this.increaseButton.isActive = false;
+				this.decreaseButton.isActive = false;
+				this.lockedIn = false;
+				break;
+			
+			case GameStage.Ended:
+				this.increaseButton.isActive = !this.lockedIn;
+				this.decreaseButton.isActive = !this.lockedIn;
+				break;
 		}
 	}
 
@@ -59,7 +72,8 @@ export class Bet extends MonoBehaviour
 
 	public LockBet(): void
 	{
-		if (!this.seat.Occupied) return;
+		if (this.currentBet == 0) return;
+		this.lockedIn = true;
 		this.gameObject.game.GetFeature(NetworkingFeature).SendData("LockBet", this.currentBet);
 	}
 }

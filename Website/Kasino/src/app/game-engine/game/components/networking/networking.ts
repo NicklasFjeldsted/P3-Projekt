@@ -7,7 +7,8 @@ export class NetworkingFeature implements IFeature
 {
 	public Entity: Game;
 
-	public hubConnection: signalR.HubConnection | null;
+	public hubConnection: signalR.HubConnection;
+	private subscriptions: string[] = [];
 
 	public async StartConnection(): Promise<void>
 	{
@@ -20,31 +21,27 @@ export class NetworkingFeature implements IFeature
 	  {
 		return await this.hubConnection.start();
 	  }
-	  catch (err)
+	  catch (error)
 	  {
-		return console.log("Error while starting connection" + err);
+		return console.log("Error while starting connection" + error);
 	  }
 	}
   
 	public SendData<T>(func: string, data: T): void
 	{
-	  this.hubConnection!.send(func, data);
+	  this.hubConnection.send(func, data);
 	}
 	public Send(func: string): void
 	{
-	  this.hubConnection!.send(func);
+	  this.hubConnection.send(func);
 	}
   
-	public GetData(func: string): void
-	{
-	  this.hubConnection!.send(func);
-	}
-  
-	public async Subscribe(func: string, action: (data: string) => void): Promise<void>
+	public async Subscribe<T>(func: string, action: (data: T) => void): Promise<void>
 	{
 		return await new Promise((resolve) =>
 		{
-			this.hubConnection!.on(func, (data) => action(data));
+			this.hubConnection.on(func, (data) => action(data));
+			this.subscriptions.push(func);
 			resolve();
 		});
 	}
@@ -53,18 +50,31 @@ export class NetworkingFeature implements IFeature
 	{
 		return await new Promise((resolve) =>
 		{
-			this.hubConnection!.off(func);
+			this.hubConnection.off(func);
+			console.log(func + " - Unsubscribed.");
 			resolve();
 		});
 	}
 
+	private counter: number = 0;
 	public StopConnection(): Promise<boolean>
 	{
-		return new Promise<boolean>((resolve) =>
+		return new Promise<boolean>((resolve, reject) =>
 		{
-			this.hubConnection!.stop().then(() =>
+			this.subscriptions.forEach((subscription) =>
 			{
-				resolve(true);
+				this.Unsubscribe(subscription).then(() =>
+				{
+					this.counter++;
+					if (this.counter == this.subscriptions.length)
+					{
+						this.hubConnection.stop().then(() =>
+						{
+							this.counter = 0;
+							resolve(true);
+						}).catch((error) => { console.error(error); reject(false); });
+					}
+				});
 			});
 		});
 	}
@@ -86,8 +96,6 @@ export class NetworkingFeature implements IFeature
 
 	Dispose(): void
 	{
-		console.error(`${this.constructor.name} - Disposed`);
-		this.hubConnection = null;
-		this.Entity.RemoveFeature(NetworkingFeature);
+
 	}
 }
