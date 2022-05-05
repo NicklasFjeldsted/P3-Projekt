@@ -273,7 +273,7 @@ export class House extends MonoBehaviour
 		{
 			this.houseCards.push(parsedData[key]);
 		}
-
+		this.childText.gameObject.isActive = true;
 		this.childText.text = this.HeldValue.toString();
 
 		this.ClearCards();
