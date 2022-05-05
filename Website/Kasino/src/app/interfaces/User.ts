@@ -1,23 +1,20 @@
-export interface IUser 
-{
-	email: string;
-	fullName: string;
-}
-
-export class UserData
-{
+export interface IUser {
   email: string;
   fullName: string;
 }
 
-export class User
-{
-  constructor()
-  {
+export class UserData {
+  email: string;
+  fullName: string;
+}
+
+export class User {
+  constructor() {
     this.id = null;
     this.email = null;
     this.firstName = null;
     this.lastName = null;
+    this.role = null;
     this.jwtToken = null;
   }
 
@@ -25,10 +22,10 @@ export class User
   email: string | null;
   firstName: string | null;
   lastName: string | null;
+  role: string | null;
   jwtToken: string | null;
 
-  public get fullName(): string
-  {
+  public get fullName(): string {
     return `${this.firstName} ${this.lastName}`;
   }
 }

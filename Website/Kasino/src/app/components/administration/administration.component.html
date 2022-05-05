@@ -23,16 +23,22 @@
         <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
       </ng-container>
 
-      <!-- Name Column -->
+      <!-- First Name Column -->
       <ng-container matColumnDef="firstname">
         <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{ row.firstName }} </mat-cell>
       </ng-container>
 
-      <!-- Color Column -->
+      <!-- Last Name Column -->
       <ng-container matColumnDef="lastname">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{ row.lastName }} </mat-cell>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Role </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.role }} </mat-cell>
       </ng-container>
 
       <!-- Color Column -->

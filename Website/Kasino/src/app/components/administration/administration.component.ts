@@ -12,7 +12,7 @@ import { CustomerService } from "src/app/services/customer.service";
   styleUrls: ["./administration.component.css"],
 })
 export class AdministrationComponent {
-  displayedColumns: string[] = ["id", "email", "firstname", "lastname", "actions"];
+  displayedColumns: string[] = ["id", "email", "firstname", "lastname", "role", "actions"];
   dataSource: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
