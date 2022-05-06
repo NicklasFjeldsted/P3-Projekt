@@ -7,6 +7,7 @@ using System.Collections;
 using Newtonsoft.Json;
 using Timer = System.Timers.Timer;
 using System.Timers;
+using TEC_KasinoAPI.Helpers;
 
 namespace TEC_KasinoAPI.Hubs
 {
@@ -23,6 +24,7 @@ namespace TEC_KasinoAPI.Hubs
 			Start();
 		}
 
+		// An extended Dispose method.
 		public new void Dispose()
         {
 			Stop();
@@ -30,13 +32,13 @@ namespace TEC_KasinoAPI.Hubs
 			base.Dispose();
 		}
 
-		private int counter = 0;
+		/// <summary>
+		/// The base method that will be called on the TimerPlus class.
+		/// </summary>
 		private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			counter++;
-
 			Debug.WriteLine("\n----------------------");
-			Debug.WriteLine($"\tOnTimerEvent - {counter}");
+			Debug.WriteLine("\tOnTimerEvent");
 			Debug.WriteLine("----------------------\n");
 			await HubContext.Clients.All.SendAsync("RequestBet");
 		}
@@ -102,37 +104,37 @@ namespace TEC_KasinoAPI.Hubs
 
         #region Persistent Data.
         // A dictionary that persists between hub instances that contains all connectedPlayer data and their connectionIds.
-        private static ConcurrentDictionary<string, PlayerData> connectedPlayers = new ConcurrentDictionary<string, PlayerData>();
-        private static ConcurrentDictionary<string, int> bets = new ConcurrentDictionary<string, int>();
+        private static readonly ConcurrentDictionary<string, PlayerData> connectedPlayers = new ConcurrentDictionary<string, PlayerData>();
+        private static readonly ConcurrentDictionary<string, int> bets = new ConcurrentDictionary<string, int>();
 
 		// A queue that persists between hub instances that contains the turn order of the game.
-		private static ConcurrentQueue<int> turnOrder = new ConcurrentQueue<int>();
+		private static readonly ConcurrentQueue<int> turnOrder = new ConcurrentQueue<int>();
 
 		// A dictionary that persists between hub instances that contains the remaining cards in a game.
-		private static ConcurrentDictionary<int, Card> availableCards = new ConcurrentDictionary<int, Card>();
+		private static readonly ConcurrentDictionary<int, Card> availableCards = new ConcurrentDictionary<int, Card>();
 
 		// A dictionary that persists between hub instances that contain the cards held by the house.
-		private static ConcurrentDictionary<int, Card> houseCards = new ConcurrentDictionary<int, Card>();
+		private static readonly ConcurrentDictionary<int, Card> houseCards = new ConcurrentDictionary<int, Card>();
         #endregion
 
         #region Information Variables.
-        // The seat index whos turn it is in a game.
-        private static int seatTurnIndex;
+        // The seat index whoms turn it is in a game.
+        private static int SeatTurnIndex;
 
 		// A bool that is changed to true when there is a game running and false when there is not.
 		private static bool IsPlaying = false;
-
-        //private static int betweenGamesTime = 0;
         #endregion
 
         // A server instance of the hub to call methods outside of a regular call.
         private readonly IHubContext<BlackjackHub> _hubContext;
+
 		// The context for the Database.
 		private static DatabaseContext _context;
 
+		// Static reference for the timer instance.
 		private static readonly TimerPlus _timer;
 
-		// Hub constructor that dependency injects the HubContext, DatabaseContext and starts the timer.
+		// Hub instance constructor that dependency injects HubContext and DatabaseContext.
 		public BlackjackHub(IHubContext<BlackjackHub> hubContext, DatabaseContext dbContext)
 		{
 			_hubContext = hubContext;
@@ -140,74 +142,75 @@ namespace TEC_KasinoAPI.Hubs
 			_timer.HubContext = hubContext;
 		}
 
+		// Hub static constructor that sets the timer instance reference for the hub static instance.
+		// Also subscribe any methods we need to run on the timer event.
 		static BlackjackHub()
         {
 			_timer = TimerPlus.Instance;
 			_timer.Elapsed += HubTimer_Elapsed;
 		}
 
-		#region Timer Methods & Functionality.
-
+		#region Timer Event Methods
 		/// <summary>
-		/// The method that is called when the timer time has elapsed.
+		/// Local method that is called when the timer event is raised.
 		/// </summary>
-		/// <param name="source"></param>
-		/// <param name="e"></param>
 		private static void HubTimer_Elapsed(object sender, ElapsedEventArgs e)
 		{
-			BeginGame();
+			Task.Run(async () => await BeginGame());
 		}
 		#endregion
 
 		#region Turn Handling & Sorting.
 		/// <summary>
-		/// Proceeds the turn order.
+		/// Proceeds the turn order and checks if it is the house's turn.
 		/// </summary>
 		public static void SwitchTurn()
         {
-			turnOrder.TryDequeue(out seatTurnIndex);
+			turnOrder.TryDequeue(out SeatTurnIndex);
 
-			if(seatTurnIndex == 0)
+			if(SeatTurnIndex == 0)
             {
 				HandleHouseTurn();
 			}
         }
 
+		// This method will call itself until a desired outcome leads it to exit.
+		// I.E. Recursive.
 		/// <summary>
 		/// Handles the house turn recursivly.
 		/// </summary>
-		public static async Task HandleHouseTurn()
+		public static async void HandleHouseTurn()
         {
-			int value = CalculateValue(houseCards.Values);
-
+			#pragma warning disable CS4014 // Disables the warning about methods not being awaited.
 			switch (CalculateValue(houseCards.Values))
             {
+				// If the house cards' value is 16 or less, draw another card.
 				case < 17:
-					// Hit
-					houseCards.TryAdd(houseCards.Count, GenerateCard());
-					HandleHouseTurn();
-					break;
+					await Task.Run(() => houseCards.TryAdd(houseCards.Count, GenerateCard()));
+                    HandleHouseTurn();
+                    break;
 
+				// If the house cards' value is above 21, the house busts and the game ends.
 				case > 21:
-					// Bust
 					EndGame(true);
 					break;
 
+				// If the house cards' value is above 16 but below 21 the house stands and the game ends.
 				default:
-					// Stand
 					EndGame();
 					break;
             }
+			#pragma warning restore CS4014
 			await _timer.HubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
 		}
 
 		/// <summary>
-		/// Finds all seated players and adds them to a queue.
+		/// Finds all seated players whoms bet is above 0 and adds them to the turnOrder.
 		/// </summary>
 		private static void SetTurnOrder()
 		{
 			turnOrder.Clear();
-			List<KeyValuePair<string, PlayerData>> players = connectedPlayers.Where(p => p.Value.seated == true).ToList();
+			var players = connectedPlayers.Where(p => p.Value.seated == true).ToList();
 			foreach (var pair in players)
 			{
 				if (bets[pair.Key] <= 0) continue;
@@ -221,11 +224,11 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		private static void SortQueue()
 		{
-			List<int> temp = turnOrder.ToList();
-			temp.Sort();
-			temp.Reverse();
+			List<int> sortedList = turnOrder.ToList();
+			sortedList.Sort();
+			sortedList.Reverse();
 			turnOrder.Clear();
-			temp.ForEach(x => turnOrder.Enqueue(x));
+			sortedList.ForEach(x => turnOrder.Enqueue(x));
 		}
         #endregion
 
@@ -237,8 +240,7 @@ namespace TEC_KasinoAPI.Hubs
         public async Task JoinSeat(string playerData)
 		{
 			string id = Context.ConnectionId;
-			//ResetTimer();
-			connectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), connectedPlayers[id]);
+			await Task.Run(() => connectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), connectedPlayers[id]));
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
 
@@ -249,10 +251,10 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			string id = Context.ConnectionId;
 
-			if (seatTurnIndex == connectedPlayers[id].seatIndex)
+			if (SeatTurnIndex == connectedPlayers[id].seatIndex)
 			{
 				SwitchTurn();
-				Task.Run(async () => await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex)));
+				Task.Run(async () => await _hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(SeatTurnIndex)));
 			}
 
 			bets.TryRemove(new KeyValuePair<string, int>(id, bets[id]));
@@ -260,7 +262,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			if (connectedPlayers.IsEmpty || !connectedPlayers.Any(player => player.Value.seated) && !bets.Any(bet => bet.Value > 0))
 			{
-				EndGame();
+				Task.Run(async () => await EndGame());
 			}
 
 			Task.Run(async () => await _hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers)));
@@ -280,7 +282,7 @@ namespace TEC_KasinoAPI.Hubs
 		}
 
 		/// <summary>
-		/// Check if any player is seated.
+		/// Checks if there are any seated players whoms bets are above 0.
 		/// </summary>
 		/// <returns><see cref="bool"/>: true if any player data's seated bool is true otherwise false.</returns>
 		private static bool CheckPlayers()
@@ -297,7 +299,8 @@ namespace TEC_KasinoAPI.Hubs
 		public async Task UpdatePlayerData(string playerData)
 		{
 			string id = Context.ConnectionId;
-			connectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), connectedPlayers[id]);
+			
+			await Task.Run(() => connectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), connectedPlayers[id]));
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
@@ -337,14 +340,14 @@ namespace TEC_KasinoAPI.Hubs
 			}
 
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
-			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
+			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(SeatTurnIndex));
 		}
 
 		/// <summary>
 		/// This is called by the server if the "Hit" method calculates a value over 21, "Bust" informs
 		/// the connectedPlayers that the client that called "Hit" is busted.
 		/// </summary>
-		public async Task Bust()
+		public async void Bust()
         {
             if (IsPlaying)
             {
@@ -352,7 +355,7 @@ namespace TEC_KasinoAPI.Hubs
 				SwitchTurn();
 			}
 
-			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
+			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(SeatTurnIndex));
 			await Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
 
@@ -363,7 +366,7 @@ namespace TEC_KasinoAPI.Hubs
 		/// to the server until the "HandleHouseTurn" is called.
 		/// </summary>
 		/// <returns></returns>
-		private static async Task DealCards()
+		private static void DealCards()
         {
             foreach (PlayerData data in connectedPlayers.Values.ToList())
             {
@@ -372,7 +375,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			houseCards.TryAdd(houseCards.Count, GenerateCard());
 
-			await _timer.HubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
+			_timer.HubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(houseCards));
 
 			foreach (PlayerData data in connectedPlayers.Values.ToList())
 			{
@@ -383,18 +386,16 @@ namespace TEC_KasinoAPI.Hubs
 
 			IsPlaying = true;
 
-			await _timer.HubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
-			await _timer.HubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
+			_timer.HubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
+			_timer.HubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
 		}
 
 		/// <summary>
-		/// This is a method that is subscribed on a timer event that is fired if there are any seated players.
+		/// This is the method that checks and handles the beginning of a game.
 		/// This begins a new game handling everything in order, so a new round can begin.
 		/// </summary>
-		/// <returns></returns>
 		private static async Task BeginGame()
         {
-
 			foreach (var player in bets)
 			{
 				Debug.WriteLine($"{player.Key} - {player.Value}");
@@ -416,11 +417,11 @@ namespace TEC_KasinoAPI.Hubs
 
 			RefillCards();
 
-			await DealCards();
+			DealCards();
 
 			SwitchTurn();
 
-			await _timer.HubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(seatTurnIndex));
+			await _timer.HubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(SeatTurnIndex));
 		}
 
 		/// <summary>
@@ -470,7 +471,7 @@ namespace TEC_KasinoAPI.Hubs
                 }
             }
 
-			seatTurnIndex = -1;
+			SeatTurnIndex = -1;
 
 			await _timer.HubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
 			await _timer.HubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(connectedPlayers));
@@ -488,7 +489,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			if (accountBalance == null) return;
 
-			accountBalance.Balance += request.Amount * 2;
+			accountBalance.Balance += request.Amount;
 
 			_context.AccountBalances.Update(accountBalance);
 
@@ -532,11 +533,7 @@ namespace TEC_KasinoAPI.Hubs
         {
 			foreach (PlayerData data in connectedPlayers.Values.ToList())
 			{
-				data.busted = false;
-				data.stand = false;
-				data.winner = false;
-				data.betAmount = 0;
-				data.cards.Clear();
+				data.Reset();
 			}
 		}
 
@@ -545,7 +542,6 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		private static void CalculateWinners()
         {
-			// "pair" is of type KeyValuePair<string, PlayerData>
 			foreach(var pair in connectedPlayers)
             {
 				if (pair.Value.seated == false) continue;
@@ -615,7 +611,7 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		/// <param name="data"></param>
 		/// <returns><see cref="string"/>: the converted JSON object as a string.</returns>
-		private static string DictionaryToJson(ConcurrentDictionary<string, PlayerData> data)
+		private static string DictionaryToJson<TKey, TValue>(ConcurrentDictionary<TKey, TValue> data)
         {
 			IEnumerable<string> entries = data.Select(data =>
 				string.Format("\"{0}\": {1}", data.Key,
