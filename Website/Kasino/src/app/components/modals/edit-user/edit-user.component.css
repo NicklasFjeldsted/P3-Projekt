@@ -83,6 +83,12 @@
   border: 1px solid #9bcae4;
 }
 
+.info-group > select {
+  padding: 0.5em 0.25em;
+  outline: none;
+  border: 1px solid #9bcae4;
+}
+
 .save-container {
   width: 100%;
   height: auto;

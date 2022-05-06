@@ -75,6 +75,17 @@ export class EditUserComponent implements OnInit {
     return this.customerForm.controls;
   }
 
+  onSubmit(): void {
+    this.customerService.updateCustomer(this.customerForm.value).subscribe({
+      next: (message) => {
+        console.log(message);
+      },
+      error: (error) => {
+        console.log("Something went wrong! " + error);
+      },
+    });
+  }
+
   // Gets user from database
   getUser(): void {
     this.customerService.getCustomer(this.customerID).subscribe({

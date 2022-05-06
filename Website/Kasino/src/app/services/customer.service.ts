@@ -29,6 +29,10 @@ export class CustomerService {
     return this.http.get<UserAccount>(`${environment.apiURL}/Customers/${id}`);
   }
 
+  public updateCustomer(body: UserAccount): Observable<any> {
+    return this.http.put<any>(`${environment.apiURL}/Customers/${body.customerID}`, body, { withCredentials: true });
+  }
+
   /** Returns the user data of the logged in user. */
   public getUser(): void {
     this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser").subscribe((userData) => this.UserSubject.next(userData));
