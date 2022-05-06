@@ -124,13 +124,11 @@ export class Game extends Entity
 
 		super.Awake();
 		
-		console.groupCollapsed("Game Entity Override");
 		// Awake all the entities in the game.
 		for (const entity of this.Entities)
 		{
 			entity.Awake();
 		}
-		console.groupEnd();
 
 		// Delay Start by one frame to make sure all entities and components have awaken.
 		window.requestAnimationFrame(() =>
