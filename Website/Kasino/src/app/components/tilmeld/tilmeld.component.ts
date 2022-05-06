@@ -27,7 +27,7 @@ export class TilmeldComponent implements OnInit {
     acceptTerms: new FormControl(false),
   });
 
-  step: any = 2; // Current step on form
+  step: any = 1; // Current step on form
   nextSubmit: boolean = false; // checks if client has pressed next on form
   acceptRights: boolean = false; // checks if client has accepted their rights
   submitted: boolean = false; // checks if client has submitted form
