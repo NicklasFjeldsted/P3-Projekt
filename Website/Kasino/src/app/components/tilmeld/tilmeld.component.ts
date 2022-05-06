@@ -96,7 +96,7 @@ export class TilmeldComponent {
     const buttonMale = document.getElementById("gender-button-0")!.children;
     const buttonFemale = document.getElementById("gender-button-1")!.children;
     for (let i = 0; i < 3; i++) {
-      if (genderid == 0) {
+      if (genderid == 1) {
         buttonMale[i].classList.add("active");
         buttonFemale[i].classList.remove("active");
       } else {

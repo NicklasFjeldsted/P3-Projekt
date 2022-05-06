@@ -91,13 +91,12 @@ export class EditUserComponent implements OnInit {
   // Converts countryName to CountryID and vice versa
   convertCountry(countryID?: number | null, countryName?: string): string | number {
     const countries: Country[] = JSON.parse(localStorage.getItem("countries")!);
-    if (countryID != null) {
-      const country: Country | undefined = countries.find((country) => country.countryID == countryID);
-      return country!.countryName;
-    } else {
+    if (countryID == null) {
       const country: Country | undefined = countries.find((country) => country.countryName == countryName);
       return country!.countryID;
     }
+    const country: Country | undefined = countries.find((country) => country.countryID == countryID);
+    return country!.countryName;
   }
 
   convertGender = (inputVal: string | number) => (_isNumberValue(inputVal) ? (inputVal == 1 ? "Male" : "Female") : inputVal === "Male" ? 1 : 2);
