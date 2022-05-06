@@ -27,5 +27,14 @@
             betAmount = newData.betAmount;
             cards = newData.cards.ToList();
         }
+
+        public void Reset()
+        {
+            busted = false;
+            stand = false;
+            winner = false;
+            betAmount = 0;
+            cards.Clear();
+        }
     }
 }
