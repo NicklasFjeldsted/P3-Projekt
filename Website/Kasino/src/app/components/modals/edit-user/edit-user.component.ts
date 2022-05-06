@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
+import { _isNumberValue } from "@angular/cdk/coercion";
 import { Component, Inject, OnInit } from "@angular/core";
 import { AbstractControl, Form, FormControl, FormGroup } from "@angular/forms";
 import { Country } from "src/app/interfaces/country";
@@ -99,15 +100,7 @@ export class EditUserComponent implements OnInit {
     }
   }
 
-  convertGender(genderID?: number | null, genderName?: string): string | number {
-    let gender: any;
-    if (genderID != null) {
-      gender = genderID === 1 ? "Male" : "Female";
-    } else {
-      gender = genderName === "Male" ? 1 : 2;
-    }
-    return gender;
-  }
+  convertGender = (inputVal: string | number) => (_isNumberValue(inputVal) ? (inputVal == 1 ? "Male" : "Female") : inputVal === "Male" ? 1 : 2);
 
   // Adds active class to selected navbar item
   addActive(siteNumber: number): void {
@@ -132,8 +125,8 @@ export class EditUserComponent implements OnInit {
       lastName: this.customerAcc.lastName,
       address: this.customerAcc.address,
       zipCodeID: this.customerAcc.zipCodeID,
-      genderID: this.convertGender(this.customerAcc.genderID),
-      registerDate: this.customerAcc.registerDate,
+      genderID: this.convertGender(this.customerAcc.genderID!),
+      registerDate: new Date(this.customerAcc.registerDate!).toLocaleString("en-GB", { timeZone: "CET" }), // Formats string to DD/MM/YY in CET timezone
     });
     this.customerForm.markAsPristine();
   }
