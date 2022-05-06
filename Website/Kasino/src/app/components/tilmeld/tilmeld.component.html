@@ -117,16 +117,16 @@
           </div>
 
           <div class="input-group">
-            <div *ngIf="this.form.get('genderID')?.value === null && submitted" class="invalid-feedback">
+            <div *ngIf="checkGender() && submitted" class="invalid-feedback">
               <span>Vælg køn</span>
             </div>
             <div class="gender">
-              <div class="gender-button" id="gender-button-0" (click)="setGender(0)">
+              <div class="gender-button" id="gender-button-0" (click)="setGender(1)">
                 <i class="fa fa-mars" type="icon"></i>
                 <input type="button" />
                 <span type="span">Mand</span>
               </div>
-              <div class="gender-button" id="gender-button-1" (click)="setGender(1)">
+              <div class="gender-button" id="gender-button-1" (click)="setGender(2)">
                 <i class="fa fa-venus" type="icon"></i>
                 <input type="button" />
                 <span type="span">Kvinde</span>
