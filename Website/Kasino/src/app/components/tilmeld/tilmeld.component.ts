@@ -28,8 +28,8 @@ export class TilmeldComponent {
   });
 
   step: any = 1; // Current step on form
-  nextSubmit: boolean = false; // checks if client has pressed next on form
-  submitted: boolean = false; // checks if client has submitted form
+  nextSubmit: boolean = false; // if client has pressed next on form
+  submitted: boolean = false; // if client has submitted form
   custom: CustomerRegisterRequest; // customer request model
 
   constructor(private customerService: CustomerService, private router: Router, private authenticationService: AuthenticationService) {}
