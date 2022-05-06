@@ -191,7 +191,7 @@ export class House extends MonoBehaviour
 					{
 						seat.ResetSeat();
 					}
-					else if (!result && seat.seatIndex === playerData[ key ].seatIndex)
+					else if (!result && seat.seatIndex == playerData[ key ].seatIndex)
 					{
 						seat.UpdateSeat(playerData[ key ]);
 					}
@@ -306,12 +306,14 @@ export class House extends MonoBehaviour
 		}
 	}
 
-	public GetBets(): void
+	public UpdateSeatBets(data: string): void
 	{
+		let betObject = JSON.parse(data);
+		//console.log("Log: ", data, betObject);
 		for (const seat of this.seats)
 		{
-			if (!seat.Occupied) continue;
-			seat.seatBet.LockBet();
+			if (seat.seatIndex != betObject.seatIndex) continue;
+			seat.seatBet.UpdateBet(betObject.amount);
 		}
 	}
 }

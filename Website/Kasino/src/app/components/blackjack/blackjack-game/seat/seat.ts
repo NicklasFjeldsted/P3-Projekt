@@ -231,6 +231,13 @@ export class Seat extends MonoBehaviour
 	{
 		this.myTurn = newValue;
 
+		if (this.house.client.data.seatIndex != this.seatIndex)
+		{
+			this.standButtonCollider.gameObject.isActive = false;
+			this.hitButtonCollider.gameObject.isActive = false;
+			return;
+		}
+
 		this.standButtonCollider.gameObject.isActive = this.myTurn;
 		this.hitButtonCollider.gameObject.isActive = this.myTurn;
 	}
@@ -248,7 +255,6 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-		
 		if (this.house.CurrentStage == GameStage.Ended)
 		{
 			if (this.Player)
@@ -259,7 +265,10 @@ export class Seat extends MonoBehaviour
 			{
 				this.seatBet.gameObject.isActive = false;
 			}
-			this.resultTextChildComponent.gameObject.isActive = true;
+			if (this.seatBet.lastBet > 0)
+			{
+				this.resultTextChildComponent.gameObject.isActive = true;
+			}
 			this.UpdateIsMyTurn(false);
 			this.childTextComponent.text = this.Player.cardValues.toString();
 			this.DisplayCard();
@@ -317,7 +326,7 @@ export class Seat extends MonoBehaviour
 		}
 	}
 
-	/** Check if the card with the cardID parameter is already displayed on this seat. */
+	/** **DEPRECATED** Check if the card with the cardID parameter is already displayed on this seat. */
 	private IsCardDisplayed(cardID: number): boolean
 	{
 		for (let displayCard of this.displayedCards)
@@ -349,6 +358,7 @@ export class Seat extends MonoBehaviour
 		}
 	}
 
+	/** Resets this seats player's cards */
 	private ClearCards(): void
 	{
 		for (let displayCard of this.displayedCards)
@@ -376,6 +386,7 @@ export class Seat extends MonoBehaviour
 	public JoinSeat(): void
 	{
 		if (this.house.CurrentStage == GameStage.Started) return;
+		if (this.house.client.data.seated == true) return;
 
 		if (!this.Player)
 		{

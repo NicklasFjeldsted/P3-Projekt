@@ -2,7 +2,6 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {  Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
-import { Balance } from 'src/app/interfaces/balance';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
 import { House, Player, PlayerData } from './blackjack-game';
@@ -45,21 +44,22 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       for (const seat of house.seats)
       {
         seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
+        seat.seatBet.OnBetChanged.subscribe((data: number) => this.networking.SendData("UpdateBet", data));
       }
       
-      this.networking.Subscribe("RequestBet", () => house.GetBets());
       this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
       this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
 
       this.networking.Subscribe("GameEnded", () => house.GameEnded());
       this.networking.Subscribe("GameStarted", () => house.GameStarted());
       this.networking.Subscribe("UpdateBalance", () => this.balanceService.updateBalance());
+      this.networking.Subscribe("UpdateSeatBet", (data: string) => house.UpdateSeatBets(data));
       
       this.networking.Subscribe("DataChanged", (data: string) => house.UpdateSeatData(data)).then(() =>
       {
         Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
         
-        setTimeout(() => house.CreateClient(this.game.user), 100);
+        house.CreateClient(this.game.user);
       });
 
       this.networking.Subscribe("SyncTurn", (data: string) => house.SyncTurn(data));

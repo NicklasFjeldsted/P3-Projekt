@@ -1,3 +1,4 @@
+import { BehaviorSubject, Observable } from "rxjs";
 import { GameObject, MonoBehaviour, NetworkingFeature, TextComponent } from "src/app/game-engine";
 import { GameStage } from "../house";
 import { Seat } from "../seat";
@@ -6,10 +7,20 @@ export class Bet extends MonoBehaviour
 {
 	public text: TextComponent;
 	public currentBet: number = 0;
+	public lastBet: number = 0;
 	public increaseButton: GameObject;
 	public decreaseButton: GameObject;
 	public seat: Seat;
 	private lockedIn: boolean = false;
+	private BetSubject: BehaviorSubject<number>;
+	public OnBetChanged: Observable<number>;
+
+	constructor()
+	{
+		super();
+		this.BetSubject = new BehaviorSubject<number>(0);
+		this.OnBetChanged = this.BetSubject.asObservable();
+	}
 	
 	clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
@@ -34,9 +45,13 @@ export class Bet extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
+		this.text.text = '';
+
 		if (!this.seat.Occupied) return;
 
 		this.text.text = `${this.currentBet}kr.`;
+
+		if (this.seat.house.client.data.seatIndex != this.seat.seatIndex) return;
 
 		switch (this.seat.house.CurrentStage)
 		{
@@ -62,18 +77,21 @@ export class Bet extends MonoBehaviour
 	{
 		this.currentBet += amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.BetSubject.next(this.currentBet);
+		this.lastBet = this.currentBet;
 	}
 
 	public SubtractAmount(amount: number): void
 	{
 		this.currentBet -= amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.BetSubject.next(this.currentBet);
+		this.lastBet = this.currentBet;
 	}
 
-	public LockBet(): void
+	public UpdateBet(amount: number): void
 	{
-		if (this.currentBet == 0) return;
-		this.lockedIn = true;
-		this.gameObject.game.GetFeature(NetworkingFeature).SendData("LockBet", this.currentBet);
+		this.currentBet = amount;
+		this.lastBet = this.currentBet;
 	}
 }
