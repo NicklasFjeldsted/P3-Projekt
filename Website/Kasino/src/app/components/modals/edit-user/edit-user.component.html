@@ -4,62 +4,62 @@
   </div>
   <div class="navbar-container">
     <section class="navbar" id="navbar">
-      <div class="navbar-item" (click)="addActive(0)">BASIC</div>
-      <div class="navbar-item" (click)="addActive(1)">ADVANCED</div>
-      <div class="navbar-item" (click)="addActive(2)">BALANCE</div>
-      <div class="navbar-item" (click)="addActive(3)">TRANSACTIONS</div>
+      <div class="navbar-item" (click)="addActive(0)">CUSTOMER DETAILS</div>
+      <div class="navbar-item" (click)="addActive(1)">BALANCE</div>
+      <div class="navbar-item" (click)="addActive(2)">TRANSACTIONS</div>
     </section>
   </div>
   <div class="content" id="information" *ngSwitchCase="'0'">
-    <div class="basic-information">
-      <div id="id" class="info-group">
-        <label for="input">Customer ID</label>
-        <input id="input" type="text" readonly [value]="customerAcc.customerID" />
-      </div>
-      <div class="info-group">
-        <label for="input">E-mail</label>
-        <input id="input" type="text" [value]="customerAcc.email" />
-      </div>
-      <div class="info-group">
-        <label for="input">First Name</label>
-        <input id="input" type="text" [value]="customerAcc.firstName" />
-      </div>
-      <div class="info-group">
-        <label for="input">Last Name</label>
-        <input id="input" type="text" [value]="customerAcc.lastName" />
-      </div>
-      <div class="info-group">
-        <label for="input">Mobile Number</label>
-        <input id="input" type="text" [value]="customerAcc.phoneNumber" />
-      </div>
-    </div>
-  </div>
-  <div class="content" id="information" *ngSwitchCase="'1'">
-    <div class="advanced-information">
-      <div class="info-group">
-        <label for="input">Address</label>
-        <input id="input" type="text" [value]="customerAcc.address" />
-      </div>
-      <div class="info-group">
-        <label for="input">Country</label>
-        <input id="input" type="text" [value]="customerAcc.countryID" />
-      </div>
-      <div class="info-group">
-        <label for="input">Zipcode</label>
-        <input id="input" type="text" [value]="customerAcc.zipCodeID" />
-      </div>
-      <div class="info-group">
-        <label for="input">Gender</label>
-        <input id="input" type="text" [value]="customerAcc.genderID" />
-      </div>
-      <div class="info-group">
-        <label for="input">Register Date</label>
-        <input id="input" type="text" readonly [value]="customerAcc.registerDate" />
-      </div>
+    <div class="customer-information">
+      <form class="basic-information" [formGroup]="customerForm">
+        <div class="info-group">
+          <label for="input">Customer ID</label>
+          <input style="width: 5%; text-align: center" class="noChange" id="input" type="text" readonly formControlName="customerID" />
+        </div>
+        <div class="info-group">
+          <label for="input">E-mail</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['email'].dirty != true }" formControlName="email" />
+        </div>
+        <div class="info-group">
+          <label for="input">First Name</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['firstName'].dirty != true }" formControlName="firstName" />
+        </div>
+        <div class="info-group">
+          <label for="input">Last Name</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['lastName'].dirty != true }" formControlName="lastName" />
+        </div>
+        <div class="info-group">
+          <label for="input">Mobile Number</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['phoneNumber'].dirty != true }" formControlName="phoneNumber" />
+        </div>
+      </form>
+      <form class="advanced-information" [formGroup]="customerForm">
+        <div class="info-group">
+          <label for="input">Address</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['address'].dirty != true }" formControlName="address" />
+        </div>
+        <div class="info-group">
+          <label for="input">Country</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['countryID'].dirty != true }" formControlName="countryID" />
+        </div>
+        <div class="info-group">
+          <label for="input">Zipcode</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['zipCodeID'].dirty != true }" formControlName="zipCodeID" />
+        </div>
+        <div class="info-group">
+          <label for="input">Gender</label>
+          <input id="input" type="text" [ngClass]="{ noChange: f['genderID'].dirty != true }" formControlName="genderID" />
+        </div>
+        <div class="info-group">
+          <label for="input">Register Date</label>
+          <input id="input" class="noChange" type="text" readonly formControlName="registerDate" />
+        </div>
+      </form>
     </div>
   </div>
   <div class="save-container">
     <div class="button-container">
+      <button id="reset" [disabled]="!customerForm.dirty" (click)="assignForm()">Reset</button>
       <button id="cancel" (click)="close()">Cancel</button>
       <button id="save">Save</button>
     </div>

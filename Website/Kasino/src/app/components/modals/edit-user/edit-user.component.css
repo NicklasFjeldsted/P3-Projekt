@@ -32,7 +32,7 @@
 
 .navbar {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .navbar-item {
@@ -42,6 +42,7 @@
   cursor: pointer;
   font-weight: 500;
   font-size: 1.25em;
+  user-select: none;
 }
 
 .active {
@@ -55,12 +56,18 @@
   background-color: #fff;
 }
 
-.basic-information,
-.advanced-information {
+.customer-information {
   padding: 1em;
   display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.basic-information,
+.advanced-information {
+  display: flex;
   flex-direction: column;
-  max-width: calc(50% - 1em);
+  width: 100%;
   gap: 1em;
 }
 
@@ -73,21 +80,14 @@
 .info-group > input {
   padding: 0.5em 0.5em;
   outline: none;
-}
-
-#id > input {
-  width: 5%;
-  background-color: #ebebe4;
-  cursor: none;
-  color: #c6c6c6;
-  border: 1px solid rgba(118, 118, 118, 0.3);
-  text-align: center;
+  border: 1px solid #9bcae4;
 }
 
 .save-container {
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: row;
   justify-content: end;
 }
 
@@ -106,6 +106,10 @@
   border-radius: 5px;
 }
 
+#reset {
+  border: 1px solid transparent;
+}
+
 #cancel {
   background-color: #fff;
   color: #9bcae4;
@@ -114,4 +118,10 @@
 #save {
   background-color: #1e88c3;
   color: #fff;
+}
+
+.noChange {
+  background-color: rgba(239, 239, 239, 0.3);
+  color: rgb(84, 84, 84);
+  border: 1px solid rgba(118, 118, 118, 0.3) !important;
 }
