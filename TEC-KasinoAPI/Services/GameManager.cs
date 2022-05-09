@@ -122,6 +122,12 @@ namespace TEC_KasinoAPI.Services
 			_timer.Elapsed += HubTimer_Elapsed;
         }
 
+        ~GameManager()
+        {
+			_timer.Elapsed -= HubTimer_Elapsed;
+			_timer.Dispose();
+        }
+
 		/// <summary>
 		/// Local method that is called when the timer event is raised.
 		/// </summary>

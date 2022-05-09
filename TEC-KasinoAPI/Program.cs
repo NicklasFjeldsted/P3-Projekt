@@ -112,22 +112,12 @@ builder.Services.AddSingleton<IGameManager, GameManager>();
 
 builder.WebHost.ConfigureLogging(logging =>
 {
-	logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
-	logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
+    logging.AddFilter("Microsoft.AspNetCore.SignalR", LogLevel.Debug);
+    logging.AddFilter("Microsoft.AspNetCore.Http.Connections", LogLevel.Debug);
 });
 
 // Build the web application
 WebApplication app = builder.Build();
-
-//app.Use(async (context, next) =>
-//{
-//	var hubContext = context.RequestServices.GetRequiredService<IHubContext<BlackjackHub>>();
-
-//	if(next != null)
-//    {
-//		await next.Invoke();
-//    }
-//});
 
 // Enable swagger and its UI
 app.UseSwagger();
