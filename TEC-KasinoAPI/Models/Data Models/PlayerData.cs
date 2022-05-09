@@ -1,17 +1,29 @@
-﻿namespace TEC_KasinoAPI.Models
+﻿using System.Diagnostics;
+using System.Reflection;
+
+namespace TEC_KasinoAPI.Models
 {
     public class PlayerData
     {
-        public string fullName;
-        public string email;
-        public int seatIndex;
-        public int customerID;
-        public bool seated;
-        public bool stand;
-        public bool busted;
-        public bool winner;
-        public List<Card> cards;
-        public int betAmount;
+        private string? fullName;
+        private string? email;
+        private int? seatIndex;
+        private int? customerID;
+        private bool? seated;
+        private bool? stand;
+        private bool? busted;
+        private bool? winner;
+        private List<Card>? cards;
+
+        public string FullName { get => fullName; set => fullName = value; }
+        public string Email { get => email; set => email = value; }
+        public int SeatIndex { get => seatIndex ?? -1; set => seatIndex = value; }
+        public int CustomerID { get => customerID ?? -1; set => customerID = value; }
+        public bool Seated { get => seated ?? false; set => seated = value; }
+        public bool Stand { get => stand ?? false; set => stand = value; }
+        public bool Busted { get => busted ?? false; set => busted = value; }
+        public bool Winner { get => winner ?? false; set => winner = value; }
+        public List<Card> Cards { get => cards; set => cards = value; }
 
         public PlayerData() { }
         public PlayerData(PlayerData newData)
@@ -24,7 +36,6 @@
             stand = newData.stand;
             busted = newData.busted;
             winner = newData.winner;
-            betAmount = newData.betAmount;
             cards = newData.cards.ToList();
         }
 
@@ -33,8 +44,25 @@
             busted = false;
             stand = false;
             winner = false;
-            betAmount = 0;
-            cards.Clear();
+            if(cards != null)
+            {
+                cards.Clear();
+            }
+        }
+
+        public async Task Update(PlayerData newData)
+        {
+            await Task.Run(() =>
+            {
+                foreach (FieldInfo fi in newData.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
+                {
+                    object valueNewData = typeof(PlayerData).GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(newData);
+
+                    if (valueNewData == null) continue;
+
+                    GetType().GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).SetValue(this, valueNewData);
+                }
+            });
         }
     }
 }

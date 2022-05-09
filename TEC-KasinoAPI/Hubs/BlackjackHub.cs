@@ -3,6 +3,7 @@ using TEC_KasinoAPI.Models;
 using Newtonsoft.Json;
 using TEC_KasinoAPI.Models.Data_Models;
 using TEC_KasinoAPI.Services;
+using System.Diagnostics;
 
 namespace TEC_KasinoAPI.Hubs
 {
@@ -15,17 +16,6 @@ namespace TEC_KasinoAPI.Hubs
 			_gameManager = gameManager;
 		}
 
-        /// <summary>
-        /// Informs the connctedPlayers that <paramref name="playerData"/> has sat down in a seat.
-        /// </summary>
-        /// <param name="playerData"></param>
-        public async Task JoinSeat(string playerData)
-		{
-			string id = Context.ConnectionId;
-			await Task.Run(() => _gameManager.ConnectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), _gameManager.ConnectedPlayers[id]));
-			await Clients.All.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
-		}
-
 		/// <summary>
 		/// Called when a HubConnection on the client side disconnects.
 		/// </summary>
@@ -33,10 +23,10 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			string id = Context.ConnectionId;
 
-			if (_gameManager.SeatTurnIndex == _gameManager.ConnectedPlayers[id].seatIndex)
+			if (_gameManager.SeatTurnIndex == _gameManager.ConnectedPlayers[id].SeatIndex)
 			{
 				_gameManager.SwitchTurn();
-				Clients.Others.SendAsync("SyncTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
+				Clients.Others.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
 			}
 
 			_gameManager.Bets.TryRemove(new KeyValuePair<string, int>(id, _gameManager.Bets[id]));
@@ -47,7 +37,7 @@ namespace TEC_KasinoAPI.Hubs
 				Task.Run(async () => await _gameManager.EndGame());
 			}
 
-			Clients.Others.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
+			Clients.Others.SendAsync("Player_Disconnected", id);
 
 			return base.OnDisconnectedAsync(exception);
 		}
@@ -61,58 +51,57 @@ namespace TEC_KasinoAPI.Hubs
 			_gameManager.ConnectedPlayers.TryAdd(id, new PlayerData());
 			_gameManager.Bets.TryAdd(id, 0);
 
+			Clients.Others.SendAsync("Player_Connected", id);
+
 			return base.OnConnectedAsync();
 		}
 
-		/// <summary>
-		/// Retrieves a new set of <paramref name="playerData"/> and informs the connectedPlayers that the data has changed.
-		/// </summary>
-		/// <param name="playerData"></param>
-		public async Task UpdatePlayerData(string playerData)
-		{
+		public async Task Update_PlayerData(string playerData)
+        {
 			string id = Context.ConnectionId;
-			
-			await Task.Run(() => _gameManager.ConnectedPlayers.TryUpdate(id, JsonConvert.DeserializeObject<PlayerData>(playerData), _gameManager.ConnectedPlayers[id]));
+			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}));
+			await Clients.All.SendAsync("Update_PlayerData_Callback", playerData);
+        }
 
-			await Clients.Client(id).SendAsync("SyncPlaying", JsonConvert.SerializeObject(_gameManager.IsPlaying));
-			await Clients.Client(id).SendAsync("SyncTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
-			await Clients.All.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
-		}
+		public async Task Get_PlayerData()
+        {
+			await Clients.Caller.SendAsync("Get_PlayerData_Callback", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
+        }
 
         /// <summary>
         /// A player calls "Hit" from the client side and "Hit" either informs the connected players
         /// that the caller busted or gained a new card.
         /// </summary>
-        /// <returns></returns>
         public async Task Hit()
         {
+			string id = Context.ConnectionId;
             if (_gameManager.IsPlaying)
 			{
-				_gameManager.ConnectedPlayers[Context.ConnectionId].cards.Add(_gameManager.GenerateCard());
-				if(GameManager.CalculateValue(_gameManager.ConnectedPlayers[Context.ConnectionId].cards.ToList()) > 21)
+				_gameManager.ConnectedPlayers[id].Cards.Add(_gameManager.GenerateCard());
+				if(GameManager.CalculateValue(_gameManager.ConnectedPlayers[id].Cards.ToList()) > 21)
                 {
 					Bust();
                 }
             }
 
-			await Clients.All.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
+			await Clients.All.SendAsync("Update_PlayerData_Callback", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 		}
 
 		/// <summary>
 		/// A player calls "Stand" from the client side and "Stand" informs the connectedPlayers that
 		/// the caller stands.
 		/// </summary>
-		/// <returns></returns>
 		public async Task Stand()
         {
-			if (_gameManager.IsPlaying && !_gameManager.ConnectedPlayers[Context.ConnectionId].busted)
+			string id = Context.ConnectionId;
+			if (_gameManager.IsPlaying && !_gameManager.ConnectedPlayers[id].Busted)
 			{
-				_gameManager.ConnectedPlayers[Context.ConnectionId].stand = true;
+				_gameManager.ConnectedPlayers[id].Stand = true;
 				_gameManager.SwitchTurn();
 			}
 
-			await Clients.All.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
-			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
+			await Clients.All.SendAsync("Update_PlayerData_Callback", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
+			await Clients.All.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
 		}
 
 		/// <summary>
@@ -121,14 +110,15 @@ namespace TEC_KasinoAPI.Hubs
 		/// </summary>
 		public async Task Bust()
         {
+			string id = Context.ConnectionId;
             if (_gameManager.IsPlaying)
             {
-				_gameManager.ConnectedPlayers[Context.ConnectionId].busted = true;
+				_gameManager.ConnectedPlayers[id].Busted = true;
 				_gameManager.SwitchTurn();
 			}
 
-			await Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
-			await Clients.All.SendAsync("DataChanged", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
+			await Clients.All.SendAsync("Update_PlayerData_Callback", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
+			await Clients.All.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
 		}
 
 		/// <summary>
@@ -138,9 +128,9 @@ namespace TEC_KasinoAPI.Hubs
         {
 			if (_gameManager.IsPlaying) return;
 			string id = Context.ConnectionId;
-			BetResponse response = new BetResponse(betAmount, _gameManager.ConnectedPlayers[id].seatIndex);
+			BetResponse response = new BetResponse(betAmount, _gameManager.ConnectedPlayers[id].SeatIndex);
 			await Task.Run(() => _gameManager.Bets.AddOrUpdate(id, key => _gameManager.Bets[key] = betAmount, (key, value) => _gameManager.Bets[key] = betAmount));
-			await Clients.Others.SendAsync("UpdateSeatBet", JsonConvert.SerializeObject(response));
+			await Clients.Others.SendAsync("Sync_PlayerBet", JsonConvert.SerializeObject(response));
         }
     }
 }

@@ -161,18 +161,6 @@ export class Seat extends MonoBehaviour
 
 	}
 
-	/** Update this seats player's data with new data. */
-	public UpdateSeat(data: PlayerData): void
-	{
-		if (!this.Player)
-		{
-			this.Player = new Player();
-		}
-
-		data.customerID = this.gameObject.game.balance.customerID;
-		this.Player.UpdateData(data);
-	}
-
 	/** Reset this seats Player. */
 	public ResetSeat(): void
 	{
@@ -231,7 +219,7 @@ export class Seat extends MonoBehaviour
 	{
 		this.myTurn = newValue;
 
-		if (this.house.client.data.seatIndex != this.seatIndex)
+		if (this.house.client.data.SeatIndex != this.seatIndex)
 		{
 			this.standButtonCollider.gameObject.isActive = false;
 			this.hitButtonCollider.gameObject.isActive = false;
@@ -255,90 +243,87 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-		if (this.house.CurrentStage == GameStage.Ended)
+		switch (this.house.CurrentStage)
 		{
-			if (this.Player)
-			{
-				this.seatBet.gameObject.isActive = true;
-			}
-			else
-			{
-				this.seatBet.gameObject.isActive = false;
-			}
-			if (this.seatBet.lastBet > 0)
-			{
-				this.resultTextChildComponent.gameObject.isActive = true;
-			}
-			this.UpdateIsMyTurn(false);
-			this.childTextComponent.text = this.Player.cardValues.toString();
-			this.DisplayCard();
-			setTimeout(() =>
-			{
+			case GameStage.Off:
+				if (this.Occupied)
+				{
+					this.seatBet.gameObject.isActive = true;
+				}
+				else
+				{
+					this.seatBet.gameObject.isActive = false;
+				}
+
+				this.childTextComponent.gameObject.isActive = true;
 				this.resultTextChildComponent.gameObject.isActive = false;
-				this.childTextComponent.gameObject.isActive = false;
+				this.seatText.text = this.Player.data.FullName;
 				this.ClearCards();
-			}, 4500);
-			if (this.Player.data.busted == true)
-			{
-				this.resultTextChildComponent.text = "BUST!";
-			}
-			else if (this.Player.data.winner == true)
-			{
-				this.resultTextChildComponent.text = "WIN!";
-			}
-			else if(this.Player.data.winner == false)
-			{
-				this.resultTextChildComponent.text = "LOSE!";
-			}
-		}
-		else if (this.house.CurrentStage == GameStage.Started)
-		{
-			this.seatBet.gameObject.isActive = true;
-			this.childTextComponent.gameObject.isActive = true;
-			this.childTextComponent.text = this.Player.cardValues.toString();
-			this.seatText.text = this.Player.data.fullName;
-			this.UpdateIsMyTurn(this.myTurn);
-			this.DisplayCard();
-
-			if (!this.Player.data.busted)
-			{
-				this.resultTextChildComponent.gameObject.isActive = false;
-				return;
-			}
-
-			this.resultTextChildComponent.gameObject.isActive = true;
-			this.resultTextChildComponent.text = "BUST!";
-		}
-		else if (this.house.CurrentStage == GameStage.Off)
-		{
-			if (this.Player)
-			{
+				break;
+			
+			case GameStage.Started:
 				this.seatBet.gameObject.isActive = true;
-			}
-			else
-			{
-				this.seatBet.gameObject.isActive = false;
-			}
-			this.childTextComponent.gameObject.isActive = true;
-			this.resultTextChildComponent.gameObject.isActive = false;
-			this.seatText.text = this.Player.data.fullName;
-			this.ClearCards();
+				this.childTextComponent.gameObject.isActive = true;
+				this.childTextComponent.text = this.Player.cardValues.toString();
+				this.seatText.text = this.Player.data.FullName;
+				this.UpdateIsMyTurn(this.myTurn);
+				this.DisplayCard();
+	
+				if (!this.Player.data.Busted)
+				{
+					this.resultTextChildComponent.gameObject.isActive = false;
+					break;
+				}
+	
+				this.resultTextChildComponent.gameObject.isActive = true;
+				this.resultTextChildComponent.text = "BUST!";
+				break;
+			
+			case GameStage.Ended:
+				if (this.Player)
+				{
+					this.seatBet.gameObject.isActive = true;
+					this.DisplayCard();
+				}
+				else
+				{
+					this.seatBet.gameObject.isActive = false;
+					this.ClearCards();
+				}
+	
+				if (this.seatBet.lastBet > 0)
+				{
+					this.resultTextChildComponent.gameObject.isActive = true;
+				}
+				else
+				{
+					this.resultTextChildComponent.gameObject.isActive = false;
+				}
+	
+				this.UpdateIsMyTurn(false);
+				this.childTextComponent.text = this.Player.cardValues.toString();
+	
+				setTimeout(() =>
+				{
+					this.resultTextChildComponent.gameObject.isActive = false;
+					this.childTextComponent.gameObject.isActive = false;
+					this.ClearCards();
+				}, 4500);
+	
+				if (this.Player.data.Busted == true)
+				{
+					this.resultTextChildComponent.text = "BUST!";
+				}
+				else if (this.Player.data.Winner == true)
+				{
+					this.resultTextChildComponent.text = "WIN!";
+				}
+				else if(this.Player.data.Winner == false)
+				{
+					this.resultTextChildComponent.text = "LOSE!";
+				}
+				break;
 		}
-	}
-
-	/** **DEPRECATED** Check if the card with the cardID parameter is already displayed on this seat. */
-	private IsCardDisplayed(cardID: number): boolean
-	{
-		for (let displayCard of this.displayedCards)
-		{
-			if (displayCard.renderer.image == null) continue;
-
-			if (!displayCard.renderer.image.includes(`${cardID}`)) continue;
-
-			return true;
-		}
-
-		return false;
 	}
 
 	/** Loads a card PNG and displays it. */
@@ -346,11 +331,11 @@ export class Seat extends MonoBehaviour
 	{
 		if (!this.Player) return;
 		
-		for (let i = 0; i < this.Player.data.cards.length; i++)
+		for (let i = 0; i < this.Player.data.Cards.length; i++)
 		{
 			this.displayedCards[ i ].gameObject.isActive = true;
 			
-			this.displayedCards[ i ].renderer.image = `../../../../../assets/media/blackjack-game/cards/${this.Player.data.cards[ i ].id}.png`;
+			this.displayedCards[ i ].renderer.image = `../../../../../assets/media/blackjack-game/cards/${this.Player.data.Cards[ i ].id}.png`;
 			
 			this.displayedCards[ i ].ResetPosition();
 
@@ -386,13 +371,13 @@ export class Seat extends MonoBehaviour
 	public JoinSeat(): void
 	{
 		if (this.house.CurrentStage == GameStage.Started) return;
-		if (this.house.client.data.seated == true) return;
+		if (this.house.client.data.Seated == true) return;
 
 		if (!this.Player)
 		{
 			this.Player = this.house.client;
-			this.Player.data.seated = true;
-			this.Player.data.seatIndex = this.seatIndex;
+			this.Player.data.Seated = true;
+			this.Player.data.SeatIndex = this.seatIndex;
 			this.OnSeatJoined.next(this.Player.data);
 			return;
 		}
@@ -404,8 +389,8 @@ export class Seat extends MonoBehaviour
 	{
 		if (this.Player)
 		{
-			this.Player.data.seated = false;
-			this.Player.data.seatIndex = -1;
+			this.Player.data.Seated = false;
+			this.Player.data.SeatIndex = -1;
 			this.Player = null;
 			return;
 		}

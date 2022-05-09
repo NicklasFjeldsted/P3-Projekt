@@ -28,10 +28,11 @@ export class House extends MonoBehaviour
 		return output;
 	}
 
-	public IsPlaying: boolean = false;
 	private StageSubject: BehaviorSubject<GameStage>;
 	public OnStageChange: Observable<GameStage>;
 	public get CurrentStage(): GameStage { return this.StageSubject.value; }
+
+	public IsPlaying: boolean = false;
 	private SeatTurn: number = -1;
 	private displayedCards: CardObject[] = [];
 
@@ -63,6 +64,47 @@ export class House extends MonoBehaviour
 			return this._client;
 		}
 		throw new Error(`${this.gameObject.gameObjectName} > ${this.constructor.name} - player is null!`);
+	}
+
+	public Update_PlayerData_Callback(data: string): void
+	{
+		let parsedData = JSON.parse(data);
+
+		if (parsedData.customerID == this.client.data.CustomerID)
+		{
+			this.client.data.Update(parsedData);
+		}
+		
+		if (parsedData.seatIndex == null) return;
+
+		for (const seat of this.seats)
+		{
+			if (seat.seatIndex != parsedData.seatIndex || !parsedData.seated) continue;
+			
+			if (!seat.Occupied)
+			{
+				seat.Player = new Player();
+			}
+			
+			seat.Player!.data.Update(parsedData);
+			
+			seat.Display();
+		}
+	}
+
+	public Get_PlayerData_Callback(data: string): void
+	{
+		console.log(JSON.parse(data));
+	}
+
+	public Player_Connected(connectionID: string): void
+	{
+		console.debug(connectionID + " - Connected.");
+	}
+
+	public Player_Disconnected(connectionID: string): void
+	{
+		console.debug(connectionID + " - Disconnected.");
 	}
 
 	Start(): void
@@ -176,34 +218,6 @@ export class House extends MonoBehaviour
 		cardObject.renderer.layer = this.displayedCards.length - 15;
 	}
 
-	public UpdateSeatData(playerDataString: string)
-	{
-		// Convert the incoming playerDataJsonString to a Json Object and Index it by the connection id.
-		var playerData: PlayerData[] = JSON.parse(playerDataString);
-
-		for (const key in playerData)
-		{
-			for (const seat of this.seats)
-			{
-				this.ShouldReset(playerData, seat).then((result) =>
-				{
-					if (result)
-					{
-						seat.ResetSeat();
-					}
-					else if (!result && seat.seatIndex == playerData[ key ].seatIndex)
-					{
-						seat.UpdateSeat(playerData[ key ]);
-					}
-				})
-				.finally(() =>
-				{
-					seat.Display();
-				});
-			}
-		}
-	}
-
 	public GameEnded(): void
 	{
 		this.SeatTurn = 0;
@@ -215,28 +229,12 @@ export class House extends MonoBehaviour
 		this.StageSubject.next(GameStage.Started);
 	}
 
-	private async ShouldReset(data: PlayerData[], seat: Seat): Promise<boolean>
-	{
-		return await new Promise<boolean>((resolve) =>
-		{
-			for (const key in data)
-			{
-				if (seat.seatIndex == data[ key ].seatIndex)
-				{
-					return resolve(false);
-				}
-			}
-			return resolve(true);
-		});
-	}
-
 	public CreateClient(user: UserData)
 	{
 		this._client = new Player();
-		this.client.data.email = user.email;
-		this.client.data.customerID = this.gameObject.game.balance.customerID;
-		this.client.data.fullName = user.fullName;
-		Player.OnDataChanged.next(this.client.data);
+		this.client.data.Email = user.email;
+		this.client.data.CustomerID = this.gameObject.game.balance.customerID;
+		this.client.data.FullName = user.fullName;
 	}
 
 	private CreateSeat(id: number, position: Vector2): GameObject
@@ -250,19 +248,6 @@ export class House extends MonoBehaviour
 		seat.transform.position = position;
 		this.seats.push(seat.GetComponent(Seat));
 		return seat;
-	}
-
-	/** This functions checks if the house already holds that card. */
-	public IsDuplicate(card: Card): boolean
-	{
-		for (const hcard of this.houseCards)
-		{
-			if (card.id === hcard.id)
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 
 	public HouseCards(data: string): void
