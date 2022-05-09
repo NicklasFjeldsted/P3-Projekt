@@ -31,7 +31,9 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
 import { MatTableModule } from "@angular/material/table";
 import { AdministrationComponent } from "./components/administration/administration.component";
-import { EditUserComponent } from "./components/modals/edit-user/edit-user.component";
+import { EditUserComponent } from "./components/modals/action-modals/edit-user/edit-user.component";
+import { EditBalanceComponent } from "./components/modals/action-modals/edit-balance/edit-balance.component";
+import { DeactivateUserComponent } from "./components/modals/action-modals/deactivate-user/deactivate-user.component";
 
 @NgModule({
   declarations: [
@@ -54,6 +56,8 @@ import { EditUserComponent } from "./components/modals/edit-user/edit-user.compo
     GameInfobarComponent,
     AdministrationComponent,
     EditUserComponent,
+    EditBalanceComponent,
+    DeactivateUserComponent,
   ],
   imports: [
     BrowserModule,

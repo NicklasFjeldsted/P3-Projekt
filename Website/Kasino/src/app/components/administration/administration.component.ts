@@ -6,7 +6,9 @@ import { User } from "src/app/interfaces/User";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { CustomerService } from "src/app/services/customer.service";
 import { DialogConfig, DialogService } from "../modals/dialog.service";
-import { EditUserComponent } from "../modals/edit-user/edit-user.component";
+import { EditBalanceComponent } from "../modals/action-modals/edit-balance/edit-balance.component";
+import { EditUserComponent } from "../modals/action-modals/edit-user/edit-user.component";
+import { DeactivateUserComponent } from "../modals/action-modals/deactivate-user/deactivate-user.component";
 
 @Component({
   selector: "app-administration",
@@ -29,6 +31,7 @@ export class AdministrationComponent {
       if (token !== "") {
         this.customerService.getAll().subscribe((customers) => {
           this.dataSource = new MatTableDataSource<User>(customers);
+          this.openAction(1, 2);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });
@@ -36,6 +39,7 @@ export class AdministrationComponent {
     });
   }
 
+  // Filter used on searchbar
   applyFilter(event: Event) {
     let filterValue = (event.target as HTMLInputElement).value;
     filterValue = filterValue.trim(); // Remove whitespace
@@ -43,14 +47,24 @@ export class AdministrationComponent {
     this.dataSource.filter = filterValue;
   }
 
-  openEdit(customer: any) {
-    let dialogConfig: DialogConfig = {
-      data: customer.customerID,
-    };
-    this.dialog.open(EditUserComponent, dialogConfig);
+  // Switchcase function, opens associated action modals
+  openAction(customerID: number, id: number) {
+    let dialogConfig: DialogConfig = { data: customerID };
+    switch (id) {
+      case 1:
+        this.dialog.open(EditUserComponent, dialogConfig);
+        break;
+      case 2:
+        this.dialog.open(EditBalanceComponent, dialogConfig);
+        break;
+      case 3:
+        this.dialog.open(DeactivateUserComponent, dialogConfig);
+        break;
+      case 4:
+        this.resetPassword();
+        break;
+    }
   }
 
-  openDeactive() {
-    // this.dialog.open();
-  }
+  resetPassword() {}
 }

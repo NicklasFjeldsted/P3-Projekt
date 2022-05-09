@@ -1,0 +1,64 @@
+.main-container {
+  width: 1000px;
+  background-color: #f5f5f5;
+  opacity: 0;
+  padding: 1em;
+  position: absolute;
+}
+
+.v-center {
+  position: absolute !important;
+}
+
+.h-center {
+  text-align: unset;
+}
+
+.header-container {
+  width: 100%;
+  text-align: left;
+}
+
+#header {
+  font-size: 2em;
+  padding: 1em 0;
+  color: #545454;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.input-container {
+  width: 300px;
+  background-color: lightgrey;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: row;
+  gap: none;
+}
+
+.input-group > input {
+  padding: 16px 16px;
+  outline: none;
+  border: 1px solid #9bcae4;
+  border-right: none;
+  font-size: 18px;
+}
+
+.balance-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+}
+
+.balance-buttons > button {
+  border-radius: 0;
+  border: 1px solid black;
+  padding: 24px;
+  width: 100px;
+}

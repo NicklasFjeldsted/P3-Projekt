@@ -86,17 +86,22 @@
   font-size: 1.5em;
 }
 
-#edit {
+.actions > button:nth-child(1) {
   background-color: #84f289;
   border: 1px solid #84f289;
 }
 
-#deactivate {
+.actions > button:nth-child(2) {
+  background-color: #fe5722;
+  border: 1px solid #fe5722;
+}
+
+.actions > button:nth-child(3) {
   background-color: #f08080;
   border: 1px solid #f08080;
 }
 
-#reset {
+.actions > button:nth-child(4) {
   background-color: #6495ed;
   border: 1px solid #6495ed;
 }

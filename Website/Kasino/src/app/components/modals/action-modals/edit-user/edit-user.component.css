@@ -25,35 +25,9 @@
   color: #545454;
 }
 
-.navbar-container {
-  width: 100%;
-  height: auto;
-}
-
-.navbar {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-.navbar-item {
-  text-align: center;
-  background-color: #e4e4e4;
-  padding: 0.5em 0;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 1.25em;
-  user-select: none;
-}
-
-.active {
-  color: #ff630c;
-  background-color: #fff;
-}
-
 .content {
   width: 100%;
   height: auto;
-  background-color: #fff;
 }
 
 .customer-information {
@@ -61,6 +35,7 @@
   display: flex;
   flex-direction: row;
   gap: 1em;
+  background-color: #fff;
 }
 
 .basic-information,
@@ -90,11 +65,10 @@
 }
 
 .save-container {
-  width: 100%;
-  height: auto;
   display: flex;
   flex-direction: row;
-  justify-content: end;
+  justify-content: flex-end;
+  padding: 0 1em;
 }
 
 .button-container {

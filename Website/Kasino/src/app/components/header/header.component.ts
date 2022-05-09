@@ -16,25 +16,25 @@ import { JwtDecodePlus } from "src/app/helpers";
   styleUrls: ["./header.component.css"],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public authenticationService: AuthenticationService, private dialog: DialogService, private balanceService: BalanceService, private customerService: CustomerService) {}
+  constructor(
+    public authenticationService: AuthenticationService,
+    private dialog: DialogService,
+    private balanceService: BalanceService,
+    private customerService: CustomerService
+  ) {}
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
 
   currentBalance: number | null;
   isLoggedIn: boolean;
 
-  ngOnInit(): void
-  {
-    this.authenticationService.OnTokenChanged.subscribe((token) =>
-    {
-      if (token !== '')
-      {
+  ngOnInit(): void {
+    this.authenticationService.OnTokenChanged.subscribe((token) => {
+      if (token !== "") {
         this.isLoggedIn = true;
         this.balanceService.getBalance(JwtDecodePlus.jwtDecode(token).nameid);
         this.customerService.getUser();
-      }
-      else
-      {
+      } else {
         this.isLoggedIn = false;
       }
     });
