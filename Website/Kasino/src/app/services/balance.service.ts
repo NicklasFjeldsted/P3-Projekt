@@ -13,8 +13,7 @@ export class BalanceService {
   private BalanceSubject: BehaviorSubject<Balance>;
   public OnBalanceChanged: Observable<Balance>;
 
-  constructor(private http: HttpClient)
-  {
+  constructor(private http: HttpClient) {
     this.BalanceSubject = new BehaviorSubject<Balance>(new Balance());
     this.OnBalanceChanged = this.BalanceSubject.asObservable();
   }
@@ -36,14 +35,16 @@ export class BalanceService {
     return this.http.put<any>(`${environment.apiURL}/balance/update`, { customerID, depositLimit }, { withCredentials: true });
   }
 
-  public getBalance(id: number): void
-  {
+  public getBalance(id: number): void {
     this.id = id;
     this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`).subscribe((balance) => this.BalanceSubject.next(balance));
   }
 
-  public updateBalance(): void
-  {
+  public getUserBalance(id: number): Observable<Balance> {
+    return this.http.get<Balance>(`${environment.apiURL}/Balance/${id}`);
+  }
+
+  public updateBalance(): void {
     this.http.get<Balance>(`${environment.apiURL}/Balance/${this.id}`).subscribe((balance) => this.BalanceSubject.next(balance));
   }
 }

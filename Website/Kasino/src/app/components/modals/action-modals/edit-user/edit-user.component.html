@@ -1,48 +1,62 @@
-<div class="main-container v-center h-center" [@openClose]="isOpen ? 'open' : 'close'" [ngSwitch]="site">
+<div class="main-container v-center h-center" [@openClose]="isOpen ? 'open' : 'close'">
   <div class="header-container">
     <div id="header">Edit user account</div>
   </div>
-  <div class="navbar-container">
-    <section class="navbar" id="navbar">
-      <div class="navbar-item" (click)="addActive(0)">CUSTOMER DETAILS</div>
-      <div class="navbar-item" (click)="addActive(1)">BALANCE</div>
-      <div class="navbar-item" (click)="addActive(2)">TRANSACTIONS</div>
-    </section>
-  </div>
-  <div class="content" id="information" *ngSwitchCase="'0'">
+  <div class="content" id="information">
     <div class="customer-information">
-      <form class="basic-information" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      <form class="basic-information" [formGroup]="customerForm">
         <div class="info-group">
           <label for="input">Customer ID</label>
           <input style="width: 5%; text-align: center" class="noChange" id="input" type="text" readonly formControlName="customerID" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors">Email is not valid</div>
+          </div>
           <label for="input">E-mail</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['email'].dirty != true }" formControlName="email" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['firstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['firstName'].errors">First name is not valid</div>
+          </div>
           <label for="input">First Name</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['firstName'].dirty != true }" formControlName="firstName" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['lastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['lastName'].errors">Last name is not valid</div>
+          </div>
           <label for="input">Last Name</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['lastName'].dirty != true }" formControlName="lastName" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['phoneNumber'].errors" class="invalid-feedback">
+            <div *ngIf="f['phoneNumber'].errors">Phonenumber is not valid</div>
+          </div>
           <label for="input">Mobile Number</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['phoneNumber'].dirty != true }" formControlName="phoneNumber" />
         </div>
       </form>
       <form class="advanced-information" [formGroup]="customerForm">
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['address'].errors" class="invalid-feedback">
+            <div *ngIf="f['address'].errors">Address is not valid</div>
+          </div>
           <label for="input">Address</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['address'].dirty != true }" formControlName="address" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['countryID'].errors" class="invalid-feedback">
+            <div *ngIf="f['countryID'].errors">Country is not valid</div>
+          </div>
           <label for="input">Country</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['countryID'].dirty != true }" formControlName="countryID" />
         </div>
         <div class="info-group">
+          <div *ngIf="hasSubmitted && f['zipCodeID'].errors" class="invalid-feedback">
+            <div *ngIf="f['zipCodeID'].errors">Zipcode is not valid</div>
+          </div>
           <label for="input">Zipcode</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['zipCodeID'].dirty != true }" formControlName="zipCodeID" />
         </div>
@@ -53,6 +67,9 @@
             <option [ngValue]="'Male'">Male</option>
             <option [ngValue]="'Female'">Female</option>
           </select>
+          <div *ngIf="hasSubmitted && f['genderID'].errors" class="invalid-feedback">
+            <div *ngIf="f['genderID'].errors">Gender is not valid</div>
+          </div>
         </div>
         <div class="info-group">
           <label for="input">Register Date</label>
@@ -60,12 +77,12 @@
         </div>
       </form>
     </div>
-  </div>
-  <div class="save-container">
-    <div class="button-container">
-      <button id="reset" [disabled]="!customerForm.dirty" (click)="assignForm()">Reset</button>
-      <button id="cancel" (click)="close()">Cancel</button>
-      <button id="save" type="submit">Save</button>
+    <div class="save-container">
+      <div class="button-container">
+        <button id="reset" [disabled]="!customerForm.dirty" (click)="assignForm()">Reset</button>
+        <button id="cancel" (click)="close()">Cancel</button>
+        <button id="save" type="submit" (click)="onSubmit()">Save</button>
+      </div>
     </div>
   </div>
 </div>

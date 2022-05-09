@@ -107,14 +107,6 @@ namespace TEC_KasinoAPI.Services
                 throw new AppException("Email '" + model.Email + "' is already taken.");
             }
 
-            // Check if the Password is null or empty 
-            // I.E. If the Password was entered into the model
-            if(!string.IsNullOrEmpty(model.Password))
-            {
-                // Hash the password from the model and insert the hashed password into the customer object
-                customer.Password = BC.HashPassword(model.Password);
-            }
-
             // Map the model parameter to the customer object
             _mapper.Map(model, customer);
 

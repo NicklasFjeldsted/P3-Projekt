@@ -44,9 +44,11 @@
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
-        <mat-cell *matCellDef="let row" class="actions"
-          ><button id="edit" (click)="openEdit(row)"><i class="fa-solid fa-pen-to-square"></i></button
-          ><button id="deactivate"><i class="fa-solid fa-user-slash"></i></button><button id="reset"><i class="fa-solid fa-unlock"></i></button>
+        <mat-cell *matCellDef="let row" class="actions">
+          <button (click)="openAction(row.customerID, 1)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="openAction(row.customerID, 2)"><i class="fa-solid fa-wallet"></i></button>
+          <button (click)="openAction(row.customerID, 3)"><i class="fa-solid fa-user-slash"></i></button>
+          <button (click)="openAction(row.customerID, 4)"><i class="fa-solid fa-unlock"></i></button>
         </mat-cell>
       </ng-container>
 

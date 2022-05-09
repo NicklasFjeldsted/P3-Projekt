@@ -25,7 +25,7 @@ namespace TEC_KasinoAPI.Controllers
 			return Ok(new { message = "The transaction completed successfully!" });
 		}
 
-		[HttpGet("{customerID}"), Authorize(Roles = "Customer")]
+		[HttpGet("{customerID}"), Authorize(Roles = "Customer, Admin")]
 		public async Task<IActionResult> GetById(int customerID)
 		{
 			List<Transaction> transactions = await _transactionService.GetByIdAsync(customerID);
