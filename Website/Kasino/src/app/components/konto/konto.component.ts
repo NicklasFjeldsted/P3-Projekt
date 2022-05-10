@@ -13,6 +13,7 @@ import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel } f
 import { BalanceService } from "src/app/services/balance.service";
 import { Transaction } from "src/app/interfaces/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Component({
   selector: "app-konto",
@@ -45,9 +46,16 @@ export class KontoComponent implements OnInit {
       lastName: "",
       address: "",
     };
+
   }
 
   ngOnInit(): void {
+    this.kontoSite = 1;
+    this.balanceService.OnIndbetalingChange.subscribe((value) => {
+      if(value) {
+        this.kontoSite = 3;
+      }
+    })
     this.showAccountInfo();
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
       if (balance.customerID !== undefined) {
@@ -145,7 +153,7 @@ export class KontoComponent implements OnInit {
 
   // Onclick function which opens a component
   openIndbetal() {
-    this.dialog.open(IndbetalComponent);
+    this.dialog.open(IndbetalComponent)
   }
 
   // Onclick function which opens a component
@@ -162,4 +170,6 @@ export class KontoComponent implements OnInit {
   openDeaktiver() {
     this.dialog.open(DeaktiverComponent);
   }
+
 }
+
