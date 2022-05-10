@@ -48,12 +48,6 @@ namespace TEC_KasinoAPI.Services
 		{
 			List<Transaction> transactions = await _context.Transactions.Where(x => x.CustomerID == customerID).ToListAsync();
 
-			// Checks if theres any transactions existing with the associated id
-			if (transactions.Count == 0)
-			{
-				throw new KeyNotFoundException("No transactions found");
-			}
-
 			return transactions;
 		}
 	}
