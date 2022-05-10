@@ -88,7 +88,7 @@ export class TilmeldComponent {
   }
 
   // Checks whether customer has assigned a value to genderID
-  checkGender = () => (this.form.get("genderID")?.value === null ? false : true);
+  checkGender = () => (this.form.get("genderID")?.value !== null ? false : true);
 
   // Sets the id of the gender
   setGender(genderid: Number): void {

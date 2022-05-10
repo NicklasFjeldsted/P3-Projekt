@@ -22,12 +22,6 @@
             <mat-cell *matCellDef="let row"> {{ row.transactionID }} </mat-cell>
           </ng-container>
 
-          <!-- CustomerID Column -->
-          <ng-container matColumnDef="customer-id">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Customer ID </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.customerID }} </mat-cell>
-          </ng-container>
-
           <!-- TransactionDate Column -->
           <ng-container matColumnDef="date">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </mat-header-cell>

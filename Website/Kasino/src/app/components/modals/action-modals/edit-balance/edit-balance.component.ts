@@ -39,7 +39,7 @@ export class EditBalanceComponent implements OnInit {
 
   customerBalance: Balance;
 
-  displayedColumns: string[] = ["transaction-id", "customer-id", "date", "amount", "balance"];
+  displayedColumns: string[] = ["transaction-id", "date", "amount", "balance"];
   dataSource: MatTableDataSource<Transaction>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
