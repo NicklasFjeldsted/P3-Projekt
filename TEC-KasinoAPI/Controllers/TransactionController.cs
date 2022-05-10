@@ -32,7 +32,7 @@ namespace TEC_KasinoAPI.Controllers
 
 			if(transactions.Count == 0)
 			{
-				return BadRequest(new {message = "No transactions found!"}):
+				return BadRequest(new { message = "No transactions found!" });
 			}
 
 			return Ok(transactions);

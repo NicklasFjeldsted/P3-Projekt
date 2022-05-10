@@ -46,16 +46,15 @@ export class KontoComponent implements OnInit {
       lastName: "",
       address: "",
     };
-
   }
 
   ngOnInit(): void {
     this.kontoSite = 1;
     this.balanceService.OnIndbetalingChange.subscribe((value) => {
-      if(value) {
+      if (value) {
         this.kontoSite = 3;
       }
-    })
+    });
     this.showAccountInfo();
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
       if (balance.customerID !== undefined) {
@@ -100,9 +99,6 @@ export class KontoComponent implements OnInit {
           this.transactionList.push(element);
         });
       },
-      error: (error) => {
-        console.log(error);
-      },
     });
   }
 
@@ -132,7 +128,7 @@ export class KontoComponent implements OnInit {
       next: (message) => {
         console.log(message);
         this.hasUpdateLimit = true;
-        if (this.balance.depositLimit === this.f["depositLimit"].value) {
+        if (this.balance.depositLimit == this.f["depositLimit"].value) {
           alert("Du har ikke ændret din indbetalingsgrænse");
         } else {
           console.log(message);
@@ -153,7 +149,7 @@ export class KontoComponent implements OnInit {
 
   // Onclick function which opens a component
   openIndbetal() {
-    this.dialog.open(IndbetalComponent)
+    this.dialog.open(IndbetalComponent);
   }
 
   // Onclick function which opens a component
@@ -170,6 +166,4 @@ export class KontoComponent implements OnInit {
   openDeaktiver() {
     this.dialog.open(DeaktiverComponent);
   }
-
 }
-
