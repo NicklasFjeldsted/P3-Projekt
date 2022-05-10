@@ -1,5 +1,16 @@
-import { Subject } from "rxjs";
 import { Card } from "../cards";
+export interface IPlayerData
+{
+	fullName: string;
+	email: string;
+	seatIndex: number;
+	customerID: number;
+	seated: boolean;
+	stand: boolean;
+	busted: boolean;
+	winner: boolean;
+	cards: Card[];
+}
 export class PlayerData
 {
 	private fullName: string | null;
@@ -66,6 +77,21 @@ export class PlayerData
 				this[prop] = value;
 			}
 		}
+	}
+
+	public static Parse(data: any): IPlayerData
+	{
+		let parsedPlayerDataObject: any = {};
+		for (const index in data)
+		{
+			parsedPlayerDataObject[ this.FirstCharToLowerCase(index) ] = data[index];
+		}
+		return parsedPlayerDataObject;
+	}
+
+	private static FirstCharToLowerCase(string: string): string
+	{
+		return string.charAt(0).toLocaleLowerCase() + string.slice(1)
 	}
 }
 

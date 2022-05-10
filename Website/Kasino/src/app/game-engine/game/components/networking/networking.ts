@@ -12,28 +12,29 @@ export class NetworkingFeature implements IFeature
 
 	public async StartConnection(): Promise<void>
 	{
-	  this.hubConnection = new signalR.HubConnectionBuilder()
-		.withUrl(environment.hubURL + "/Blackjack", {})
-		.configureLogging(new ServerLogger())
-		.build();
+		this.hubConnection = new signalR.HubConnectionBuilder()
+			.withUrl(environment.hubURL + "/Blackjack", { headers: { Authorization: `Bearer ${this.Entity.accessToken}` } })
+			.configureLogging(new ServerLogger())
+			.build();
 
-	  try
-	  {
-		return await this.hubConnection.start();
-	  }
-	  catch (error)
-	  {
-		return console.log("Error while starting connection" + error);
-	  }
+		try
+		{
+			return await this.hubConnection.start();
+		}
+		catch (error)
+		{
+			return console.log("Error while starting connection\n\n", error);
+		}
 	}
   
 	public SendData<T>(func: string, data: T): void
 	{
-	  this.hubConnection.send(func, data);
+	  	this.hubConnection.send(func, data);
 	}
+
 	public Send(func: string): void
 	{
-	  this.hubConnection.send(func);
+	  	this.hubConnection.send(func);
 	}
   
 	public async Subscribe<T>(func: string, action: (data: T) => void): Promise<void>
@@ -51,7 +52,7 @@ export class NetworkingFeature implements IFeature
 		return await new Promise((resolve) =>
 		{
 			this.hubConnection.off(func);
-			console.log(func + " - Unsubscribed.");
+			console.debug(func + " - Unsubscribed.");
 			resolve();
 		});
 	}

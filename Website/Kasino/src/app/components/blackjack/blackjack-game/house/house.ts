@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { GameObject, InfoBar, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, User, UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
-import { Player, PlayerData } from "../player";
+import { IPlayerData, Player, PlayerData } from "../player";
 import { Seat } from "../seat";
 
 export enum GameStage
@@ -135,16 +135,19 @@ export class House extends MonoBehaviour
 		}
 	}
 
-	public Player_Connected(connectionID: string): void
+	public Player_Connected(data: string): void
 	{
-		console.debug(connectionID + " - Connected.");
+		let playerData: PlayerData = JSON.parse(data);
+		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
+		console.debug(parsedPlayerData.fullName + " - Connected.");
 	}
 
 	public Player_Disconnected(data: string): void
 	{
 		let playerData: PlayerData = JSON.parse(data);
-		this.seats.find(seat => seat.seatIndex == playerData.SeatIndex)!.LeaveSeat();
-		console.debug(playerData.FullName + " - Disconnected.");
+		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
+		this.seats.find(seat => seat.seatIndex == parsedPlayerData.seatIndex)?.LeaveSeat();
+		console.debug(parsedPlayerData.fullName + " - Disconnected.");
 	}
 
 	Start(): void

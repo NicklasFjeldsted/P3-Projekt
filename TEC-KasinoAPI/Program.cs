@@ -153,8 +153,8 @@ app.UseWebSockets();
 // Set up the endpoints for the API using the controllers.
 app.UseEndpoints(x => {
 	x.MapControllers();
-	x.MapHub<BlackjackHub>("Blackjack");
-	});
+	x.MapHub<BlackjackHub>("Blackjack").RequireAuthorization();
+});
 
 // Run the web application.
 app.Run();

@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using TEC_KasinoAPI.Models.Data_Models;
 using TEC_KasinoAPI.Services;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace TEC_KasinoAPI.Hubs
 {
@@ -39,7 +40,6 @@ namespace TEC_KasinoAPI.Hubs
 				Task.Run(async () => await _gameManager.EndGame());
 			}
 
-
 			return base.OnDisconnectedAsync(exception);
 		}
 
@@ -49,10 +49,20 @@ namespace TEC_KasinoAPI.Hubs
 		public override Task OnConnectedAsync()
 		{
 			string id = Context.ConnectionId;
-			_gameManager.ConnectedPlayers.TryAdd(id, new PlayerData());
+
+			//         PlayerData player = new PlayerData()
+			//         {
+			//             FullName = Context.User.Claims.First(x => x.Type == ClaimTypes.GivenName).Value,
+			//             Email = Context.User.Claims.First(x => x.Type == ClaimTypes.Email).Value
+			//};
+
+			PlayerData player = new PlayerData();
+			player.FullName = Context.User.Identity.Name;
+
+			_gameManager.ConnectedPlayers.TryAdd(id, player);
 			_gameManager.Bets.TryAdd(id, 0);
 
-			Clients.Others.SendAsync("Player_Connected", id);
+			Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 
 			return base.OnConnectedAsync();
 		}
