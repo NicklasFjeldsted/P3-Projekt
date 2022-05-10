@@ -187,7 +187,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}")]
+        [HttpGet("{customerID}"), Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> GetByID(int customerID)
         {
             // Get the customer with the customerID parameter

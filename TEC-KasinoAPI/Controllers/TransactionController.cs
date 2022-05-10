@@ -17,7 +17,7 @@ namespace TEC_KasinoAPI.Controllers
 			_transactionService = transactionService;
 		}
 
-		[HttpPost("create"), Authorize(Roles = "Customer")]
+		[HttpPost("create"), Authorize(Roles = "Admin, Customer")]
 		public async Task<IActionResult> Create([FromBody]BalanceResponse model)
 		{
 			await _transactionService.AddTransaction(model);
@@ -25,7 +25,7 @@ namespace TEC_KasinoAPI.Controllers
 			return Ok(new { message = "The transaction completed successfully!" });
 		}
 
-		[HttpGet("{customerID}"), Authorize(Roles = "Customer, Admin")]
+		[HttpGet("{customerID}"), Authorize(Roles = "Admin, Customer")]
 		public async Task<IActionResult> GetById(int customerID)
 		{
 			List<Transaction> transactions = await _transactionService.GetByIdAsync(customerID);

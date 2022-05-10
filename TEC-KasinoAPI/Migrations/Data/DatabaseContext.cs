@@ -25,7 +25,6 @@ namespace TEC_KasinoAPI.Data
 			builder.Entity<Customer>(entity => // Configures a model 
 			{
 				// Create unique indexes for columns
-				entity.HasAlternateKey(e => e.Email).HasName("UN_Customers_Email");
 				entity.HasAlternateKey(e => e.CPRNumber).HasName("UN_Customers_CPRNumber");
 				entity.Property(e => e.RegisterDate).HasDefaultValueSql("getdate()"); // Sets RegisterDate default value to SqlCommand 'GetDate()'
 			});

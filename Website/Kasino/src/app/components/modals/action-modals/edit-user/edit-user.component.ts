@@ -105,7 +105,7 @@ export class EditUserComponent implements OnInit {
         this.close();
       },
       error: (msg: Error) => {
-        console.log("Error updating customer: " + msg);
+        console.log("Error updating customer: ", msg);
       },
     });
   }

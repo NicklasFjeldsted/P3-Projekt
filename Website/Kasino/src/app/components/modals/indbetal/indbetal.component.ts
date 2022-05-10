@@ -55,7 +55,7 @@ export class IndbetalComponent implements OnInit {
     public authenticationService: AuthenticationService,
     private router: Router,
     private builder: FormBuilder,
-    private balance: BalanceService,
+    private balanceService: BalanceService,
     private transaction: TransactionService
   ) {}
 
@@ -98,14 +98,16 @@ export class IndbetalComponent implements OnInit {
       return;
     }
 
+    if (this.form.invalid) return;
+
     //this.form.patchValue({cardNumber: formatCard});
-    this.balance.addBalance(this.f["amount"]?.value).subscribe({
+    this.balanceService.addBalance(this.f["amount"]?.value).subscribe({
       next: (response) => {
         this.transaction.AddTransaction(response).subscribe({
           next: (message) => {
             console.log(message);
             this.close();
-            window.location.reload();
+            this.balanceService.updateBalance();
           },
         });
       },

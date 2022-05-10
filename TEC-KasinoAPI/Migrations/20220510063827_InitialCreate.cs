@@ -65,14 +65,14 @@ namespace TEC_KasinoAPI.Migrations
                     ZipCodeID = table.Column<int>(type: "int", nullable: false),
                     Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GenderID = table.Column<int>(type: "int", nullable: false),
-                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()")
+                    RegisterDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    Deactivated = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.CustomerID);
                     table.UniqueConstraint("UN_Customers_CPRNumber", x => x.CPRNumber);
-                    table.UniqueConstraint("UN_Customers_Email", x => x.Email);
-                    table.UniqueConstraint("UN_Customers_PhoneNumber", x => x.PhoneNumber);
                     table.ForeignKey(
                         name: "FK_Customers_AccountGenders_GenderID",
                         column: x => x.GenderID,
@@ -173,6 +173,12 @@ namespace TEC_KasinoAPI.Migrations
                 name: "IX_Customers_ZipCodeID",
                 table: "Customers",
                 column: "ZipCodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "UN_Customers_Email",
+                table: "Customers",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshToken_CustomerID",

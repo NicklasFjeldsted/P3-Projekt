@@ -4,9 +4,9 @@ using TEC_KasinoAPI.Services;
 
 namespace TEC_KasinoAPI.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    
     public class BalanceController : ControllerBase
     {
         private IBalanceService _balanceService;
@@ -52,7 +52,7 @@ namespace TEC_KasinoAPI.Controllers
         /// <param name="customerID"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("update"), Authorize(Roles = "Customer")]
+        [HttpPut("update"), Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> Update([FromBody] BalanceUpdateRequest model)
         {
             // Validate the input.
@@ -72,7 +72,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("add-balance")]
+        [HttpPut("add-balance"), Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> AddBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
@@ -93,7 +93,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        [HttpPut("subtract-balance")]
+        [HttpPut("subtract-balance"), Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> SubtractBalance([FromBody] BalanceRequest model)
         {
             // Validate the input.
@@ -114,7 +114,7 @@ namespace TEC_KasinoAPI.Controllers
         /// </summary>
         /// <param name="customerID"></param>
         /// <returns></returns>
-        [HttpGet("{customerID}")]
+        [HttpGet("{customerID}"), Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> GetByID(int customerID)
         {
             // Find the account balance with the customerID parameter.

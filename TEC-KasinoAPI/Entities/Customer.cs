@@ -53,6 +53,10 @@ namespace TEC_KasinoAPI.Models
 
 		[JsonIgnore]
 		public List<RefreshToken> RefreshTokens { get; set; }
+
+		public DateTime? Deactivated { get; set; }
+		public bool IsActive => Deactivated == null;
+		public string DeactivatedBy { get; set; }
 	}
 
 }

@@ -17,7 +17,7 @@ namespace TEC_KasinoAPI.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.2")
+                .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -98,6 +98,12 @@ namespace TEC_KasinoAPI.Migrations
                         .IsRequired()
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("Deactivated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -138,13 +144,11 @@ namespace TEC_KasinoAPI.Migrations
                     b.HasAlternateKey("CPRNumber")
                         .HasName("UN_Customers_CPRNumber");
 
-                    b.HasAlternateKey("Email")
-                        .HasName("UN_Customers_Email");
-
-                    b.HasAlternateKey("PhoneNumber")
-                        .HasName("UN_Customers_PhoneNumber");
-
                     b.HasIndex("CountryID");
+
+                    b.HasIndex("Email")
+                        .IsUnique()
+                        .HasDatabaseName("UN_Customers_Email");
 
                     b.HasIndex("GenderID");
 

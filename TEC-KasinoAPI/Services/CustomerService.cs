@@ -149,6 +149,7 @@ namespace TEC_KasinoAPI.Services
 
             // Return false if no user was found with the email or if the password doesnt match.
             if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
+
             
             // Authentication successful so generate jwt and refresh tokens.
             string jwtToken = await GenerateJWTTokenAsync(customer);
