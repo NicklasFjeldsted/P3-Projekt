@@ -64,8 +64,6 @@ export class TilmeldComponent implements OnInit {
     console.log(this.customer);
   }
 
-  log = () => console.log(this.checkCountries()?.countryID);
-
   // Gets all controls from nested FormGroup
   get credentials() {
     return this.form.controls["credentials"] as FormGroup;
