@@ -1,6 +1,6 @@
 <div class="spacing"></div>
 <form data-multi-step class="multi-step-form noselect" [formGroup]="form" (ngSubmit)="signUp()" [ngSwitch]="step">
-  <div class="step-title" (click)="log()" *ngSwitchCase="'1'">Trin 1 ud af 2</div>
+  <div class="step-title" *ngSwitchCase="'1'">Trin 1 ud af 2</div>
   <div class="step-title" *ngSwitchCase="'2'">Trin 2 ud af 2</div>
   <div class="form-wrapper">
     <div class="form-content">
