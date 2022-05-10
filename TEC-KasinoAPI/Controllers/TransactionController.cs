@@ -30,6 +30,11 @@ namespace TEC_KasinoAPI.Controllers
 		{
 			List<Transaction> transactions = await _transactionService.GetByIdAsync(customerID);
 
+			if(transactions.Count == 0)
+			{
+				return BadRequest(new {message = "No transactions found!"}):
+			}
+
 			return Ok(transactions);
 		}
 	}

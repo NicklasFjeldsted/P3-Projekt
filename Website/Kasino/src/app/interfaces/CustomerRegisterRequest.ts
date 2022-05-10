@@ -1,13 +1,12 @@
-export interface CustomerRegisterRequest
-{
-  Email: string;
-  Password: string;
-  CountryID: number;
-  PhoneNumber: number;
-  CPRNumber: string;
-  FirstName: string;
-  LastName: string;
-  Address: string;
-  ZipCodeID: number;
-  GenderID: number;
+export interface CustomerRegisterRequest {
+  email: string;
+  password: string;
+  countryID: number;
+  phoneNumber: number;
+  cprNumber: string;
+  firstName: string;
+  lastName: string;
+  address: string;
+  zipCodeID: number;
+  genderID: number;
 }
