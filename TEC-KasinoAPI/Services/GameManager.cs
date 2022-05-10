@@ -178,7 +178,7 @@ namespace TEC_KasinoAPI.Services
             {
 				IHubContext<BlackjackHub> hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
-				await hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(HouseCards));
+				await hubContext.Clients.All.SendAsync("Update_HouseCards_Callback", JsonConvert.SerializeObject(HouseCards));
             }
 		}
 
@@ -188,11 +188,11 @@ namespace TEC_KasinoAPI.Services
 		private void SetTurnOrder()
 		{
 			TurnOrder.Clear();
-			var players = ConnectedPlayers.Where(p => p.Value.seated == true && Bets[p.Key] > 0).ToList();
+			var players = ConnectedPlayers.Where(p => p.Value.Seated == true && Bets[p.Key] > 0).ToList();
 			foreach (var pair in players)
 			{
 				if (Bets[pair.Key] <= 0) continue;
-				TurnOrder.Enqueue(pair.Value.seatIndex);
+				TurnOrder.Enqueue(pair.Value.SeatIndex);
 			}
 			SortQueue();
 		}
@@ -227,15 +227,15 @@ namespace TEC_KasinoAPI.Services
 		{
 			foreach (var pair in ConnectedPlayers)
 			{
-				if (pair.Value.seated == false) continue;
+				if (pair.Value.Seated == false) continue;
 
-				if (pair.Value.busted == true) continue;
+				if (pair.Value.Busted == true) continue;
 
-				if (CalculateValue(pair.Value.cards) < CalculateValue(HouseCards.Values)) continue;
+				if (CalculateValue(pair.Value.Cards) < CalculateValue(HouseCards.Values)) continue;
 
 				PlayerData oldData = new PlayerData(pair.Value);
 
-				pair.Value.winner = true;
+				pair.Value.Winner = true;
 
 				ConnectedPlayers.TryUpdate(pair.Key, pair.Value, oldData);
 			}
@@ -310,7 +310,7 @@ namespace TEC_KasinoAPI.Services
 		public bool CheckPlayers()
 		{
 			bool anyBets = Bets.Any(x => x.Value > 0);
-			bool anySeated = ConnectedPlayers.Any(x => x.Value.seated == true);
+			bool anySeated = ConnectedPlayers.Any(x => x.Value.Seated == true);
 			return anyBets && anySeated;
 		}
 
@@ -330,25 +330,25 @@ namespace TEC_KasinoAPI.Services
 				foreach (var data in ConnectedPlayers.ToList())
 				{
 					if (Bets[data.Key] <= 0) continue;
-					data.Value.cards.Add(GenerateCard());
+					data.Value.Cards.Add(GenerateCard());
 				}
 
 				HouseCards.TryAdd(HouseCards.Count, GenerateCard());
 
-				hubContext.Clients.All.SendAsync("HouseCards", JsonConvert.SerializeObject(HouseCards));
+				hubContext.Clients.All.SendAsync("Update_HouseCards_Callback", JsonConvert.SerializeObject(HouseCards));
 
 				foreach (var data in ConnectedPlayers.ToList())
 				{
 					if (Bets[data.Key] <= 0) continue;
-					data.Value.cards.Add(GenerateCard());
+					data.Value.Cards.Add(GenerateCard());
 				}
 
 				HouseCards.TryAdd(HouseCards.Count, GenerateCard());
 
 				IsPlaying = true;
 
-				hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
-				hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(ConnectedPlayers));
+				hubContext.Clients.All.SendAsync("Sync_CurrentStage", JsonConvert.SerializeObject(IsPlaying));
+				hubContext.Clients.All.SendAsync("Get_PlayerData_Callback", DictionaryToJson(ConnectedPlayers));
 			}
 		}
 
@@ -371,7 +371,7 @@ namespace TEC_KasinoAPI.Services
             {
 				var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
-				await hubContext.Clients.All.SendAsync("GameStarted");
+				await hubContext.Clients.All.SendAsync("Game_Started");
 
 				HouseCards.Clear();
 
@@ -387,7 +387,7 @@ namespace TEC_KasinoAPI.Services
 
 				SwitchTurn();
 
-				await hubContext.Clients.All.SendAsync("SyncTurn", JsonConvert.SerializeObject(SeatTurnIndex));
+				await hubContext.Clients.All.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(SeatTurnIndex));
 			}
 		}
 
@@ -407,10 +407,10 @@ namespace TEC_KasinoAPI.Services
 			{
 				foreach (var player in ConnectedPlayers.Values)
 				{
-					if (!player.seated) continue;
-					if (player.busted) continue;
+					if (!player.Seated) continue;
+					if (player.Busted) continue;
 
-					player.winner = true;
+					player.Winner = true;
 				}
 			}
 			else
@@ -420,19 +420,19 @@ namespace TEC_KasinoAPI.Services
 
 			foreach (var player in ConnectedPlayers.Values)
 			{
-				if (!player.seated) continue;
+				if (!player.Seated) continue;
 
-				string connectionID = ConnectedPlayers.First(x => x.Value.customerID == player.customerID).Key;
-				BalanceRequest request = new BalanceRequest(player.customerID, Bets.First(x => x.Key == connectionID).Value);
+				string connectionID = ConnectedPlayers.First(x => x.Value.CustomerID == player.CustomerID).Key;
+				BalanceRequest request = new BalanceRequest(player.CustomerID, Bets.First(x => x.Key == connectionID).Value);
 
 				Bets[connectionID] = 0;
 
-				if (player.winner == true)
+				if (player.Winner == true)
 				{
 					Win(request, connectionID);
 				}
 
-				if (player.winner == false)
+				if (player.Winner == false)
 				{
 					Lose(request, connectionID);
 				}
@@ -444,9 +444,9 @@ namespace TEC_KasinoAPI.Services
             {
 				var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
-				await hubContext.Clients.All.SendAsync("SyncPlaying", JsonConvert.SerializeObject(IsPlaying));
-				await hubContext.Clients.All.SendAsync("DataChanged", DictionaryToJson(ConnectedPlayers));
-				await hubContext.Clients.All.SendAsync("GameEnded");
+				await hubContext.Clients.All.SendAsync("Sync_CurrentStage", JsonConvert.SerializeObject(IsPlaying));
+				await hubContext.Clients.All.SendAsync("Get_PlayerData_Callback", DictionaryToJson(ConnectedPlayers));
+				await hubContext.Clients.All.SendAsync("Game_Ended");
 			}
 
 			_timer.Start();
@@ -471,7 +471,7 @@ namespace TEC_KasinoAPI.Services
 				databaseContext.AccountBalances.Update(accountBalance);
 
 				databaseContext.SaveChanges();
-				await hubContext.Clients.Client(connectionID).SendAsync("UpdateBalance");
+				await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
 			}
 		}
 
@@ -494,7 +494,7 @@ namespace TEC_KasinoAPI.Services
 				databaseContext.AccountBalances.Update(accountBalance);
 
 				databaseContext.SaveChanges();
-				await hubContext.Clients.Client(connectionID).SendAsync("UpdateBalance");
+				await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
 			}
 		}
 	}

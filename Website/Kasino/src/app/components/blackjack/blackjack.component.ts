@@ -4,7 +4,7 @@ import {  Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { House, Player, PlayerData } from './blackjack-game';
+import { Card, House, Player, PlayerData } from './blackjack-game';
 
 @Component({
   selector: 'blackjack',
@@ -43,29 +43,28 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     {
       for (const seat of house.seats)
       {
-        seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("JoinSeat", Player.BuildPlayerData(data)));
         seat.seatBet.OnBetChanged.subscribe((data: number) => this.networking.SendData("UpdateBet", data));
+        seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("Update_PlayerData", Player.BuildPlayerData(data)));
       }
       
       this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
       this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
 
-      this.networking.Subscribe("GameEnded", () => house.GameEnded());
-      this.networking.Subscribe("GameStarted", () => house.GameStarted());
-      this.networking.Subscribe("UpdateBalance", () => this.balanceService.updateBalance());
-      this.networking.Subscribe("UpdateSeatBet", (data: string) => house.UpdateSeatBets(data));
+      this.networking.Subscribe("Update_PlayerData_Callback", (data: string) => house.Update_PlayerData_Callback(data)); // Changed data from others.
+      this.networking.Subscribe("Get_PlayerData_Callback", (data: string) => house.Get_PlayerData_Callback(data)); // Current server data (ConnectedPlayers<Dictionary>).
+
+      this.networking.Subscribe("Player_Connected", (connectionID: string) => house.Player_Connected(connectionID)); // ConnectionID of the player who joined.
+      this.networking.Subscribe("Player_Disconnected", (connectionID: string) => house.Player_Disconnected(connectionID)); // ConnectionID of the player who left.
+
+      this.networking.Subscribe("Game_Ended", () => house.GameEnded());
+      this.networking.Subscribe("Game_Started", () => house.GameStarted());
+      this.networking.Subscribe("Update_Balance", () => this.balanceService.updateBalance());
+      this.networking.Subscribe("Update_HouseCards_Callback", (data: string) => house.HouseCards(data));
+      this.networking.Subscribe("Sync_PlayerBet", (data: string) => house.UpdateSeatBets(data));
+      this.networking.Subscribe("Sync_CurrentTurn", (data: string) => house.SyncTurn(data));
+      this.networking.Subscribe("Sync_CurrentStage", (data: string) => house.SyncPlaying(data));
       
-      this.networking.Subscribe("DataChanged", (data: string) => house.UpdateSeatData(data)).then(() =>
-      {
-        Player.OnDataChanged.subscribe((data: PlayerData) => this.networking.SendData("UpdatePlayerData", Player.BuildPlayerData(data)));
-        
-        house.CreateClient(this.game.user);
-      });
-
-      this.networking.Subscribe("SyncTurn", (data: string) => house.SyncTurn(data));
-      this.networking.Subscribe("SyncPlaying", (data: string) => house.SyncPlaying(data));
-
-      this.networking.Subscribe("HouseCards", (data: string) => house.HouseCards(data));
+      house.CreateClient(this.game.user);
     });
   }
 

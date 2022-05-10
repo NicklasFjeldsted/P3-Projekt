@@ -51,7 +51,7 @@ export class Bet extends MonoBehaviour
 
 		this.text.text = `${this.currentBet}kr.`;
 
-		if (this.seat.house.client.data.seatIndex != this.seat.seatIndex) return;
+		if (this.seat.house.client.data.SeatIndex != this.seat.seatIndex) return;
 
 		switch (this.seat.house.CurrentStage)
 		{

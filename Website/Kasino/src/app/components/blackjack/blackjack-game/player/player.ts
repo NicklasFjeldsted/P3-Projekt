@@ -1,46 +1,76 @@
 import { Subject } from "rxjs";
 import { Card } from "../cards";
-export interface IPlayerData
+export class PlayerData
 {
-	fullName: string;
-	seatIndex: number;
-	seated: boolean;
-	stand: boolean;
-	busted: boolean;
-	cards: Card[];
-}
+	private fullName: string | null;
+	private email: string | null;
+	private seatIndex: number | null;
+	private customerID: number | null;
+	private seated: boolean | null;
+	private stand: boolean | null;
+	private busted: boolean | null;
+	private winner: boolean | null;
+	private cards: Card[] | null;
 
-export class PlayerData implements IPlayerData
-{
-	public fullName: string;
-	public customerID: number;
-	public email: string;
-	public seatIndex: number;
-	public seated: boolean;
-	public stand: boolean;
-	public busted: boolean;
-	public winner: boolean;
-	public cards: Card[];
-	public betAmount: number;
+	public get FullName(): string { return this.fullName ?? ""; }
+	public set FullName(value: string) { this.fullName = value; }
+
+	public get Email(): string { return this.email ?? ""; }
+	public set Email(value: string) { this.email = value; }
+
+	public get SeatIndex(): number { return this.seatIndex ?? -1; }
+	public set SeatIndex(value: number) { this.seatIndex = value; }
+
+	public get CustomerID(): number { return this.customerID ?? -1; }
+	public set CustomerID(value: number) { this.customerID = value; }
+
+	public get Seated(): boolean { return this.seated ?? false; }
+	public set Seated(value: boolean) { this.seated = value; }
+
+	public get Stand(): boolean { return this.stand ?? false; }
+	public set Stand(value: boolean) { this.stand = value; }
+
+	public get Busted(): boolean { return this.busted ?? false; }
+	public set Busted(value: boolean) { this.busted = value; }
+	
+	public get Winner(): boolean { return this.winner ?? false; }
+	public set Winner(value: boolean) { this.winner = value; }
+
+	public get Cards(): Card[] { return this.cards ?? []; }
+	public set Cards(value: Card[]) { this.cards = value; }
+
 
 	constructor(name?: string)
 	{
-		this.fullName = name ? name : "No Name";
-		this.seatIndex = -1;
-		this.customerID = -1;
-		this.betAmount = 0;
-		this.seated = false;
-		this.stand = false;
-		this.busted = false;
-		this.winner = false;
-		this.cards = [];
+		this.fullName = name ? name : null;
+		this.email = null;
+		this.seatIndex = null;
+		this.customerID = null;
+		this.seated = null;
+		this.stand = null;
+		this.busted = null;
+		this.winner = null;
+		this.cards = null;
+	}
+
+	public Update(newData: PlayerData): void
+	{
+		for (const prop in this)
+		{
+			for (const [key, value] of Object.entries(newData))
+			{
+				if (key != prop) continue;
+				
+				if (value == null) continue;
+	
+				this[prop] = value;
+			}
+		}
 	}
 }
 
 export class Player
 {
-	public static OnDataChanged: Subject<PlayerData> = new Subject<PlayerData>();
-
 	constructor()
 	{
 		this.data = new PlayerData();
@@ -53,46 +83,12 @@ export class Player
 	public get cardValues(): number
 	{
 		var output: number = 0;
-		for (const card of this.data.cards)
+		for (const card of this.data.Cards)
 		{
 			output += card.value;
 		}
+		console.log(output);
 		return output;
-	}
-
-	/** This functions updates the card of this player. */
-	private UpdateCards(cards: Card[]): void
-	{
-		this.data.cards = [];
-		for (const card of cards)
-		{
-			this.data.cards.push(card);
-		}
-	}
-
-	/** This function updates all of this players data. */
-	public UpdateData(newData: PlayerData): void
-	{
-		this.data.fullName = newData.fullName;
-		this.data.seatIndex = newData.seatIndex;
-		this.data.seated = newData.seated;
-		this.data.stand = newData.stand;
-		this.data.busted = newData.busted;
-		this.data.winner = newData.winner;
-		this.UpdateCards(newData.cards);
-	}
-
-	/** This functions checks if the current player already holds that card. */
-	public IsDuplicate(card: Card): boolean
-	{
-		for (const hcard of this.data.cards)
-		{
-			if (card.id === hcard.id)
-			{
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/** This function creates a json string from a playerdata object. */
@@ -100,15 +96,15 @@ export class Player
 	{
 		return JSON.stringify(
 			{
-				fullName: data.fullName,
-				email: data.email,
-				winner: data.winner,
-				customerID: data.customerID,
-			  	seatIndex: data.seatIndex,
-			  	seated: data.seated,
-			  	stand: data.stand,
-			  	busted: data.busted,
-			  	cards: data.cards
+				fullName: data.FullName,
+				email: data.Email,
+				seatIndex: data.SeatIndex,
+				customerID: data.CustomerID,
+				seated: data.Seated,
+				stand: data.Stand,
+				busted: data.Busted,
+				winner: data.Winner,
+			  	cards: data.Cards
 			}
 		);
 	}
