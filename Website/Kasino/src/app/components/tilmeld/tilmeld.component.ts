@@ -60,8 +60,6 @@ export class TilmeldComponent implements OnInit {
       }),
       acceptTerms: new FormControl(false, Validators.requiredTrue),
     });
-    this.customer = Object.assign(this.customer, this.credentials.value, this.details.value);
-    console.log(this.customer);
   }
 
   // Gets all controls from nested FormGroup
