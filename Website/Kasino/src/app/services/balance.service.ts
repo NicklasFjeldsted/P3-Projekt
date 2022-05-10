@@ -13,9 +13,15 @@ export class BalanceService {
   private BalanceSubject: BehaviorSubject<Balance>;
   public OnBalanceChanged: Observable<Balance>;
 
+  private Indbetaling: BehaviorSubject<boolean>;
+  public OnIndbetalingChange: Observable<boolean>;
+
   constructor(private http: HttpClient) {
     this.BalanceSubject = new BehaviorSubject<Balance>(new Balance());
     this.OnBalanceChanged = this.BalanceSubject.asObservable();
+
+    this.Indbetaling = new BehaviorSubject<boolean>(false);
+    this.OnIndbetalingChange = this.Indbetaling.asObservable();
   }
 
   private id: number = -1;
@@ -46,5 +52,9 @@ export class BalanceService {
 
   public updateBalance(): void {
     this.http.get<Balance>(`${environment.apiURL}/Balance/${this.id}`).subscribe((balance) => this.BalanceSubject.next(balance));
+  }
+
+  public goToLimit(): void {
+    this.Indbetaling.next(true);
   }
 }

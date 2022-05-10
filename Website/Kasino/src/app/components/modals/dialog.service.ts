@@ -23,7 +23,7 @@ export class DialogService
   constructor(private overlay: Overlay, private injector: Injector) {}
 
   // Open modal
-  open<T>(component: ComponentType<T>, config?: DialogConfig): DialogRef 
+  open<T>(component: ComponentType<T>, config?: DialogConfig): ComponentType<T> 
   {
     // Globally centered position strategy
     const positionStrategy = this.overlay
@@ -55,6 +55,6 @@ export class DialogService
     const portal = new ComponentPortal(component, null, injector);
     overlayRef.attach(portal);
 
-    return dialogRef;
+    return component;
   }
 }

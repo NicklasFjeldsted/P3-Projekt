@@ -2,10 +2,12 @@ import { animate, state, style, transition, trigger } from "@angular/animations"
 import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Observable, Subject } from "rxjs";
 import { ChangeBalance } from "src/app/interfaces/changeBalance";
 import { AuthenticationService } from "src/app/services/authentication.service";
 import { BalanceService } from "src/app/services/balance.service";
 import { TransactionService } from "src/app/services/transaction.service";
+import { KontoComponent } from "../../konto/konto.component";
 import { DialogRef } from "../dialog-ref";
 import { DIALOG_DATA } from "../dialog-tokens";
 import { DialogService } from "../dialog.service";
@@ -38,6 +40,7 @@ export class IndbetalComponent implements OnInit {
   submitted: boolean = false;
   isCardValid: boolean = true;
   currentLimit: number | null;
+  public property = 1;
 
   @ViewChild("focusBtn") btn: ElementRef;
 
@@ -203,4 +206,14 @@ export class IndbetalComponent implements OnInit {
       return true;
     }
   }
+
+
+  public openLimit(): void {
+    if(this.router.url != "/konto") {
+      this.router.navigate(["konto"])
+    }
+    this.balanceService.goToLimit();
+    this.close();
+  }
 }
+
