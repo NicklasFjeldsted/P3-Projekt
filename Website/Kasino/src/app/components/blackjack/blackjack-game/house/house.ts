@@ -1,5 +1,5 @@
 import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { GameObject, InfoBar, MonoBehaviour, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { GameObject, InfoBar, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, User, UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
 import { Player, PlayerData } from "../player";
@@ -68,33 +68,71 @@ export class House extends MonoBehaviour
 
 	public Update_PlayerData_Callback(data: string): void
 	{
-		let parsedData = JSON.parse(data);
+		let playerDataObject = JSON.parse(data);
 
-		if (parsedData.customerID == this.client.data.CustomerID)
+		let parsedPlayerDataObject: any = {};
+		for (const index in playerDataObject)
 		{
-			this.client.data.Update(parsedData);
+			parsedPlayerDataObject[ this.FirstCharToLowerCase(index) ] = playerDataObject[index];
+		}
+
+
+		if (parsedPlayerDataObject.customerID == this.client.data.CustomerID)
+		{
+			this.client.data.Update(parsedPlayerDataObject);
 		}
 		
-		if (parsedData.seatIndex == null) return;
+		if (parsedPlayerDataObject.seatIndex == null) return;
 
 		for (const seat of this.seats)
 		{
-			if (seat.seatIndex != parsedData.seatIndex || !parsedData.seated) continue;
+			if (seat.seatIndex != parsedPlayerDataObject.seatIndex || !parsedPlayerDataObject.seated) continue;
 			
-			if (!seat.Occupied)
+			if (!seat.Player)
 			{
 				seat.Player = new Player();
 			}
 			
-			seat.Player!.data.Update(parsedData);
+			seat.Player.data.Update(parsedPlayerDataObject);
 			
 			seat.Display();
 		}
 	}
 
+	private FirstCharToLowerCase(string: string): string
+	{
+		return string.charAt(0).toLocaleLowerCase() + string.slice(1)
+	}
+
 	public Get_PlayerData_Callback(data: string): void
 	{
-		console.log(JSON.parse(data));
+		// JSON object indexed with the connection id.
+		let playerDataObjects = JSON.parse(data);
+		
+		for (const key in playerDataObjects)
+		{
+			let parsedPlayerDataObject: any = {};
+			for (const index in playerDataObjects[ key ])
+			{
+				parsedPlayerDataObject[ this.FirstCharToLowerCase(index) ] = playerDataObjects[key][index];
+			}
+
+			if (parsedPlayerDataObject.seatIndex == -1) continue;
+			
+			for (const seat of this.seats)
+			{
+				if (seat.seatIndex != parsedPlayerDataObject.seatIndex || !parsedPlayerDataObject.seated) continue;
+					
+				if (!seat.Player)
+				{
+					seat.Player = new Player();
+				}
+
+				seat.Player.data.Update(parsedPlayerDataObject);
+
+				seat.Display();
+			}
+		}
 	}
 
 	public Player_Connected(connectionID: string): void
@@ -102,9 +140,11 @@ export class House extends MonoBehaviour
 		console.debug(connectionID + " - Connected.");
 	}
 
-	public Player_Disconnected(connectionID: string): void
+	public Player_Disconnected(data: string): void
 	{
-		console.debug(connectionID + " - Disconnected.");
+		let playerData: PlayerData = JSON.parse(data);
+		this.seats.find(seat => seat.seatIndex == playerData.SeatIndex)!.LeaveSeat();
+		console.debug(playerData.FullName + " - Disconnected.");
 	}
 
 	Start(): void
@@ -235,6 +275,7 @@ export class House extends MonoBehaviour
 		this.client.data.Email = user.email;
 		this.client.data.CustomerID = this.gameObject.game.balance.customerID;
 		this.client.data.FullName = user.fullName;
+		this.gameObject.game.GetFeature(NetworkingFeature).Send("Get_PlayerData");
 	}
 
 	private CreateSeat(id: number, position: Vector2): GameObject

@@ -87,7 +87,6 @@ export class Player
 		{
 			output += card.value;
 		}
-		console.log(output);
 		return output;
 	}
 

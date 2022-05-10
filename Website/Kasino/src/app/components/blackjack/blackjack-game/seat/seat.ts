@@ -39,6 +39,8 @@ export class Seat extends MonoBehaviour
 		this.UpdateIsMyTurn(this.myTurn);
 		this.resultTextChildComponent.gameObject.isActive = false;
 		this.childTextComponent.gameObject.isActive = false;
+
+		this.house.OnStageChange.subscribe((stage) => stage == GameStage.Ended ? this.OnGameEnded() : null);
 	}
 
 	public Awake(): void
@@ -246,26 +248,22 @@ export class Seat extends MonoBehaviour
 		switch (this.house.CurrentStage)
 		{
 			case GameStage.Off:
-				if (this.Occupied)
-				{
-					this.seatBet.gameObject.isActive = true;
-				}
-				else
-				{
-					this.seatBet.gameObject.isActive = false;
-				}
-
+				this.seatBet.gameObject.isActive = true;
 				this.childTextComponent.gameObject.isActive = true;
 				this.resultTextChildComponent.gameObject.isActive = false;
+
 				this.seatText.text = this.Player.data.FullName;
+
 				this.ClearCards();
 				break;
 			
 			case GameStage.Started:
 				this.seatBet.gameObject.isActive = true;
 				this.childTextComponent.gameObject.isActive = true;
+
 				this.childTextComponent.text = this.Player.cardValues.toString();
 				this.seatText.text = this.Player.data.FullName;
+
 				this.UpdateIsMyTurn(this.myTurn);
 				this.DisplayCard();
 	
@@ -274,23 +272,22 @@ export class Seat extends MonoBehaviour
 					this.resultTextChildComponent.gameObject.isActive = false;
 					break;
 				}
-	
+
 				this.resultTextChildComponent.gameObject.isActive = true;
 				this.resultTextChildComponent.text = "BUST!";
 				break;
 			
 			case GameStage.Ended:
-				if (this.Player)
-				{
-					this.seatBet.gameObject.isActive = true;
-					this.DisplayCard();
-				}
-				else
-				{
-					this.seatBet.gameObject.isActive = false;
-					this.ClearCards();
-				}
-	
+				// if (this.Player)
+				// {
+				// 	this.seatBet.gameObject.isActive = true;
+				// 	this.DisplayCard();
+				// }
+				// else
+				// {
+				// 	this.seatBet.gameObject.isActive = false;
+				// 	this.ClearCards();
+				// }
 				if (this.seatBet.lastBet > 0)
 				{
 					this.resultTextChildComponent.gameObject.isActive = true;
@@ -299,7 +296,6 @@ export class Seat extends MonoBehaviour
 				{
 					this.resultTextChildComponent.gameObject.isActive = false;
 				}
-	
 				this.UpdateIsMyTurn(false);
 				this.childTextComponent.text = this.Player.cardValues.toString();
 	
@@ -323,6 +319,45 @@ export class Seat extends MonoBehaviour
 					this.resultTextChildComponent.text = "LOSE!";
 				}
 				break;
+		}
+	}
+
+	public OnGameEnded(): void
+	{
+		if (!this.Player)
+		{
+			return;
+		}
+
+		if (this.seatBet.lastBet > 0)
+		{
+			this.resultTextChildComponent.gameObject.isActive = true;
+		}
+		else
+		{
+			this.resultTextChildComponent.gameObject.isActive = false;
+		}
+		this.UpdateIsMyTurn(false);
+		this.childTextComponent.text = this.Player.cardValues.toString();
+
+		setTimeout(() =>
+		{
+			this.resultTextChildComponent.gameObject.isActive = false;
+			this.childTextComponent.gameObject.isActive = false;
+			this.ClearCards();
+		}, 4500);
+
+		if (this.Player.data.Busted == true)
+		{
+			this.resultTextChildComponent.text = "BUST!";
+		}
+		else if (this.Player.data.Winner == true)
+		{
+			this.resultTextChildComponent.text = "WIN!";
+		}
+		else if(this.Player.data.Winner == false)
+		{
+			this.resultTextChildComponent.text = "LOSE!";
 		}
 	}
 
@@ -379,6 +414,7 @@ export class Seat extends MonoBehaviour
 			this.Player.data.Seated = true;
 			this.Player.data.SeatIndex = this.seatIndex;
 			this.OnSeatJoined.next(this.Player.data);
+			this.seatBet.gameObject.isActive = true;
 			return;
 		}
 		throw new Error(`Exists Error:\n Seat-Number: ${this.seatIndex}'s Player is not null.`);
@@ -389,9 +425,9 @@ export class Seat extends MonoBehaviour
 	{
 		if (this.Player)
 		{
-			this.Player.data.Seated = false;
-			this.Player.data.SeatIndex = -1;
 			this.Player = null;
+			this.seatBet.gameObject.isActive = false;
+			this.seatText.text = this.gameObject.gameObjectName;
 			return;
 		}
 		throw new Error(`Null Reference Error:\n Seat-Number: ${this.seatIndex}'s Player is null.`);

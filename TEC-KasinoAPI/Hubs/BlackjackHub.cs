@@ -29,6 +29,8 @@ namespace TEC_KasinoAPI.Hubs
 				Clients.Others.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(_gameManager.SeatTurnIndex));
 			}
 
+			Clients.Others.SendAsync("Player_Disconnected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
+
 			_gameManager.Bets.TryRemove(new KeyValuePair<string, int>(id, _gameManager.Bets[id]));
 			_gameManager.ConnectedPlayers.TryRemove(new KeyValuePair<string, PlayerData>(id, _gameManager.ConnectedPlayers[id]));
 
@@ -37,7 +39,6 @@ namespace TEC_KasinoAPI.Hubs
 				Task.Run(async () => await _gameManager.EndGame());
 			}
 
-			Clients.Others.SendAsync("Player_Disconnected", id);
 
 			return base.OnDisconnectedAsync(exception);
 		}
