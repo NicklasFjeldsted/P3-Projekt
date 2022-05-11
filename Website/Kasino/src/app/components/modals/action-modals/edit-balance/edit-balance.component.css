@@ -62,3 +62,31 @@
   padding: 24px;
   width: 100px;
 }
+
+.bottom-table {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+}
+
+.bottom-table > .button-container {
+  flex-basis: 20%;
+  display: flex;
+  align-items: center;
+}
+
+.bottom-table > mat-paginator {
+  flex-basis: 80%;
+}
+
+.button-container > button {
+  width: 80px;
+  height: 45px;
+  padding: 0.75em 0em;
+  color: #333;
+  border: 1px solid transparent;
+  background-color: #fff;
+  border-color: #ccc;
+  cursor: pointer;
+  border-radius: 5px;
+}

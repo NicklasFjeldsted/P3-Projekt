@@ -1,17 +1,10 @@
 <div class="left-side noselect">
   <div class="sidenav">
-    <i
-      [ngStyle]="{ top: kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px' }"
-      class="fa-solid fa-caret-left"
-    ></i>
+    <i [ngStyle]="{ top: kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px' }" class="fa-solid fa-caret-left"></i>
     <ul class="sidenav-content">
       <a (click)="changeSite(1)"><li [ngClass]="{ 'is-selected': kontoSite == 1 }">Konto</li></a>
-      <a (click)="changeSite(2)"
-        ><li [ngClass]="{ 'is-selected': kontoSite == 2 }">Transaktionshistorik</li></a
-      >
-      <a (click)="changeSite(3)"
-        ><li [ngClass]="{ 'is-selected': kontoSite == 3 }">Indbetalingsgrænse</li></a
-      >
+      <a (click)="changeSite(2)"><li [ngClass]="{ 'is-selected': kontoSite == 2 }">Transaktionshistorik</li></a>
+      <a (click)="changeSite(3)"><li [ngClass]="{ 'is-selected': kontoSite == 3 }">Indbetalingsgrænse</li></a>
     </ul>
   </div>
 </div>
@@ -90,9 +83,7 @@
 
     <div class="form-row flow-down bottom-buttons">
       <button class="bottom-button" id="logud" (click)="openLogout()">Log ud</button>
-      <button class="bottom-button" id="deaktiver" (click)="openDeaktiver()">
-        Deaktiver konto
-      </button>
+      <button class="bottom-button" id="deaktiver" (click)="openDeaktiver()">Deaktiver konto</button>
     </div>
   </div>
 </form>
@@ -123,12 +114,7 @@
             <tr *ngFor="let transactions of transactionList.reverse()">
               <td>{{ transactions.transactionID }}</td>
               <td>{{ transactions.transactionDate | date: "dd/MM/yyyy HH:mm" }}</td>
-              <td
-                [style]="
-                  transactions.amount.startsWith('+')
-                    ? 'background-color: lightgreen;'
-                    : 'background-color: #ff7f7f;'"
-              >
+              <td [style]="transactions.amount.startsWith('+') ? 'background-color: lightgreen;' : 'background-color: #ff7f7f;'">
                 {{ transactions.amount }}
               </td>
               <td>{{ transactions.currentBalance }}</td>
@@ -140,14 +126,8 @@
   </div>
 </form>
 
-<form
-  id="deposit"
-  method="get"
-  class="form-control h-center noselect"
-  [formGroup]="depositForm"
-  *ngIf="kontoSite == 3">
-  
-  <div class="column flow-down main ">
+<form id="deposit" method="get" class="form-control h-center noselect" *ngIf="kontoSite == 3">
+  <div class="column flow-down main">
     <div class="form-header">
       <h1>Indstil indbetalingsgrænse</h1>
     </div>
@@ -166,26 +146,27 @@
       </div>
       <div class="set-limit">
         <div class="minus">
-          <button (click)="updateAmount(25, false)"><i class="fa-solid fa-minus"></i></button>
+          <button (click)="subAmount()" [disabled]="depositLimit.value <= 1000"><i class="fa-solid fa-minus"></i></button>
         </div>
         <div class="limit">
           <input
             type="text"
-            formControlName="depositLimit"
+            min="1000"
+            max="100000"
+            [formControl]="depositLimit"
+            minlength="4"
+            maxlength="7"
             (keypress)="keyPressNumbers($event)"
-            [value]="f['depositLimit'].value"
+            [value]="depositLimit.value"
           />
         </div>
         <div class="plus">
-          <button (click)="updateAmount(25, true)"><i class="fa-solid fa-plus"></i></button>
+          <button (click)="addAmount()" [disabled]="depositLimit.value >= 100000"><i class="fa-solid fa-plus"></i></button>
         </div>
       </div>
       <div class="submit-limit">
-        <button
-          [disabled]="f['depositLimit'].value < 1000 || hasUpdateLimit == true"
-          (click)="updateDepositLimit()"
-        >
-          Ændrer din indbetalingsgrænse til {{ f["depositLimit"].value }} kr
+        <button [disabled]="depositLimit.value < 1000 || hasUpdateLimit == true" (click)="updateDepositLimit()">
+          Ændrer din indbetalingsgrænse til {{ depositLimit.value }} kr
         </button>
       </div>
     </div>

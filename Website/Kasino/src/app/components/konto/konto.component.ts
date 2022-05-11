@@ -9,7 +9,7 @@ import { UdbetalComponent } from "../modals/udbetal/udbetal.component";
 import { DialogService } from "../modals/dialog.service";
 import { LogoutComponent } from "../modals/logout/logout.component";
 import { DeaktiverComponent } from "../modals/deaktiver/deaktiver.component";
-import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel } from "@angular/forms";
+import { AbstractControl, Form, FormBuilder, FormControl, FormGroup, NgModel, Validators } from "@angular/forms";
 import { BalanceService } from "src/app/services/balance.service";
 import { Transaction } from "src/app/interfaces/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
@@ -23,9 +23,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 export class KontoComponent implements OnInit {
   accountInfo: AccountInfo;
   balance: Balance = new Balance();
-  depositForm: FormGroup = new FormGroup({
-    depositLimit: new FormControl(),
-  });
+  depositLimit: FormControl;
   kontoSite: number = 1;
 
   transactionList: Transaction[] = [];
@@ -62,13 +60,7 @@ export class KontoComponent implements OnInit {
       }
     });
 
-    this.depositForm = this.formBuilder.group({
-      depositLimit: new FormControl(1000),
-    });
-  }
-
-  get f(): { [key: string]: AbstractControl } {
-    return this.depositForm.controls;
+    this.depositLimit = new FormControl(1000, [Validators.max(100000), Validators.min(1000)]);
   }
 
   // Gets userdata from API Call
@@ -86,7 +78,7 @@ export class KontoComponent implements OnInit {
   // Gets user information from token and decrypts the data
   updateLocalBalance(newBalance: Balance): void {
     this.balance = newBalance;
-    this.f["depositLimit"].patchValue(this.balance.depositLimit);
+    this.depositLimit.patchValue(this.balance.depositLimit);
     this.updateLocalTransactions(newBalance.customerID);
   }
 
@@ -105,6 +97,10 @@ export class KontoComponent implements OnInit {
   // Checks if user presses letters instead of digits
   keyPressNumbers(event: any) {
     var charCode = event.which ? event.which : event.keyCode;
+
+    if (this.depositLimit.value >= 100000) {
+      this.depositLimit.patchValue(100000);
+    }
     // Only Numbers 0-9
     if (charCode < 48 || charCode > 57) {
       event.preventDefault();
@@ -114,21 +110,17 @@ export class KontoComponent implements OnInit {
     }
   }
 
-  // Onclick function which changes users depositlimit
-  updateAmount(value: number | null, addOrSub: boolean): void {
-    if (addOrSub) {
-      return this.f["depositLimit"].patchValue(this.f["depositLimit"].value + value);
-    }
-    return this.f["depositLimit"].patchValue(this.f["depositLimit"].value - value!);
-  }
+  // Onclick functions which changes users depositlimit
+  addAmount = () => this.depositLimit.patchValue(this.depositLimit.value + 25);
+  subAmount = () => this.depositLimit.patchValue(this.depositLimit.value - 25);
 
   // Updates users deposit limit
   updateDepositLimit(): void {
-    this.balanceService.updateDeposit(this.f["depositLimit"].value).subscribe({
+    this.balanceService.updateDeposit(this.depositLimit.value).subscribe({
       next: (message) => {
         console.log(message);
         this.hasUpdateLimit = true;
-        if (this.balance.depositLimit == this.f["depositLimit"].value) {
+        if (this.balance.depositLimit == this.depositLimit.value) {
           alert("Du har ikke ændret din indbetalingsgrænse");
         } else {
           console.log(message);

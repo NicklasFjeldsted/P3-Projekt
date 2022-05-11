@@ -37,20 +37,9 @@ import { DialogService } from "../dialog.service";
 })
 export class IndbetalComponent implements OnInit {
   isOpen: boolean = true;
-  submitted: boolean = false;
   isCardValid: boolean = true;
   currentLimit: number | null;
-  public property = 1;
-
-  @ViewChild("focusBtn") btn: ElementRef;
-
-  form: FormGroup = new FormGroup({
-    cardName: new FormControl(""),
-    cardNumber: new FormControl(""),
-    expDate: new FormControl(""),
-    cvv: new FormControl(),
-    amount: new FormControl(),
-  });
+  form: FormGroup;
 
   constructor(
     private dialogRef: DialogRef,
@@ -63,9 +52,8 @@ export class IndbetalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.showFocus();
     this.isOpen = true;
-    this.getBalance();
+    this.getDepositLimit();
 
     // Gives form validators
     this.form = this.builder.group({
@@ -75,13 +63,12 @@ export class IndbetalComponent implements OnInit {
       cvv: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       amount: [null, Validators.required],
     });
+    this.updateAmount(150, 1);
+    this.f["amount"].markAsUntouched();
   }
 
-  // Closes dialog(modal)
-  close(): void {
-    this.isOpen = false;
-    this.dialogRef.close();
-  }
+  // Gets max length of amount based on their deposit limit
+  getMaxLength = () => this.currentLimit?.toString().length!;
 
   // Gets controls from form
   get f(): { [key: string]: AbstractControl } {
@@ -89,52 +76,40 @@ export class IndbetalComponent implements OnInit {
   }
 
   // Submits the deposit request
-  onSubmit() {
-    this.submitted = true;
-    if (!this.isValid()) {
-      this.isCardValid = false;
-      return;
-    }
-
-    if (this.f["amount"]?.value > this.currentLimit!) {
-      alert("Deposit amount has exceeded your deposit limit!");
-      return;
-    }
-
-    if (this.form.invalid) return;
-
-    //this.form.patchValue({cardNumber: formatCard});
+  onSubmit(): void {
     this.balanceService.addBalance(this.f["amount"]?.value).subscribe({
       next: (response) => {
-        this.transaction.AddTransaction(response).subscribe({
-          next: (message) => {
-            console.log(message);
-            this.close();
-            this.balanceService.updateBalance();
-          },
+        this.transaction.AddTransaction(response).subscribe(() => {
+          this.close();
+          this.balanceService.updateBalance();
         });
       },
       error: (error) => {
-        console.log(error);
+        console.log("Something went wrong! ", error);
       },
     });
-    return;
   }
 
-  getBalance(): void {
+  getDepositLimit(): void {
     this.authenticationService.decodeToken().subscribe({
       next: (userBalance) => {
         this.currentLimit = userBalance.depositLimit;
       },
       error: (error) => {
-        console.log(error);
+        console.log("Something went wrong! ", error);
       },
     });
   }
 
   // Updates the amount value to the specified buttons value
-  updateAmount(value: number): void {
+  updateAmount(value: number, id: number): void {
+    this.f["amount"].markAsTouched();
     this.form.patchValue({ amount: value });
+    const element = document.getElementById("button-grid")!.children;
+    for (let i = 0; i < element?.length!; i++) {
+      element[i].classList.remove("active");
+    }
+    element[id].classList.add("active");
   }
 
   // Checks if the card number is valid through the use of Luhn algorithm
@@ -168,10 +143,8 @@ export class IndbetalComponent implements OnInit {
     if (ele === undefined) {
       return;
     }
-
     ele = ele.split("-").join("");
-    let finalVal = ele.match(/.{1,4}/g)?.join("-");
-    this.form.patchValue({ cardNumber: finalVal });
+    this.form.patchValue({ cardNumber: ele.match(/.{1,4}/g)?.join("-") });
   }
 
   // Add a slash in between month and year
@@ -181,39 +154,29 @@ export class IndbetalComponent implements OnInit {
       return;
     }
     ele = ele.split("/").join("");
-
-    let finalVal = ele.match(/.{1,2}/g)?.join("/");
-    this.form.patchValue({ expDate: finalVal });
-  }
-
-  // Focuces one of the buttons and adds its value to amount
-  showFocus() {
-    setTimeout(() => {
-      // this will make the execution after the above boolean has changed
-      this.btn.nativeElement.focus();
-      this.updateAmount(150);
-    }, 0);
+    this.form.patchValue({ expDate: ele.match(/.{1,2}/g)?.join("/") });
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any) {
+  keyPressNumbers(event: any): void {
     var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
     if (charCode < 48 || charCode > 57) {
       event.preventDefault();
-      return false;
-    } else {
-      return true;
     }
   }
 
+  // Closes dialog(modal)
+  close(): void {
+    this.isOpen = false;
+    this.dialogRef.close();
+  }
 
-  public openLimit(): void {
-    if(this.router.url != "/konto") {
-      this.router.navigate(["konto"])
+  openLimit(): void {
+    if (this.router.url != "/konto") {
+      this.router.navigate(["konto"]);
     }
     this.balanceService.goToLimit();
     this.close();
   }
 }
-

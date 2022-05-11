@@ -1,90 +1,158 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" [@openClose]="isOpen ? 'open' : 'close'" [ngStyle]="{'max-height': (f['amount'].value < 100 && this.form.hasError ? '650px' : this.form.hasError && submitted ? '625px' : '580px') }" id="indbetalForm" method="post" class="form-control h-center v-center noselect">
-	<div class="form-header bg-green">
-		<svg (click)="close()" xmlns="http://www.w3.org/2000/svg" class="v-center" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet"><path data-path="close" fill-rule="evenodd" d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"></path></svg>
+<form [formGroup]="form" [@openClose]="isOpen ? 'open' : 'close'" id="indbetalForm" method="post" class="form-control h-center v-center noselect">
+  <div class="header">
+    <div class="header-button">
+      <svg (click)="close()" xmlns="http://www.w3.org/2000/svg" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet">
+        <path
+          data-path="close"
+          fill-rule="evenodd"
+          d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"
+        ></path>
+      </svg>
+    </div>
 
-		<div class="column column-header">
-			<h2>Indbetaling</h2>
-		</div>
-	</div>
-	<br>
-	<div class="column flow-down input-section">
-		<div class="form-row flow-down">
-			<label for="" class="form-label">Kortholders navn</label>
-			<input class="form-input" formControlName="cardName" [ngClass]="{ 'is-invalid': submitted && f['cardName'].errors, 'is-valid': submitted && !f['cardName'].errors}" placeholder="Ex. John Smith">
+    <div class="header-title">
+      <div>Indbetaling</div>
+    </div>
+  </div>
 
-			<div *ngIf="submitted && f['cardName'].errors" class="invalid-feedback">
-				<div *ngIf="f['cardName'].errors['required']">Indtast kortholderens navn</div>
-			</div>
-		</div>
-		<div class="form-row flow-down">
-			<label for="" class="form-label">Kortnummer</label>
-			<input class="form-input" (keyup)="addDashes()" (keypress)="keyPressNumbers($event)" (focusout)="this.isCardValid = isValid()" formControlName="cardNumber" maxlength="19" [ngClass]="{ 'is-invalid': submitted && f['cardNumber'].errors || !this.isCardValid, 'is-valid': submitted && !f['cardNumber'].errors && this.isCardValid} " placeholder="1234-1234-1234-1234">
+  <div class="card-credentials">
+    <div class="input-group">
+      <label for="form-input" class="form-label">Kortholders navn</label>
+      <input
+        id="form-input"
+        formControlName="cardName"
+        [ngClass]="{ 'is-invalid': f['cardName'].touched && f['cardName'].errors, 'is-valid': f['cardName'].touched && !f['cardName'].errors }"
+        placeholder="Ex. John Smith"
+      />
 
-			<div *ngIf="submitted && !this.isCardValid && !f['cardNumber'].errors" class="invalid-feedback">
-				<div *ngIf="!this.isCardValid">Kortnummeret er ikke gyldigt!</div>
-			</div>
-			<div *ngIf="submitted && f['cardNumber'].errors" class="invalid-feedback">
-				<div *ngIf="f['cardNumber'].errors['required']">Indtast kortnummeret</div>
-				<div *ngIf="f['cardNumber'].errors['maxlength']">Kortnummeret skal have 16 cifre</div>
-				<div *ngIf="f['cardNumber'].errors['minlength']">Kortnummeret skal have 16 cifre</div>
-			</div>
-		</div>
+      <div *ngIf="f['cardName'].touched && f['cardName'].errors" class="invalid-feedback">
+        <div *ngIf="f['cardName'].errors['required']">Indtast kortholderens navn</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="form-input" class="form-label">Kortnummer</label>
+      <input
+        id="form-input"
+        (keyup)="addDashes()"
+        (keypress)="keyPressNumbers($event)"
+        (focusout)="this.isCardValid = isValid()"
+        formControlName="cardNumber"
+        maxlength="19"
+        [ngClass]="{
+          'is-invalid': (f['cardNumber'].touched && f['cardNumber'].errors) || !isCardValid,
+          'is-valid': f['cardNumber'].touched && !f['cardNumber'].errors && isCardValid
+        }"
+        placeholder="1234-1234-1234-1234"
+      />
 
-		<div class="form-row center card">
-			<div class="form-row card-credentials">
-				<div class="form-row flow-down">
-					<label for="" class="form-label">Udløbsdato</label>
-					<input class="form-input" #expDate (keyup)="addSlash()" formControlName="expDate" minlength="5" maxlength="5" [ngClass]="{ 'is-invalid': submitted && f['expDate'].errors, 'is-valid': submitted && !f['expDate'].errors}" placeholder="12/24">
+      <div *ngIf="(f['cardNumber'].touched && f['cardNumber'].errors) || (f['cardNumber'].touched && !isCardValid)" class="invalid-feedback">
+        <div *ngIf="f['cardNumber'].errors!['required']">Indtast kortnummeret</div>
+        <div *ngIf="f['cardNumber'].errors!['maxlength']">Kortnummeret skal have 16 cifre</div>
+        <div *ngIf="f['cardNumber'].errors!['minlength']">Kortnummeret skal have 16 cifre</div>
+        <div *ngIf="!isCardValid">Kortnummeret er ikke gyldigt!</div>
+      </div>
+    </div>
 
-					<div *ngIf="submitted && f['expDate'].errors" class="invalid-feedback">
-						<div *ngIf="f['expDate'].errors['required']">Indtast udløbsdatoen</div>
-						<div *ngIf="f['expDate'].errors['maxlength']">Udløbsdatoen skal have både måned og år</div>
-						<div *ngIf="f['expDate'].errors['minlength']">Udløbsdatoen skal have både måned og år</div>
-					</div>
-				</div>
+    <div class="card-wrapper">
+      <div class="input-group">
+        <label for="form-input" class="form-label">Udløbsdato</label>
+        <input
+          id="form-input"
+          (keyup)="addSlash()"
+          formControlName="expDate"
+          minlength="5"
+          maxlength="5"
+          [ngClass]="{ 'is-invalid': f['expDate'].touched && f['expDate'].errors, 'is-valid': f['expDate'].touched && !f['expDate'].errors }"
+          placeholder="12/24"
+        />
 
-				<div class="form-row flow-down">
-					<label for="" class="form-label">Kontrolcifre/CVV</label>
-					<input class="form-input" formControlName="cvv" [ngClass]="{ 'is-invalid': submitted && f['cvv'].errors, 'is-valid': submitted && !f['cvv'].errors}" placeholder="123">
+        <div *ngIf="f['expDate'].touched && f['expDate'].errors" class="invalid-feedback">
+          <div *ngIf="f['expDate'].errors['required']">Indtast udløbsdatoen</div>
+          <div *ngIf="f['expDate'].errors['maxlength']">Udløbsdatoen skal have både måned og år</div>
+          <div *ngIf="f['expDate'].errors['minlength']">Udløbsdatoen skal have både måned og år</div>
+        </div>
+      </div>
 
-					<div *ngIf="submitted && f['cvv'].errors" class="invalid-feedback">
-						<div *ngIf="f['cvv'].errors['required']">Indtast kontrolcifrene</div>
-						<div *ngIf="f['cvv'].errors['minlength']">CVV skal være 3 cifre</div>
-						<div *ngIf="f['cvv'].errors['maxlength']">CVV skal være 3 cifre</div>
-					</div>
-				</div>
-			</div>
-		</div>
+      <div class="input-group">
+        <label for="form-input" class="form-label">Kontrolcifre/CVV</label>
+        <input
+          id="form-input"
+          formControlName="cvv"
+          [ngClass]="{ 'is-invalid': f['cvv'].touched && f['cvv'].errors, 'is-valid': f['cvv'].touched && !f['cvv'].errors }"
+          placeholder="123"
+        />
 
-		<div class="form-row flow-down">
-			<label for="" class="form-label">Beløb</label>
-			<input class="form-input" formControlName="amount" maxlength="6" (keypress)="keyPressNumbers($event)" [ngClass]="{ 'is-invalid': f['amount'].value < 100, 'is-valid': submitted && f['amount'].value >= 100}">
+        <div *ngIf="f['cvv'].touched && f['cvv'].errors" class="invalid-feedback">
+          <div *ngIf="f['cvv'].errors['required']">Indtast kontrolcifrene</div>
+          <div *ngIf="f['cvv'].errors['minlength']">CVV skal være 3 cifre</div>
+          <div *ngIf="f['cvv'].errors['maxlength']">CVV skal være 3 cifre</div>
+        </div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="form-input" class="form-label">Beløb</label>
+      <input
+        id="form-input"
+        formControlName="amount"
+        [maxlength]="getMaxLength()"
+        (keypress)="keyPressNumbers($event)"
+        [ngClass]="{
+          'is-invalid': (f['amount'].touched && f['amount'].value < 100) || (f['amount'].touched && f['amount'].value > currentLimit!),
+          'is-valid': (f['amount'].touched && f['amount'].value >= 100) || (f['amount'].touched && f['amount'].value < currentLimit!)
+        }"
+      />
 
-			<div *ngIf="f['amount'].value < 100" class="invalid-feedback">
-				<div>Du kan mindst indbetale 100 kr.</div>
-			</div>
-		</div>
-	</div>
+      <div *ngIf="f['amount'].value < 100 || f['amount'].value > currentLimit!" class="invalid-feedback">
+        <div *ngIf="f['amount'].value < 100">Du kan mindst indbetale 100 kr.</div>
+        <div *ngIf="f['amount'].value > currentLimit!">Du overstiger din indbetalingsgrænse på {{ currentLimit }} kr!</div>
+      </div>
+    </div>
+  </div>
 
-	<br>
-	<div class="amount-selection">
-		<div class="amount-grid">
-			<button type="button" class="grid-item" (click)="updateAmount(100)"><span class="left"></span><p>100 kr</p><span class="right"></span></button>
-			<button type="button" class="grid-item" (click)="updateAmount(150)" #focusBtn><span class="left"></span><p>150 kr</p><span class="right"></span></button>
-			<button type="button" class="grid-item" (click)="updateAmount(250)"><span class="left"></span><p>250 kr</p><span class="right"></span></button>
-			<button type="button" class="grid-item" (click)="updateAmount(500)"><span class="left"></span><p>500 kr</p><span class="right"></span></button>
-			<button type="button" class="grid-item" (click)="updateAmount(1000)"><span class="left"></span><p>1000 kr</p><span class="right"></span></button>
-			<button type="button" class="grid-item" (click)="updateAmount(2500)"><span class="left"></span><p>2500 kr</p><span class="right"></span></button>
-		</div>
-	</div>
-  
-	<div class="column flow-down submit-form">
-		<div class="row center">
-			<button type="submit" id="submit" class="form-submit" [disabled]="f['amount'].value < 100">Indbetal {{f['amount'].value}} kr på min konto</button>
-		</div>
-		<div class="row center change">
-			<button id="change" class="form-submit" (click)="openLimit()">Indstil Indbetalingsgrænse</button>
-		</div>
-	</div>
+  <div class="amount-selection">
+    <div class="amount-grid" id="button-grid">
+      <button type="button" class="grid-item" (click)="updateAmount(100, 0)">
+        <span class="left"></span>
+        <p>100 kr</p>
+        <span class="right"></span>
+      </button>
+      <button type="button" class="grid-item" (click)="updateAmount(150, 1)" #focusBtn>
+        <span class="left"></span>
+        <p>150 kr</p>
+        <span class="right"></span>
+      </button>
+      <button type="button" class="grid-item" (click)="updateAmount(250, 2)">
+        <span class="left"></span>
+        <p>250 kr</p>
+        <span class="right"></span>
+      </button>
+      <button type="button" class="grid-item" (click)="updateAmount(500, 3)">
+        <span class="left"></span>
+        <p>500 kr</p>
+        <span class="right"></span>
+      </button>
+      <button type="button" class="grid-item" (click)="updateAmount(1000, 4)">
+        <span class="left"></span>
+        <p>1000 kr</p>
+        <span class="right"></span>
+      </button>
+      <button type="button" class="grid-item" (click)="updateAmount(2500, 5)">
+        <span class="left"></span>
+        <p>2500 kr</p>
+        <span class="right"></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="submit-form">
+    <button
+      type="submit"
+      id="submit"
+      (click)="onSubmit()"
+      [disabled]="form.invalid || f['amount'].value < 100 || f['amount'].value > currentLimit! || !isCardValid"
+    >
+      Indbetal {{ f["amount"].value }} kr på min konto
+    </button>
+    <button type="button" id="change" (click)="openLimit()">Indstil Indbetalingsgrænse</button>
+  </div>
 </form>
-
