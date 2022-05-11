@@ -31,7 +31,6 @@ export class AdministrationComponent {
       if (token !== "") {
         this.customerService.getAll().subscribe((customers) => {
           this.dataSource = new MatTableDataSource<User>(customers);
-          this.openAction(1, 2);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });

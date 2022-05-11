@@ -4,22 +4,38 @@
     <div class="form-header">
       <h2>Log ind</h2>
     </div>
-    <br>
+    <br />
     <!-- Lady on the left of the login form. -->
     <img src="../../../assets/media/girl.png" class="ll-img" />
     <!-- A single column where its content flows down instead of sideways. -->
     <div class="form-row flow-down">
       <i class="fa fa-envelope fa-2x"></i>
-      <input type="text" name="email" id="email" class="form-input" placeholder="E-mail" formControlName="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />
-      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+      <input
+        type="text"
+        name="email"
+        id="email"
+        class="form-input"
+        placeholder="E-mail"
+        formControlName="email"
+        [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }"
+      />
+      <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
         <div *ngIf="f['email'].errors['required']">Username is required</div>
       </div>
     </div>
 
     <div class="form-row flow-down">
       <i class="fa fa-lock fa-2x"></i>
-      <input type="password" name="password" id="password" class="form-input" placeholder="Adgangskode" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f['password'].errors }"/>
-      <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+      <input
+        type="password"
+        name="password"
+        id="password"
+        class="form-input"
+        placeholder="Adgangskode"
+        formControlName="password"
+        [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }"
+      />
+      <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
         <div *ngIf="f['password'].errors['required']">Password is required</div>
       </div>
     </div>
@@ -27,8 +43,8 @@
     <div class="form-row flow-down">
       <button type="submit" name="login" id="login" class="btn form-submit bg-orange">Log ind</button>
     </div>
-    <br>
-    <div class="form-row flow-down form-links" style="display: block;">
+    <br />
+    <div class="form-row flow-down form-links" style="display: block">
       <a routerLink="/kontakt">Glemt Adgangskode</a>
       <a routerLink="/tilmeld">Opret Konto</a>
     </div>
