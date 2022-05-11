@@ -1,11 +1,4 @@
-<form
-  [formGroup]="form"
-  (ngSubmit)="onSubmit()"
-  [@openClose]="isOpen ? 'open' : 'close'"
-  id="indbetalForm"
-  method="post"
-  class="form-control h-center v-center noselect"
->
+<form [formGroup]="form" [@openClose]="isOpen ? 'open' : 'close'" id="indbetalForm" method="post" class="form-control h-center v-center noselect">
   <div class="header">
     <div class="header-button">
       <svg (click)="close()" xmlns="http://www.w3.org/2000/svg" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet">
@@ -152,9 +145,14 @@
   </div>
 
   <div class="submit-form">
-    <button type="submit" id="submit" [disabled]="form.invalid || f['amount'].value < 100 || f['amount'].value > currentLimit! || !isCardValid">
+    <button
+      type="submit"
+      id="submit"
+      (click)="onSubmit()"
+      [disabled]="form.invalid || f['amount'].value < 100 || f['amount'].value > currentLimit! || !isCardValid"
+    >
       Indbetal {{ f["amount"].value }} kr på min konto
     </button>
-    <button id="change" (click)="openLimit()">Indstil Indbetalingsgrænse</button>
+    <button type="button" id="change" (click)="openLimit()">Indstil Indbetalingsgrænse</button>
   </div>
 </form>
