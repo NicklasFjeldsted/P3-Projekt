@@ -137,6 +137,9 @@ namespace TEC_KasinoAPI.Services
             // Returns null if the accountBalance wasnt found I.E. it doesnt exist.
             if (accountBalance == null) return null;
 
+            // Returns null if the balance after the change is less than 0.
+            if (accountBalance.Balance - model.Amount < 0) return null;
+
             // Subtract the amount from the model parameter from the account balance.
             accountBalance.Balance -= model.Amount;
 

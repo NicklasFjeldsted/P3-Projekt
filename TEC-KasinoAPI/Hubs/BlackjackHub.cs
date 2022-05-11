@@ -11,6 +11,7 @@ namespace TEC_KasinoAPI.Hubs
     public class BlackjackHub : Hub
 	{
 		private readonly IGameManager _gameManager;
+		private readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore };
 
 		public BlackjackHub(IGameManager gameManager)
 		{
@@ -50,30 +51,39 @@ namespace TEC_KasinoAPI.Hubs
 		{
 			string id = Context.ConnectionId;
 
-			//         PlayerData player = new PlayerData()
-			//         {
-			//             FullName = Context.User.Claims.First(x => x.Type == ClaimTypes.GivenName).Value,
-			//             Email = Context.User.Claims.First(x => x.Type == ClaimTypes.Email).Value
-			//};
-
-			PlayerData player = new PlayerData();
-			player.FullName = Context.User.Identity.Name;
-
-			_gameManager.ConnectedPlayers.TryAdd(id, player);
+			_gameManager.ConnectedPlayers.TryAdd(id, new PlayerData());
 			_gameManager.Bets.TryAdd(id, 0);
-
-			Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 
 			return base.OnConnectedAsync();
 		}
 
+		/// <summary>
+		/// Identifies the hub connection and connects the player to everyone else.
+		/// </summary>
+		public async Task Identify(string playerData)
+        {
+			string id = Context.ConnectionId;
+
+			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, _serializerSettings));
+
+			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
+		}
+
+		/// <summary>
+		/// Updates a players data.
+		/// </summary>
 		public async Task Update_PlayerData(string playerData)
         {
 			string id = Context.ConnectionId;
-			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore}));
+
+			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, _serializerSettings));
+
 			await Clients.All.SendAsync("Update_PlayerData_Callback", playerData);
         }
 
+		/// <summary>
+		/// Gets all the data the players have sent to the server.
+		/// </summary>
 		public async Task Get_PlayerData()
         {
 			await Clients.Caller.SendAsync("Get_PlayerData_Callback", GameManager.DictionaryToJson(_gameManager.ConnectedPlayers));
@@ -116,8 +126,7 @@ namespace TEC_KasinoAPI.Hubs
 		}
 
 		/// <summary>
-		/// This is called by the server if the "Hit" method calculates a value over 21, "Bust" informs
-		/// the connectedPlayers that the client that called "Hit" is busted.
+		/// This is called by the server if the "Hit" method calculates a value over 21, "Bust" informs the connectedPlayers that the client that called "Hit" is busted.
 		/// </summary>
 		public async Task Bust()
         {

@@ -13,13 +13,13 @@ export class NetworkingFeature implements IFeature
 	public async StartConnection(): Promise<void>
 	{
 		this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl(environment.hubURL + "/Blackjack", { headers: { Authorization: `Bearer ${this.Entity.accessToken}` } })
+			.withUrl(environment.hubURL + "/Blackjack")
 			.configureLogging(new ServerLogger())
 			.build();
 
 		try
 		{
-			return await this.hubConnection.start();
+			return await this.hubConnection.start().then(() => this.SendData("Identify", JSON.stringify(this.Entity.user)));
 		}
 		catch (error)
 		{

@@ -53,20 +53,6 @@ export class Game extends Entity
 		this._balance = value;
 	}
 
-	private _accessToken: string;
-	public get accessToken(): string
-	{
-		if (this._accessToken)
-		{
-			return this._accessToken;
-		}
-		throw new Error(`User's accessToken did not load correctly!`);
-	}
-	public set accessToken(value: string)
-	{
-		this._accessToken = value;
-	}
-
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject): void
 	{
