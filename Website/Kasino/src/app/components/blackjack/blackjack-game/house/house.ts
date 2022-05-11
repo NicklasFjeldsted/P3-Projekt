@@ -288,6 +288,7 @@ export class House extends MonoBehaviour
 		seat.SetParent(this.gameObject);
 		seat.AddComponent(new Seat());
 		seat.GetComponent(Seat).seatIndex = id;
+		seat.GetComponent(Seat).house = this;
 		seat.transform.scale = new Vector2(100, 100);
 		seat.transform.position = position;
 		this.seats.push(seat.GetComponent(Seat));

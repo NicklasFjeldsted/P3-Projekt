@@ -35,7 +35,6 @@ export class Seat extends MonoBehaviour
 	public Start(): void
 	{
 		this.collider = this.gameObject.GetComponent(ColliderComponent);
-		this.house = this.gameObject.parent.GetComponent(House);
 		this.UpdateIsMyTurn(this.myTurn);
 		this.resultTextChildComponent.gameObject.isActive = false;
 		this.childTextComponent.gameObject.isActive = false;
@@ -245,6 +244,7 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
+		console.warn(this.house);
 		switch (this.house.CurrentStage)
 		{
 			case GameStage.Off:
