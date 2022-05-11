@@ -105,7 +105,7 @@
         (keypress)="keyPressNumbers($event)"
         [ngClass]="{
           'is-invalid': (f['amount'].touched && f['amount'].value < 100) || (f['amount'].touched && f['amount'].value > currentLimit!),
-          'is-valid': (f['amount'].touched && f['amount'].value > 100) || (f['amount'].touched && f['amount'].value < currentLimit!)
+          'is-valid': (f['amount'].touched && f['amount'].value >= 100) || (f['amount'].touched && f['amount'].value < currentLimit!)
         }"
       />
 
