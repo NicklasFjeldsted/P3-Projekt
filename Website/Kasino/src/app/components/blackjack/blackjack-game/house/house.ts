@@ -139,7 +139,7 @@ export class House extends MonoBehaviour
 	{
 		let playerData: PlayerData = JSON.parse(data);
 		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
-		console.debug(parsedPlayerData.fullName + " - Connected.");
+		console.info(`%c${parsedPlayerData.fullName} %c- %cConnected.`, "color: rgba(0, 183, 255, 1)", "color: rgba(255, 255, 255, 1)", "color: rgba(255, 174, 0, 1)");
 	}
 
 	public Player_Disconnected(data: string): void
@@ -147,7 +147,7 @@ export class House extends MonoBehaviour
 		let playerData: PlayerData = JSON.parse(data);
 		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
 		this.seats.find(seat => seat.seatIndex == parsedPlayerData.seatIndex)?.LeaveSeat();
-		console.debug(parsedPlayerData.fullName + " - Disconnected.");
+		console.info(`%c${parsedPlayerData.fullName} %c- %cDisconnected.`, "color: rgba(0, 183, 255, 1)", "color: rgba(255, 255, 255, 1)", "color: rgba(255, 174, 0, 1)");
 	}
 
 	Start(): void

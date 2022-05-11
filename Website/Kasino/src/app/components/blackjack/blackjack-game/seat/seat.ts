@@ -244,7 +244,6 @@ export class Seat extends MonoBehaviour
 			return;
 		}
 
-		console.warn(this.house);
 		switch (this.house.CurrentStage)
 		{
 			case GameStage.Off:

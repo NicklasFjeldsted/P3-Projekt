@@ -30,6 +30,6 @@ export class ServerLogger implements ILogger
 				break;
 		}
 
-		console.info(`\t%c ${LogLevel[logLevel]} - ${message}`, `background: #${bg_color}; color: #${txt_color};`);
+		console.debug(`%c${LogLevel[logLevel]} - ${message}`, `background: #${bg_color}; color: #${txt_color};`);
 	}
 }
