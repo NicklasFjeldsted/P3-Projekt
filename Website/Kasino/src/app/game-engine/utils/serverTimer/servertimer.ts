@@ -24,13 +24,13 @@ export class ServerTimer
 
 		setInterval(() =>
 		{
-			this.ServerTimeSubject.next(this.DueTime.getTime() - Date.now());
+			this.ServerTimeSubject.next(this._dueTime.getTime() - Date.now());
 		}, 100);
 	}
 
-	public Start(newDueTime: Date): void
+	public Start(newDueTime: string): void
 	{
-		this._dueTime = newDueTime;
+		this._dueTime = new Date(newDueTime);
 		this.ElapsedSubject.next();
 	}
 }

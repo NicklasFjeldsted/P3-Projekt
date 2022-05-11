@@ -146,7 +146,7 @@ export class House extends MonoBehaviour
 	public Update_Server_DueTime(DueTime: string)
 	{
 		let parsedDueTime = JSON.parse(DueTime);
-		this.Timer.Start(new Date(parsedDueTime));
+		this.Timer.Start(parsedDueTime);
 	}
 
 	public Player_Connected(data: string): void
