@@ -1,6 +1,6 @@
-import { BehaviorSubject, Observable, Subject } from "rxjs";
-import { GameObject, InfoBar, MonoBehaviour, NetworkingFeature, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
-import { IUser, User, UserData } from "src/app/interfaces/User";
+import { BehaviorSubject, Observable } from "rxjs";
+import { GameObject, MonoBehaviour, NetworkingFeature, ServerTimer, TextComponent, Vector2 } from "src/app/game-engine";
+import { UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
 import { IPlayerData, Player, PlayerData } from "../player";
 import { Seat } from "../seat";
@@ -41,10 +41,18 @@ export class House extends MonoBehaviour
 		super();
 		this.StageSubject = new BehaviorSubject<GameStage>(GameStage.Off);
 		this.OnStageChange = this.StageSubject.asObservable();
+		this._timer = new ServerTimer();
+	}
+
+	private _timer: ServerTimer;
+	public get Timer(): ServerTimer
+	{
+		return this._timer;
 	}
 
 	private childText: TextComponent;
 	private resultChildText: TextComponent;
+	private serverTimerChildText: TextComponent;
 	private houseCards: Card[] = [];
 	private get HeldValue(): number
 	{
@@ -135,6 +143,12 @@ export class House extends MonoBehaviour
 		}
 	}
 
+	public Update_Server_DueTime(DueTime: string)
+	{
+		let parsedDueTime = JSON.parse(DueTime);
+		this.Timer.Start(new Date(parsedDueTime));
+	}
+
 	public Player_Connected(data: string): void
 	{
 		let playerData: PlayerData = JSON.parse(data);
@@ -152,13 +166,30 @@ export class House extends MonoBehaviour
 
 	Start(): void
 	{
+		this.Timer.OnServerTimeChanged.subscribe((timeLeft) =>
+		{
+			if (timeLeft <= 0)
+			{
+				this.serverTimerChildText.text = ' ';
+				return;
+			}
+			
+			this.serverTimerChildText.text = `Game Start:\n${(timeLeft / 1000).toFixed(1)}s`;
+		});
 
+		this.Timer.Elapsed.subscribe(() =>
+		{
+			if (this.CurrentStage != GameStage.Ended) return;
+			
+			this.childText.gameObject.isActive = false;
+			this.resultChildText.gameObject.isActive = false;
+			this.ClearCards();
+		});
 	}
 
 	Awake(): void
 	{
 		this.gameObject.transform.position = new Vector2(480, 300);
-
 		
 		let offset: number = 200;
 		for (let i = 0; i < 5; i++)
@@ -180,14 +211,20 @@ export class House extends MonoBehaviour
 		this.resultChildText = resultChild.GetComponent(TextComponent);
 		this.resultChildText.gameObject.transform.Translate(new Vector2(0, -250));
 
-		cardChild.AddComponent(new TextComponent());
+		cardChild.AddComponent(new TextComponent(' '));
 		this.childText = cardChild.GetComponent(TextComponent);
 
 		cardChild.SetParent(this.gameObject);
 		cardChild.transform.Translate(new Vector2(0, -230));
 		cardChild.transform.scale = new Vector2(100, 100);
 
-		this.childText.text = ' ';
+		let serverTimerChildText = new GameObject('Server Timer');
+		this.gameObject.game.Instantiate(serverTimerChildText);
+		serverTimerChildText.SetParent(this.gameObject);
+		serverTimerChildText.AddComponent(new TextComponent(' '));
+		serverTimerChildText.transform.scale = new Vector2(150, 30);
+		this.serverTimerChildText = serverTimerChildText.GetComponent(TextComponent);
+		this.serverTimerChildText.Awake();
 	}
 	
 	Update(deltaTime: number): void
@@ -312,14 +349,6 @@ export class House extends MonoBehaviour
 		if (this.CurrentStage == GameStage.Ended)
 		{
 			this.resultChildText.gameObject.isActive = true;
-			
-			setTimeout(() =>
-			{
-				this.childText.gameObject.isActive = false;
-				this.resultChildText.gameObject.isActive = false;
-				this.ClearCards();
-			}, 4500);
-
 			if (this.HeldValue > 21)
 			{
 				this.resultChildText.text = "HOUSE BUSTED!";

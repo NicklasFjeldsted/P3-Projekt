@@ -102,7 +102,6 @@ namespace TEC_KasinoAPI.Services
 		public ConcurrentDictionary<int, Card> HouseCards { get { return houseCards; } }
 		private readonly ConcurrentDictionary<int, Card> houseCards = new ConcurrentDictionary<int, Card>();
 
-
 		// Reference for the timer instance.
 		private readonly TimerPlus _timer = TimerPlus.Instance;
 
@@ -133,6 +132,12 @@ namespace TEC_KasinoAPI.Services
 		/// </summary>
 		private void HubTimer_Elapsed(object sender, ElapsedEventArgs e)
 		{
+			using (var scope = _scopeFactory.CreateScope())
+			{
+				IHubContext<BlackjackHub> hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
+
+				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(_timer.DueTime));
+			}
 			BeginGame();
 		}
 
@@ -379,6 +384,8 @@ namespace TEC_KasinoAPI.Services
 
 				_timer.Stop();
 
+				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(_timer.DueTime));
+
 				SetTurnOrder();
 
 				RefillCards();
@@ -440,16 +447,17 @@ namespace TEC_KasinoAPI.Services
 
 			SeatTurnIndex = -1;
 
+			_timer.Start();
+
 			await using(var scope = _scopeFactory.CreateAsyncScope())
             {
 				var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
 				await hubContext.Clients.All.SendAsync("Sync_CurrentStage", JsonConvert.SerializeObject(IsPlaying));
 				await hubContext.Clients.All.SendAsync("Get_PlayerData_Callback", DictionaryToJson(ConnectedPlayers));
+				await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(_timer.DueTime));
 				await hubContext.Clients.All.SendAsync("Game_Ended");
 			}
-
-			_timer.Start();
 		}
 
 		/// <summary>

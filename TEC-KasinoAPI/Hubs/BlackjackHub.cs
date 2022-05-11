@@ -3,8 +3,7 @@ using TEC_KasinoAPI.Models;
 using Newtonsoft.Json;
 using TEC_KasinoAPI.Models.Data_Models;
 using TEC_KasinoAPI.Services;
-using System.Diagnostics;
-using System.Security.Claims;
+using TEC_KasinoAPI.Helpers;
 
 namespace TEC_KasinoAPI.Hubs
 {
@@ -65,7 +64,7 @@ namespace TEC_KasinoAPI.Hubs
 			string id = Context.ConnectionId;
 
 			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, _serializerSettings));
-
+			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(TimerPlus.Instance.DueTime));
 			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 		}
 

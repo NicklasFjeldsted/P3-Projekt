@@ -3,6 +3,7 @@
 		<p>Name: {{this.user.fullName}}</p>
 		<p>Balance: {{this.balance.balance}} kr.</p>
 		<p>Time: {{this.time | date: 'HH:mm'}}</p>
+		<p>Room Time: {{this.timePlayed}}</p>
 	</div>
 	<div class="infobar-error" *ngIf="this.user === undefined">
 		<p>User did not load properly!</p>

@@ -8,12 +8,16 @@
 	height: 20px;
 }
 
+#infobar > #infobar-wrapper {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}
+
 #infobar > #infobar-wrapper > p {
 	display: inline;
+	text-align: center;
 	color: white;
-	height: 100%;
-	margin-right: 100px;
-	margin-left: 20px;
 }
 
 #infobar > .infobar-error {

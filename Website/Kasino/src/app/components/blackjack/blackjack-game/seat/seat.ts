@@ -40,6 +40,15 @@ export class Seat extends MonoBehaviour
 		this.childTextComponent.gameObject.isActive = false;
 
 		this.house.OnStageChange.subscribe((stage) => stage == GameStage.Ended ? this.OnGameEnded() : null);
+		this.house.Timer.Elapsed.subscribe(() =>
+		{
+			if (this.house.CurrentStage != GameStage.Ended) return;
+			
+			this.resultTextChildComponent.gameObject.isActive = false;
+			this.childTextComponent.gameObject.isActive = false;
+			this.ClearCards();
+		});
+
 	}
 
 	public Awake(): void
@@ -246,6 +255,7 @@ export class Seat extends MonoBehaviour
 
 		switch (this.house.CurrentStage)
 		{
+			//////// OFF /////////////////////////////////////////////////////////////////////////////
 			case GameStage.Off:
 				this.seatBet.gameObject.isActive = true;
 				this.childTextComponent.gameObject.isActive = true;
@@ -255,7 +265,9 @@ export class Seat extends MonoBehaviour
 
 				this.ClearCards();
 				break;
+			////////////////////////////////////////////////////////////////////////////////////////////
 			
+			//////// STARTED /////////////////////////////////////////////////////////////////////////////
 			case GameStage.Started:
 				this.seatBet.gameObject.isActive = true;
 				this.childTextComponent.gameObject.isActive = true;
@@ -275,18 +287,10 @@ export class Seat extends MonoBehaviour
 				this.resultTextChildComponent.gameObject.isActive = true;
 				this.resultTextChildComponent.text = "BUST!";
 				break;
+			////////////////////////////////////////////////////////////////////////////////////////////
 			
+			//////// ENDED /////////////////////////////////////////////////////////////////////////////
 			case GameStage.Ended:
-				// if (this.Player)
-				// {
-				// 	this.seatBet.gameObject.isActive = true;
-				// 	this.DisplayCard();
-				// }
-				// else
-				// {
-				// 	this.seatBet.gameObject.isActive = false;
-				// 	this.ClearCards();
-				// }
 				if (this.seatBet.lastBet > 0)
 				{
 					this.resultTextChildComponent.gameObject.isActive = true;
@@ -297,14 +301,7 @@ export class Seat extends MonoBehaviour
 				}
 				this.UpdateIsMyTurn(false);
 				this.childTextComponent.text = this.Player.cardValues.toString();
-	
-				setTimeout(() =>
-				{
-					this.resultTextChildComponent.gameObject.isActive = false;
-					this.childTextComponent.gameObject.isActive = false;
-					this.ClearCards();
-				}, 4500);
-	
+
 				if (this.Player.data.Busted == true)
 				{
 					this.resultTextChildComponent.text = "BUST!";
@@ -318,6 +315,7 @@ export class Seat extends MonoBehaviour
 					this.resultTextChildComponent.text = "LOSE!";
 				}
 				break;
+			////////////////////////////////////////////////////////////////////////////////////////////
 		}
 	}
 
@@ -336,15 +334,11 @@ export class Seat extends MonoBehaviour
 		{
 			this.resultTextChildComponent.gameObject.isActive = false;
 		}
+
 		this.UpdateIsMyTurn(false);
 		this.childTextComponent.text = this.Player.cardValues.toString();
 
-		setTimeout(() =>
-		{
-			this.resultTextChildComponent.gameObject.isActive = false;
-			this.childTextComponent.gameObject.isActive = false;
-			this.ClearCards();
-		}, 4500);
+
 
 		if (this.Player.data.Busted == true)
 		{
