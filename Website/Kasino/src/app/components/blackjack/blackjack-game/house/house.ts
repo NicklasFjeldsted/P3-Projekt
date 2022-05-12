@@ -61,6 +61,15 @@ export class House extends MonoBehaviour
 		{
 			output += card.value;
 		}
+
+		for (const card of this.houseCards)
+		{
+			if (card.id < 0 || card.id > 5) continue;
+
+			if (output > 11) continue;
+
+			output += 10;
+		}
 		return output;
 	}
 
@@ -143,10 +152,11 @@ export class House extends MonoBehaviour
 		}
 	}
 
-	public Update_Server_DueTime(DueTime: string)
+	public Update_Server_DueTime(dueTime: string)
 	{
-		let parsedDueTime = JSON.parse(DueTime);
+		let parsedDueTime = JSON.parse(dueTime);
 		this.Timer.Start(parsedDueTime);
+		return;
 	}
 
 	public Player_Connected(data: string): void

@@ -64,7 +64,7 @@ namespace TEC_KasinoAPI.Hubs
 			string id = Context.ConnectionId;
 
 			await _gameManager.ConnectedPlayers[id].Update(JsonConvert.DeserializeObject<PlayerData>(playerData, _serializerSettings));
-			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(TimerPlus.Instance.DueTime));
+			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
 			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 		}
 
@@ -98,9 +98,15 @@ namespace TEC_KasinoAPI.Hubs
             if (_gameManager.IsPlaying)
 			{
 				_gameManager.ConnectedPlayers[id].Cards.Add(_gameManager.GenerateCard());
-				if(GameManager.CalculateValue(_gameManager.ConnectedPlayers[id].Cards.ToList()) > 21)
+
+				int playerCardValue = GameManager.CalculateValue(_gameManager.ConnectedPlayers[id].Cards.ToList());
+				if (playerCardValue > 21)
                 {
 					Bust();
+                }
+				else if(playerCardValue == 21)
+                {
+					Stand();
                 }
             }
 

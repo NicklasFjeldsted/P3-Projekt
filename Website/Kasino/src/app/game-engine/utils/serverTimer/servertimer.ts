@@ -28,9 +28,9 @@ export class ServerTimer
 		}, 100);
 	}
 
-	public Start(newDueTime: string): void
+	public Start(newDueTime: any): void
 	{
-		this._dueTime = new Date(newDueTime);
+		this._dueTime = new Date(newDueTime.DueTime);
 		this.ElapsedSubject.next();
 	}
 }

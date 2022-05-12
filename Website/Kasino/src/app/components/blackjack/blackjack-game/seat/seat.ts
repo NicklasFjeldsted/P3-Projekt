@@ -277,6 +277,12 @@ export class Seat extends MonoBehaviour
 
 				this.UpdateIsMyTurn(this.myTurn);
 				this.DisplayCard();
+
+				if (this.Player.data.Blackjack == true)
+				{
+					this.resultTextChildComponent.gameObject.isActive = true;
+					this.resultTextChildComponent.text = "BLACKJACK!";
+				}
 	
 				if (!this.Player.data.Busted)
 				{
@@ -302,7 +308,11 @@ export class Seat extends MonoBehaviour
 				this.UpdateIsMyTurn(false);
 				this.childTextComponent.text = this.Player.cardValues.toString();
 
-				if (this.Player.data.Busted == true)
+				if (this.Player.data.Blackjack == true)
+				{
+					this.resultTextChildComponent.text = "BLACKJACK!";
+				}
+				else if (this.Player.data.Busted == true)
 				{
 					this.resultTextChildComponent.text = "BUST!";
 				}
