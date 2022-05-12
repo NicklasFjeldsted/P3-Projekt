@@ -9,10 +9,6 @@ export class ServerLogger implements ILogger
 
 		switch (logLevel)
 		{
-			case LogLevel.Error:
-				txt_color = 'ef233c';
-				break;
-			
 			case LogLevel.Information:
 				txt_color = 'ffffff';
 				break;
@@ -30,6 +26,13 @@ export class ServerLogger implements ILogger
 				break;
 		}
 
-		console.debug(`%c${LogLevel[logLevel]} - ${message}`, `background: #${bg_color}; color: #${txt_color};`);
+		if (logLevel == LogLevel.Error)
+		{
+			console.error(`${LogLevel[ logLevel ]} - ${message} %c=> %cSignalR`, 'color: #ffb703', 'color: rgba(0, 183, 255, 1)');
+		}
+		else
+		{
+			console.debug(`%c${LogLevel[logLevel]} - ${message}`, `background: #${bg_color}; color: #${txt_color};`);
+		}
 	}
 }

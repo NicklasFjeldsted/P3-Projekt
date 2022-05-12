@@ -21,6 +21,7 @@ export class PlayerData
 	private stand: boolean | null;
 	private busted: boolean | null;
 	private winner: boolean | null;
+	private blackjack: boolean | null;
 	private cards: Card[] | null;
 
 	public get FullName(): string { return this.fullName ?? ""; }
@@ -47,6 +48,9 @@ export class PlayerData
 	public get Winner(): boolean { return this.winner ?? false; }
 	public set Winner(value: boolean) { this.winner = value; }
 
+	public get Blackjack(): boolean { return this.blackjack ?? false; }
+	public set Blackjack(value: boolean) { this.blackjack = value; }
+
 	public get Cards(): Card[] { return this.cards ?? []; }
 	public set Cards(value: Card[]) { this.cards = value; }
 
@@ -61,6 +65,7 @@ export class PlayerData
 		this.stand = null;
 		this.busted = null;
 		this.winner = null;
+		this.blackjack = null;
 		this.cards = null;
 	}
 
@@ -112,6 +117,15 @@ export class Player
 		for (const card of this.data.Cards)
 		{
 			output += card.value;
+		}
+
+		for (const card of this.data.Cards)
+		{
+			if (card.id < 0 || card.id > 5) continue;
+
+			if (output > 11) continue;
+
+			output += 10;
 		}
 		return output;
 	}

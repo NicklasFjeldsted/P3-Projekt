@@ -21,6 +21,7 @@ namespace TEC_KasinoAPI.Services
 		Card GenerateCard();
 		bool CheckPlayers();
 		Task EndGame(bool houseBust = false);
+		Task Blackjack(BalanceRequest request, string connectionID);
 		int SeatTurnIndex { get; }
 		bool IsPlaying { get; }
     }
@@ -102,7 +103,6 @@ namespace TEC_KasinoAPI.Services
 		public ConcurrentDictionary<int, Card> HouseCards { get { return houseCards; } }
 		private readonly ConcurrentDictionary<int, Card> houseCards = new ConcurrentDictionary<int, Card>();
 
-
 		// Reference for the timer instance.
 		private readonly TimerPlus _timer = TimerPlus.Instance;
 
@@ -133,6 +133,12 @@ namespace TEC_KasinoAPI.Services
 		/// </summary>
 		private void HubTimer_Elapsed(object sender, ElapsedEventArgs e)
 		{
+			using (var scope = _scopeFactory.CreateScope())
+			{
+				IHubContext<BlackjackHub> hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
+
+				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
+			}
 			BeginGame();
 		}
 
@@ -188,10 +194,10 @@ namespace TEC_KasinoAPI.Services
 		private void SetTurnOrder()
 		{
 			TurnOrder.Clear();
-			var players = ConnectedPlayers.Where(p => p.Value.Seated == true && Bets[p.Key] > 0).ToList();
+			var players = ConnectedPlayers.Where(p => p.Value.Seated == true && Bets[p.Key] > 49).ToList();
 			foreach (var pair in players)
 			{
-				if (Bets[pair.Key] <= 0) continue;
+				if (Bets[pair.Key] <= 49) continue;
 				TurnOrder.Enqueue(pair.Value.SeatIndex);
 			}
 			SortQueue();
@@ -253,6 +259,16 @@ namespace TEC_KasinoAPI.Services
 			{
 				output += card.value;
 			}
+
+			foreach (Card card in cards)
+            {
+				if (card.id < 0 || card.id > 5) continue;
+
+				if (output > 11) continue;
+
+				output += 10;
+            }
+
 			return output;
 		}
 
@@ -309,7 +325,7 @@ namespace TEC_KasinoAPI.Services
 		/// <returns><see cref="bool"/>: true if any player data's seated bool is true otherwise false.</returns>
 		public bool CheckPlayers()
 		{
-			bool anyBets = Bets.Any(x => x.Value > 0);
+			bool anyBets = Bets.Any(x => x.Value > 49);
 			bool anySeated = ConnectedPlayers.Any(x => x.Value.Seated == true);
 			return anyBets && anySeated;
 		}
@@ -329,7 +345,7 @@ namespace TEC_KasinoAPI.Services
 
 				foreach (var data in ConnectedPlayers.ToList())
 				{
-					if (Bets[data.Key] <= 0) continue;
+					if (Bets[data.Key] <= 49) continue;
 					data.Value.Cards.Add(GenerateCard());
 				}
 
@@ -339,8 +355,16 @@ namespace TEC_KasinoAPI.Services
 
 				foreach (var data in ConnectedPlayers.ToList())
 				{
-					if (Bets[data.Key] <= 0) continue;
+					if (Bets[data.Key] <= 49) continue;
 					data.Value.Cards.Add(GenerateCard());
+
+					string id = ConnectedPlayers.First(x => x.Value.CustomerID == data.Value.CustomerID).Key;
+					BalanceRequest request = new BalanceRequest(data.Value.CustomerID, Bets.First(x => x.Key == id).Value);
+
+					if (CalculateValue(ConnectedPlayers[id].Cards) == 21 && ConnectedPlayers[id].Cards.Count == 2)
+					{
+						Blackjack(request, id);
+					}
 				}
 
 				HouseCards.TryAdd(HouseCards.Count, GenerateCard());
@@ -378,6 +402,8 @@ namespace TEC_KasinoAPI.Services
 				ResetPlayers();
 
 				_timer.Stop();
+
+				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(_timer.DueTime));
 
 				SetTurnOrder();
 
@@ -427,6 +453,8 @@ namespace TEC_KasinoAPI.Services
 
 				Bets[connectionID] = 0;
 
+				if (player.Blackjack) continue;
+
 				if (player.Winner == true)
 				{
 					Win(request, connectionID);
@@ -440,16 +468,17 @@ namespace TEC_KasinoAPI.Services
 
 			SeatTurnIndex = -1;
 
+			_timer.Start();
+
 			await using(var scope = _scopeFactory.CreateAsyncScope())
             {
 				var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
 				await hubContext.Clients.All.SendAsync("Sync_CurrentStage", JsonConvert.SerializeObject(IsPlaying));
 				await hubContext.Clients.All.SendAsync("Get_PlayerData_Callback", DictionaryToJson(ConnectedPlayers));
+				await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
 				await hubContext.Clients.All.SendAsync("Game_Ended");
 			}
-
-			_timer.Start();
 		}
 
 		/// <summary>
@@ -494,6 +523,43 @@ namespace TEC_KasinoAPI.Services
 				databaseContext.AccountBalances.Update(accountBalance);
 
 				databaseContext.SaveChanges();
+				await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
+			}
+		}
+
+		/// <summary>
+		/// Calculates and adds the blackjack bonus to the player.
+		/// </summary>
+		/// <param name="request"></param>
+		/// <param name="connectionID"></param>
+		/// <returns></returns>
+		public async Task Blackjack(BalanceRequest request, string connectionID)
+        {
+			await using (var scope = _scopeFactory.CreateAsyncScope())
+			{
+				var databaseContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+				var hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
+
+				AccountBalance accountBalance = await databaseContext.AccountBalances.SingleAsync(x => x.CustomerID == request.CustomerID);
+
+				if (accountBalance == null) return;
+
+				accountBalance.Balance += (request.Amount + request.Amount / 2);
+
+				databaseContext.AccountBalances.Update(accountBalance);
+
+				databaseContext.SaveChanges();
+
+				ConnectedPlayers[connectionID].Blackjack = true;
+				ConnectedPlayers[connectionID].Stand = true;
+
+				if(SeatTurnIndex == ConnectedPlayers[connectionID].SeatIndex)
+                {
+					SwitchTurn();
+					await hubContext.Clients.All.SendAsync("Sync_CurrentTurn", JsonConvert.SerializeObject(SeatTurnIndex));
+                }
+
+				await hubContext.Clients.All.SendAsync("Update_PlayerData_Callback", JsonConvert.SerializeObject(ConnectedPlayers[connectionID]));
 				await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
 			}
 		}

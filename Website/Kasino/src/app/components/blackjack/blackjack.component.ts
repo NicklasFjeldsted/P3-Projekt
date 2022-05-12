@@ -59,6 +59,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
 
       this.networking.Subscribe("Game_Ended", () => house.GameEnded());
       this.networking.Subscribe("Game_Started", () => house.GameStarted());
+      this.networking.Subscribe("Update_Server_DueTime", (timeLeft: string) => house.Update_Server_DueTime(timeLeft));
       this.networking.Subscribe("Update_Balance", () => this.balanceService.updateBalance());
       this.networking.Subscribe("Update_HouseCards_Callback", (data: string) => house.HouseCards(data));
       this.networking.Subscribe("Sync_PlayerBet", (data: string) => house.UpdateSeatBets(data));

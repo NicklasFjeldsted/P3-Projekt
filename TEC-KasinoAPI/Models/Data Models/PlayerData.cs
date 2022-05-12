@@ -13,6 +13,7 @@ namespace TEC_KasinoAPI.Models
         private bool? stand;
         private bool? busted;
         private bool? winner;
+        private bool? blackjack;
         private List<Card>? cards;
 
         public string FullName { get => fullName; set => fullName = value; }
@@ -23,6 +24,7 @@ namespace TEC_KasinoAPI.Models
         public bool Stand { get => stand ?? false; set => stand = value; }
         public bool Busted { get => busted ?? false; set => busted = value; }
         public bool Winner { get => winner ?? false; set => winner = value; }
+        public bool Blackjack { get => blackjack ?? false; set => blackjack = value; }
         public List<Card> Cards { get => cards; set => cards = value; }
 
         public PlayerData() { }
@@ -44,6 +46,7 @@ namespace TEC_KasinoAPI.Models
             busted = false;
             stand = false;
             winner = false;
+            blackjack = false;
             if(cards != null)
             {
                 cards.Clear();
