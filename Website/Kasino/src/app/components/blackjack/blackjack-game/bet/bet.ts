@@ -8,8 +8,7 @@ export class Bet extends MonoBehaviour
 	public text: TextComponent;
 	public currentBet: number = 0;
 	public lastBet: number = 0;
-	public increaseButton: GameObject;
-	public decreaseButton: GameObject;
+	public buttons: GameObject[] = [];
 	public seat: Seat;
 	private lockedIn: boolean = false;
 	private BetSubject: BehaviorSubject<number>;
@@ -38,8 +37,10 @@ export class Bet extends MonoBehaviour
 	public Awake(): void
 	{
 		this.text = this.gameObject.AddComponent(new TextComponent()).GetComponent(TextComponent);
-		this.increaseButton.isActive = this.gameObject.isActive;
-		this.decreaseButton.isActive = this.gameObject.isActive;
+		for (const button of this.buttons)
+		{
+			button.isActive = this.gameObject.isActive;
+		}
 		this.seat = this.gameObject.parent.GetComponent(Seat);
 	}
 
@@ -56,19 +57,25 @@ export class Bet extends MonoBehaviour
 		switch (this.seat.house.CurrentStage)
 		{
 			case GameStage.Off:
-				this.increaseButton.isActive = !this.lockedIn;
-				this.decreaseButton.isActive = !this.lockedIn;
+				for (const button of this.buttons)
+				{
+					button.isActive = !this.lockedIn;
+				}
 				break;
 			
 			case GameStage.Started:
-				this.increaseButton.isActive = false;
-				this.decreaseButton.isActive = false;
+				for (const button of this.buttons)
+				{
+					button.isActive = false;
+				}
 				this.lockedIn = false;
 				break;
 			
 			case GameStage.Ended:
-				this.increaseButton.isActive = !this.lockedIn;
-				this.decreaseButton.isActive = !this.lockedIn;
+				for (const button of this.buttons)
+				{
+					button.isActive = !this.lockedIn;
+				}
 				break;
 		}
 	}
@@ -77,6 +84,7 @@ export class Bet extends MonoBehaviour
 	{
 		this.currentBet += amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.currentBet = this.clamp(this.currentBet, 0, 5000);
 		this.BetSubject.next(this.currentBet);
 		this.lastBet = this.currentBet;
 	}
@@ -85,8 +93,25 @@ export class Bet extends MonoBehaviour
 	{
 		this.currentBet -= amount;
 		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.currentBet = this.clamp(this.currentBet, 0, 5000);
 		this.BetSubject.next(this.currentBet);
 		this.lastBet = this.currentBet;
+	}
+
+	public ClearBet()
+	{
+		this.currentBet = 0;
+		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.currentBet = this.clamp(this.currentBet, 0, 5000);
+		this.BetSubject.next(this.currentBet);
+	}
+
+	public Rebet()
+	{
+		this.currentBet = this.lastBet;
+		this.currentBet = this.clamp(this.currentBet, 0, this.gameObject.game.balance.balance);
+		this.currentBet = this.clamp(this.currentBet, 0, 5000);
+		this.BetSubject.next(this.currentBet);
 	}
 
 	public UpdateBet(amount: number): void

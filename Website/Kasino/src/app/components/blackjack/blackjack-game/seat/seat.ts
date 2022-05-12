@@ -1,5 +1,5 @@
 import { Subject } from "rxjs";
-import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, Game, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, SpriteRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { ShapeRendererComponent } from "src/app/game-engine/utils/rendering/shaperenderer";
 import { Bet } from "../bet";
 import { Card, CardObject } from "../cards";
@@ -26,8 +26,11 @@ export class Seat extends MonoBehaviour
 	private collider: ColliderComponent;
 	private hitButtonCollider: ColliderComponent;
 	private standButtonCollider: ColliderComponent;
-	private decreaseButtonCollider: ColliderComponent;
-	private increaseButtonCollider: ColliderComponent;
+	private add1000btnCOL: ColliderComponent;
+	private add100btnCOL: ColliderComponent;
+	private add50btnCOL: ColliderComponent;
+	private clearbtnCOL: ColliderComponent;
+	private rebetbtnCOL: ColliderComponent;
 	public house: House;
 	public seatBet: Bet;
 	private displayedCards: CardObject[] = [];
@@ -61,8 +64,6 @@ export class Seat extends MonoBehaviour
 		let seatShape: Shape = new Shape();
 		seatShape.fillColor = new Color(255, 255, 255);
 		seatShape.radius = 20;
-		seatShape.outline = true;
-		seatShape.outlineWidth = 2;
 
 		this.gameObject.AddComponent(new ShapeRendererComponent(seatShape));
 		this.gameObject.AddComponent(new ColliderComponent());
@@ -70,6 +71,16 @@ export class Seat extends MonoBehaviour
 		let buttonShape: Shape = new Shape();
 		buttonShape.outline = true;
 		buttonShape.outlineWidth = 2;
+
+		let buttonShape1: Shape = new Shape();
+		buttonShape1.outline = true;
+		buttonShape1.outlineWidth = 2;
+		buttonShape1.fillColor = new Color(120, 120, 120);
+
+		let betShape: Shape = new Shape();
+		betShape.fillColor = new Color(82, 82, 82);
+		betShape.outline = true;
+		betShape.outlineWidth = 5;
 
 		let nameShape: Shape = new Shape();
 		nameShape.outline = true;
@@ -140,28 +151,69 @@ export class Seat extends MonoBehaviour
 		betAmount.transform.Translate(new Vector2(0, -10));
 		betAmount.isActive = false;
 
-		let increaseBetAmountButton = new GameObject(`${this.gameObject.gameObjectName}'s Increase Bet Amount Button`);
-		this.gameObject.game.Instantiate(increaseBetAmountButton);
-		increaseBetAmountButton.AddComponent(new ColliderComponent());
-		increaseBetAmountButton.AddComponent(new TextComponent('+10'));
-		increaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
-		increaseBetAmountButton.transform.scale = new Vector2(30, 30);
-		increaseBetAmountButton.SetParent(betAmount);
-		increaseBetAmountButton.transform.Translate(new Vector2(-40, 0));
-		this.increaseButtonCollider = increaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+		let add50btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 50 Button`);
+		this.gameObject.game.Instantiate(add50btn);
+		let text50 = add50btn.AddComponent(new TextComponent('+50')).GetComponent(TextComponent);
+		text50.fontSize = 24;
+		add50btn.AddComponent(new ShapeRendererComponent(buttonShape));
+		add50btn.transform.scale = new Vector2(100, 50);
+		add50btn.SetParent(betAmount);
+		add50btn.transform.position = new Vector2(680, 30);
+		this.add50btnCOL = add50btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
 
-		let decreaseBetAmountButton = new GameObject(`${this.gameObject.gameObjectName}'s Decrease Bet Amount Button`);
-		this.gameObject.game.Instantiate(decreaseBetAmountButton);
-		decreaseBetAmountButton.AddComponent(new ColliderComponent());
-		decreaseBetAmountButton.AddComponent(new TextComponent('-10'));
-		decreaseBetAmountButton.AddComponent(new ShapeRendererComponent(buttonShape));
-		decreaseBetAmountButton.transform.scale = new Vector2(30, 30);
-		decreaseBetAmountButton.SetParent(betAmount);
-		decreaseBetAmountButton.transform.Translate(new Vector2(40, 0));
-		this.decreaseButtonCollider = decreaseBetAmountButton.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+		let add100btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 100 Button`);
+		this.gameObject.game.Instantiate(add100btn);
+		let text100 = add100btn.AddComponent(new TextComponent('+100')).GetComponent(TextComponent);
+		text100.fontSize = 24;
+		add100btn.AddComponent(new ShapeRendererComponent(buttonShape));
+		add100btn.transform.scale = new Vector2(100, 50);
+		add100btn.SetParent(betAmount);
+		add100btn.transform.position = new Vector2(780, 30);
+		this.add100btnCOL = add100btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
 
-		this.seatBet.increaseButton = increaseBetAmountButton;
-		this.seatBet.decreaseButton = decreaseBetAmountButton;
+		let add1000btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 1000 Button`);
+		this.gameObject.game.Instantiate(add1000btn);
+		let text1000 = add1000btn.AddComponent(new TextComponent('+1000')).GetComponent(TextComponent);
+		text1000.fontSize = 24;
+		add1000btn.AddComponent(new ShapeRendererComponent(buttonShape));
+		add1000btn.transform.scale = new Vector2(100, 50);
+		add1000btn.SetParent(betAmount);
+		add1000btn.transform.position = new Vector2(880, 30);
+		this.add1000btnCOL = add1000btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+
+		let clearbtn = new GameObject(`${this.gameObject.gameObjectName}'s Clear Button`);
+		this.gameObject.game.Instantiate(clearbtn);
+		let clearText = clearbtn.AddComponent(new TextComponent('Clear')).GetComponent(TextComponent);
+		clearText.fontSize = 24;
+		clearbtn.AddComponent(new ShapeRendererComponent(buttonShape1));
+		clearbtn.transform.scale = new Vector2(100, 50);
+		clearbtn.SetParent(betAmount);
+		clearbtn.transform.position = new Vector2(80, 30);
+		this.clearbtnCOL = clearbtn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+
+		let rebetBtn = new GameObject(`${this.gameObject.gameObjectName}'s Rebet Button`);
+		this.gameObject.game.Instantiate(rebetBtn);
+		let rebetText = rebetBtn.AddComponent(new TextComponent('Rebet')).GetComponent(TextComponent);
+		rebetText.fontSize = 24;
+		rebetBtn.AddComponent(new ShapeRendererComponent(buttonShape1));
+		rebetBtn.transform.scale = new Vector2(100, 50);
+		rebetBtn.SetParent(betAmount);
+		rebetBtn.transform.position = new Vector2(180, 30);
+		this.rebetbtnCOL = rebetBtn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+
+		let betBackground = new GameObject(`${this.gameObject.gameObjectName} - Bet Background`);
+		this.gameObject.game.Instantiate(betBackground);
+		betBackground.SetParent(this.gameObject);
+		betBackground.AddComponent(new ShapeRendererComponent(betShape)).GetComponent(ShapeRendererComponent).layer = -100;
+		betBackground.transform.scale = new Vector2(960, 100);
+		betBackground.transform.position = new Vector2(480, 15);
+
+		this.seatBet.buttons.push(add50btn);
+		this.seatBet.buttons.push(add100btn);
+		this.seatBet.buttons.push(add1000btn);
+		this.seatBet.buttons.push(clearbtn);
+		this.seatBet.buttons.push(rebetBtn);
+		this.seatBet.buttons.push(betBackground);
 
 		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
 	}
@@ -180,27 +232,44 @@ export class Seat extends MonoBehaviour
 	/** Handle on clicked for this seat. */
 	private OnClicked(point: Vector2): void
 	{
-		if (this.collider.Hit(point))
-		{
-			if (this.Occupied)
-			{
-				if (this.house.client != this.Player)
-				{
-					return;
-				}
+		if (!this.gameObject.isActive) return;
 
-				if (this.increaseButtonCollider.Hit(point))
-				{
-					this.seatBet.AddAmount(10);
-				}
 		
-				if (this.decreaseButtonCollider.Hit(point))
-				{
-					this.seatBet.SubtractAmount(10);
-				}
-
+		if (this.Occupied)
+		{
+			if (this.house.client != this.Player)
+			{
 				return;
 			}
+			
+			if (this.add50btnCOL.Hit(point))
+			{
+				this.seatBet.AddAmount(50);
+			}
+
+			if (this.add100btnCOL.Hit(point))
+			{
+				this.seatBet.AddAmount(100);
+			}
+
+			if (this.add1000btnCOL.Hit(point))
+			{
+				this.seatBet.AddAmount(1000);
+			}
+
+			if (this.clearbtnCOL.Hit(point))
+			{
+				this.seatBet.ClearBet();
+			}
+
+			if (this.rebetbtnCOL.Hit(point))
+			{
+				this.seatBet.Rebet();
+			}
+		}
+
+		if (this.collider.Hit(point))
+		{
 			this.JoinSeat();
 		}
 

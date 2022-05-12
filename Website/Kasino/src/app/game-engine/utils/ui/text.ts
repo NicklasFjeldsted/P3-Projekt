@@ -2,6 +2,7 @@ import { CanvasLayer } from "../canvas";
 import { Color } from "../color";
 import { RectTransform } from "../rectTransform";
 import { Rendering } from "../rendering";
+import { Vector2 } from "../vector2";
 
 export class TextComponent extends Rendering
 {
@@ -13,6 +14,11 @@ export class TextComponent extends Rendering
 	public fontSize: number | undefined;
 	public fit: boolean = false;
 	public color: Color | undefined;
+	public blur: number | undefined;
+	
+	public shadow: boolean = false;
+	public shadowColor: Color | undefined;
+	public shadowOffset: Vector2 = Vector2.zero;
 
 	private _width: number = 0;
 
@@ -34,7 +40,7 @@ export class TextComponent extends Rendering
 
 	Start(): void
 	{
-		//this.gameObject.transform.scale = new Vector2(this.width, 30);
+		
 	}
 
 	Awake(): void
@@ -64,6 +70,20 @@ export class TextComponent extends Rendering
 			return;
 		}
 
+		if (this.shadow)
+		{
+			CanvasLayer.GetLayer(this.renderLayer).DrawText(
+				this.text,
+				new Vector2(
+					this.rectTransform.center.x + this.shadowOffset.x,
+					this.rectTransform.center.y + this.shadowOffset.y
+				),
+				this.fontSize,
+				this.rectTransform.size.x,
+				this.fit,
+				this.shadowColor,
+				this.blur);
+		}
 		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit, this.color);
 	}
 

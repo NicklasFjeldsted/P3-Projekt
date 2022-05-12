@@ -8,7 +8,7 @@ namespace TEC_KasinoAPI.Helpers
 {
 	public sealed class TimerPlus : Timer
 	{
-		private static readonly Lazy<TimerPlus> _instance = new Lazy<TimerPlus>(() => new TimerPlus(3000));
+		private static readonly Lazy<TimerPlus> _instance = new Lazy<TimerPlus>(() => new TimerPlus(10000));
 		public static TimerPlus Instance { get { return _instance.Value; } }
 
 		private DateTime _startTime;

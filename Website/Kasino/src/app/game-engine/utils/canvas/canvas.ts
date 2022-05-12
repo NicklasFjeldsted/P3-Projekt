@@ -185,12 +185,13 @@ export class Canvas implements IAwake
 	}
 
 	/** Draw text the canvas and return the width of it. */
-	public DrawText(text: string, position: Vector2, fontSize: number = 16, maxWidth?: number, fit: boolean = false, color?: Color): void
+	public DrawText(text: string, position: Vector2, fontSize: number = 16, maxWidth?: number, fit: boolean = false, color?: Color, blur: number = 0): void
 	{
 		let _margin: number = 0;
 
 		this._context.textAlign = "center";
 		this._context.textBaseline = "middle";
+		this._context.filter = `blur(${blur})`;
 		if (color)
 		{
 			this._context.fillStyle = color.AsString();

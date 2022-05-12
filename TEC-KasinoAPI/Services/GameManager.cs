@@ -194,10 +194,10 @@ namespace TEC_KasinoAPI.Services
 		private void SetTurnOrder()
 		{
 			TurnOrder.Clear();
-			var players = ConnectedPlayers.Where(p => p.Value.Seated == true && Bets[p.Key] > 0).ToList();
+			var players = ConnectedPlayers.Where(p => p.Value.Seated == true && Bets[p.Key] > 49).ToList();
 			foreach (var pair in players)
 			{
-				if (Bets[pair.Key] <= 0) continue;
+				if (Bets[pair.Key] <= 49) continue;
 				TurnOrder.Enqueue(pair.Value.SeatIndex);
 			}
 			SortQueue();
@@ -325,7 +325,7 @@ namespace TEC_KasinoAPI.Services
 		/// <returns><see cref="bool"/>: true if any player data's seated bool is true otherwise false.</returns>
 		public bool CheckPlayers()
 		{
-			bool anyBets = Bets.Any(x => x.Value > 0);
+			bool anyBets = Bets.Any(x => x.Value > 49);
 			bool anySeated = ConnectedPlayers.Any(x => x.Value.Seated == true);
 			return anyBets && anySeated;
 		}
@@ -345,7 +345,7 @@ namespace TEC_KasinoAPI.Services
 
 				foreach (var data in ConnectedPlayers.ToList())
 				{
-					if (Bets[data.Key] <= 0) continue;
+					if (Bets[data.Key] <= 49) continue;
 					data.Value.Cards.Add(GenerateCard());
 				}
 
@@ -355,7 +355,7 @@ namespace TEC_KasinoAPI.Services
 
 				foreach (var data in ConnectedPlayers.ToList())
 				{
-					if (Bets[data.Key] <= 0) continue;
+					if (Bets[data.Key] <= 49) continue;
 					data.Value.Cards.Add(GenerateCard());
 
 					string id = ConnectedPlayers.First(x => x.Value.CustomerID == data.Value.CustomerID).Key;
