@@ -96,7 +96,7 @@ p {
   background-color: hsla(0, 0%, 82.7%, 0.5);
 }
 
-.sidenav-list > li:nth-child(4) {
+#help {
   border-top: 1px solid #808080;
 }
 

@@ -8,13 +8,13 @@
       <li class="sidenav-item">
         <a routerLink=""><i class="fa fa-house"></i><span>Forside</span></a>
       </li>
-      <li class="sidenav-item">
+      <li class="sidenav-item" *ngIf="role != ''">
         <a routerLink="konto"><i class="fa fa-user"></i><span>Konto</span></a>
       </li>
       <li class="sidenav-item">
         <a routerLink="/indstillinger"><i class="fa fa-gear"></i><span>Indstillinger</span></a>
       </li>
-      <li class="sidenav-item sidenav-info">
+      <li class="sidenav-item sidenav-info" id="help">
         <a routerLink="support"><span>Help Center</span></a>
       </li>
       <li class="sidenav-item sidenav-info">

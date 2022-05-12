@@ -1,6 +1,8 @@
 :host {
-  height: 15vh;
+  height: 17.5vh;
   display: block;
+
+  --header-height: 10vh;
 }
 
 .header {
@@ -9,7 +11,7 @@
   z-index: 999;
   top: 0;
   width: 100%;
-  height: 7.5vh;
+  height: var(--header-height);
   box-shadow: 0 0 1pc rgba(0, 0, 0, 0.4);
   display: block;
   background-color: #015536;
@@ -175,7 +177,7 @@ button {
   width: 100%;
   height: 7.5vh;
   position: absolute;
-  top: 7.5vh;
+  top: var(--header-height);
   background-color: #05372c;
 }
 
@@ -201,12 +203,14 @@ button {
   align-items: center;
   color: #fff;
   text-decoration: none;
-  transition: all 1s ease;
+  transition: all 0.1s ease;
+  margin: auto;
+  width: 33%;
+  height: 85%;
 }
 
-.game > a:hover > svg {
-  width: 38px;
-  height: 38px;
+.game > a:hover {
+  height: 100%;
 }
 
 .game > i {
@@ -214,8 +218,21 @@ button {
 }
 
 svg {
-  width: 36px;
-  height: 36px;
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
   transition: all 0.15s ease;
+}
+
+@media (max-width: 900px) {
+  #logo {
+    display: none;
+  }
+
+  .games-flex {
+    width: 100%;
+  }
+
+  .svg {
+    width: 28px;
+    height: 28px;
+  }
 }
