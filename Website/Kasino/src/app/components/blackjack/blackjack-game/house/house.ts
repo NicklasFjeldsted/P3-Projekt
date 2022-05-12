@@ -156,7 +156,6 @@ export class House extends MonoBehaviour
 	{
 		let parsedDueTime = JSON.parse(dueTime);
 		this.Timer.Start(parsedDueTime);
-		return;
 	}
 
 	public Player_Connected(data: string): void
@@ -178,11 +177,13 @@ export class House extends MonoBehaviour
 	{
 		this.Timer.OnServerTimeChanged.subscribe((timeLeft) =>
 		{
-			if (timeLeft <= 0)
+			if (timeLeft <= 0 || isNaN(timeLeft))
 			{
-				this.serverTimerChildText.text = ' ';
+				this.serverTimerChildText.gameObject.isActive = false;
 				return;
 			}
+
+			this.serverTimerChildText.gameObject.isActive = true;
 			
 			this.serverTimerChildText.text = `Game Start:\n${(timeLeft / 1000).toFixed(1)}s`;
 		});
@@ -193,6 +194,7 @@ export class House extends MonoBehaviour
 			
 			this.childText.gameObject.isActive = false;
 			this.resultChildText.gameObject.isActive = false;
+
 			this.ClearCards();
 		});
 	}
