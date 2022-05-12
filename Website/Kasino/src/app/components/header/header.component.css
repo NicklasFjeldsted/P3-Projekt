@@ -1,218 +1,221 @@
-:host 
-{
-  display: flex;
-  flex-direction: column;
-  height: 15%;
-}
-
-@media only screen and (max-width: 600px) 
-{
-  .center-row 
-  {
-    width: 100%;
-  }
-}
-
-.navigation .row 
-{
-  padding: 4px;
-  margin: 0;
-  border-bottom: 1px solid lightgreen;
-  border-radius: 5px;
-  height: 20px;
-  width: 100%;
-}
-
-.dropdown 
-{
-  display: inline-block;
-  margin-left: 20px;
-  padding: 10px;
-}
-
-.kasino-logo 
-{
-  color: white;
-}
-
-.dropdown-content 
-{
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 12px 16px;
-  z-index: 999;
-}
-
-.dropdown:hover .dropdown-content 
-{
+:host {
+  height: 15vh;
   display: block;
-  background-color: rgb(44, 42, 42);
 }
 
-.header 
-{
-  background-color: #015536;
-  border-bottom: 0;
+.header {
+  position: fixed;
+  overflow: hidden;
+  z-index: 999;
+  top: 0;
+  width: 100%;
+  height: 7.5vh;
   box-shadow: 0 0 1pc rgba(0, 0, 0, 0.4);
-  z-index: 5;
+  display: block;
+  background-color: #015536;
+}
+
+.flex-box > * {
   flex: 1;
 }
 
-#logo-link 
-{
-  max-width: 32%;
-  min-width: 100px;
-}
-
-#logo 
-{
-  max-width: 100%;
-  height: auto;
-  z-index: 1;
-}
-
-.tilmeld 
-{
-  background-color: #f08000;
-}
-
-.games 
-{
-  background-color: #05372c;
-  border: 1px solid #05372c;
-  z-index: 2;
-  flex: 1;
-  height: 75px;
-}
-
-.dropdown-content a 
-{
-  color: white;
-}
-
-.link-game 
-{
+.flex-box {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  height: 100%;
+}
+
+.sidenav {
+  position: relative;
+  padding-left: 2%;
+  display: flex;
   align-items: center;
-  color: white;
-  font-family: "Montserrat", sans-serif !important;
-  font-weight: 500;
 }
 
-.link-game > svg,
-.link-game > img,
-#logo,
-#testright 
-{
-  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg)
-    brightness(104%) contrast(104%);
-}
-
-.column > .link-game 
-{
-  transition: all 0.3s ease 0s;
-}
-
-.column > .link-game:hover 
-{
-  color: #d3d3d3;
-}
-
-.column > .link-game:hover > svg,
-.column > .link-game:hover > img 
-{
-  filter: invert(95%) sepia(1%) saturate(0%) hue-rotate(171deg) brightness(88%)
-  contrast(97%);
-}
-
-.sideNav-button 
-{
-  background-color: transparent;
-  border: none;
+.sidenav > i {
   cursor: pointer;
 }
 
-.login 
-{
-  background-color: transparent;
-  border: 1px solid transparent;
-  outline: none !important;
-  transition: all 0.3s ease 0s;
-}
-
-.login:hover 
-{
-  border: 1px solid #fff;
-  box-shadow: none !important;
-}
-
-#balance 
-{
-  box-shadow: none;
-  width: 150px;
-}
-
-.deposit 
-{
+.logo {
+  display: flex;
+  align-items: center;
   position: relative;
-  padding-right: 0.3em;
 }
 
-.deposit > i 
-{
-  position: relative;
-  padding-left: 10px;
-  right: 0px;
-  font-size: 1.6em;
-  top: 4px;
-}
-
-.logout > i 
-{
-  font-size: 1.2em;
-  position: relative;
-  top: 2px;
-  padding-right: 5px;
-  transform: rotate(180deg);
-}
-
-.saldo 
-{
-  background-color: #f08000;
-}
-
-.saldo:hover 
-{
-  box-shadow: 0px 0px 10px #f08000;
-}
-
-.right nav 
-{
-  max-width: 100%;
+#logo {
+  max-width: 188px;
   height: auto;
+  color: #fff;
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+  position: absolute;
+  left: 47%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
 }
 
-@media (max-width: 680px) 
-{
-  .right nav 
-  {
-    justify-content: unset;
-  }
-
-  .btn 
-  {
-    font-size: 12px;
-  }
+.sidenav > i {
+  font-size: 1.6em;
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
 }
 
-@media (max-width: 500px) 
-{
-  .btn 
-  {
-    font-size: 10px;
-  }
+.buttons-flex {
+  position: absolute;
+  right: 10%;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  height: 100%;
+  align-items: center;
+}
+
+#NotAuth {
+  gap: 1em;
+}
+
+button {
+  padding: 1pc;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 9pt;
+  cursor: pointer;
+}
+
+#tilmeld {
+  background-color: #e78553;
+  color: #313233;
+  border: 1px solid transparent;
+}
+
+#login {
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: all 0.3s ease 0s;
+  color: #fff;
+}
+
+#login:hover {
+  border-color: #fff;
+}
+
+#balance {
+  position: relative;
+  padding: 9px 3pc 9px 1pc;
+  background-color: #05372c;
+  border: 7px solid #05372c;
+  color: #fff;
+  font-size: 1pc;
+  transition: all 0.1s ease;
+}
+
+#balance > i {
+  font-size: 34px;
+  color: #f08000;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+}
+
+#balance:hover {
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+#notification {
+  position: relative;
+  padding: 10px;
+  border-radius: 100%;
+  font-size: 1pc;
+  background-color: #05372c;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #05372c;
+  transition: all 0.1s ease;
+}
+
+#notification > i {
+  position: absolute;
+  font-size: 26px;
+  color: #ddd;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#notification:hover {
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+#user {
+  position: relative;
+  padding: 10px;
+  border-radius: 100%;
+  font-size: 1pc;
+  background-color: #05372c;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #05372c;
+  transition: all 0.1s ease;
+}
+
+#user > i {
+  position: absolute;
+  font-size: 24px;
+  color: #ddd;
+  left: 50%;
+  top: 49%;
+  transform: translate(-50%, -50%);
+}
+
+#user:hover {
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+.games {
+  width: 100%;
+  height: 7.5vh;
+  position: absolute;
+  top: 7.5vh;
+  background-color: #05372c;
+}
+
+.games-flex {
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+}
+.game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  padding-top: 7px;
+}
+
+.game > a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  transition: all 1s ease;
+}
+
+.game > a:hover > svg {
+  width: 38px;
+  height: 38px;
+}
+
+.game > i {
+  color: white;
+}
+
+svg {
+  width: 36px;
+  height: 36px;
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+  transition: all 0.15s ease;
 }
