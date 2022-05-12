@@ -268,7 +268,7 @@ export class Seat extends MonoBehaviour
 			}
 		}
 
-		if (this.collider.Hit(point))
+		if (this.collider.Hit(point) && !this.Occupied)
 		{
 			this.JoinSeat();
 		}
