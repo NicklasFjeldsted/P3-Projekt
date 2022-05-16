@@ -9,11 +9,32 @@ import { MatDialogConfig, MatDialogModule } from "@angular/material/dialog";
 import { BalanceService } from "src/app/services/balance.service";
 import { CustomerService } from "src/app/services/customer.service";
 import { JwtDecodePlus } from "src/app/helpers";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 
 @Component({
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"],
+  animations: [
+    trigger("openAccountPanel", [
+      state(
+        "true",
+        style({
+          right: "0",
+          opacity: "1",
+        })
+      ),
+      state(
+        "false",
+        style({
+          right: "-15.5vh",
+          opacity: ".3",
+        })
+      ),
+      transition("open => closed", [animate("0.3s ease")]),
+      transition("closed => open", [animate("0.3s ease")]),
+    ]),
+  ],
 })
 export class HeaderComponent implements OnInit {
   constructor(
@@ -24,6 +45,7 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onAccountPanelToggle: EventEmitter<void> = new EventEmitter<void>();
 
   currentBalance: string;
   isLoggedIn: boolean;
@@ -41,9 +63,9 @@ export class HeaderComponent implements OnInit {
     this.balanceService.OnBalanceChanged.subscribe((balance) => (this.currentBalance = balance.balance?.toLocaleString("dk", { useGrouping: true })));
   }
 
-  emitSideNavToggle(): void {
-    this.onSideNavToggle.emit();
-  }
+  emitSideNavToggle = () => this.onSideNavToggle.emit();
+
+  emitAccountPanelToggle = () => this.onAccountPanelToggle.emit();
 
   public getBalance(): void {
     this.balanceService.OnBalanceChanged.subscribe((balance) => {

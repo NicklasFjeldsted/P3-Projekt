@@ -1,5 +1,4 @@
-:host 
-{
+:host {
   height: 100%;
   width: 100%;
   background: #efefef;
@@ -8,16 +7,14 @@
   overflow: hidden;
 }
 
-.left-side 
-{
+.left-side {
   position: absolute;
   height: 100%;
-  width: calc((100% - 695px) / 2 );
+  width: calc((100% - 695px) / 2);
   top: 0;
 }
 
-.sidenav 
-{
+.sidenav {
   position: absolute;
   max-width: 160px;
   height: 100%;
@@ -25,16 +22,14 @@
   right: 0;
 }
 
-.sidenav > i 
-{
+.sidenav > i {
   position: absolute;
   right: -5px;
   color: white;
   font-size: 1.75em;
 }
 
-.sidenav-content 
-{
+.sidenav-content {
   display: grid;
   gap: 1em;
   width: 100%;
@@ -42,20 +37,17 @@
   text-align: right;
 }
 
-.sidenav-content > a 
-{
+.sidenav-content > a {
   text-align: right;
   cursor: pointer;
 }
 
-.sidenav-content > a > li 
-{
+.sidenav-content > a > li {
   padding-right: 1.5em;
 }
 
-.form-control 
-{
-  max-width: 575px;
+.form-control {
+  max-width: 75vh;
   padding: 60px 60px 60px;
   height: 100%;
   background-color: #fff;
@@ -63,149 +55,128 @@
   border-radius: 0;
 }
 
-.form-header 
-{
+.form-header {
   display: flex;
   justify-content: center; /* align horizontal */
   align-items: center; /* align vertical */
   margin: 0;
 }
 
-.form-header > h1 
-{
-  font-family: 'Montserrat', sans-serif;
+.form-header > h1 {
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 1.75rem;
 }
 
-.customer-title 
-{
+.customer-title {
   text-align: left;
 }
 
-.customer-title > h2 
-{
+.customer-title > h2 {
   margin: 0;
   font-size: 1.3rem;
   font-weight: 300;
 }
 
-.customer-title > p 
-{
+.customer-title > p {
   margin: 0;
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: 300;
   line-height: 1.5;
 }
 
-.grid-buttons 
-{
+.grid-buttons {
   display: grid;
   grid-template-columns: repeat(3, minmax(calc(200px - 1em), 1fr));
   gap: 1em;
   height: 50px;
 }
 
-.grid-button 
-{
+.grid-button {
   height: 100%;
   width: 100%;
   border-radius: 50px;
   cursor: pointer;
 }
 
-.grid-buttons #indbetal 
-{
+.grid-buttons #indbetal {
   background: #e78553;
   border: 1px solid #e78553;
 }
 
-.grid-buttons #udbetal 
-{
+.grid-buttons #udbetal {
   background: #fff;
   color: #249752;
   border: 1px solid #249752;
 }
 
-.grid-buttons #logud 
-{
+.grid-buttons #logud {
   background-color: #249752;
   color: #fff;
   border: 1px solid #249752;
 }
 
-.grid-button[id="indbetal"]:hover 
-{
+.grid-button[id="indbetal"]:hover {
   box-shadow: 1px 1px 15px -5px #e78553;
 }
 
-.grid-button[id="udbetal"]:hover 
-{
+.grid-button[id="udbetal"]:hover {
   box-shadow: 1px 1px 15px -5px #249752;
 }
 
-.grid-button[id="logud"]:hover 
-{
+.grid-button[id="logud"]:hover {
   box-shadow: 1px 1px 15px -5px #249752;
 }
 
-.balance-account 
-{
-  display:flex;
+.balance-account {
+  display: flex;
   flex-direction: row;
   width: 100%;
   height: 7%;
   gap: 2em;
 }
 
-.balance-account > .balance-circle 
-{
+.balance-account > .balance-circle {
   width: 7.5%;
   text-align: center;
-  display:flex;
+  display: flex;
   justify-content: right;
 }
 
-.balance-circle > .circle 
-{
-
+.balance-circle > .circle {
   border-radius: 50%;
   background-color: #249752;
   width: 30px;
   height: 30px;
-  display:flex;
+  display: flex;
   justify-content: center;
 }
 
-.circle > span 
-{
-  padding: .3em;
+.circle > span {
+  padding: 0.3em;
   color: #fff;
 }
 
-.balance-account 
-{
+.balance-account {
   text-align: center;
   align-items: center;
 }
 
-.balance 
-{
+.balance {
   font-size: 2em;
   text-align: center;
   font-weight: 900;
 }
 
-.konto-oplysninger 
-{
+.konto-oplysninger {
   height: auto;
   width: 100%;
   position: relative;
 }
 
-.konto-title, .balance-title 
-{
-  display:flex;
+.konto-title,
+.balance-title {
+  display: flex;
   text-align: left;
   color: #015536;
   font-size: 1rem;
@@ -213,14 +184,12 @@
   align-items: flex-end;
 }
 
-.form-row 
-{
+.form-row {
   flex-direction: row;
   max-height: 64px;
 }
 
-.form-row-divider 
-{
+.form-row-divider {
   width: 100%;
   height: 1px;
   background-color: #838383;
@@ -230,48 +199,42 @@
   left: auto;
 }
 
-.row-logo 
-{
+.row-logo {
   height: 64px;
   width: 72px;
-  display:flex;
+  display: flex;
   flex-shrink: 0;
   justify-content: center;
   align-items: center;
 }
 
-.row-logo > i 
-{
+.row-logo > i {
   font-size: 1.5em;
   filter: invert(59%) sepia(0%) saturate(0%) hue-rotate(136deg) brightness(87%) contrast(92%);
 }
 
-.row-info 
-{
+.row-info {
   text-align: left;
   padding: 1pc 1pc 1pc 0;
   width: 100%;
   height: 100%;
 }
 
-.row-info > .row-title 
-{
+.row-info > .row-title {
   margin: 0;
   font-weight: 300;
   font-size: 9pt;
   color: #838383;
 }
 
-.row-info > .row-content 
-{
+.row-info > .row-content {
   margin: 0;
   font-weight: 300;
   font-size: 1pc;
   color: #838383;
 }
 
-.form-row 
-{
+.form-row {
   margin: 0;
 }
 
@@ -279,72 +242,66 @@
   gap: 1em;
 }
 
-.user-email 
-{
+.user-email {
   width: 100%;
   justify-content: center;
   flex-direction: column;
 }
 
-.user-email > .email-title 
-{
-  font-size: .75rem;
+.user-email > .email-title {
+  font-size: 0.75rem;
   font-weight: 300;
   line-height: 1.5;
   color: #838383;
 }
 
-.user-email > .email 
-{
+.user-email > .email {
   font-size: 1rem;
   font-weight: 300;
   line-height: 1.5;
 }
 
-.bottom-buttons 
-{
+.bottom-buttons {
   width: 100%;
   height: 200px;
   flex-direction: column;
   gap: 1em;
 }
 
-.bottom-button 
-{
+.bottom-button {
   width: 100%;
-  font-size: .875rem;
+  font-size: 0.875rem;
   padding: 1pc;
   border-radius: 50px;
   height: 56px;
 }
 
-.bottom-buttons > #logud 
-{
+.bottom-buttons > #logud {
   background-color: #249752;
   color: #fff;
   border: 1px solid #249752;
   cursor: pointer;
 }
 
-.bottom-buttons > #deaktiver 
-{
+.bottom-buttons > #deaktiver {
   background: #e78553;
   border: 1px solid #e78553;
   cursor: pointer;
 }
 
-.bottom-buttons > #logud:hover 
-{
+.bottom-buttons > #logud:hover {
   box-shadow: 1px 1px 15px -5px #249752;
 }
 
-.bottom-buttons > #deaktiver:hover 
-{
+.bottom-buttons > #deaktiver:hover {
   box-shadow: 1px 1px 15px -5px #e78553;
 }
 
-.deposit-limit 
-{
+#deposit {
+  height: calc(100vh - var(--full-header));
+}
+
+.deposit-limit {
   width: 100%;
   height: auto;
   display: flex;
@@ -352,27 +309,23 @@
   gap: 2em;
 }
 
-.current-limit 
-{
+.current-limit {
   width: 100%;
 }
 
-.current-limit > h3 
-{
+.current-limit > h3 {
   width: 100%;
   text-align: left;
   position: relative;
   margin: 0;
 }
 
-.current-limit > h3 > span 
-{
+.current-limit > h3 > span {
   position: absolute;
   right: 0;
 }
 
-.set-limit 
-{
+.set-limit {
   width: 100%;
   height: 50%;
   display: grid;
@@ -381,8 +334,7 @@
   align-items: center;
 }
 
-.set-limit > div 
-{
+.set-limit > div {
   height: 35%;
   text-align: center;
   align-items: center;
@@ -390,8 +342,7 @@
   justify-content: center;
 }
 
-.limit > input 
-{
+.limit > input {
   text-align: center;
   border: 1px solid #838383;
   width: 100%;
@@ -400,8 +351,7 @@
   padding: 16px;
 }
 
-.set-limit > div > button 
-{
+.set-limit > div > button {
   border-radius: 50%;
   background-color: #015536;
   border: none;
@@ -410,92 +360,80 @@
   width: 50px;
   height: 50px;
   cursor: pointer;
-  transition: all .3s ease 0s;
+  transition: all 0.3s ease 0s;
 }
 
-.set-limit > div > button:hover 
-{
+.set-limit > div > button:hover {
   background-color: #01784c;
 }
 
-.set-limit > div > button > i 
-{
+.set-limit > div > button > i {
   font-size: 40px;
   filter: invert(93%) sepia(0%) saturate(7465%) hue-rotate(57deg) brightness(107%) contrast(110%);
 }
 
-.limit > input:focus 
-{
+.limit > input:focus {
   outline: 0;
 }
 
-.submit-limit 
-{
+.submit-limit {
   width: 100%;
   height: 50px;
   flex-shrink: 0;
 }
 
-.submit-limit > button 
-{
+.submit-limit > button {
   width: 100%;
   height: 100%;
   border-radius: 50px;
-  background-color: #F08000;
+  background-color: #f08000;
   cursor: pointer;
-  font-size: .875rem;
+  font-size: 0.875rem;
   border: none;
 }
 
-.submit-limit > button:hover 
-{
+.submit-limit > button:hover {
   box-shadow: 1px 1px 15px -2px #e78553;
 }
 
-.divider 
-{
+.divider {
   width: 100%;
   height: 7px;
   background-color: #d8d8d8;
 }
 
-.is-selected 
-{
+.is-selected {
   color: #00a34a;
 }
 
-.invalid-feedback 
-{
+.invalid-feedback {
   text-align: center;
   font-size: 1em;
 }
 
-.transaction-container 
-{
+.transaction-container {
   width: 100%;
   margin: 0;
   height: 500px;
 }
 
-.transaction-list 
-{
+.transaction-list {
   width: 100%;
   height: 100%;
 }
 
-.transaction-list > table 
-{
+.transaction-list > table {
   width: 100%;
 }
 
-table, th, td 
-{
+table,
+th,
+td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
-.transaction-list th 
-{
+.transaction-list th {
   width: 25%;
   align-content: center;
 }

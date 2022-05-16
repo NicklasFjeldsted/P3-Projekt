@@ -6,8 +6,7 @@
   font-weight: 400;
   --header-height: 10vh;
   --games-height: 7.5vh;
-  /* --full-header: calc(var(--header-height) + var(--games-height)); */
-  --full-header: 17.5vh;
+  --full-header: calc(var(--header-height) + var(--games-height));
   --footer-height: 16vh;
   box-sizing: border-box;
 }

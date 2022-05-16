@@ -1,9 +1,13 @@
 /* Gets the angular component element in the DOM and defines the behaviour of it. */
 :host {
-  height: 90%;
-  width: 100%;
+  display: flex;
+}
+
+.main {
+  width: 100vw;
+  position: relative;
+  min-height: calc(100vh - var(--full-header));
   background-image: url("../../../assets/media/login-background.jpg");
-  display: block;
 }
 
 /* Defines the behaviour of the Lady Image. */
@@ -40,6 +44,11 @@ form {
   min-width: 300px;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .form-input {
@@ -63,7 +72,7 @@ form {
 .form-row > i {
   color: #dcdcdc;
   position: absolute;
-  left: 34px;
+  left: 80px;
   top: 10px;
 }
 

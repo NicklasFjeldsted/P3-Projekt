@@ -5,20 +5,39 @@
   display: inline-block;
 }
 
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+h3 {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+h4 {
+  color: #838383;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding-right: 1pc;
+  line-height: 1;
+}
+
 .back-drop {
   display: none;
-  z-index: 900;
+  z-index: 1000;
   height: 100%;
   width: 100%;
-  background-color: black;
-  opacity: 0.5;
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   left: 0;
 }
 
 .sidenav {
-  z-index: 1000;
+  z-index: 1001;
   width: 250px;
   height: 100vh;
   background-color: white;
@@ -118,4 +137,112 @@ p {
 
 .fill-row {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+}
+
+.divider {
+  border-top: 1px solid hsla(0, 0%, 100%, 0.2);
+  display: block;
+}
+
+#account-panel {
+  width: 340px;
+  height: 100vh;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  z-index: 1001;
+  opacity: 0;
+}
+
+.top-panel {
+  background-color: #05372c;
+  padding: 2pc 1pc 0;
+}
+
+.account-details {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2em;
+  padding: 0.5pc 0;
+}
+
+#add-balance {
+  border-radius: 50px;
+  background-color: #e78553;
+  color: #313233;
+  line-height: 24px;
+  text-align: center;
+  user-select: none;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 1pc;
+  text-decoration: none;
+  transition: all 0.3s ease 0s;
+  font-weight: 500;
+  float: right;
+}
+
+.balance-panel {
+  padding: 0.5pc 0;
+}
+
+.balance-display {
+  background-color: #144d2c;
+  height: 4pc;
+  border-radius: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fcd500;
+  text-align: center;
+}
+
+.balance-display > span {
+  width: 155px;
+}
+
+.account-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.account-item {
+  width: 100%;
+  padding: 0 1pc;
+  height: 40px;
+  cursor: pointer;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+}
+
+.account-item:hover {
+  background-color: hsla(0, 0%, 82.7%, 0.5);
+}
+
+.account-item > span {
+  float: left;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.account-item > i {
+  font-size: 18px;
+  position: absolute;
+  right: 1pc;
+}
+
+.list-divider {
+  border-top: 1px solid #ddd;
+  width: 100%;
 }

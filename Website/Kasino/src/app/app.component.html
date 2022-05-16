@@ -1,7 +1,7 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 </style>
-<div class="back-drop" id="backdrop" (click)="closeSideNav()"></div>
+<div class="back-drop" id="backdrop" (click)="closeSideNav(); closeAccountPanel()"></div>
 <div class="sidenav noselect" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
     <ul class="sidenav-list">
@@ -33,6 +33,41 @@
   </div>
 </div>
 
-<app-header (onSideNavToggle)="openSideNav()"></app-header>
+<div id="account-panel" [@openAccountPanel]="isAccountPanel">
+  <div class="top-panel">
+    <h3>{{ accountName }}</h3>
+    <div class="account-details">
+      <div class="details">
+        <h4>Konto-id:</h4>
+        <h4>{{ accountID }}</h4>
+      </div>
+      <div class="add-balance">
+        <button id="add-balance">Indbetal</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="balance-panel">
+      <div class="balance-display">
+        <span>Din nuværende saldo</span>
+        <span>{{ accountBalance }} kr</span>
+      </div>
+    </div>
+  </div>
+  <div class="bot-panel">
+    <ul class="account-list">
+      <li class="account-item"><span>Udbetal</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item"><span>Transaktionshistorik</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item"><span>Min Konto</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item" (click)="openLimit()"><span>Indbetalingsgrænse</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item"><span>Udeluk dig selv</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item"><span>Log ud</span><i class="fa-solid fa-angle-right"></i></li>
+    </ul>
+  </div>
+</div>
+
+<app-header (onSideNavToggle)="openSideNav()" (onAccountPanelToggle)="openAccountPanel()"></app-header>
 <router-outlet></router-outlet>
 <app-footer></app-footer>
