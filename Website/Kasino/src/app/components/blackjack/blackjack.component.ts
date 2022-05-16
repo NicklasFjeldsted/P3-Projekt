@@ -1,10 +1,10 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {  Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, GameType, NetworkingFeature } from 'src/app/game-engine';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { House, Player, PlayerData } from './blackjack-game';
+import { House, Player, BlackjackPlayerData } from './blackjack-game';
 
 @Component({
   selector: 'blackjack',
@@ -32,7 +32,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     
     this.game.AddFeature(new BackgroundFeature());
     this.game.AddFeature(new GameInputFeature());
-    this.game.AddFeature(new NetworkingFeature());
+    this.game.AddFeature(new NetworkingFeature(GameType.Blackjack));
 
     this.networking = this.game.GetFeature(NetworkingFeature);
 
@@ -47,7 +47,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
       for (const seat of house.seats)
       {
         seat.seatBet.OnBetChanged.subscribe((data: number) => this.networking.SendData("UpdateBet", data));
-        seat.OnSeatJoined.subscribe((data: PlayerData) => this.networking.SendData("Update_PlayerData", Player.BuildPlayerData(data)));
+        seat.OnSeatJoined.subscribe((data: BlackjackPlayerData) => this.networking.SendData("Update_PlayerData", Player.BuildPlayerData(data)));
       }
 
       this.networking.Subscribe("Update_PlayerData_Callback", (data: string) => house.Update_PlayerData_Callback(data)); // Changed data from others.

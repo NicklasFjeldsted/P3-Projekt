@@ -11,7 +11,7 @@ export interface IPlayerData
 	winner: boolean;
 	cards: Card[];
 }
-export class PlayerData
+export class BlackjackPlayerData
 {
 	private fullName: string | null;
 	private email: string | null;
@@ -69,7 +69,7 @@ export class PlayerData
 		this.cards = null;
 	}
 
-	public Update(newData: PlayerData): void
+	public Update(newData: BlackjackPlayerData): void
 	{
 		for (const prop in this)
 		{
@@ -104,11 +104,11 @@ export class Player
 {
 	constructor()
 	{
-		this.data = new PlayerData();
+		this.data = new BlackjackPlayerData();
 	}
 	
 	/** The playerdata of this player. */
-	public data: PlayerData;
+	public data: BlackjackPlayerData;
 
 	/** This getter returns the total value of all the cards associated with this player. */
 	public get cardValues(): number
@@ -131,7 +131,7 @@ export class Player
 	}
 
 	/** This function creates a json string from a playerdata object. */
-	public static BuildPlayerData(data: PlayerData): string
+	public static BuildPlayerData(data: BlackjackPlayerData): string
 	{
 		return JSON.stringify(
 			{

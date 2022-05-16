@@ -6,7 +6,7 @@ namespace TEC_KasinoAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class BlackjackController : ControllerBase
+	public class GameController : ControllerBase
 	{
 		[HttpGet("GetUser")]
 		public async Task<IActionResult> GetUser()
@@ -14,7 +14,8 @@ namespace TEC_KasinoAPI.Controllers
 			User user = new User
 			{
 				email = await HttpContext.User.FindFirstAsync(ClaimTypes.Email),
-				fullName = await HttpContext.User.FindFirstAsync(ClaimTypes.GivenName)
+				fullName = await HttpContext.User.FindFirstAsync(ClaimTypes.GivenName),
+				customerID = await HttpContext.User.FindFirstAsync(ClaimTypes.NameIdentifier)
 			};
 
 			if (!string.IsNullOrEmpty(user.email))

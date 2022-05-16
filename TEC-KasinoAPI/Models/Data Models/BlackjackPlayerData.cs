@@ -1,9 +1,8 @@
-﻿using System.Diagnostics;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace TEC_KasinoAPI.Models
 {
-    public class PlayerData
+    public class BlackjackPlayerData
     {
         private string? fullName;
         private string? email;
@@ -27,8 +26,8 @@ namespace TEC_KasinoAPI.Models
         public bool Blackjack { get => blackjack ?? false; set => blackjack = value; }
         public List<Card> Cards { get => cards; set => cards = value; }
 
-        public PlayerData() { }
-        public PlayerData(PlayerData newData)
+        public BlackjackPlayerData() { }
+        public BlackjackPlayerData(BlackjackPlayerData newData)
         {
             fullName = newData.fullName;
             email = newData.email;
@@ -53,13 +52,13 @@ namespace TEC_KasinoAPI.Models
             }
         }
 
-        public async Task Update(PlayerData newData)
+        public async Task Update(BlackjackPlayerData newData)
         {
             await Task.Run(() =>
             {
                 foreach (FieldInfo fi in newData.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
                 {
-                    object valueNewData = typeof(PlayerData).GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(newData);
+                    object valueNewData = typeof(BlackjackPlayerData).GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(newData);
 
                     if (valueNewData == null) continue;
 

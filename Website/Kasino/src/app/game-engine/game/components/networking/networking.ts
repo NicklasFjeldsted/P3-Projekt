@@ -2,6 +2,7 @@ import * as signalR from "@microsoft/signalr";
 import { IFeature, ServerLogger } from "src/app/game-engine/utils";
 import { environment } from "src/environments/environment";
 import { Game } from "../../game";
+import { GameType } from "./gameType";
 
 export class NetworkingFeature implements IFeature
 {
@@ -9,6 +10,8 @@ export class NetworkingFeature implements IFeature
 
 	public hubConnection: signalR.HubConnection;
 	private subscriptions: string[] = [];
+
+	constructor(private gameType: GameType) { }
 
 	public async StartConnection(): Promise<void>
 	{

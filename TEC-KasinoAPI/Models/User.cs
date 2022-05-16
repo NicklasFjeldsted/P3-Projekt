@@ -4,5 +4,6 @@
     {
         public string email { get; set; }
         public string fullName { get; set; }
+        public string customerID { get; set; }
     }
 }

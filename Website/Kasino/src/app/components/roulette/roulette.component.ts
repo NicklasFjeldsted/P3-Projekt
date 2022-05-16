@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, NetworkingFeature } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameType, NetworkingFeature } from 'src/app/game-engine';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
 
@@ -28,7 +28,7 @@ export class RouletteComponent implements OnInit, OnDestroy, CanDeactivate<Roule
 
     this.game.AddFeature(new BackgroundFeature());
     this.game.AddFeature(new GameInputFeature());
-    this.game.AddFeature(new NetworkingFeature());
+    this.game.AddFeature(new NetworkingFeature(GameType.Roulette));
 
     this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
     this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);

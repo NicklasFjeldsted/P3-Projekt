@@ -4,7 +4,7 @@ import { ShapeRendererComponent } from "src/app/game-engine/utils/rendering/shap
 import { Bet } from "../bet";
 import { Card, CardObject } from "../cards";
 import { GameStage, House } from "../house";
-import { Player, PlayerData } from "../player";
+import { Player, BlackjackPlayerData } from "../player";
 
 export class Seat extends MonoBehaviour
 {
@@ -18,7 +18,7 @@ export class Seat extends MonoBehaviour
 	public seatIndex: number;
 	public myTurn: boolean = false;
 	
-	public OnSeatJoined: Subject<PlayerData> = new Subject<PlayerData>();
+	public OnSeatJoined: Subject<BlackjackPlayerData> = new Subject<BlackjackPlayerData>();
 	
 	private childTextComponent: TextComponent;
 	private resultTextChildComponent: TextComponent;

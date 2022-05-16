@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using TEC_KasinoAPI.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using TEC_KasinoAPI.Games;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,6 +110,7 @@ builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddSingleton<IGameManager, GameManager>();
+builder.Services.AddSingleton<IBlackjack, Blackjack>();
 
 builder.WebHost.ConfigureLogging(logging =>
 {
