@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
 
-  currentBalance: number | null;
+  currentBalance: string;
   isLoggedIn: boolean;
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ export class HeaderComponent implements OnInit {
         this.isLoggedIn = false;
       }
     });
-    this.balanceService.OnBalanceChanged.subscribe((balance) => (this.currentBalance = balance.balance));
+    this.balanceService.OnBalanceChanged.subscribe((balance) => (this.currentBalance = balance.balance?.toLocaleString("dk", { useGrouping: true })));
   }
 
   emitSideNavToggle(): void {
@@ -47,7 +47,7 @@ export class HeaderComponent implements OnInit {
 
   public getBalance(): void {
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
-      this.currentBalance = balance.balance;
+      this.currentBalance = balance.balance.toLocaleString("dk", { useGrouping: true });
     });
   }
 
