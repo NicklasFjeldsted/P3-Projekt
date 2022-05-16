@@ -2,10 +2,9 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import {  Observable } from 'rxjs';
 import { BackgroundFeature, Game, GameInputFeature, GameObject, NetworkingFeature } from 'src/app/game-engine';
-import { AuthenticationService } from 'src/app/services/authentication.service';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
-import { Card, House, Player, PlayerData } from './blackjack-game';
+import { House, Player, PlayerData } from './blackjack-game';
 
 @Component({
   selector: 'blackjack',
@@ -17,7 +16,7 @@ import { Card, House, Player, PlayerData } from './blackjack-game';
 
 export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<BlackjackComponent>
 {
-  constructor(private balanceService: BalanceService, private customerService: CustomerService, private authenticationServer: AuthenticationService) { }
+  constructor(private balanceService: BalanceService, private customerService: CustomerService) { }
 
   private networking: NetworkingFeature;
   public game: Game;
