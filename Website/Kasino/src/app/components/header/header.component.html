@@ -17,7 +17,7 @@
         <button routerLink="login" id="login">Log ind</button>
       </div>
       <div class="buttons-flex" id="Auth" *ngSwitchCase="true">
-        <button (click)="openIndbetal()" id="balance">3.000 kr<i class="fa-solid fa-circle-plus"></i></button>
+        <button (click)="openIndbetal()" id="balance">{{ currentBalance }}<i class="fa-solid fa-circle-plus"></i></button>
         <button id="notification"><i class="fa-solid fa-bell"></i></button>
         <button id="user"><i class="fa-solid fa-user"></i></button>
       </div>
