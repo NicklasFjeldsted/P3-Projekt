@@ -176,7 +176,7 @@ export class IndbetalComponent implements OnInit {
     if (this.router.url != "/konto") {
       this.router.navigate(["konto"]);
     }
-    this.balanceService.goToLimit();
+    this.balanceService.goToLimit(3);
     this.close();
   }
 }

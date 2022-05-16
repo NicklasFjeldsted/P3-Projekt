@@ -4,30 +4,32 @@
   padding: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
-  --header-height: 10vh;
-  --games-height: 7.5vh;
-  --full-header: calc(var(--header-height) + var(--games-height));
-  --footer-height: 16vh;
   box-sizing: border-box;
 }
+/* Define variables here */
+:root {
+  --header-height: 10vh; /* fixed top-header height */
+  --games-height: 7.5vh; /* fixed games height */
+  --full-header: calc(var(--header-height) + var(--games-height)); /* fixed complete header height */
+  --footer-height: 16vh; /* fixed footer height */
+  --full-height: calc(100vh - calc(var(--full-header))); /* Makes component have full height without seeing the footer */
 
-/* Makes the background green. */
-.bg-green {
-  background-color: green !important;
+  --bg-orange: #e78553;
+  --bg-green: #015536;
+  --bg-dark-green: #05372c;
 }
 
-.bg-orange {
-  background-color: #f08000 !important;
-}
-
-.bg-white {
-  background-color: white !important;
+.position-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Game elements wrapper. */
 #game {
   width: 100vw;
-  min-height: calc(100vh - var(--full-header));
+  min-height: var(--full-height);
   display: inline-flex;
   flex-direction: column;
   align-items: center;

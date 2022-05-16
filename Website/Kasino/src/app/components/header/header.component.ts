@@ -46,9 +46,11 @@ export class HeaderComponent implements OnInit {
 
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() onAccountPanelToggle: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onNotificationsToggle: EventEmitter<void> = new EventEmitter<void>();
 
   currentBalance: string;
   isLoggedIn: boolean;
+  isNotificationsOpened: boolean = false;
 
   ngOnInit(): void {
     this.authenticationService.OnTokenChanged.subscribe((token) => {
@@ -67,17 +69,19 @@ export class HeaderComponent implements OnInit {
 
   emitAccountPanelToggle = () => this.onAccountPanelToggle.emit();
 
+  emitNotificationsToggle = () => this.onNotificationsToggle.emit();
+
   public getBalance(): void {
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
       this.currentBalance = balance.balance.toLocaleString("dk", { useGrouping: true });
     });
   }
 
-  openIndbetal() {
-    this.dialog.open(IndbetalComponent);
-  }
+  openDeposit = () => this.dialog.open(IndbetalComponent);
 
-  openLogout() {
-    this.dialog.open(LogoutComponent);
-  }
+  openLogout = () => this.dialog.open(LogoutComponent);
+
+  openNotifications = () => (this.isNotificationsOpened = true);
+
+  closeNotifications = () => (this.isNotificationsOpened = false);
 }

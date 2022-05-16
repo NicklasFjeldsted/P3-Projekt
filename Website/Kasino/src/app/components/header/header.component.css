@@ -1,18 +1,16 @@
 :host {
-  height: 17.5vh;
+  height: var(--full-header);
   display: block;
 }
 
 .header {
-  position: fixed;
-  overflow: hidden;
-  z-index: 999;
-  top: 0;
   width: 100%;
   height: var(--header-height);
+  position: fixed;
+  top: 0;
+  z-index: 100;
   box-shadow: 0 0 1pc rgba(0, 0, 0, 0.4);
-  display: block;
-  background-color: #015536;
+  background-color: var(--bg-green);
 }
 
 .flex-box > * {
@@ -32,11 +30,11 @@
   align-items: center;
 }
 
-.sidenav > i {
+i {
   cursor: pointer;
 }
 
-.logo {
+.logo-container {
   display: flex;
   align-items: center;
   position: relative;
@@ -44,13 +42,11 @@
 
 #logo {
   max-width: 188px;
-  height: auto;
-  color: #fff;
-  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
   position: absolute;
   left: 47%;
   top: 48%;
   transform: translate(-50%, -50%);
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
   cursor: pointer;
 }
 
@@ -90,7 +86,7 @@ button > i {
   cursor: pointer;
 }
 
-#tilmeld {
+#signup {
   background-color: #e78553;
   color: #313233;
   border: 1px solid transparent;
