@@ -1,8 +1,6 @@
 :host {
   height: 17.5vh;
   display: block;
-
-  --header-height: 10vh;
 }
 
 .header {

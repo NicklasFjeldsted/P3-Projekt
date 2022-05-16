@@ -4,6 +4,12 @@
   padding: 0;
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+  --header-height: 10vh;
+  --games-height: 7.5vh;
+  /* --full-header: calc(var(--header-height) + var(--games-height)); */
+  --full-header: 17.5vh;
+  --footer-height: 16vh;
+  box-sizing: border-box;
 }
 
 /* Makes the background green. */
@@ -17,6 +23,12 @@
 
 .bg-white {
   background-color: white !important;
+}
+
+#game {
+  width: 100vw;
+  position: relative;
+  min-height: calc(100vh - var(--full-header));
 }
 
 /* Canvas styling */

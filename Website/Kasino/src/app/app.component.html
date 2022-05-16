@@ -33,8 +33,6 @@
   </div>
 </div>
 
-<div class="container noselect">
-  <app-header class="header" (onSideNavToggle)="openSideNav()"></app-header>
-  <router-outlet></router-outlet>
-  <app-footer style="overflow: hidden"></app-footer>
-</div>
+<app-header (onSideNavToggle)="openSideNav()"></app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

@@ -1,5 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
+:host {
+  height: auto;
+  display: inline-block;
+}
+
 .back-drop {
   display: none;
   z-index: 900;
