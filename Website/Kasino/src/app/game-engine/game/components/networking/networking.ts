@@ -16,7 +16,7 @@ export class NetworkingFeature implements IFeature
 	public async StartConnection(): Promise<void>
 	{
 		this.hubConnection = new signalR.HubConnectionBuilder()
-			.withUrl(environment.hubURL + "/Blackjack")
+			.withUrl(environment.hubURL + `/${GameType[this.gameType]}`)
 			.configureLogging(new ServerLogger())
 			.build();
 

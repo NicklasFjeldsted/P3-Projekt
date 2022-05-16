@@ -40,7 +40,7 @@ export class BlackjackComponent implements OnInit, OnDestroy, CanDeactivate<Blac
     this.game.Instantiate(house.gameObject);
 
     this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
-    this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
+    this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user.Update(userData));
 
     this.game.Initialize().then(() =>
     {

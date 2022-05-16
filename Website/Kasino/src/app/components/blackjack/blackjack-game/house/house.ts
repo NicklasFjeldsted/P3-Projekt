@@ -241,7 +241,7 @@ export class House extends MonoBehaviour
 		this.gameObject.game.Instantiate(serverTimerChildText);
 		serverTimerChildText.SetParent(this.gameObject);
 		serverTimerChildText.AddComponent(new TextComponent(' '));
-		serverTimerChildText.transform.scale = new Vector2(200, 100);
+		serverTimerChildText.transform.scale = new Vector2(400, 100);
 		this.serverTimerChildText = serverTimerChildText.GetComponent(TextComponent);
 		this.serverTimerChildText.color = new Color(255, 255, 255);
 		this.serverTimerChildText.renderLayer = 1000;

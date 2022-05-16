@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from "@angular/core";
+import { GameType } from "src/app/game-engine";
 import { User } from "src/app/interfaces/User";
-import { CustomerService } from "src/app/services/customer.service";
-import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
   selector: "app-home",
@@ -13,9 +12,11 @@ export class HomeComponent {
   users: User[];
   category: number = 0;
 
-  constructor(private customerService: CustomerService) {}
+  constructor() {}
 
-  ngOnInit() {}
+  ngOnInit()
+  {
+  }
 
   @HostListener("window:scroll", []) onWindowScroll() {
     // do some stuff here when the window is scrolled

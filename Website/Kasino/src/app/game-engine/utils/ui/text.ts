@@ -17,6 +17,7 @@ export class TextComponent extends Rendering
 	public blur: number | undefined;
 	
 	public shadow: boolean = false;
+	public shadowSize: number | undefined;
 	public shadowColor: Color | undefined;
 	public shadowOffset: Vector2 = Vector2.zero;
 
@@ -78,7 +79,7 @@ export class TextComponent extends Rendering
 					this.rectTransform.center.x + this.shadowOffset.x,
 					this.rectTransform.center.y + this.shadowOffset.y
 				),
-				this.fontSize,
+				this.shadowSize && this.fontSize ? this.fontSize + this.shadowSize : this.fontSize,
 				this.rectTransform.size.x,
 				this.fit,
 				this.shadowColor,

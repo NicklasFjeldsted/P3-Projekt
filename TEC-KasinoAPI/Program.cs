@@ -111,6 +111,7 @@ builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 builder.Services.AddSingleton<IGameManager, GameManager>();
 builder.Services.AddSingleton<IBlackjack, Blackjack>();
+builder.Services.AddSingleton<IRoulette, Roulette>();
 
 builder.WebHost.ConfigureLogging(logging =>
 {
@@ -156,6 +157,7 @@ app.UseWebSockets();
 app.UseEndpoints(x => {
 	x.MapControllers();
 	x.MapHub<BlackjackHub>("Blackjack");
+	x.MapHub<RouletteHub>("Roulette");
 });
 
 // Run the web application.

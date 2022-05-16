@@ -1,7 +1,7 @@
 <div id="infobar">
 	<div id="infobar-wrapper" *ngIf="this.user !== undefined && this.balance !== undefined">
 		<p>Name: {{this.user.FullName}}</p>
-		<p>Balance: {{this.balance.balance}} kr.</p>
+		<p>Balance: {{this.currentBalance}} kr.</p>
 		<p>Time: {{this.time | date: 'HH:mm'}}</p>
 		<p>Room Time: {{this.timePlayed}}</p>
 	</div>

@@ -73,7 +73,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			await _gameManager.ConnectedPlayers[id].Update(parsedData);
 			await _game.Players[id].Update(JsonConvert.DeserializeObject<BlackjackPlayerData>(playerData, _serializerSettings));
-			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
+			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Blackjack)));
 			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_game.Players[id]));
 		}
 

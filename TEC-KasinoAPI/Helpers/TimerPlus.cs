@@ -1,15 +1,18 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Timers;
+using TEC_KasinoAPI.Services;
 using Timer = System.Timers.Timer;
 
 namespace TEC_KasinoAPI.Helpers
 {
 	public sealed class TimerPlus : Timer
 	{
-		private static readonly Lazy<TimerPlus> _instance = new Lazy<TimerPlus>(() => new TimerPlus(10000));
-		public static TimerPlus Instance { get { return _instance.Value; } }
+		public static ConcurrentDictionary<GameType, TimerPlus> Timers = new ConcurrentDictionary<GameType, TimerPlus>();
+
+		public GameType timerGameType;
 
 		private DateTime _startTime;
 		public DateTime StartTime { get { return _startTime; } }
@@ -17,19 +20,20 @@ namespace TEC_KasinoAPI.Helpers
 		private DateTime _dueTime;
 		public DateTime DueTime { get { return _dueTime; } }
 		public double Duration => (_dueTime - _startTime).TotalMilliseconds;
-
-		public TimerPlus(double interval) : base(interval)
+		
+		public TimerPlus(double interval, GameType gameType) : base(interval)
 		{
 			Elapsed += Timer_Elapsed;
+			timerGameType = gameType;
 			Start();
 		}
 
 		public class TimerPackage
         {
-			public TimerPackage() 
+			public TimerPackage(GameType gameType) 
 			{ 
-				StartTime = Instance.StartTime; 
-				DueTime = Instance.DueTime;
+				StartTime = Timers[gameType].StartTime; 
+				DueTime = Timers[gameType].DueTime;
 			}
 			public DateTime StartTime { get; private set; }
 			public DateTime DueTime { get; private set; }
@@ -70,13 +74,20 @@ namespace TEC_KasinoAPI.Helpers
 
 			using (var socket = new  Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp))
             {
-				socket.Connect(ipEndPoint);
+                try
+                {
+					socket.Connect(ipEndPoint);
 
-				socket.ReceiveTimeout = 3000;
+					socket.ReceiveTimeout = 3000;
 
-				socket.Send(ntpData);
-				socket.Receive(ntpData);
-				socket.Close();
+					socket.Send(ntpData);
+					socket.Receive(ntpData);
+					socket.Close();
+				}
+				catch(Exception ex)
+                {
+					Debug.WriteLine(ex.Message);
+                }
             }
 
 			const byte serverReplyTime = 40;
@@ -116,7 +127,7 @@ namespace TEC_KasinoAPI.Helpers
 			Debug.WriteLine("\nDue:" + _dueTime);
 			Debug.WriteLine("\nDuration(MS): " + Duration);
 			Debug.WriteLine("\n----------------------");
-			Debug.WriteLine("\tOnTimerEvent");
+			Debug.WriteLine("OnTimerEvent - " + timerGameType.ToString());
 			Debug.WriteLine("----------------------");
 		}
 	}

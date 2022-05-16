@@ -99,7 +99,7 @@ namespace TEC_KasinoAPI.Games
 		private readonly ConcurrentDictionary<int, Card> houseCards = new ConcurrentDictionary<int, Card>();
 
 		// Reference for the timer instance.
-		private readonly TimerPlus _timer = TimerPlus.Instance;
+		private readonly TimerPlus _timer = TimerPlus.Timers.GetOrAdd(GameType.Blackjack, new TimerPlus(10000, GameType.Blackjack));
 
 		// The seat index whoms turn it is in a game.
 		public int SeatTurnIndex { get { return _seatTurnIndex; } private set { _seatTurnIndex = value; } }
@@ -134,7 +134,7 @@ namespace TEC_KasinoAPI.Games
 			{
 				IHubContext<BlackjackHub> hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<BlackjackHub>>();
 
-				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
+				hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Blackjack)));
 			}
 			BeginGame();
 		}
@@ -380,9 +380,9 @@ namespace TEC_KasinoAPI.Games
 		/// </summary>
 		private async Task BeginGame()
 		{
-			foreach (var player in _gameManager.Bets)
+			foreach (var player in Players)
 			{
-				Debug.WriteLine($"{player.Key} - {player.Value}");
+				Debug.WriteLine($"{player.Key} - {player.Value.FullName}");
 			}
 			Debug.WriteLine("----------------------\n");
 
@@ -474,7 +474,7 @@ namespace TEC_KasinoAPI.Games
 
 				await hubContext.Clients.All.SendAsync("Sync_CurrentStage", JsonConvert.SerializeObject(IsPlaying));
 				await hubContext.Clients.All.SendAsync("Get_PlayerData_Callback", DictionaryToJson(Players));
-				await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage()));
+				await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Blackjack)));
 				await hubContext.Clients.All.SendAsync("Game_Ended");
 			}
 		}

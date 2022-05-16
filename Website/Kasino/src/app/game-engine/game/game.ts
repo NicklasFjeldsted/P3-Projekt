@@ -28,16 +28,11 @@ export class Game extends Entity
 	private _user: UserData
 	public get user(): UserData
 	{
-		if (this._user)
+		if (!this._user)
 		{
-			return this._user;
+			this._user = new UserData();
 		}
-		throw new Error(`User did not load correctly!`);
-	}
-	public set user(value: UserData)
-	{
-		this._user = value;
-		console.log(this._user);
+		return this._user;
 	}
 
 	private _balance: Balance;

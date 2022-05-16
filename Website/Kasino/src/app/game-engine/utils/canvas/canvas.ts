@@ -191,7 +191,7 @@ export class Canvas implements IAwake
 
 		this._context.textAlign = "center";
 		this._context.textBaseline = "middle";
-		this._context.filter = `blur(${blur})`;
+		this._context.filter = `blur(${blur}px)`;
 		if (color)
 		{
 			this._context.fillStyle = color.AsString();

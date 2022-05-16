@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { BackgroundFeature, Game, GameInputFeature, GameType, NetworkingFeature } from 'src/app/game-engine';
+import { BackgroundFeature, Game, GameInputFeature, GameObject, GameType, NetworkingFeature } from 'src/app/game-engine';
 import { BalanceService } from 'src/app/services/balance.service';
 import { CustomerService } from 'src/app/services/customer.service';
+import { House } from './roulette-game';
 
 @Component({
   selector: 'app-roulette',
@@ -30,12 +31,19 @@ export class RouletteComponent implements OnInit, OnDestroy, CanDeactivate<Roule
     this.game.AddFeature(new GameInputFeature());
     this.game.AddFeature(new NetworkingFeature(GameType.Roulette));
 
+    this.networking = this.game.GetFeature(NetworkingFeature);
+    
+    let house = new GameObject('House').AddComponent(new House()).GetComponent(House);
+    this.game.Instantiate(house.gameObject);
+
     this.balanceService.OnBalanceChanged.subscribe((balance) => this.game.balance = balance);
-    this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user = userData);
+    this.customerService.OnUserDataChanged.subscribe((userData) => this.game.user.Update(userData));
+
 
     this.game.Initialize().then(() =>
     {
-      
+      this.networking.Subscribe("Player_Connected", (data: string) => house.Player_Connected(data));
+      this.networking.Subscribe("Player_Disconnected", (data: string) => house.Player_Disconnected(data));
     });
   }
 
