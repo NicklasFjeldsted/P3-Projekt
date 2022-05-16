@@ -1,9 +1,5 @@
 #infobar{
-	position: absolute;
 	background-color: rgb(32, 32, 32);
-	top: 82%;
-	left: 50%;
-	transform: translate(-50%, -50%);
 	width: 960px;
 	height: 20px;
 }

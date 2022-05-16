@@ -1,9 +1,10 @@
 /* Gets the angular component element in the DOM and defines the behaviour of it. */
 :host {
-  height: 90%;
-  width: 100%;
+  display: flex;
+  height: calc(100vh - var(--full-header));
+  width: 100vw;
   background-image: url("../../../assets/media/login-background.jpg");
-  display: block;
+  background-size: cover;
 }
 
 /* Defines the behaviour of the Lady Image. */

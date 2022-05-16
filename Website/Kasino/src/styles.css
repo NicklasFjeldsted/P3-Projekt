@@ -25,14 +25,25 @@
   background-color: white !important;
 }
 
+/* Game elements wrapper. */
 #game {
   width: 100vw;
-  position: relative;
   min-height: calc(100vh - var(--full-header));
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Canvas styling */
-#game > canvas {
+/* Canvas wrapper. */
+#game > #canvas-screen {
+  position: relative;
+  height: 600px;
+  width: 960px;
+}
+
+/* Canvas styling. */
+#game > #canvas-screen > canvas {
   margin: 0;
   position: absolute;
   top: 50%;

@@ -35,7 +35,7 @@ export class CustomerService {
 
   /** Returns the user data of the logged in user. */
   public getUser(): void {
-    this.http.get<UserData>(environment.apiURL + "/blackjack/GetUser").subscribe((userData) => this.UserSubject.next(userData));
+    this.http.get<UserData>(environment.apiURL + "/game/GetUser").subscribe((userData) => this.UserSubject.next(userData));
   }
 
   /** Post customer credentials. */

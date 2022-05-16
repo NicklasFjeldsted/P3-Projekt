@@ -2,7 +2,7 @@ import { GameObject } from '../utils/gameObject';
 import { CanvasLayer, Entity, IRendering, Vector2 } from '../utils';
 import { NetworkingFeature } from './components';
 import { Balance } from 'src/app/interfaces/balance';
-import { User, UserData } from 'src/app/interfaces/User';
+import { UserData } from 'src/app/interfaces/User';
 
 type AbstractFeature<T> = Function & { prototype: T; };
 type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
@@ -37,6 +37,7 @@ export class Game extends Entity
 	public set user(value: UserData)
 	{
 		this._user = value;
+		console.log(this._user);
 	}
 
 	private _balance: Balance;

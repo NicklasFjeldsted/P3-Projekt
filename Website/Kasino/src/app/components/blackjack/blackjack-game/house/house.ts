@@ -2,7 +2,7 @@ import { BehaviorSubject, Observable } from "rxjs";
 import { Color, GameObject, MonoBehaviour, NetworkingFeature, ServerTimer, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { UserData } from "src/app/interfaces/User";
 import { Card, CardObject } from "../cards";
-import { IPlayerData, Player, PlayerData } from "../player";
+import { IPlayerData, Player, BlackjackPlayerData } from "../player";
 import { Seat } from "../seat";
 
 export enum GameStage
@@ -160,15 +160,15 @@ export class House extends MonoBehaviour
 
 	public Player_Connected(data: string): void
 	{
-		let playerData: PlayerData = JSON.parse(data);
-		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
+		let playerData: BlackjackPlayerData = JSON.parse(data);
+		let parsedPlayerData: IPlayerData = BlackjackPlayerData.Parse(playerData);
 		console.info(`%c${parsedPlayerData.fullName} %c- %cConnected.`, "color: rgba(0, 183, 255, 1)", "color: rgba(255, 255, 255, 1)", "color: rgba(255, 174, 0, 1)");
 	}
 
 	public Player_Disconnected(data: string): void
 	{
-		let playerData: PlayerData = JSON.parse(data);
-		let parsedPlayerData: IPlayerData = PlayerData.Parse(playerData);
+		let playerData: BlackjackPlayerData = JSON.parse(data);
+		let parsedPlayerData: IPlayerData = BlackjackPlayerData.Parse(playerData);
 		this.seats.find(seat => seat.seatIndex == parsedPlayerData.seatIndex)?.LeaveSeat();
 		console.info(`%c${parsedPlayerData.fullName} %c- %cDisconnected.`, "color: rgba(0, 183, 255, 1)", "color: rgba(255, 255, 255, 1)", "color: rgba(255, 174, 0, 1)");
 	}
@@ -338,9 +338,9 @@ export class House extends MonoBehaviour
 	public CreateClient(user: UserData)
 	{
 		this._client = new Player();
-		this.client.data.Email = user.email;
+		this.client.data.Email = user.Email;
 		this.client.data.CustomerID = this.gameObject.game.balance.customerID;
-		this.client.data.FullName = user.fullName;
+		this.client.data.FullName = user.FullName;
 		this.gameObject.game.GetFeature(NetworkingFeature).Send("Get_PlayerData");
 	}
 
