@@ -1,7 +1,7 @@
 <style>
   @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
 </style>
-<div class="back-drop" id="backdrop" (click)="closeSideNav(); closeAccountPanel()"></div>
+<div class="back-drop" id="backdrop" (click)="closeSideNav(); closeAccountPanel(); closeNotifications()"></div>
 <div class="sidenav noselect" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
   <div class="sidenav-content">
     <ul class="sidenav-list">
@@ -68,6 +68,33 @@
   </div>
 </div>
 
-<app-header (onSideNavToggle)="openSideNav()" (onAccountPanelToggle)="openAccountPanel()"></app-header>
+<i class="fa-solid fa-caret-up" id="arrow-notification" *ngIf="isNotificationsOpened"></i>
+<div class="notification-container" *ngIf="isNotificationsOpened">
+  <div class="notification-header">
+    <div class="notification-circle"></div>
+    <span>0</span>
+    <p>Ulæste notifikationer</p>
+  </div>
+  <div class="notification-content">
+    <ul class="notification-list">
+      <li class="notification-item">
+        <div class="notification-image"><img src="../../../assets/media/notification-image.jpg" /></div>
+        <div class="notification-text">
+          <h3 class="text-header">Du kan få 100% bonus på din første indbetaling!</h3>
+          <div class="text-divider">
+            <div class="notification-play">Spil nu!</div>
+            <div class="notification-date">16-05-2022</div>
+          </div>
+        </div>
+        <div class="notification-button">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="notification-footer"></div>
+</div>
+
+<app-header (onSideNavToggle)="openSideNav()" (onAccountPanelToggle)="openAccountPanel()" (onNotificationsToggle)="openNotifications()"></app-header>
 <router-outlet></router-outlet>
 <app-footer></app-footer>

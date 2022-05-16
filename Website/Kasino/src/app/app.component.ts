@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
 
   isAccountPanel: boolean = false;
   isSidenavOpen: boolean = false;
+  isNotificationsOpened: boolean = false;
 
   sideNav: HTMLElement;
   accountPanel: HTMLElement;
@@ -116,17 +117,18 @@ export class AppComponent implements OnInit {
     this.accountPanel.classList.add("active");
   }
 
-  goToLink(site: string) {
-    this.router.navigate([site]);
+  openNotifications() {
+    this.isNotificationsOpened = true;
+    document.getElementById("backdrop")?.classList.add("back-drop-notifications");
   }
 
-  onActivate() {
-    if (document.getElementsByTagName("app-home").length == 0 || this.hasVisited == true) {
-      document.getElementById("component-container")!.style.height = "100%";
-    } else if (document.getElementsByTagName("app-home").length != 0) {
-      this.hasVisited = true;
-      document.getElementById("component-container")!.style.height = "1500px";
-    }
+  closeNotifications() {
+    this.isNotificationsOpened = false;
+    document.getElementById("backdrop")?.classList.remove("back-drop-notifications");
+  }
+
+  goToLink(site: string) {
+    this.router.navigate([site]);
   }
 
   goToAccount(number: number): void {

@@ -1,24 +1,19 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap");
-</style>
-<!-- Top row on the page. -->
-<div class="header">
+<div class="header" (click)="closeNotifications()">
   <div class="flex-box">
     <div class="sidenav">
       <i (click)="emitSideNavToggle()" class="fa-solid fa-bars"></i>
     </div>
-    <div class="logo">
+    <div class="logo-container">
       <img routerLink="" id="logo" src="../../../assets/media/tec-logo.png" />
     </div>
     <div class="buttons" [ngSwitch]="isLoggedIn">
       <div class="buttons-flex" id="NotAuth" *ngSwitchCase="false">
-        <button routerLink="tilmeld" id="tilmeld">Tilmeld dig</button>
+        <button routerLink="tilmeld" id="signup">Tilmeld dig</button>
         <button routerLink="login" id="login">Log ind</button>
       </div>
       <div class="buttons-flex" id="Auth" *ngSwitchCase="true">
-        <button (click)="openIndbetal()" id="balance">{{ currentBalance }} kr.<i class="fa-solid fa-circle-plus"></i></button>
-        <button (click)="(null)" id="notification"><i class="fa-solid fa-bell"></i></button>
+        <button (click)="openDeposit()" id="balance">{{ currentBalance }} kr.<i class="fa-solid fa-circle-plus"></i></button>
+        <button (click)="emitNotificationsToggle()" id="notification"><i class="fa-solid fa-bell"></i></button>
         <button (click)="emitAccountPanelToggle()" id="user"><i class="fa-solid fa-user"></i></button>
       </div>
     </div>
@@ -100,4 +95,31 @@
       </a>
     </div>
   </div>
+</div>
+
+<i class="fa-solid fa-caret-up" id="arrow-notification" *ngIf="isNotificationsOpened"></i>
+<div class="notification-container" *ngIf="isNotificationsOpened">
+  <div class="notification-header">
+    <div class="notification-circle"></div>
+    <span>0</span>
+    <p>Ulæste notifikationer</p>
+  </div>
+  <div class="notification-content">
+    <ul class="notification-list">
+      <li class="notification-item">
+        <div class="notification-image"><img src="../../../assets/media/notification-image.jpg" /></div>
+        <div class="notification-text">
+          <h3 class="text-header">Du kan få 100% bonus på din første indbetaling!</h3>
+          <div class="text-divider">
+            <div class="notification-play">Spil nu!</div>
+            <div class="notification-date">16-05-2022</div>
+          </div>
+        </div>
+        <div class="notification-button">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="notification-footer"></div>
 </div>
