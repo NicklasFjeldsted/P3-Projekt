@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { CustomerService } from "../../services/customer.service";
 import { AuthenticationService } from "src/app/services/authentication.service";
@@ -20,7 +20,7 @@ import { BehaviorSubject, Observable } from "rxjs";
   templateUrl: "./konto.component.html",
   styleUrls: ["./konto.component.css"],
 })
-export class KontoComponent implements OnInit {
+export class KontoComponent implements OnInit, AfterViewInit {
   accountInfo: AccountInfo;
   balance: Balance = new Balance();
   depositLimit: FormControl;
@@ -49,18 +49,18 @@ export class KontoComponent implements OnInit {
   ngOnInit(): void {
     this.kontoSite = 1;
     this.balanceService.OnIndbetalingChange.subscribe((value) => {
-      if (value) {
-        this.kontoSite = 3;
-      }
+      this.kontoSite = value;
     });
-    this.showAccountInfo();
+    this.depositLimit = new FormControl(1000, [Validators.max(100000), Validators.min(1000)]);
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
       if (balance.customerID !== undefined) {
         this.updateLocalBalance(balance);
       }
     });
+  }
 
-    this.depositLimit = new FormControl(1000, [Validators.max(100000), Validators.min(1000)]);
+  ngAfterViewInit(): void {
+    this.showAccountInfo();
   }
 
   // Gets userdata from API Call

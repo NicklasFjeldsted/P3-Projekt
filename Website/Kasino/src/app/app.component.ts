@@ -129,11 +129,11 @@ export class AppComponent implements OnInit {
     }
   }
 
-  openLimit(): void {
+  goToAccount(number: number): void {
     this.closeAccountPanel();
     if (this.router.url != "/konto") {
       this.router.navigate(["konto"]);
     }
-    this.balanceService.goToLimit();
+    this.balanceService.goToLimit(number);
   }
 }

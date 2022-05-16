@@ -56,11 +56,11 @@
   <div class="bot-panel">
     <ul class="account-list">
       <li class="account-item"><span>Udbetal</span><i class="fa-solid fa-angle-right"></i></li>
-      <li class="account-item"><span>Transaktionshistorik</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item" (click)="goToAccount(2)"><span>Transaktionshistorik</span><i class="fa-solid fa-angle-right"></i></li>
       <li class="list-divider"></li>
-      <li class="account-item"><span>Min Konto</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item" (click)="goToAccount(1)"><span>Min Konto</span><i class="fa-solid fa-angle-right"></i></li>
       <li class="list-divider"></li>
-      <li class="account-item" (click)="openLimit()"><span>Indbetalingsgrænse</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item" (click)="goToAccount(3)"><span>Indbetalingsgrænse</span><i class="fa-solid fa-angle-right"></i></li>
       <li class="account-item"><span>Udeluk dig selv</span><i class="fa-solid fa-angle-right"></i></li>
       <li class="list-divider"></li>
       <li class="account-item"><span>Log ud</span><i class="fa-solid fa-angle-right"></i></li>
