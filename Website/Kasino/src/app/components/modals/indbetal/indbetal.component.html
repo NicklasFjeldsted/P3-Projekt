@@ -20,11 +20,6 @@
           <input id="form-input" class="no-icon" formControlName="cardName" [ngClass]="{ 'is-invalid': f['cardName'].touched && f['cardName'].errors, 'is-valid': f['cardName'].touched && !f['cardName'].errors }" required=""/>
           <span class="input-label no-icon-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">Kortholders navn</span>
         </div>
-
-
-        <div *ngIf="f['cardName'].touched && f['cardName'].errors" class="invalid-feedback">
-          <div *ngIf="f['cardName'].errors['required']">Indtast kortholderens navn</div>
-        </div>
       </div>
 
       <div class="input-group">
@@ -32,12 +27,6 @@
           <span class="icon" id="cardNumber"></span>
           <input id="form-input" (keyup)="addDashes()" (keypress)="keyPressNumbers($event)" (focusout)="this.isCardValid = isValid()" formControlName="cardNumber"  maxlength="19" [ngClass]="{ 'is-invalid': (f['cardNumber'].touched && f['cardNumber'].errors) || !isCardValid, 'is-valid': f['cardNumber'].touched && !f['cardNumber'].errors && isCardValid}" required=""/>
           <span class="input-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">Kreditkortnummer</span>
-        </div>
-
-        <div *ngIf="(f['cardNumber'].touched && f['cardNumber'].errors) || (f['cardNumber'].touched && !isCardValid)" class="invalid-feedback">
-          <div *ngIf="f['cardNumber'].errors!['required']">Indtast kortnummeret</div>
-          <div *ngIf="f['cardNumber'].errors!['maxlength'] || f['cardNumber'].errors!['minlength']">Kortnummeret skal have 16 cifre</div>
-          <div *ngIf="!isCardValid && !form.errors">Kortnummeret er ikke gyldigt!</div>
         </div>
       </div>
 
@@ -48,12 +37,6 @@
             <input id="form-input" (keyup)="addSlash()" formControlName="expDate" minlength="5" maxlength="5" [ngClass]="{ 'is-invalid': f['expDate'].touched && f['expDate'].errors, 'is-valid': f['expDate'].touched && !f['expDate'].errors }" required=""/>
             <span class="input-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">•• / ••</span>
           </div>
-
-          <div *ngIf="f['expDate'].touched && f['expDate'].errors" class="invalid-feedback">
-            <div *ngIf="f['expDate'].errors['required']">Indtast udløbsdatoen</div>
-            <div *ngIf="f['expDate'].errors['maxlength']">Udløbsdatoen skal have både måned og år</div>
-            <div *ngIf="f['expDate'].errors['minlength']">Udløbsdatoen skal have både måned og år</div>
-          </div>
         </div>
 
         <div class="input-group">
@@ -61,12 +44,6 @@
             <span class="icon" id="cvc"></span>
             <input id="form-input" formControlName="cvv" [ngClass]="{ 'is-invalid': f['cvv'].touched && f['cvv'].errors, 'is-valid': f['cvv'].touched && !f['cvv'].errors }" required=""/>
             <span class="input-label" [ngClass]="{ 'label-error': f['cvv'].touched && f['cvv'].errors }">CVC</span>
-          </div>
-
-          <div *ngIf="f['cvv'].touched && f['cvv'].errors" class="invalid-feedback">
-            <div *ngIf="f['cvv'].errors['required']">Indtast kontrolcifrene</div>
-            <div *ngIf="f['cvv'].errors['minlength']">CVV skal være 3 cifre</div>
-            <div *ngIf="f['cvv'].errors['maxlength']">CVV skal være 3 cifre</div>
           </div>
         </div>
       </div>

@@ -116,6 +116,7 @@ li:hover {
   grid-column: span 3 / auto;
   grid-row: span 2 / auto;
   position: relative;
+  overflow: hidden;
 }
 
 .promotion-text {
@@ -297,21 +298,13 @@ li:hover {
 
 /* Slideshow --- */
 
-
-
-/* Styling the area of the slides */
-#slideshow {
-  overflow: hidden;
-  width: 728px;
-}
- 
 /* Style each of the sides with a fixed width and height */
 .slide {
   float: left;
-  width: 728px;
+  width: 25%;
   position: relative;
 }
- 
+
 .slide > div {
   position: absolute;
   left: 0;
@@ -320,48 +313,46 @@ li:hover {
 
 /* Add animation to the slides */
 .slide-wrapper {
-   
-/* Calculate the total width on the basis of number of slides */
-  width: calc(728px * 4);
- 
-/* Specify the animation with the duration and speed */
+  /* Calculate the total width on the basis of number of slides */
+  width: calc(100% * 4);
+
+  /* Specify the animation with the duration and speed */
   animation: slide 50s ease-in-out 10s alternate forwards;
 }
- 
+
 /* Set the background color of each of the slides */
 .slide:nth-child(1) {
   background: green;
 }
- 
+
 .slide:nth-child(2) {
   background: pink;
 }
- 
+
 .slide:nth-child(3) {
   background: red;
 }
- 
+
 .slide:nth-child(4) {
   background: yellow;
 }
- 
+
 /* Define the animation for the slideshow */
 @keyframes slide {
-   
-/* Calculate the margin-left for each of the slides */
+  /* Calculate the margin-left for each of the slides */
   20% {
     margin-left: 0px;
   }
 
   40% {
-    margin-left: calc(-728px * 1);
+    margin-left: calc(-100% * 1);
   }
- 
+
   60% {
-    margin-left: calc(-728px * 2);
+    margin-left: calc(-100% * 2);
   }
- 
+
   80% {
-    margin-left: calc(-728px * 3);
+    margin-left: calc(-100% * 3);
   }
 }
