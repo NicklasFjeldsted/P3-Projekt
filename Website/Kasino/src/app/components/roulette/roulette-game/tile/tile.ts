@@ -1,4 +1,3 @@
-import { BehaviorSubject, Observable } from "rxjs";
 import { Color, GameObject, MonoBehaviour, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 
 export class Tile extends MonoBehaviour
@@ -7,21 +6,23 @@ export class Tile extends MonoBehaviour
 
 	public textComponent: TextComponent;
 
-	private blackTileShape: Shape = new Shape();
-	private redTileShape: Shape = new Shape();
+	public betDisplay: GameObject;
 
-	public bettedDisplay: GameObject;
-	public tileDisplay: GameObject;
+	public tileShape: Shape;
+
+	private betColor: Color = new Color(70, 70, 255);
+
+	constructor()
+	{
+		super();
+		this.tileShape = new Shape();
+	}
 
 	clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
 	public Awake(): void
 	{
-		this.blackTileShape.radius = 0;
-		this.redTileShape.radius = 0;
-		this.redTileShape.fillColor = new Color(255, 50, 50);
-		this.blackTileShape.fillColor = new Color(50, 50, 50);
-
+		this.gameObject.AddComponent(new ShapeRendererComponent(this.tileShape));
 		this.textComponent = this.gameObject.GetComponent(TextComponent);
 		this.textComponent.color = new Color(255, 255, 255);
 		this.textComponent.shadow = true;
@@ -29,21 +30,27 @@ export class Tile extends MonoBehaviour
 		this.textComponent.fontSize = 24;
 		this.textComponent.shadowSize = 1;
 		this.textComponent.blur = 1;
-
-		this.tileDisplay = new GameObject(`${this.gameObject.gameObjectName}'s Tile Display`);
-		this.gameObject.game.Instantiate(this.tileDisplay);
-		this.tileDisplay.AddComponent(new TextComponent(this.data.betAmount.toString()));
-		this.tileDisplay.AddComponent(new ShapeRendererComponent(this.data.color == 0 ? this.redTileShape : this.blackTileShape));
-		this.tileDisplay.SetParent(this.bettedDisplay);
-		this.tileDisplay.GetComponent(TextComponent).Awake();
-		this.tileDisplay.GetComponent(ShapeRendererComponent).Awake();
-		this.tileDisplay.transform.scale = new Vector2(65, 65);
-		this.tileDisplay.isActive = false;
 	}
 
 	public Start(): void
 	{
-
+		this.tileShape.radius = 0;
+		this.tileShape.outlineWidth = 5;
+		this.tileShape.outlineColor = this.betColor;
+		switch (this.data.color)
+		{
+			case TileColors.Black:
+				this.tileShape.fillColor = new Color(50, 50, 50);
+				break;
+				
+			case TileColors.Red:
+				this.tileShape.fillColor = new Color(255, 50, 50);
+				break;
+				
+			case TileColors.Green:
+				this.tileShape.fillColor = new Color(50, 255, 50);
+				break;
+		}
 	}
 
 	public Update(deltaTime: number): void
@@ -56,11 +63,30 @@ export class Tile extends MonoBehaviour
 		this.data.betAmount += amount;
 		this.data.betAmount = this.clamp(this.data.betAmount, 0, this.gameObject.game.balance.balance);
 		this.data.betAmount = this.clamp(this.data.betAmount, 0, 2500);
+		
+		if (this.data.betAmount > 0)
+		{
+			this.textComponent.text = this.data.betAmount.toLocaleString('dk', { useGrouping: true });
+			this.tileShape.outline = true;
+			this.textComponent.shadow = false;
+			this.textComponent.color = this.betColor;
+		}
+		else
+		{
+			this.textComponent.text = this.data.number.toString();
+			this.textComponent.color = new Color(255, 255, 255);
+			this.textComponent.shadow = true;
+			this.tileShape.outline = false;
+		}
 	}
-
+	
 	public Clear(): void
 	{
 		this.data.betAmount = 0;
+		this.textComponent.text = this.data.number.toString();
+		this.textComponent.color = new Color(255, 255, 255);
+		this.textComponent.shadow = true;
+		this.tileShape.outline = false;
 	}
 }
 
