@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Inject, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Observable, Subject } from "rxjs";
@@ -35,7 +35,7 @@ import { DialogService } from "../dialog.service";
     ]),
   ],
 })
-export class IndbetalComponent implements OnInit {
+export class IndbetalComponent implements OnInit, OnDestroy {
   isOpen: boolean = true;
   isCardValid: boolean = true;
   currentLimit: number | null;
@@ -54,17 +54,21 @@ export class IndbetalComponent implements OnInit {
   ngOnInit(): void {
     this.isOpen = true;
     this.getDepositLimit();
+    document.body.classList.add("modalOpen");
 
     // Gives form validators
     this.form = this.builder.group({
-      cardName: ["Nicklas", Validators.required],
-      cardNumber: ["5497-7453-2614-4515", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
-      expDate: ["12/24", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
+      cardName: ["", Validators.required],
+      cardNumber: ["", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
+      expDate: ["", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
       cvv: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       amount: [null, Validators.required],
     });
-    this.updateAmount(150, 1);
+    this.updateAmount(100, 0);
     this.f["amount"].markAsUntouched();
+  }
+  ngOnDestroy(): void {
+    document.body.classList.remove("modalOpen");
   }
 
   // Gets max length of amount based on their deposit limit
