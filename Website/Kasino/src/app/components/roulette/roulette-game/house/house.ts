@@ -1,4 +1,4 @@
-import { ColliderComponent, GameInputFeature, GameObject, MonoBehaviour, ServerTimer, Shape, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, ServerTimer, Shape, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, UserData } from "src/app/interfaces/User";
 import { Bet } from "../bet";
 import { Tile, TileColors } from "../tile";
@@ -7,9 +7,6 @@ export class House extends MonoBehaviour
 {
 	public tileColliders: ColliderComponent[] = [];
 	private serverTimerText: TextComponent;
-
-	private blackTileShape: Shape = new Shape();
-	private redTileShape: Shape = new Shape();
 
 	private grid: GameObject;
 
@@ -33,14 +30,9 @@ export class House extends MonoBehaviour
 
 	public Awake(): void
 	{
-		// this.blackTileShape.radius = 0;
-		// this.redTileShape.radius = 0;
-		// this.redTileShape.fillColor = new Color(255, 50, 50);
-		// this.blackTileShape.fillColor = new Color(50, 50, 50);
-
 		this.grid = new GameObject(`Grid`);
 		this.gameObject.game.Instantiate(this.grid);
-		this.grid.transform.position = new Vector2(55, 80);
+		this.grid.transform.position = new Vector2(85, 80);
 
 		for (let y = this.gridHeight; y > 0; y--)
 		{
@@ -49,9 +41,6 @@ export class House extends MonoBehaviour
 				this.CreateTile(new Vector2(x, y), new Vector2(this.tileSize * x, this.tileSize * y));
 			}
 		}
-
-		// let greenTileShape: Shape = new Shape();
-		// greenTileShape.radius = 0;
 
 		let greenTile = new GameObject(`Green Grid Tile`);
 		this.gameObject.game.Instantiate(greenTile);
@@ -74,11 +63,15 @@ export class House extends MonoBehaviour
 
 		let serverTimer = new GameObject(`Roulette Server Timer`);
 		this.gameObject.game.Instantiate(serverTimer);
-		serverTimer.transform.scale = new Vector2(100, 100);
-		serverTimer.transform.position = new Vector2(480, 300);
 		serverTimer.SetParent(this.gameObject);
+		serverTimer.transform.scale = new Vector2(300, 30);
+		serverTimer.transform.position = new Vector2(480, 350);
 		serverTimer.AddComponent(new TextComponent('@TIME'));
 		this.serverTimerText = serverTimer.GetComponent(TextComponent);
+		this.serverTimerText.shadow = true;
+		this.serverTimerText.color = new Color(255, 255, 255);
+		this.serverTimerText.blur = 2;
+		this.serverTimerText.shadowOffset = new Vector2(2, 2);
 
 		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe((point) => this.Click(point));
 	}
@@ -122,7 +115,6 @@ export class House extends MonoBehaviour
 		this.gameObject.game.Instantiate(tile);
 		tile.SetParent(this.grid);
 		
-		let shape: Shape = (coordinate.x + coordinate.y) % 2 == 0 ? this.redTileShape : this.blackTileShape;
 		let num = ((coordinate.x * 3) - (coordinate.y)) + 1;
 		let tileScript = tile.AddComponent(new Tile()).GetComponent(Tile);
 

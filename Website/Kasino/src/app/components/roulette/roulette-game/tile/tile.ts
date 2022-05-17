@@ -1,4 +1,4 @@
-import { Color, GameObject, MonoBehaviour, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { Color, GameObject, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 
 export class Tile extends MonoBehaviour
 {
@@ -70,6 +70,7 @@ export class Tile extends MonoBehaviour
 			this.tileShape.outline = true;
 			this.textComponent.shadow = false;
 			this.textComponent.color = this.betColor;
+			this.gameObject.game.GetFeature(NetworkingFeature).SendData("Update_Tile_Data", JSON.stringify(this.data));
 		}
 		else
 		{
@@ -77,6 +78,7 @@ export class Tile extends MonoBehaviour
 			this.textComponent.color = new Color(255, 255, 255);
 			this.textComponent.shadow = true;
 			this.tileShape.outline = false;
+			this.gameObject.game.GetFeature(NetworkingFeature).SendData("Remove_Tile_Data", JSON.stringify(this.data));
 		}
 	}
 	

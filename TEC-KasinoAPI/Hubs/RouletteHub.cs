@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using TEC_KasinoAPI.Games;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
@@ -30,6 +31,7 @@ namespace TEC_KasinoAPI.Hubs
 
 			_gameManager.Bets.TryRemove(new KeyValuePair<string, int>(id, _gameManager.Bets[id]));
 			_gameManager.ConnectedPlayers.TryRemove(new KeyValuePair<string, UserData>(id, _gameManager.ConnectedPlayers[id]));
+			_game.Players.TryRemove(new KeyValuePair<string, UserData>(id, _game.Players[id]));
 
 			return base.OnDisconnectedAsync(exception);
 		}
@@ -42,6 +44,7 @@ namespace TEC_KasinoAPI.Hubs
 			string id = Context.ConnectionId;
 
 			_gameManager.ConnectedPlayers.TryAdd(id, new UserData());
+			_game.Players.TryAdd(id, new UserData());
 			_gameManager.Bets.TryAdd(id, 0);
 
 			return base.OnConnectedAsync();
@@ -58,8 +61,47 @@ namespace TEC_KasinoAPI.Hubs
 			parsedData.GameType = GameType.Roulette;
 
 			await _gameManager.ConnectedPlayers[id].Update(parsedData);
+			await _game.Players[id].Update(parsedData);
 			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Roulette)));
 			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
+		}
+
+		public void Update_Tile_Data(string tileData)
+        {
+			string id = Context.ConnectionId;
+
+			var newTile = JsonConvert.DeserializeObject<TileData>(tileData);
+			_game.PlayerTileData.AddOrUpdate(id, newTile, (key, value) => _game.PlayerTileData[key] = newTile);
+            foreach (var tile in _game.PlayerTileData)
+            {
+				Debug.WriteLine($"\n{tile.Key} -> Number = {tile.Value.number} : Color = {tile.Value.color} : Amount = {tile.Value.betAmount}");
+            }
+		}
+
+		public void Remove_Tile_Data(string tileData)
+        {
+			string id = Context.ConnectionId;
+
+			var newTile = JsonConvert.DeserializeObject<TileData>(tileData);
+			_game.PlayerTileData.TryRemove(new KeyValuePair<string, TileData>(id, newTile));
+			foreach (var tile in _game.PlayerTileData)
+			{
+				Debug.WriteLine($"\n{tile.Key} -> Number = {tile.Value.number} : Color = {tile.Value.color} : Amount = {tile.Value.betAmount}");
+			}
+		}
+
+		public void Clear_Tile_Data()
+        {
+			string id = Context.ConnectionId;
+
+            foreach (var tile in _game.PlayerTileData.Where(pair => pair.Key == id))
+            {
+				_game.PlayerTileData.TryRemove(new KeyValuePair<string, TileData>(id, tile.Value));
+			}
+			foreach (var tsile in _game.PlayerTileData)
+			{
+				Debug.WriteLine($"\n{tsile.Key} -> Number = {tsile.Value.number} : Color = {tsile.Value.color} : Amount = {tsile.Value.betAmount}");
+			}
 		}
 	}
 }

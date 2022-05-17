@@ -1,4 +1,4 @@
-import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { House } from "../house";
 import { Tile } from "../tile";
 
@@ -45,7 +45,7 @@ export class Bet extends MonoBehaviour
 		add10btn.AddComponent(new ShapeRendererComponent(buttonShape));
 		add10btn.AddComponent(new TextComponent('+10'));
 		add10btn.AddComponent(new ColliderComponent());
-		add10btn.transform.scale = new Vector2(50, 30);
+		add10btn.transform.scale = new Vector2(75, 50);
 		add10btn.transform.Translate(new Vector2(100, 0));
 		this.add10btnCOL = add10btn.GetComponent(ColliderComponent);
 		
@@ -55,8 +55,8 @@ export class Bet extends MonoBehaviour
 		add50btn.AddComponent(new ShapeRendererComponent(buttonShape));
 		add50btn.AddComponent(new TextComponent('+50'));
 		add50btn.AddComponent(new ColliderComponent());
-		add50btn.transform.scale = new Vector2(50, 30);
-		add50btn.transform.Translate(new Vector2(160, 0));
+		add50btn.transform.scale = new Vector2(75, 50);
+		add50btn.transform.Translate(new Vector2(180, 0));
 		this.add50btnCOL = add50btn.GetComponent(ColliderComponent);
 
 		let add100btn = new GameObject(`Add 100 Button`);
@@ -65,8 +65,8 @@ export class Bet extends MonoBehaviour
 		add100btn.AddComponent(new ShapeRendererComponent(buttonShape));
 		add100btn.AddComponent(new TextComponent('+100'));
 		add100btn.AddComponent(new ColliderComponent());
-		add100btn.transform.scale = new Vector2(50, 30);
-		add100btn.transform.Translate(new Vector2(220, 0));
+		add100btn.transform.scale = new Vector2(75, 50);
+		add100btn.transform.Translate(new Vector2(260, 0));
 		this.add100btnCOL = add100btn.GetComponent(ColliderComponent);
 
 		let add500btn = new GameObject(`Add 500 Button`);
@@ -75,8 +75,8 @@ export class Bet extends MonoBehaviour
 		add500btn.AddComponent(new ShapeRendererComponent(buttonShape));
 		add500btn.AddComponent(new TextComponent('+500'));
 		add500btn.AddComponent(new ColliderComponent());
-		add500btn.transform.scale = new Vector2(50, 30);
-		add500btn.transform.Translate(new Vector2(280, 0));
+		add500btn.transform.scale = new Vector2(75, 50);
+		add500btn.transform.Translate(new Vector2(340, 0));
 		this.add500btnCOL = add500btn.GetComponent(ColliderComponent);
 
 		let add1000btn = new GameObject(`Add 1000 Button`);
@@ -85,8 +85,8 @@ export class Bet extends MonoBehaviour
 		add1000btn.AddComponent(new ShapeRendererComponent(buttonShape));
 		add1000btn.AddComponent(new TextComponent('+1000'));
 		add1000btn.AddComponent(new ColliderComponent());
-		add1000btn.transform.scale = new Vector2(50, 30);
-		add1000btn.transform.Translate(new Vector2(340, 0));
+		add1000btn.transform.scale = new Vector2(75, 50);
+		add1000btn.transform.Translate(new Vector2(420, 0));
 		this.add1000btnCOL = add1000btn.GetComponent(ColliderComponent);
 
 		let clearBtn = new GameObject(`Clear Button`);
@@ -95,7 +95,7 @@ export class Bet extends MonoBehaviour
 		clearBtn.AddComponent(new ShapeRendererComponent(buttonShape));
 		clearBtn.AddComponent(new TextComponent('Clear'));
 		clearBtn.AddComponent(new ColliderComponent());
-		clearBtn.transform.scale = new Vector2(50, 30);
+		clearBtn.transform.scale = new Vector2(75, 50);
 		clearBtn.transform.Translate(new Vector2(100, -60));
 		this.clearBtnCOL = clearBtn.GetComponent(ColliderComponent);
 
@@ -164,6 +164,7 @@ export class Bet extends MonoBehaviour
 		{
 			tile.gameObject.GetComponent(Tile).Clear();
 		}
+		this.gameObject.game.GetFeature(NetworkingFeature).Send("Clear_Tile_Data");
 	}
 
 	public Reset(): void

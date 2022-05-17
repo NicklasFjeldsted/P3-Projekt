@@ -12,12 +12,16 @@ namespace TEC_KasinoAPI.Games
 {
     public interface IRoulette
     {
-        
+        ConcurrentDictionary<string, UserData> Players { get; }
+        ConcurrentDictionary<string, TileData> PlayerTileData { get; }
     }
     public class Roulette : IRoulette
     {
         public ConcurrentDictionary<string, UserData> Players { get { return _players; } }
         private readonly ConcurrentDictionary<string, UserData> _players = new ConcurrentDictionary<string, UserData>();
+
+        public ConcurrentDictionary<string, TileData> PlayerTileData { get { return _playerTileData; } }
+        private readonly ConcurrentDictionary<string, TileData> _playerTileData = new ConcurrentDictionary<string, TileData>();
 
         // Reference for the timer instance.
         private readonly TimerPlus _timer = TimerPlus.Timers.GetOrAdd(GameType.Roulette, new TimerPlus(5000, GameType.Roulette));
