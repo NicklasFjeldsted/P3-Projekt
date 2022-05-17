@@ -159,10 +159,15 @@ export class Bet extends MonoBehaviour
 
 	public ClearBets(): void
 	{
-		this.betIncrement = 0;
+		this.Reset();
 		for (const tile of this.gameObject.parent.GetComponent(House).tileColliders)
 		{
 			tile.gameObject.GetComponent(Tile).Clear();
 		}
+	}
+
+	public Reset(): void
+	{
+		this.betIncrement = 0;
 	}
 }
