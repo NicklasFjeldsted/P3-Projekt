@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using TEC_KasinoAPI.Games;
+using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
 using TEC_KasinoAPI.Services;
 
@@ -54,9 +55,10 @@ namespace TEC_KasinoAPI.Hubs
 			string id = Context.ConnectionId;
 
 			UserData parsedData = JsonConvert.DeserializeObject<UserData>(playerData, _serializerSettings);
-			parsedData.GameType = GameType.Blackjack;
+			parsedData.GameType = GameType.Roulette;
 
 			await _gameManager.ConnectedPlayers[id].Update(parsedData);
+			await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Roulette)));
 			await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[id]));
 		}
 	}
