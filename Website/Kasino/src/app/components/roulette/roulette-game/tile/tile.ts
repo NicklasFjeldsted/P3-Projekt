@@ -5,6 +5,7 @@ export class Tile extends MonoBehaviour
 	public data: TileData = new TileData();
 
 	public textComponent: TextComponent;
+	public shapeRenderer: ShapeRendererComponent;
 
 	public betDisplay: GameObject;
 
@@ -22,13 +23,12 @@ export class Tile extends MonoBehaviour
 
 	public Awake(): void
 	{
-		this.gameObject.AddComponent(new ShapeRendererComponent(this.tileShape));
+		this.shapeRenderer = this.gameObject.AddComponent(new ShapeRendererComponent(this.tileShape)).GetComponent(ShapeRendererComponent);
 		this.textComponent = this.gameObject.GetComponent(TextComponent);
 		this.textComponent.color = new Color(255, 255, 255);
 		this.textComponent.shadow = true;
 		this.textComponent.shadowOffset = new Vector2(1, 2);
 		this.textComponent.fontSize = 24;
-		this.textComponent.shadowSize = 1;
 		this.textComponent.blur = 1;
 	}
 
@@ -52,12 +52,12 @@ export class Tile extends MonoBehaviour
 				break;
 		}
 	}
-
+	
 	public Update(deltaTime: number): void
 	{
 		
 	}
-
+	
 	public AddAmount(amount: number): void
 	{
 		this.data.betAmount += amount;

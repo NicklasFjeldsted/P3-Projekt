@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using TEC_KasinoAPI.Services;
 using TEC_KasinoAPI.Models;
-using System.Diagnostics;
+using TEC_KasinoAPI.Services;
 
 namespace TEC_KasinoAPI.Controllers
 {
@@ -10,13 +9,13 @@ namespace TEC_KasinoAPI.Controllers
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
-        private ICustomerService _userService;
+        private readonly ICustomerService _userService;
 
         public CustomersController(ICustomerService userService)
         {
             _userService = userService;
         }
-        
+
         /// <summary>
         /// Register a new customer from the <paramref name="model"/>.
         /// </summary>
@@ -26,7 +25,7 @@ namespace TEC_KasinoAPI.Controllers
         public async Task<IActionResult> Register(CustomerRegisterRequest model)
         {
             // Validate the input.
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest("Invalid Model:" + model);
             }
@@ -84,10 +83,10 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // Get the refresh token in the HttpRequest cookies.
-            string refreshToken = Request.Cookies["refreshToken"];
+            string refreshToken = Request.Cookies[ "refreshToken" ];
 
             // If there is a refresh token in the HttpRequest cookies revoke that token.
-            if(!string.IsNullOrEmpty(refreshToken))
+            if (!string.IsNullOrEmpty(refreshToken))
             {
                 await _userService.RevokeTokenAsync(refreshToken, IPAddress());
             }
@@ -97,7 +96,7 @@ namespace TEC_KasinoAPI.Controllers
             AuthenticateResponse response = await _userService.AuthenticateAsync(model, IPAddress());
 
             // Check if the response is null
-            if(response == null)
+            if (response == null)
             {
                 // Return -> Code 400 and "Username or password is incorrect."
                 return BadRequest(new { message = "Username or password is incorrect." });
@@ -118,13 +117,13 @@ namespace TEC_KasinoAPI.Controllers
         public async Task<IActionResult> RefreshToken()
         {
             // Get the current refresh token from the Cookies
-            string refreshToken = Request.Cookies["refreshToken"];
+            string refreshToken = Request.Cookies[ "refreshToken" ];
 
             // Do the actual refreshing getting back the new tokens
             RefreshTokenResponse response = await _userService.RefreshTokenAsync(refreshToken, IPAddress());
 
             // Check if the response is null
-            if(response == null)
+            if (response == null)
             {
                 // Return -> Code 401 and "Invalid token."
                 return Unauthorized(new { message = "Invalid token." });
@@ -152,10 +151,10 @@ namespace TEC_KasinoAPI.Controllers
             }
 
             // If the model.Token is null get the Token from the Cookies instead
-            string token = model.Token ?? Request.Cookies["refreshToken"];
+            string token = model.Token ?? Request.Cookies[ "refreshToken" ];
 
             // Check if the token is null or empty
-            if(string.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
             {
                 // Return -> Code 400 and "Token not found."
                 return BadRequest(new { message = "Token not found." });
@@ -194,7 +193,8 @@ namespace TEC_KasinoAPI.Controllers
             Customer customer = await _userService.GetByIdAsync(customerID);
 
             // If the customer wasnt found return -> Code 404
-            if (customer == null) return NotFound();
+            if (customer == null)
+                return NotFound();
 
             // If the customer was found return -> Code 200
             // and respond with the customer
@@ -213,7 +213,8 @@ namespace TEC_KasinoAPI.Controllers
             Customer customer = await _userService.GetByIdAsync(customerID);
 
             // If the customer wasnt found return -> Code 404
-            if(customer == null) return NotFound();
+            if (customer == null)
+                return NotFound();
 
             // If the customer was found return -> Code 200
             // and respond with the refresh tokens of that customer
@@ -227,7 +228,7 @@ namespace TEC_KasinoAPI.Controllers
         private void SetTokenCookie(string token)
         {
             // Configure cookie, setting expiration date and enabling HttpOnly
-            CookieOptions options = new CookieOptions
+            CookieOptions options = new()
             {
                 HttpOnly = true,
                 SameSite = SameSiteMode.Strict,
@@ -245,10 +246,10 @@ namespace TEC_KasinoAPI.Controllers
         private string IPAddress()
         {
             // Check if the http request contains an IP if not get it from the context instead
-            if(Request.Headers.ContainsKey("X-Forwarded-For"))
+            if (Request.Headers.ContainsKey("X-Forwarded-For"))
             {
                 // Get the IP from the request
-                return Request.Headers["X-Forwarded-For"];
+                return Request.Headers[ "X-Forwarded-For" ];
             }
             else
             {

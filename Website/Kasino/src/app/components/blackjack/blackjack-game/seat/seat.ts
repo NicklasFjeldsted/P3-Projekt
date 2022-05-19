@@ -87,7 +87,6 @@ export class Seat extends MonoBehaviour
 		nameShape.outlineWidth = 2;
 
 		let seatText = new GameObject(`${this.gameObject.gameObjectName}'s Text`);
-		this.gameObject.game.Instantiate(seatText);
 		seatText.SetParent(this.gameObject);
 		seatText.AddComponent(new TextComponent(this.gameObject.gameObjectName));
 		let seatTextShape = seatText.AddComponent(new ShapeRendererComponent(nameShape)).GetComponent(ShapeRendererComponent);
@@ -96,9 +95,9 @@ export class Seat extends MonoBehaviour
 		seatTextShape.layer = 2;
 		seatText.transform.Translate(new Vector2(0, 25));
 		seatText.transform.scale = new Vector2(110, 30);
+		this.gameObject.game.Instantiate(seatText);
 
 		let cardValuesChild = new GameObject(`${this.gameObject.gameObjectName}'s "Card Values Child"`);
-		this.gameObject.game.Instantiate(cardValuesChild);
 		cardValuesChild.SetParent(this.gameObject);
 		cardValuesChild.transform.Translate(new Vector2(0, -35));
 		cardValuesChild.transform.scale = new Vector2(50, 30);
@@ -106,15 +105,15 @@ export class Seat extends MonoBehaviour
 		this.childTextComponent = cardValuesChild.GetComponent(TextComponent);
 		this.childTextComponent.fit = true;
 		this.childTextComponent.fontSize = 24;
+		this.gameObject.game.Instantiate(cardValuesChild);
 
 		let buttons = new GameObject(`${this.gameObject.gameObjectName}'s buttons`);
-		this.gameObject.game.Instantiate(buttons);
 		buttons.SetParent(this.gameObject);
 		buttons.transform.scale = new Vector2(100, 30);
 		buttons.transform.Translate(new Vector2(0, -65));
+		this.gameObject.game.Instantiate(buttons);
 		
 		let hitButton = new GameObject(`${buttons.gameObjectName}'s Hit Button`);
-		this.gameObject.game.Instantiate(hitButton);
 		hitButton.SetParent(buttons);
 		hitButton.transform.scale = new Vector2(80, 30);
 		hitButton.transform.Translate(new Vector2(-40, 0));
@@ -122,9 +121,9 @@ export class Seat extends MonoBehaviour
 		hitButton.AddComponent(new ColliderComponent());
 		this.hitButtonCollider = hitButton.GetComponent(ColliderComponent);
 		hitButton.AddComponent(new ShapeRendererComponent(buttonShape));
+		this.gameObject.game.Instantiate(hitButton);
 		
 		let standButton = new GameObject(`${buttons.gameObjectName}'s Stand Button`);
-		this.gameObject.game.Instantiate(standButton);
 		standButton.SetParent(buttons);
 		standButton.transform.scale = new Vector2(80, 30);
 		standButton.transform.Translate(new Vector2(40, 0));
@@ -132,27 +131,27 @@ export class Seat extends MonoBehaviour
 		standButton.AddComponent(new ColliderComponent());
 		this.standButtonCollider = standButton.GetComponent(ColliderComponent);
 		standButton.AddComponent(new ShapeRendererComponent(buttonShape));
-
+		this.gameObject.game.Instantiate(standButton);
+		
 		let resultTextChild = new GameObject(`${this.gameObject.gameObjectName}'s Result Child`);
-		this.gameObject.game.Instantiate(resultTextChild);
 		resultTextChild.SetParent(this.gameObject);
 		resultTextChild.transform.scale = new Vector2(100, 30);
 		resultTextChild.transform.Translate(new Vector2(0, -90));
 		resultTextChild.AddComponent(new TextComponent('@result'));
 		this.resultTextChildComponent = resultTextChild.GetComponent(TextComponent);
 		this.resultTextChildComponent.renderLayer = -1;
+		this.gameObject.game.Instantiate(resultTextChild);
 
 		let betAmount = new GameObject(`${this.gameObject.gameObjectName} - Bet Amount`);
-		this.gameObject.game.Instantiate(betAmount);
 		betAmount.SetParent(this.gameObject);
 		betAmount.AddComponent(new Bet());
 		this.seatBet = betAmount.GetComponent(Bet);
 		betAmount.transform.scale = new Vector2(100, 30);
 		betAmount.transform.Translate(new Vector2(0, -10));
 		betAmount.isActive = false;
-
+		this.gameObject.game.Instantiate(betAmount);
+		
 		let add50btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 50 Button`);
-		this.gameObject.game.Instantiate(add50btn);
 		let text50 = add50btn.AddComponent(new TextComponent('+50')).GetComponent(TextComponent);
 		text50.fontSize = 24;
 		add50btn.AddComponent(new ShapeRendererComponent(buttonShape));
@@ -160,9 +159,9 @@ export class Seat extends MonoBehaviour
 		add50btn.SetParent(betAmount);
 		add50btn.transform.position = new Vector2(680, 30);
 		this.add50btnCOL = add50btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
-
+		this.gameObject.game.Instantiate(add50btn);
+		
 		let add100btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 100 Button`);
-		this.gameObject.game.Instantiate(add100btn);
 		let text100 = add100btn.AddComponent(new TextComponent('+100')).GetComponent(TextComponent);
 		text100.fontSize = 24;
 		add100btn.AddComponent(new ShapeRendererComponent(buttonShape));
@@ -170,9 +169,9 @@ export class Seat extends MonoBehaviour
 		add100btn.SetParent(betAmount);
 		add100btn.transform.position = new Vector2(780, 30);
 		this.add100btnCOL = add100btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
-
+		this.gameObject.game.Instantiate(add100btn);
+		
 		let add1000btn = new GameObject(`${this.gameObject.gameObjectName}'s Add 1000 Button`);
-		this.gameObject.game.Instantiate(add1000btn);
 		let text1000 = add1000btn.AddComponent(new TextComponent('+1000')).GetComponent(TextComponent);
 		text1000.fontSize = 24;
 		add1000btn.AddComponent(new ShapeRendererComponent(buttonShape));
@@ -180,9 +179,9 @@ export class Seat extends MonoBehaviour
 		add1000btn.SetParent(betAmount);
 		add1000btn.transform.position = new Vector2(880, 30);
 		this.add1000btnCOL = add1000btn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
-
+		this.gameObject.game.Instantiate(add1000btn);
+		
 		let clearbtn = new GameObject(`${this.gameObject.gameObjectName}'s Clear Button`);
-		this.gameObject.game.Instantiate(clearbtn);
 		let clearText = clearbtn.AddComponent(new TextComponent('Clear')).GetComponent(TextComponent);
 		clearText.fontSize = 24;
 		clearbtn.AddComponent(new ShapeRendererComponent(buttonShape1));
@@ -190,9 +189,9 @@ export class Seat extends MonoBehaviour
 		clearbtn.SetParent(betAmount);
 		clearbtn.transform.position = new Vector2(80, 30);
 		this.clearbtnCOL = clearbtn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
+		this.gameObject.game.Instantiate(clearbtn);
 
 		let rebetBtn = new GameObject(`${this.gameObject.gameObjectName}'s Rebet Button`);
-		this.gameObject.game.Instantiate(rebetBtn);
 		let rebetText = rebetBtn.AddComponent(new TextComponent('Rebet')).GetComponent(TextComponent);
 		rebetText.fontSize = 24;
 		rebetBtn.AddComponent(new ShapeRendererComponent(buttonShape1));
@@ -200,14 +199,15 @@ export class Seat extends MonoBehaviour
 		rebetBtn.SetParent(betAmount);
 		rebetBtn.transform.position = new Vector2(180, 30);
 		this.rebetbtnCOL = rebetBtn.AddComponent(new ColliderComponent()).GetComponent(ColliderComponent);
-
+		this.gameObject.game.Instantiate(rebetBtn);
+		
 		let betBackground = new GameObject(`${this.gameObject.gameObjectName} - Bet Background`);
-		this.gameObject.game.Instantiate(betBackground);
 		betBackground.SetParent(this.gameObject);
 		betBackground.AddComponent(new ShapeRendererComponent(betShape)).GetComponent(ShapeRendererComponent).layer = -100;
 		betBackground.transform.scale = new Vector2(960, 100);
 		betBackground.transform.position = new Vector2(480, 15);
-
+		this.gameObject.game.Instantiate(betBackground);
+		
 		this.seatBet.buttons.push(add50btn);
 		this.seatBet.buttons.push(add100btn);
 		this.seatBet.buttons.push(add1000btn);
@@ -215,7 +215,7 @@ export class Seat extends MonoBehaviour
 		this.seatBet.buttons.push(rebetBtn);
 		this.seatBet.buttons.push(betBackground);
 
-		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe(event => this.OnClicked(event));
+		this.gameObject.game.GetFeature(GameInputFeature).OnMouseDown.subscribe(event => this.OnClicked(event));
 	}
 
 	public Update(deltaTime: number): void
@@ -463,7 +463,6 @@ export class Seat extends MonoBehaviour
 	private CreateCardDisplay(index: number): void
 	{
 		let cardDisplayGameObject = new GameObject(`${this.gameObject.gameObjectName}'s CARD OBJECT - ${index}`);
-		this.gameObject.game.Instantiate(cardDisplayGameObject);
 		cardDisplayGameObject.SetParent(this.gameObject);
 		
 		cardDisplayGameObject.AddComponent(new CardObject());
@@ -472,6 +471,7 @@ export class Seat extends MonoBehaviour
 		cardObject.transform.Translate(new Vector2(0, -160));
 		cardObject.Awake();
 		cardObject.renderer.layer = this.displayedCards.length - 15;
+		this.gameObject.game.Instantiate(cardDisplayGameObject);
 	}
 
 	/** Join a seat. Throws an error if the seat already has a player. */

@@ -6,10 +6,10 @@ namespace TEC_KasinoAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+
     public class BalanceController : ControllerBase
     {
-        private IBalanceService _balanceService;
+        private readonly IBalanceService _balanceService;
 
         public BalanceController(IBalanceService balanceService)
         {
@@ -121,7 +121,8 @@ namespace TEC_KasinoAPI.Controllers
             AccountBalance accountBalance = await _balanceService.GetByIdAsync(customerID);
 
             // If the account balance wasnt found return -> Code 404
-            if(accountBalance == null) return NotFound();
+            if (accountBalance == null)
+                return NotFound();
 
             // If the account balance was found return -> Code 200
             // and respond with the account balance

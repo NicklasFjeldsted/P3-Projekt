@@ -15,4 +15,5 @@ export * from './collider';
 export * from './beforeunload';
 export * from './logging';
 export * from './infobar';
+export * from './mathf';
 export * from './serverTimer';

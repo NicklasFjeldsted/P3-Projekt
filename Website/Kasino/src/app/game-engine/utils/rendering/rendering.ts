@@ -4,7 +4,14 @@ import { IRendering } from "./rendering.h";
 
 export abstract class Rendering implements IRendering, IComponent
 {
+	get Changed(): boolean
+	{
+		return this.old === this.constructor;
+	}
+
 	gameObject: GameObject;
+
+	old: Function;
 
 	abstract Awake(): void;
 	abstract Start(): void;

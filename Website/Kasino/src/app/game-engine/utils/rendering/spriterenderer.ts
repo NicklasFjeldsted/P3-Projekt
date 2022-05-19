@@ -50,36 +50,6 @@ export class SpriteRendererComponent extends Rendering
 		this.gameObject.RemoveComponent(SpriteRendererComponent);
 	}
 
-	/** Draw the shadow to the canvas. */
-	private DrawShadow(): void
-	{
-		// if (!this.gameObject.isActive || this.image == null)
-		// {
-		// 	return;
-		// }
-
-		// let start: Vector2 = this.center;
-		// let size: Vector2 = this.size;
-
-		// let _start: Vector2 = new Vector2(start.x - this.shadowSize, start.y - this.shadowSize);
-		// let _size: Vector2 = new Vector2(size.x + this.shadowSize * 2, size.y + this.shadowSize * 2);
-
-		// // Check where it starts
-		// //CanvasLayer.GetLayer(6).FillRect(_start, new Vector2(5, 5));
-
-		// CanvasLayer.GetLayer(this.layer ? this.layer : 2).FillRect(_start, _size, this.shadowColor);
-	}
-
-	/** Clear the shadow from the canvas. */
-	private ClearShadow(): void
-	{
-		// CanvasLayer.GetLayer(this.layer ? this.layer : 2)
-		// .ClearRect(
-		// 	new Vector2(this.start.x - this.shadowSize, this.start.y - this.shadowSize),
-		// 	new Vector2(this.size.x + this.shadowSize * 2, this.size.y + this.shadowSize * 2)
-		// );
-	}
-
 	/** Draw a Sprite to the canvas. */
 	Draw(): void
 	{

@@ -17,7 +17,6 @@ export class TextComponent extends Rendering
 	public blur: number | undefined;
 	
 	public shadow: boolean = false;
-	public shadowSize: number | undefined;
 	public shadowColor: Color | undefined;
 	public shadowOffset: Vector2 = Vector2.zero;
 
@@ -39,10 +38,7 @@ export class TextComponent extends Rendering
 		this.text = startText ? startText : " ";
 	}
 
-	Start(): void
-	{
-		
-	}
+	private l = 0;
 
 	Awake(): void
 	{
@@ -58,34 +54,36 @@ export class TextComponent extends Rendering
 		this.RegisterRenderer();
 	}
 
+	Start(): void
+	{
+		
+	}
+
 	Update(deltaTime: number): void
 	{
-
+		this.old = this.constructor;
 	}
 
 	/** Draw Text to the canvas. */
 	Draw(): void
 	{
-		if (!this.gameObject.isActive)
+		if (!this.gameObject.isActive || !this.Changed)
 		{
 			return;
 		}
 
-		if (this.shadow)
-		{
-			CanvasLayer.GetLayer(this.renderLayer).DrawText(
-				this.text,
-				new Vector2(
-					this.rectTransform.center.x + this.shadowOffset.x,
-					this.rectTransform.center.y + this.shadowOffset.y
-				),
-				this.shadowSize && this.fontSize ? this.fontSize + this.shadowSize : this.fontSize,
-				this.rectTransform.size.x,
-				this.fit,
-				this.shadowColor,
-				this.blur);
-		}
-		CanvasLayer.GetLayer(this.renderLayer).DrawText(this.text, this.rectTransform.center, this.fontSize, this.rectTransform.size.x, this.fit, this.color);
+		CanvasLayer.GetLayer(this.renderLayer).DrawText(
+			this.text,
+			this.rectTransform.center,
+			this.fontSize,
+			this.rectTransform.size.x,
+			this.fit,
+			this.color,
+			this.shadow,
+			this.blur,
+			this.shadowColor,
+			this.shadowOffset
+		);
 	}
 
 	/** Clear Text from the canvas. */

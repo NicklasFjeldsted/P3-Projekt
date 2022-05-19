@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -17,8 +16,7 @@ namespace TEC_KasinoAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     GenderName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AccountGenders", x => x.GenderID);
                 });
 
@@ -30,8 +28,7 @@ namespace TEC_KasinoAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CountryName = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Countries", x => x.CountryID);
                     table.UniqueConstraint("UN_Countries_CountryName", x => x.CountryName);
                 });
@@ -43,8 +40,7 @@ namespace TEC_KasinoAPI.Migrations
                     ZipCodeID = table.Column<int>(type: "int", nullable: false),
                     ZipCodeName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_ZipCode", x => x.ZipCodeID);
                 });
 
@@ -69,8 +65,7 @@ namespace TEC_KasinoAPI.Migrations
                     Deactivated = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Customers", x => x.CustomerID);
                     table.UniqueConstraint("UN_Customers_CPRNumber", x => x.CPRNumber);
                     table.ForeignKey(
@@ -101,8 +96,7 @@ namespace TEC_KasinoAPI.Migrations
                     Balance = table.Column<double>(type: "float", nullable: false, defaultValueSql: "0"),
                     DepositLimit = table.Column<int>(type: "int", nullable: false, defaultValueSql: "1000")
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_AccountBalances", x => x.CustomerID);
                     table.ForeignKey(
                         name: "FK_AccountBalances_Customers_CustomerID",
@@ -127,8 +121,7 @@ namespace TEC_KasinoAPI.Migrations
                     ReplacedByToken = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CustomerID = table.Column<int>(type: "int", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_RefreshToken", x => x.ID);
                     table.ForeignKey(
                         name: "FK_RefreshToken_Customers_CustomerID",
@@ -149,8 +142,7 @@ namespace TEC_KasinoAPI.Migrations
                     Amount = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CurrentBalance = table.Column<double>(type: "float", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Transactions", x => x.TransactionID);
                     table.ForeignKey(
                         name: "FK_Transactions_AccountBalances_CustomerID",

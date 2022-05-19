@@ -3,6 +3,7 @@ import { Canvas, Vector2, Settings } from "src/app/game-engine";
 export class CanvasLayer
 { 
 	private static _layers: Canvas[] = [];
+	public static get Layers(): Canvas[] { return this._layers; }
 
 	private constructor() { }
 
