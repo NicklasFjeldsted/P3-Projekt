@@ -6,7 +6,7 @@ export class Wheel extends MonoBehaviour
 {
 	public wheelShape: Shape;
 	public house: House;
-	public shouldSpin: boolean = true;
+	public shouldSpin: boolean = false;
 
 	public shapeRenderer: ShapeRendererComponent;
 
@@ -44,7 +44,7 @@ export class Wheel extends MonoBehaviour
 		needle.SetParent(this.gameObject);
 		needle.transform.scale = new Vector2(2, this.transform.scale.y);
 		this.gameObject.game.Instantiate(needle);
-		needle.GetComponent(ShapeRendererComponent).layer = this.shapeRenderer.layer + 2;
+		needle.GetComponent(ShapeRendererComponent).layer = this.shapeRenderer.layer + 5;
 
 		for (let x = 0; x < 36; x++)
 		{
@@ -59,19 +59,22 @@ export class Wheel extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
-		if (this.shouldSpin)
-		{
-			this.wheelTileParent.transform.Translate(new Vector2(-5, 0));
-		}
+			const tile = this.wheelTiles[ 0 ];
 
-		for (let i = 0; i < this.wheelTiles.length; i++)
-		{
-			const tile = this.wheelTiles[ i ];
-
-			if (tile.gameObject.transform.position.x < this.rectTransform.start.x)
+			tile.textComponent.text = `${tile.gameObject.transform.position.x}`;
+			if (tile.gameObject.transform.position.x < this.rectTransform.start.x - this.tileSize)
 			{
 				tile.gameObject.transform.position = new Vector2(1400 + this.tileSize, 35);
+				for (let i = 0; i < this.wheelTiles.length; i++)
+				{
+					this.wheelTiles[ i - 1 ] = this.wheelTiles[ i ];
+				}
+				this.wheelTiles[ this.wheelTiles.length - 1 ] = tile;
 			}
+
+		if (this.shouldSpin)
+		{
+			this.wheelTileParent.transform.Translate(new Vector2(-3, 0));
 		}
 	}
 

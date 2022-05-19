@@ -167,12 +167,12 @@ export class House extends MonoBehaviour
 	public Wheel_Spin(data: string): void
 	{
 		let parsedWheelStopTime = JSON.parse(data);
-		console.log(parsedWheelStopTime);
+		this.wheel.shouldSpin = true;
 	}
 
 	public Wheel_Stop(data: string): void
 	{
 		let parsedWinningNumber = JSON.parse(data);
-		console.log(parsedWinningNumber);
+		this.wheel.shouldSpin = false;
 	}
 }

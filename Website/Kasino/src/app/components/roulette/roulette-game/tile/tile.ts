@@ -1,4 +1,4 @@
-import { Color, GameObject, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { Color, GameObject, Mathf, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 
 export class Tile extends MonoBehaviour
 {
@@ -19,8 +19,6 @@ export class Tile extends MonoBehaviour
 		this.tileShape = new Shape();
 	}
 
-	clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
-
 	public Awake(): void
 	{
 		this.shapeRenderer = this.gameObject.AddComponent(new ShapeRendererComponent(this.tileShape)).GetComponent(ShapeRendererComponent);
@@ -37,6 +35,7 @@ export class Tile extends MonoBehaviour
 		this.tileShape.radius = 0;
 		this.tileShape.outlineWidth = 5;
 		this.tileShape.outlineColor = this.betColor;
+		this.tileShape.shadow = false;
 		switch (this.data.color)
 		{
 			case TileColors.Black:
@@ -61,8 +60,8 @@ export class Tile extends MonoBehaviour
 	public AddAmount(amount: number): void
 	{
 		this.data.betAmount += amount;
-		this.data.betAmount = this.clamp(this.data.betAmount, 0, this.gameObject.game.balance.balance);
-		this.data.betAmount = this.clamp(this.data.betAmount, 0, 2500);
+		this.data.betAmount = Mathf.Clamp(this.data.betAmount, 0, this.gameObject.game.balance.balance);
+		this.data.betAmount = Mathf.Clamp(this.data.betAmount, 0, 2500);
 		
 		if (this.data.betAmount > 0)
 		{
