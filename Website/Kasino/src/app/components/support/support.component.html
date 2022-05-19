@@ -1,14 +1,13 @@
 <div class="featured-sites noselect" [ngSwitch]="helpSite">
 
   <div class="container" >
-    <div class="searchbar-container">
 		<div class="searchbar">
       <h1>Hvordan kan vi hjælpe?</h1>
 			<input class="input-searchbar" placeholder="Søg">
 		</div>
 	</div>
   
-	<div class="category-container h-center" *ngSwitchCase="'0'">
+	<div class="category-container" *ngSwitchCase="'0'">
     <section class="grid-container">
       <a (click)="changeSite(1)" ><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
       <a (click)="changeSite(2)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
