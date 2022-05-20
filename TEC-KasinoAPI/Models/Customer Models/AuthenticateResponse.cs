@@ -13,7 +13,7 @@ namespace TEC_KasinoAPI.Models
         [JsonIgnore]
         public string RefreshToken { get; set; }
 
-        public AuthenticateResponse(int id, string email, string firstName, string lastName,string jwtToken, string refreshToken)
+        public AuthenticateResponse(int id, string email, string firstName, string lastName, string jwtToken, string refreshToken)
         {
             Id = id;
             Email = email;

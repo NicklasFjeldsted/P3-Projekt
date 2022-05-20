@@ -215,19 +215,18 @@ export class House extends MonoBehaviour
 		}
 
 		let cardChild = new GameObject('House Cards');
-		this.gameObject.game.Instantiate(cardChild);
-
+		
 		let resultChild = new GameObject('House Result Text');
-		this.gameObject.game.Instantiate(resultChild);
 		resultChild.AddComponent(new TextComponent(' '));
 		this.resultChildText = resultChild.GetComponent(TextComponent);
 		this.resultChildText.gameObject.transform.Translate(new Vector2(0, -250));
-
+		this.gameObject.game.Instantiate(resultChild);
+		
 		let shape: Shape = new Shape();
 		shape.fillColor = new Color(255, 255, 255);
 		shape.outline = true;
 		shape.outlineWidth = 4;
-
+		
 		cardChild.AddComponent(new TextComponent(' '));
 		cardChild.AddComponent(new ShapeRendererComponent(shape))
 		this.childText = cardChild.GetComponent(TextComponent);
@@ -236,9 +235,9 @@ export class House extends MonoBehaviour
 		cardChild.transform.Translate(new Vector2(0, -230));
 		cardChild.transform.scale = new Vector2(100, 50);
 		cardChild.isActive = false;
+		this.gameObject.game.Instantiate(cardChild);
 
 		let serverTimerChildText = new GameObject('Server Timer');
-		this.gameObject.game.Instantiate(serverTimerChildText);
 		serverTimerChildText.SetParent(this.gameObject);
 		serverTimerChildText.AddComponent(new TextComponent(' '));
 		serverTimerChildText.transform.scale = new Vector2(400, 100);
@@ -250,7 +249,7 @@ export class House extends MonoBehaviour
 		this.serverTimerChildText.shadow = true;
 		this.serverTimerChildText.shadowOffset = new Vector2(2, 2);
 		this.serverTimerChildText.blur = 10;
-		this.serverTimerChildText.Awake();
+		this.gameObject.game.Instantiate(serverTimerChildText);
 	}
 	
 	Update(deltaTime: number): void
@@ -313,7 +312,6 @@ export class House extends MonoBehaviour
 	private CreateCardDisplay(index: number): void
 	{
 		let cardDisplayGameObject = new GameObject(`${this.gameObject.gameObjectName}'s CARD OBJECT - ${index}`);
-		this.gameObject.game.Instantiate(cardDisplayGameObject);
 		cardDisplayGameObject.SetParent(this.gameObject);
 		
 		cardDisplayGameObject.AddComponent(new CardObject());
@@ -322,6 +320,7 @@ export class House extends MonoBehaviour
 		cardObject.transform.Translate(new Vector2(0, -140));
 		cardObject.Awake();
 		cardObject.renderer.layer = this.displayedCards.length - 15;
+		this.gameObject.game.Instantiate(cardDisplayGameObject);
 	}
 
 	public GameEnded(): void
@@ -347,7 +346,6 @@ export class House extends MonoBehaviour
 	private CreateSeat(id: number, position: Vector2): GameObject
 	{
 		let seat: GameObject = new GameObject(`Seat - ${id}`);
-		this.gameObject.game.Instantiate(seat);
 		seat.SetParent(this.gameObject);
 		seat.AddComponent(new Seat());
 		seat.GetComponent(Seat).seatIndex = id;
@@ -355,6 +353,7 @@ export class House extends MonoBehaviour
 		seat.transform.scale = new Vector2(100, 150);
 		seat.transform.position = position;
 		this.seats.push(seat.GetComponent(Seat));
+		this.gameObject.game.Instantiate(seat);
 		return seat;
 	}
 

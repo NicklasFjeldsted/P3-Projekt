@@ -44,6 +44,8 @@ export class RouletteComponent implements OnInit, OnDestroy, CanDeactivate<Roule
       this.networking.Subscribe("Player_Connected", (data: string) => house.Player_Connected(data));
       this.networking.Subscribe("Player_Disconnected", (data: string) => house.Player_Disconnected(data));
       this.networking.Subscribe("Update_Server_DueTime", (data: string) => house.Update_Server_DueTime(data));
+      this.networking.Subscribe("Wheel_Spin", (data: string) => house.Wheel_Spin(data));
+      this.networking.Subscribe("Wheel_Stop", (data: string) => house.Wheel_Stop(data));
     });
   }
 

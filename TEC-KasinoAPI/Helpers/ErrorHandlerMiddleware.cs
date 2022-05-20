@@ -28,22 +28,22 @@ namespace TEC_KasinoAPI.Helpers
                 HttpResponse response = context.Response;
                 response.ContentType = "application/json";
 
-                switch(error)
+                switch (error)
                 {
                     // If something is wrong with OUR application - Code 400
                     case AppException e:
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
+                    response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    break;
 
                     // If what was requested wasnt found - Code 404
                     case KeyNotFoundException e:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
-                        break;
+                    response.StatusCode = (int) HttpStatusCode.NotFound;
+                    break;
 
                     // Unhandled error - Code 500
                     default:
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                        break;
+                    response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                    break;
                 }
 
                 // -------- NOTE --------

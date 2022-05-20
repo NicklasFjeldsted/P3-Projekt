@@ -16,6 +16,9 @@ export class GameObject extends Entity
 
 	public isActive: boolean = true;
 
+	private _awoken: boolean = false;
+	public get Awoken(): boolean { return this._awoken; }
+
 	private _game: Game | null;
 	public get game(): Game
 	{
@@ -155,7 +158,7 @@ export class GameObject extends Entity
 				return component as C;
 			}
 		}
-		throw new Error(`Component ${constr.name} not found on Entity ${this.constructor.name}!`);
+		throw new Error(`Component ${constr.name} not found on Entity ${this.gameObjectName}!`);
 	}
 
 	/** Remove a Component from this entity. */
@@ -255,28 +258,14 @@ export class GameObject extends Entity
 		}
 	}
 
-	public override get disposable(): boolean
-	{
-		let output = true;
-
-		if (this._components.length > 0)
-		{
-			output = false;
-		}
-
-		// if (this._children.length > 0)
-		// {
-		// 	output = false;
-		// }
-
-		return output;
-	}
-
 	// This function is a part of the start up of the game loop.
 	// This entity will also call the Awake function of all the components in this entities component array.
 	/** This is the first call made to this entity when the game compiles. */
 	public override Awake(): void
 	{
+		if (this._awoken) return;
+		this._awoken = true;
+
 		for (const component of this._components)
 		{
 			component.Awake();

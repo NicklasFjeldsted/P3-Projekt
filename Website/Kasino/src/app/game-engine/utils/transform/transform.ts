@@ -112,7 +112,7 @@ export class Transform implements IComponent
 		this.position = new Vector2(this.position.x + value.x, this.position.y + value.y);
 		for (let child of this.gameObject.Children)
 		{
-			child.transform.Translate(new Vector2(this.position.x, this.position.y));
+			child.transform.Translate(new Vector2(value.x, value.y));
 		}
 	}
 }
