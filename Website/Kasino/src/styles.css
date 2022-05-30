@@ -271,16 +271,6 @@ a {
   cursor: pointer;
 }
 
-/* Define a form header. */
-.form-header {
-  position: relative;
-  height: 60px;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  margin-bottom: 40px;
-}
-
 /* Defines the behaviour of all form's a elements. */
 form a {
   margin-bottom: 10px;
@@ -370,4 +360,88 @@ body {
 
 .modalOpen {
   overflow: hidden !important;
+}
+
+[class*="form-col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .form-col-s-1 {
+    width: 8.33%;
+  }
+  .form-col-s-2 {
+    width: 16.66%;
+  }
+  .form-col-s-3 {
+    width: 25%;
+  }
+  .form-col-s-4 {
+    width: 33.33%;
+  }
+  .form-col-s-5 {
+    width: 41.66%;
+  }
+  .form-col-s-6 {
+    width: 50%;
+  }
+  .form-col-s-7 {
+    width: 58.33%;
+  }
+  .form-col-s-8 {
+    width: 66.66%;
+  }
+  .form-col-s-9 {
+    width: 75%;
+  }
+  .form-col-s-10 {
+    width: 83.33%;
+  }
+  .form-col-s-11 {
+    width: 91.66%;
+  }
+  .form-col-s-12 {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .form-col-1 {
+    width: 8.33%;
+  }
+  .form-col-2 {
+    width: 16.66%;
+  }
+  .form-col-3 {
+    width: 25%;
+  }
+  .form-col-4 {
+    width: 33.33%;
+  }
+  .form-col-5 {
+    width: 41.66%;
+  }
+  .form-col-6 {
+    width: 50%;
+  }
+  .form-col-7 {
+    width: 58.33%;
+  }
+  .form-col-8 {
+    width: 66.66%;
+  }
+  .form-col-9 {
+    width: 75%;
+  }
+  .form-col-10 {
+    width: 83.33%;
+  }
+  .form-col-11 {
+    width: 91.66%;
+  }
+  .form-col-12 {
+    width: 100%;
+  }
 }
