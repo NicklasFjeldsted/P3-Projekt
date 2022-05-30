@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
+using System.Diagnostics;
 using TEC_KasinoAPI.Games;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
@@ -28,9 +29,15 @@ namespace TEC_KasinoAPI.Hubs
 
             Clients.Others.SendAsync("Player_Disconnected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[ id ]));
 
+            string playerDisconnectingName = _gameManager.ConnectedPlayers[ id ].FullName;
+
+            Debug.WriteLine($"\nDisconnecting - {playerDisconnectingName}\n");
+
             _gameManager.Bets.TryRemove(new KeyValuePair<string, int>(id, _gameManager.Bets[ id ]));
             _gameManager.ConnectedPlayers.TryRemove(new KeyValuePair<string, UserData>(id, _gameManager.ConnectedPlayers[ id ]));
             _game.Players.TryRemove(new KeyValuePair<string, UserData>(id, _game.Players[ id ]));
+
+            Debug.WriteLine($"\nDisconnected - {playerDisconnectingName}\n");
 
             return base.OnDisconnectedAsync(exception);
         }

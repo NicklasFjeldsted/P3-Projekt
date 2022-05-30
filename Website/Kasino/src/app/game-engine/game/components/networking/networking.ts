@@ -40,7 +40,7 @@ export class NetworkingFeature implements IFeature
 	  	this.hubConnection.send(func);
 	}
   
-	public async Subscribe<T>(func: string, action: (data: T) => void): Promise<void>
+	public async Subscribe<T>(func: string, action: (...data: T[]) => void): Promise<void>
 	{
 		return await new Promise((resolve) =>
 		{

@@ -9,6 +9,8 @@ type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
 
 export class Game extends Entity
 {
+	public static Instance: Game;
+
 	private _entities: Entity[] = [];
 
 	public get Entities(): Entity[]
