@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using TEC_KasinoAPI.Entities;
 using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Helpers
@@ -27,13 +26,14 @@ namespace TEC_KasinoAPI.Helpers
 
                 // Only maps properties that have a value
                 .ForAllMembers(x => x.Condition(
-                    (src, dest, prop) =>
-                    {
+                    (src, dest, prop) => {
                         // Returns false if the properties are null
-                        if (prop == null) return false;
+                        if (prop == null)
+                            return false;
 
                         // Returns false if the properties are empty
-                        if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string)prop)) return false;
+                        if (prop.GetType() == typeof(string) && string.IsNullOrEmpty((string) prop))
+                            return false;
 
                         // Returns true if there is no issue
                         return true;
@@ -50,13 +50,14 @@ namespace TEC_KasinoAPI.Helpers
 
                 // Only maps properties that have a value
                 .ForAllMembers(x => x.Condition(
-                    (src, dest, prop) =>
-                    {
+                    (src, dest, prop) => {
                         // Returns false if the properties are null
-                        if (prop == null) return false;
+                        if (prop == null)
+                            return false;
 
                         // Return false if the CustomerID or DepositLimit value is less than 0
-                        if(int.Parse(prop.ToString()) < 0) return false;
+                        if (int.Parse(prop.ToString()) < 0)
+                            return false;
 
                         // Returns true if there is no issue
                         return true;

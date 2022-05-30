@@ -317,7 +317,7 @@ li:hover {
   width: calc(100% * 4);
 
   /* Specify the animation with the duration and speed */
-  animation: slide 50s ease-in-out 10s alternate forwards;
+  animation: slide 25s ease-in-out 10s alternate forwards;
 }
 
 /* Set the background color of each of the slides */
@@ -326,15 +326,15 @@ li:hover {
 }
 
 .slide:nth-child(2) {
-  background: pink;
+  background: green;
 }
 
 .slide:nth-child(3) {
-  background: red;
+  background: green;
 }
 
 .slide:nth-child(4) {
-  background: yellow;
+  background: green;
 }
 
 /* Define the animation for the slideshow */

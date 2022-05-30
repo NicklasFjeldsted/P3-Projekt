@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using AutoMapper;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using TEC_KasinoAPI.Data;
 using TEC_KasinoAPI.Entities;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Models;
-using TEC_KasinoAPI.Data;
 using BC = BCrypt.Net.BCrypt;
 
 namespace TEC_KasinoAPI.Services
@@ -61,7 +58,7 @@ namespace TEC_KasinoAPI.Services
         /// </summary>
         /// <param name="model"></param>
         /// <exception cref="AppException"></exception>
-        public async Task RegisterAsync([FromBody]CustomerRegisterRequest model)
+        public async Task RegisterAsync([FromBody] CustomerRegisterRequest model)
         {
             // Check if the Email is already in use
             if (await _customers.AnyAsync(x => x.Email == model.Email))
@@ -148,9 +145,10 @@ namespace TEC_KasinoAPI.Services
             Customer customer = await _customers.SingleOrDefaultAsync(x => x.Email == model.Email);
 
             // Return false if no user was found with the email or if the password doesnt match.
-            if (customer == null || !BC.Verify(model.Password, customer.Password)) return null;
+            if (customer == null || !BC.Verify(model.Password, customer.Password))
+                return null;
 
-            
+
             // Authentication successful so generate jwt and refresh tokens.
             string jwtToken = await GenerateJWTTokenAsync(customer);
             RefreshToken refreshToken = await GenerateRefreshTokenAsync(ipAddress);
@@ -178,13 +176,15 @@ namespace TEC_KasinoAPI.Services
             Customer customer = await _customers.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return null if no user was found with the token.
-            if (customer == null) return null;
+            if (customer == null)
+                return null;
 
             // Get a reference to that token instance.
             RefreshToken refreshToken = await customer.RefreshTokens.SingleAsync(x => x.Token == token);
 
             // Return null if the token is not active.
-            if (!refreshToken.IsActive) return null;
+            if (!refreshToken.IsActive)
+                return null;
 
             // Generate a new refresh token.
             RefreshToken newRefreshToken = await GenerateRefreshTokenAsync(ipAddress);
@@ -222,13 +222,15 @@ namespace TEC_KasinoAPI.Services
             Customer customer = await _customers.SingleOrDefaultAsync(u => u.RefreshTokens.Any(t => t.Token == token));
 
             // Return false if no customer was found with the token.
-            if(customer == null) return false;
+            if (customer == null)
+                return false;
 
             // Get a reference to that token instance.
             RefreshToken refreshToken = await customer.RefreshTokens.SingleAsync(x => x.Token == token);
 
             // Return false if the token is not active.
-            if (!refreshToken.IsActive) return false;
+            if (!refreshToken.IsActive)
+                return false;
 
             // Revoke the token and set properties.
             refreshToken.Revoked = DateTime.UtcNow;
@@ -277,9 +279,9 @@ namespace TEC_KasinoAPI.Services
         /// <returns><see cref="string"/>: returns a newly generated Jason Web Token (JWT)</returns>
         private async Task<string> GenerateJWTTokenAsync(Customer customer)
         {
-            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler tokenHandler = new();
             byte[] key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
+            SecurityTokenDescriptor tokenDescriptor = new()
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
@@ -304,7 +306,7 @@ namespace TEC_KasinoAPI.Services
         {
             using (RandomNumberGenerator randomNumberGenerator = RandomNumberGenerator.Create())
             {
-                byte[] randomBytes = new byte[64];
+                byte[] randomBytes = new byte[ 64 ];
                 await randomNumberGenerator.GetBytesAsync(randomBytes);
                 return new RefreshToken
                 {

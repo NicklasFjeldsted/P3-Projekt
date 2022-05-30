@@ -26,4 +26,8 @@ export class Shape
 	fillColor: Color = new Color(50, 205, 50, 1);
 	outlineWidth: number = 5;
 	outlineColor: Color = new Color(0, 0, 0, 1);
+	shadow: boolean = false;
+	blur: number = 0;
+	shadowColor: Color = new Color(0, 0, 0, 1);
+	shadowOffset: Vector2 = Vector2.zero;
 }

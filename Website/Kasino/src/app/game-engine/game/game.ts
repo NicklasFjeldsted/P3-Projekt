@@ -1,6 +1,6 @@
 import { GameObject } from '../utils/gameObject';
 import { CanvasLayer, Entity, IRendering, Vector2 } from '../utils';
-import { NetworkingFeature } from './components';
+import { GameInputFeature, NetworkingFeature } from './components';
 import { Balance } from 'src/app/interfaces/balance';
 import { UserData } from 'src/app/interfaces/User';
 
@@ -49,10 +49,30 @@ export class Game extends Entity
 		this._balance = value;
 	}
 
+	private _input: GameInputFeature;
+	public get Input(): GameInputFeature
+	{
+		if (!this._input)
+		{
+			let input = this.GetFeature(GameInputFeature);
+			if (!input)
+			{
+				this._input = this.AddFeature(new GameInputFeature()).GetFeature(GameInputFeature);
+			}
+			else
+			{
+				this._input = input;
+			}
+		}
+		return this._input;
+	}
+
+
 	/** Instantiates a GameObject in the game. */
 	public Instantiate(gameObject: GameObject): void
 	{
 		gameObject.game = this;
+		gameObject.Awake();
 		this._entities.push(gameObject);
 	}
 
@@ -147,7 +167,7 @@ export class Game extends Entity
 		// Delay the game loop by one frame to make sure all entities and components have executed start.
 		window.requestAnimationFrame(() =>
 		{
-			this._lastTimestamp = Date.now();
+			this._lastTimestamp = new Date().getTime();
 		
 			this.Update();
 		});
@@ -157,29 +177,30 @@ export class Game extends Entity
 	public override Update(): void
 	{
 		// deltaTime will look something like 0.283192 milliseconds
-		const deltaTime = (Date.now() - this._lastTimestamp) / 1000;
+		const deltaTime = (new Date().getTime() - this._lastTimestamp) / 1000;
 
 		super.Update(deltaTime);
-
-		// Clear all renders in this game.
-		for (const renderer of this.Renders)
+			
+		// Clear all canvas in this game.
+		for (const canvas of CanvasLayer.Layers)
 		{
-			renderer.Clear();
+			if (!canvas) continue;
+			canvas.ClearCanvas();
 		}
-
+		
 		// Update all the entities in this game.
 		for (const entity of this.Entities)
 		{
 			entity.Update(deltaTime);
 		}
-
+		
 		// Draw all renders in this game.
 		for (const renderer of this.Renders)
 		{
 			renderer.Draw();
 		}
 
-		this._lastTimestamp = Date.now();
+		this._lastTimestamp = new Date().getTime();
 
 		window.requestAnimationFrame(() => this.Update());
 	}

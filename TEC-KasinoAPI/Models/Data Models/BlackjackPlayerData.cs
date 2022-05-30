@@ -4,6 +4,8 @@ namespace TEC_KasinoAPI.Models
 {
     public class BlackjackPlayerData
     {
+#pragma warning disable IDE1006 // Naming Styles
+#pragma warning disable CS8632 // Nullable
         private string? fullName;
         private string? email;
         private int? seatIndex;
@@ -14,6 +16,8 @@ namespace TEC_KasinoAPI.Models
         private bool? winner;
         private bool? blackjack;
         private List<Card>? cards;
+#pragma warning restore CS8632 // Nullable
+#pragma warning restore IDE1006 // Naming Styles
 
         public string FullName { get => fullName; set => fullName = value; }
         public string Email { get => email; set => email = value; }
@@ -46,7 +50,7 @@ namespace TEC_KasinoAPI.Models
             stand = false;
             winner = false;
             blackjack = false;
-            if(cards != null)
+            if (cards != null)
             {
                 cards.Clear();
             }
@@ -54,13 +58,13 @@ namespace TEC_KasinoAPI.Models
 
         public async Task Update(BlackjackPlayerData newData)
         {
-            await Task.Run(() =>
-            {
+            await Task.Run(() => {
                 foreach (FieldInfo fi in newData.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance))
                 {
                     object valueNewData = typeof(BlackjackPlayerData).GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).GetValue(newData);
 
-                    if (valueNewData == null) continue;
+                    if (valueNewData == null)
+                        continue;
 
                     GetType().GetField(fi.Name, BindingFlags.NonPublic | BindingFlags.Instance).SetValue(this, valueNewData);
                 }

@@ -1,5 +1,5 @@
 import { Guid } from '../guid';
-import { IUpdate, IAwake, IStart, IDisposable } from '../lifecycle';
+import { IUpdate, IAwake, IStart } from '../lifecycle';
 import { IFeature } from './feature.h';
 
 // Read up on JavaScript prototype inheritance.
@@ -7,7 +7,7 @@ import { IFeature } from './feature.h';
 type AbstractFeature<T> = Function & { prototype: T; };
 type constr<T> = AbstractFeature<T> | { new(...args: unknown[]): T; };
 
-export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
+export abstract class Entity implements IUpdate, IAwake, IStart
 {
 	/** This is a unique identifier for this Entity. */
 	public entityId: string;
@@ -25,10 +25,11 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 	};
 
 	/** Add a new feature to this entity. */
-	public AddFeature(feature: IFeature): void
+	public AddFeature(feature: IFeature): Entity
 	{
 		feature.Entity = this;
 		this._features.push(feature);
+		return this;
 	}
 
 	// "C" is a generic class that conforms to IFeature.
@@ -106,46 +107,6 @@ export abstract class Entity implements IUpdate, IAwake, IStart, IDisposable
 		}
 	
 		return false
-	}
-
-	public Dispose(): Promise<void>
-	{
-		return new Promise<void>((resolve) =>
-		{
-			console.groupCollapsed(`${this.constructor.name} - Disposal logs`);
-			var interval = setInterval(() =>
-			{
-				if (!this.disposable)
-				{
-					return;
-				}
-
-				resolve();
-				clearInterval(interval);
-
-			}, 100);
-			
-			for (const feature of this._features)
-			{
-				feature.Dispose();
-			}
-			console.groupEnd();
-			
-			console.error(this._features);
-		}).then(() =>
-		{
-			console.groupCollapsed(`${this.constructor.name} - Remainders`);
-			for (const property in this)
-			{
-				console.log(property);
-			}
-			console.groupEnd();
-		});
-	}
-
-	public get disposable(): boolean
-	{
-		return this._features.length <= 0;
 	}
 
 	// This function is a part of the start up of the game loop.

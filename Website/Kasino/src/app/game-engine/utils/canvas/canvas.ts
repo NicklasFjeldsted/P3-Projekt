@@ -128,6 +128,14 @@ export class Canvas implements IAwake
 		this._context.quadraticCurveTo(start.x, start.y, start.x + localRadius.tl, start.y);
 		this._context.closePath();
 
+		if (shape.shadow)
+		{
+			this._context.shadowBlur = shape.blur;
+			this._context.shadowOffsetX = shape.shadowOffset.x;
+			this._context.shadowOffsetY = shape.shadowOffset.y;
+			this._context.shadowColor = shape.shadowColor.AsString();
+		}
+
 		if (shape.fill)
 		{
 			this._context.fill();
@@ -185,13 +193,32 @@ export class Canvas implements IAwake
 	}
 
 	/** Draw text the canvas and return the width of it. */
-	public DrawText(text: string, position: Vector2, fontSize: number = 16, maxWidth?: number, fit: boolean = false, color?: Color, blur: number = 0): void
+	public DrawText(
+		text: string,
+		position: Vector2,
+		fontSize: number = 16,
+		maxWidth?: number,
+		fit: boolean = false,
+		color?: Color,
+		shadow: boolean = false,
+		blur: number = 0,
+		shadowColor: Color = new Color(0, 0, 0, 0),
+		shadowOffset: Vector2 = Vector2.zero
+		): void
 	{
 		let _margin: number = 0;
 
 		this._context.textAlign = "center";
 		this._context.textBaseline = "middle";
-		this._context.filter = `blur(${blur}px)`;
+
+		if (shadow)
+		{
+			this._context.shadowColor = shadowColor.AsString();
+			this._context.shadowBlur = blur;
+			this._context.shadowOffsetX = shadowOffset.x;
+			this._context.shadowOffsetY = shadowOffset.y;
+		}
+
 		if (color)
 		{
 			this._context.fillStyle = color.AsString();
@@ -200,7 +227,6 @@ export class Canvas implements IAwake
 		{
 			this._context.fillStyle = "rgba(0, 0, 0, 1)";
 		}
-		
 		
 		let desiredWidth = maxWidth ? maxWidth : this._context.measureText(text).width;
 

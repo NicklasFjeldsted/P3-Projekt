@@ -1,7 +1,8 @@
-import { ColliderComponent, Color, GameInputFeature, GameObject, MonoBehaviour, ServerTimer, Shape, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, GameInputFeature, GameObject, Mathf, MonoBehaviour, ServerTimer, Shape, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, UserData } from "src/app/interfaces/User";
 import { Bet } from "../bet";
 import { Tile, TileColors } from "../tile";
+import { Wheel } from "../wheel";
 
 export class House extends MonoBehaviour
 {
@@ -9,6 +10,7 @@ export class House extends MonoBehaviour
 	private serverTimerText: TextComponent;
 
 	private grid: GameObject;
+	private wheel: Wheel;
 
 	private gridHeight: number = 3;
 	private gridWidth: number = 12;
@@ -31,8 +33,16 @@ export class House extends MonoBehaviour
 	public Awake(): void
 	{
 		this.grid = new GameObject(`Grid`);
-		this.gameObject.game.Instantiate(this.grid);
 		this.grid.transform.position = new Vector2(85, 80);
+		this.gameObject.game.Instantiate(this.grid);
+
+		let wheel = new GameObject(`Wheel`);
+		wheel.AddComponent(new Wheel());
+		wheel.transform.position = new Vector2(480, 35);
+		wheel.transform.scale = new Vector2(960, 75);
+		this.wheel = wheel.GetComponent(Wheel);
+		this.wheel.house = this;
+		this.gameObject.game.Instantiate(wheel);
 
 		for (let y = this.gridHeight; y > 0; y--)
 		{
@@ -43,7 +53,6 @@ export class House extends MonoBehaviour
 		}
 
 		let greenTile = new GameObject(`Green Grid Tile`);
-		this.gameObject.game.Instantiate(greenTile);
 		greenTile.SetParent(this.grid);
 		greenTile.AddComponent(new TextComponent('0'));
 		greenTile.AddComponent(new Tile());
@@ -54,15 +63,15 @@ export class House extends MonoBehaviour
 		greenTile.transform.scale = new Vector2(this.tileSize, this.tileSize);
 		greenTile.transform.Translate(new Vector2(0, 130));
 		this.tileColliders.push(greenTile.GetComponent(ColliderComponent));
+		this.gameObject.game.Instantiate(greenTile);
 
 		let betTextChild = new GameObject(`Bet Child`);
-		this.gameObject.game.Instantiate(betTextChild);
 		betTextChild.SetParent(this.gameObject);
 		betTextChild.AddComponent(new Bet());
 		this.betChild = betTextChild.GetComponent(Bet);
+		this.gameObject.game.Instantiate(betTextChild);
 
 		let serverTimer = new GameObject(`Roulette Server Timer`);
-		this.gameObject.game.Instantiate(serverTimer);
 		serverTimer.SetParent(this.gameObject);
 		serverTimer.transform.scale = new Vector2(300, 30);
 		serverTimer.transform.position = new Vector2(480, 350);
@@ -72,8 +81,9 @@ export class House extends MonoBehaviour
 		this.serverTimerText.color = new Color(255, 255, 255);
 		this.serverTimerText.blur = 2;
 		this.serverTimerText.shadowOffset = new Vector2(2, 2);
+		this.gameObject.game.Instantiate(serverTimer);
 
-		this.gameObject.game.GetFeature(GameInputFeature).OnClick.subscribe((point) => this.Click(point));
+		this.gameObject.game.Input.OnMouseUp.subscribe((point) => this.Click(point));
 	}
 
 	public Start(): void
@@ -99,25 +109,28 @@ export class House extends MonoBehaviour
 
 	private Click(point: Vector2): void
 	{
+		if (this.gameObject.game.balance.balance <= this.betChild.totalBetted) return;
 		for (const tile of this.tileColliders)
 		{
 			if (tile.Hit(point))
 			{
-				tile.gameObject.GetComponent(Tile).AddAmount(this.betChild.BetIncrement);
+				let remaining = Mathf.Clamp(this.betChild.BetIncrement, 0, this.gameObject.game.balance.balance - this.betChild.totalBetted);
+				
+				tile.gameObject.GetComponent(Tile).AddAmount(remaining);
+				
+				this.betChild.totalBetted += remaining;
 			}
 		}
-		this.betChild.Reset();
 	}
 
 	private CreateTile(coordinate: Vector2, position: Vector2): void
 	{
 		let tile = new GameObject(`Grid Tile - X: ${coordinate.x}, Y: ${coordinate.y}`);
-		this.gameObject.game.Instantiate(tile);
 		tile.SetParent(this.grid);
 		
 		let num = ((coordinate.x * 3) - (coordinate.y)) + 1;
 		let tileScript = tile.AddComponent(new Tile()).GetComponent(Tile);
-
+		
 		tileScript.data.color = (coordinate.x + coordinate.y) % 2 == 0 ? TileColors.Red : TileColors.Black;
 		tileScript.data.number = num;
 		
@@ -128,6 +141,7 @@ export class House extends MonoBehaviour
 		tile.AddComponent(new TextComponent(num.toString()));
 		
 		this.tileColliders.push(tile.GetComponent(ColliderComponent));
+		this.gameObject.game.Instantiate(tile);
 	}
 
 	public Player_Connected(data: string): void
@@ -148,5 +162,17 @@ export class House extends MonoBehaviour
 	{
 		let parsedDueTime = JSON.parse(data);
 		this.Timer.Start(parsedDueTime);
+	}
+
+	public Wheel_Spin(data: string): void
+	{
+		let parsedWheelStopTime = JSON.parse(data);
+		this.wheel.shouldSpin = true;
+	}
+
+	public Wheel_Stop(data: string): void
+	{
+		let parsedWinningNumber = JSON.parse(data);
+		this.wheel.shouldSpin = false;
 	}
 }

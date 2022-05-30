@@ -1,8 +1,8 @@
-﻿using TEC_KasinoAPI.Models;
+﻿using AutoMapper;
+using Microsoft.Extensions.Options;
 using TEC_KasinoAPI.Data;
 using TEC_KasinoAPI.Helpers;
-using AutoMapper;
-using Microsoft.Extensions.Options;
+using TEC_KasinoAPI.Models;
 
 namespace TEC_KasinoAPI.Services
 {
@@ -39,7 +39,7 @@ namespace TEC_KasinoAPI.Services
         public async Task CreateAsync(int customerID)
         {
             // Check if there already exists an account balance with the customerID parameter.
-            if(await _context.AccountBalances.AnyAsync(x => x.CustomerID == customerID))
+            if (await _context.AccountBalances.AnyAsync(x => x.CustomerID == customerID))
             {
                 throw new AppException("Customer already have an account balance.");
             }
@@ -106,7 +106,8 @@ namespace TEC_KasinoAPI.Services
             AccountBalance accountBalance = await _context.AccountBalances.SingleOrDefaultAsync(x => x.CustomerID == model.CustomerID);
 
             // Returns null if the accountBalance wasnt found I.E. it doesnt exist.
-            if (accountBalance == null) return null;
+            if (accountBalance == null)
+                return null;
 
             // Add the amount from the model parameter to the account balance.
             accountBalance.Balance += model.Amount;
@@ -135,10 +136,12 @@ namespace TEC_KasinoAPI.Services
             AccountBalance accountBalance = await _context.AccountBalances.SingleOrDefaultAsync(x => x.CustomerID == model.CustomerID);
 
             // Returns null if the accountBalance wasnt found I.E. it doesnt exist.
-            if (accountBalance == null) return null;
+            if (accountBalance == null)
+                return null;
 
             // Returns null if the balance after the change is less than 0.
-            if (accountBalance.Balance - model.Amount < 0) return null;
+            if (accountBalance.Balance - model.Amount < 0)
+                return null;
 
             // Subtract the amount from the model parameter from the account balance.
             accountBalance.Balance -= model.Amount;

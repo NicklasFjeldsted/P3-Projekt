@@ -5,17 +5,19 @@ import { Rendering } from "./rendering";
 
 export class ShapeRendererComponent extends Rendering
 {
-	public layer: number | undefined;
+	public layer: number;
 
 	public shape: Shape | undefined;
 
-	constructor(private _shape?: Shape)
+	constructor(private _shape?: Shape, private _layer: number = 1)
 	{
 		super();
 		if (_shape)
 		{
 			this.shape = _shape;
 		}
+
+		this.layer = _layer;
 	}
 
 	public rectTransform: RectTransform;
@@ -36,13 +38,13 @@ export class ShapeRendererComponent extends Rendering
 
 	Start(): void
 	{
-
+		
 	}
 
 
 	Update(deltaTime: number): void
 	{
-
+		this.old = this.constructor;
 	}
 
 	Draw(): void
@@ -52,11 +54,11 @@ export class ShapeRendererComponent extends Rendering
 			return;
 		}
 
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ExtendedRect(this.rectTransform.start, this.rectTransform.size, this.shape);
+		CanvasLayer.GetLayer(this.layer).ExtendedRect(this.rectTransform.start, this.rectTransform.size, this.shape);
 	}
 
 	Clear(): void
 	{
-		CanvasLayer.GetLayer(this.layer ? this.layer : 1).ClearRect(this.rectTransform.start, this.rectTransform.size);
+		CanvasLayer.GetLayer(this.layer).ClearRect(this.rectTransform.start, this.rectTransform.size);
 	}
 }
