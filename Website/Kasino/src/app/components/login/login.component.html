@@ -1,54 +1,24 @@
-<div class="main">
-  <!-- Login form for calling the API. -->
-  <form id="login" method="post" class="form-control noselect" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="column flow-down">
-      <div class="form-header">
-        <h2>Log ind</h2>
-      </div>
-      <br />
-      <!-- Lady on the left of the login form. -->
-      <img src="../../../assets/media/girl.png" class="ll-img" />
-      <!-- A single column where its content flows down instead of sideways. -->
-      <div class="form-row flow-down">
-        <i class="fa fa-envelope fa-2x"></i>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          class="form-input"
-          placeholder="E-mail"
-          formControlName="email"
-          [ngClass]="{ 'is-invalid': f['email'].touched && f['email'].errors }"
-        />
-        <div *ngIf="f['email'].touched && f['email'].errors" class="invalid-feedback">
-          <div *ngIf="f['email'].errors['required']">Username is required</div>
-        </div>
-      </div>
-
-      <div class="form-row flow-down">
-        <i class="fa fa-lock fa-2x"></i>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          class="form-input"
-          placeholder="Adgangskode"
-          formControlName="password"
-          [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].errors }"
-        />
-        <div *ngIf="f['password'].touched && f['password'].errors" class="invalid-feedback">
-          <div *ngIf="f['password'].errors['required']">Password is required</div>
-        </div>
-      </div>
-
-      <div class="form-row flow-down">
-        <button type="submit" name="login" id="login" class="btn form-submit bg-orange">Log ind</button>
-      </div>
-      <br />
-      <div class="form-row flow-down form-links" style="display: block">
-        <a routerLink="/kontakt">Glemt Adgangskode</a>
-        <a routerLink="/tilmeld">Opret Konto</a>
-      </div>
+<form class="form-col-5 form-col-s-9" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-header">
+    <h1>Log ind</h1>
+  </div>
+  <div class="form-body">
+      <div *ngIf="submitted && !form.touched" id="error">Indtast en gyldig e-mail og adgangskode</div>
+      <div class="input-group">
+      <input type="text" formControlName="email" placeholder="E-mail">
+      <i class="fa fa-envelope"></i>
     </div>
-  </form>
+    <div class="input-group">
+      <input [type]="show ? 'text' : 'password'" formControlName="password" placeholder="Adgangskode">
+      <button type="button" id="show-pass" (click)="togglePassword()">Vis</button>
+      <i class="fa fa-lock"></i>
+    </div>
+  <div class="submit-container">
+    <button type="submit" [disabled]="form.invalid">Log ind</button>
+    <div class="form-links">
+      <a routerLink="/kontakt">Glemt adgangskode?</a>
+      <a routerLink="/tilmeld">Opret konto</a>
+    </div>
+  </div>
 </div>
+</form>
