@@ -314,10 +314,10 @@ form a {
 }
 
 .is-valid {
-  border: 1px solid #015536 !important;
-  box-shadow: #015536 0px 0px 1px !important;
+  background-color: #ebf6ef;
+  border: 1px solid #7dc198 !important;
+  color: black !important;
 }
-
 .is-invalid {
   background-color: #ffeeeb;
   border: 1px solid #f00 !important;

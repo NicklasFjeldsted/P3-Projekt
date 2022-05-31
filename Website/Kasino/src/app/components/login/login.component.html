@@ -1,15 +1,15 @@
-<form class="form-col-5 form-col-s-9" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form class="form-col-4 form-col-s-9" [formGroup]="form" (ngSubmit)="onSubmit()">
   <div class="form-header">
     <h1>Log ind</h1>
   </div>
   <div class="form-body">
-      <div *ngIf="submitted && !form.touched" id="error">Indtast en gyldig e-mail og adgangskode</div>
-      <div class="input-group">
-      <input type="text" formControlName="email" placeholder="E-mail">
-      <i class="fa fa-envelope"></i>
+    <div *ngIf="submitted && !form.touched" id="error">Indtast en gyldig e-mail og adgangskode</div>
+    <div class="input-group">
+        <input type="email" email formControlName="email" placeholder="E-mail" [ngClass]="{'is-valid': !f['email'].errors && f['email'].touched}">
+        <i class="fa fa-envelope"></i>
     </div>
     <div class="input-group">
-      <input [type]="show ? 'text' : 'password'" formControlName="password" placeholder="Adgangskode">
+      <input [type]="show ? 'text' : 'password'" formControlName="password" placeholder="Adgangskode" [ngClass]="{'is-valid': !f['password'].errors && f['password'].touched}">
       <button type="button" id="show-pass" (click)="togglePassword()">Vis</button>
       <i class="fa fa-lock"></i>
     </div>

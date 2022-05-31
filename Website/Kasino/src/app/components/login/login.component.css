@@ -68,7 +68,14 @@ form {
 .input-group > input:focus {
   outline: 0;
   color: #444;
-  border: 1px solid #969696;
+  background: none;
+  border: 1px solid #969696 !important;
+}
+
+.input-group > .is-valid {
+  background-color: #ebf6ef;
+  border: 1px solid #7dc198 !important;
+  color: #919191;
 }
 
 .input-group > input:focus ~ #show-pass {
@@ -160,7 +167,7 @@ form {
   }
 
   .input-group > i {
-    font-size: 2.9vw;
+    font-size: 2.5vw;
   }
 }
 
@@ -172,12 +179,12 @@ form {
 
   .input-group > i {
     width: 10%;
-    font-size: 2.4vw;
+    font-size: 2vw;
   }
 }
 
 @media (min-width: 1600px) {
   .input-group > i {
-    font-size: 2.1vw;
+    font-size: 1.5vw;
   }
 }

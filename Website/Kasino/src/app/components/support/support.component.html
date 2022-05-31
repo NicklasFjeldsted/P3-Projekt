@@ -1,6 +1,7 @@
 <div class="featured-sites noselect" [ngSwitch]="helpSite">
 
-  <div class="container" >
+  <div class="container" id="something">
+    <i *ngIf="helpSite != 0" (click)="changeSite(0)" class="fa-solid fa-arrow-left"></i>
 		<div class="searchbar">
       <h1>Hvordan kan vi hjælpe?</h1>
 			<input class="input-searchbar" placeholder="Søg">
@@ -18,37 +19,13 @@
 		</section>
 	</div>
   
-  <div class="bg-img">
-
-    <div class="generalt form-control  h-center" *ngSwitchCase="'1'">
-      <div id="generalt">
-        <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
-        </div>
-      </div>
-      
-      <div class="generalt form-control  h-center" *ngSwitchCase="'2'">
-        <div id="help-indbetaling">
-          <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
-          </div>
-        </div>
-        
-        <div class="generalt form-control  h-center" *ngSwitchCase="'3'">
-          <div id="help-login">
-            <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
-            </div>
-          </div>
-          
-          <div class="generalt form-control  h-center" *ngSwitchCase="'4'">
-    <div id="help-udbetaling">
-      <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
-    </div>
-  </div>
-  
-  <div class="generalt form-control  h-center" *ngSwitchCase="'5'">
-    <div id="velkomstbonusser">
-      <embed class="pdf" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
-      </div>
-    </div>
+  <div class="item-container" [ngSwitch]="helpSite">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="1" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="2" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="3" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="4" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="5" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="6" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
   </div>
 </div>
   

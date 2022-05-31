@@ -1,20 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-support',
-  templateUrl: './support.component.html',
-  styleUrls: ['./support.component.css']
+  selector: "app-support",
+  templateUrl: "./support.component.html",
+  styleUrls: ["./support.component.css"],
 })
-export class SupportComponent implements OnInit 
-{
+export class SupportComponent implements OnInit {
   helpSite: number = 0;
+  elementHeight: number;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
-  changeSite(site: number) 
-  {
+  changeSite(site: number) {
     this.helpSite = site;
   }
 }
