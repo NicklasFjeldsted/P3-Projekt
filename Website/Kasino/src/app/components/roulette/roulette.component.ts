@@ -24,8 +24,10 @@ export class RouletteComponent implements OnInit, OnDestroy, CanDeactivate<Roule
   }
 
   ngOnInit(): void
-  { 
+  {
     this.game = new Game();
+
+    Game.Instance = this.game;
 
     this.game.AddFeature(new BackgroundFeature());
     this.game.AddFeature(new GameInputFeature());
@@ -45,7 +47,6 @@ export class RouletteComponent implements OnInit, OnDestroy, CanDeactivate<Roule
       this.networking.Subscribe("Player_Disconnected", (data: string) => house.Player_Disconnected(data));
       this.networking.Subscribe("Update_Server_DueTime", (data: string) => house.Update_Server_DueTime(data));
       this.networking.Subscribe("Wheel_Spin", (data: string) => house.Wheel_Spin(data));
-      this.networking.Subscribe("Wheel_Stop", (data: string) => house.Wheel_Stop(data));
     });
   }
 

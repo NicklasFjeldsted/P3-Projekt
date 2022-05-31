@@ -16,4 +16,7 @@ export * from './beforeunload';
 export * from './logging';
 export * from './infobar';
 export * from './mathf';
+export * from './queue';
 export * from './serverTimer';
+export * from './list';
+export * from './objectPool';

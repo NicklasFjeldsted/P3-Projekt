@@ -14,6 +14,7 @@ namespace TEC_KasinoAPI.Games
     {
         ConcurrentDictionary<string, UserData> Players { get; }
         ConcurrentDictionary<string, TileData> PlayerTileData { get; }
+        TimerPlus Timer { get; }
     }
     public class Roulette : IRoulette
     {
@@ -24,7 +25,8 @@ namespace TEC_KasinoAPI.Games
         private readonly ConcurrentDictionary<string, TileData> m_playerTileData = new();
 
         // Reference for the timer instance.
-        private readonly TimerPlus _timer = TimerPlus.Timers.GetOrAdd(GameType.Roulette, new TimerPlus(5000, GameType.Roulette));
+        private readonly TimerPlus _timer = TimerPlus.Timers.GetOrAdd(GameType.Roulette, new TimerPlus(10000, GameType.Roulette));
+        public TimerPlus Timer { get { return _timer; } }
 
         private readonly IGameManager _gameManager;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -61,7 +63,6 @@ namespace TEC_KasinoAPI.Games
             }
             Debug.WriteLine("----------------------\n");
 
-
             await using (var scope = _scopeFactory.CreateAsyncScope())
             {
                 _timer.Stop();
@@ -70,17 +71,18 @@ namespace TEC_KasinoAPI.Games
                 IHubContext<RouletteHub> hubContext = scope.ServiceProvider.GetRequiredService<IHubContext<RouletteHub>>();
 
                 await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Roulette)));
-
-                await hubContext.Clients.All.SendAsync("Wheel_Spin", JsonConvert.SerializeObject(TimerPlus.GetNetworkTime().AddMilliseconds(m_wheelSpinTime)));
-
+                
                 m_winningNumber = GetWinningNumber();
+
+                await hubContext.Clients.All.SendAsync("Wheel_Spin", JsonConvert.SerializeObject(m_winningNumber));
 
                 await Task.Delay(m_wheelSpinTime - 500);
 
-                if (m_winningNumber < 1 || m_winningNumber > 36)
+                if (m_winningNumber < 0 || m_winningNumber > 36)
+                {
                     return;
+                }
 
-                await hubContext.Clients.All.SendAsync("Wheel_Stop", JsonConvert.SerializeObject(m_winningNumber));
                 _timer.Start();
                 await hubContext.Clients.All.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Roulette)));
             }

@@ -52,13 +52,13 @@ namespace TEC_KasinoAPI.Helpers
             base.Stop();
         }
 
-        // An extended Dispose method.
-        public new void Dispose()
-        {
-            Stop();
-            Elapsed -= Timer_Elapsed;
-            base.Dispose();
-        }
+        //// An extended Dispose method.
+        //public new void Dispose()
+        //{
+        //    Stop();
+        //    Elapsed -= Timer_Elapsed;
+        //    base.Dispose();
+        //}
 
         public static DateTime GetNetworkTime()
         {
