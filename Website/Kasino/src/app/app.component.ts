@@ -1,6 +1,8 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
+import { DialogService } from "./components/modals/dialog.service";
+import { LogoutComponent } from "./components/modals/logout/logout.component";
 import { JwtDecodePlus } from "./helpers";
 import { AuthenticationService } from "./services/authentication.service";
 import { BalanceService } from "./services/balance.service";
@@ -49,7 +51,12 @@ import { BalanceService } from "./services/balance.service";
   styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, private authenticationService: AuthenticationService, private balanceService: BalanceService) {}
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService,
+    private balanceService: BalanceService,
+    private dialog: DialogService
+  ) {}
 
   isIndbetalOpen = false;
 
@@ -137,5 +144,10 @@ export class AppComponent implements OnInit {
       this.router.navigate(["konto"]);
     }
     this.balanceService.goToLimit(number);
+  }
+
+  openLogout() {
+    this.closeAccountPanel();
+    this.dialog.open(LogoutComponent);
   }
 }
