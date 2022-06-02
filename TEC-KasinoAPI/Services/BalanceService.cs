@@ -110,10 +110,10 @@ namespace TEC_KasinoAPI.Services
                 return null;
 
             // Find transactions with the customerID
-            Transaction transactionsCount = await _context.Transactions.FindAsync(model.CustomerID);
+            bool transactionsCount = await _context.Transactions.AnyAsync(x => x.CustomerID == model.CustomerID);
 
             // Applies deposit bonus if requirements are met
-            if (transactionsCount == null && model.Amount <= 1000)
+            if (!transactionsCount && model.Amount <= 1000)
 			{
                 model.Amount = model.Amount * 2;
 			}
