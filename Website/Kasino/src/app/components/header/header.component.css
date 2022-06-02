@@ -221,14 +221,14 @@ button {
 
 svg {
   width: auto;
-  height: min(7.5vw, 40px);
+  height: min(7.5vw, 35px);
   scale: 1;
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
   transition: all 0.15s ease;
 }
 
 .game-item > a:hover > svg {
-  height: calc(40px * 1.1);
+  height: calc(35px * 1.1);
 }
 
 /* Small devices (tablets, 768px and up) */
