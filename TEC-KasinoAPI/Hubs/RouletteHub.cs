@@ -36,6 +36,7 @@ namespace TEC_KasinoAPI.Hubs
             _gameManager.Bets.TryRemove(new KeyValuePair<string, int>(id, _gameManager.Bets[ id ]));
             _gameManager.ConnectedPlayers.TryRemove(new KeyValuePair<string, UserData>(id, _gameManager.ConnectedPlayers[ id ]));
             _game.Players.TryRemove(new KeyValuePair<string, UserData>(id, _game.Players[ id ]));
+            _game.PlayerTileData.Remove(id, out var value);
 
             Debug.WriteLine($"\nDisconnected - {playerDisconnectingName}\n");
 
@@ -68,33 +69,72 @@ namespace TEC_KasinoAPI.Hubs
 
             await _gameManager.ConnectedPlayers[ id ].Update(parsedData);
             await _game.Players[ id ].Update(parsedData);
+            await Clients.Caller.SendAsync("Sync_BetLocked", JsonConvert.SerializeObject(_game.BetLocked));
             await Clients.Caller.SendAsync("Update_Server_DueTime", JsonConvert.SerializeObject(new TimerPlus.TimerPackage(GameType.Roulette)));
             await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[ id ]));
         }
 
-        public void Update_Tile_Data(string tileData)
+        public void Update_Bet_Data(string tileData)
         {
-            string id = Context.ConnectionId;
-
-            var newTile = JsonConvert.DeserializeObject<TileData>(tileData);
-            _game.PlayerTileData.AddOrUpdate(id, newTile, (key, value) => _game.PlayerTileData[ key ] = newTile);
-        }
-
-        public void Remove_Tile_Data(string tileData)
-        {
-            string id = Context.ConnectionId;
-
-            var newTile = JsonConvert.DeserializeObject<TileData>(tileData);
-            _game.PlayerTileData.TryRemove(new KeyValuePair<string, TileData>(id, newTile));
-        }
-
-        public void Clear_Tile_Data()
-        {
-            string id = Context.ConnectionId;
-
-            foreach (var tile in _game.PlayerTileData.Where(pair => pair.Key == id))
+            if (_game.BetLocked)
             {
-                _game.PlayerTileData.TryRemove(new KeyValuePair<string, TileData>(id, tile.Value));
+                return;
+            }
+
+            string id = Context.ConnectionId;
+
+            var newTile = JsonConvert.DeserializeObject<BetData>(tileData);
+            if (_game.PlayerTileData.ContainsKey(id))
+            {
+                foreach (var betData in _game.PlayerTileData[ id ])
+                {
+                    if(betData.number != newTile.number)
+                    {
+                        continue;
+                    }
+
+                    betData.betAmount = newTile.betAmount;
+                    return;
+                }
+                _game.PlayerTileData[ id ].Add(newTile);
+            }
+            else
+            {
+                var l = new List<BetData>();
+                l.Add(newTile);
+               _game.PlayerTileData.TryAdd(id, l);
+            }
+        }
+
+        public void Remove_Bet_Data(string tileData)
+        {
+            if(_game.BetLocked)
+            {
+                return;
+            }
+
+            string id = Context.ConnectionId;
+
+            var newTile = JsonConvert.DeserializeObject<BetData>(tileData);
+            _game.PlayerTileData[ id ].Remove(newTile);
+            if (_game.PlayerTileData[ id ].Count <= 0)
+            {
+                _game.PlayerTileData.TryRemove(new KeyValuePair<string, List<BetData>>(id, _game.PlayerTileData[id]));
+            }
+        }
+
+        public void Clear_Bet_Data()
+        {
+            if (_game.BetLocked)
+            {
+                return;
+            }
+
+            string id = Context.ConnectionId;
+
+            if (_game.PlayerTileData.ContainsKey(id))
+            {
+                _game.PlayerTileData[ id ].Clear();
             }
         }
     }

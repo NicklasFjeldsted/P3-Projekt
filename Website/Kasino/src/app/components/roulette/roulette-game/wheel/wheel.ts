@@ -6,7 +6,7 @@ export class Wheel extends MonoBehaviour
 {
 	public wheelShape: Shape;
 	public house: House;
-	public shouldSpin: boolean = false;
+	public isSpinning: boolean = false;
 
 	public shapeRenderer: ShapeRendererComponent;
 
@@ -112,6 +112,7 @@ export class Wheel extends MonoBehaviour
 			let difference: number = this.needle.transform.position.x - winningTile.transform.position.x;
 			
 			this.MoveTiles(difference);
+			this.isSpinning = false;
 		});
 	}
 
@@ -137,6 +138,7 @@ export class Wheel extends MonoBehaviour
 		{
 			let distance: number = this.needle.transform.position.x - winningTile.transform.position.x;
 			this.MoveTiles(distance);
+			this.isSpinning = true;
 		});
 		this.spinSpeed = this.maxSpinSpeed;
 	}
