@@ -111,7 +111,7 @@ export class Bet extends MonoBehaviour
 		{
 			tile.gameObject.GetComponent(Tile).Clear();
 		}
-		this.gameObject.game.GetFeature(NetworkingFeature).Send("Clear_Tile_Data");
+		this.gameObject.game.GetFeature(NetworkingFeature).Send("Clear_Bet_Data");
 	}
 
 	public Reset(): void

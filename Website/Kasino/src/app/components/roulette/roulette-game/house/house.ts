@@ -1,4 +1,4 @@
-import { ColliderComponent, Color, GameInputFeature, GameObject, Mathf, MonoBehaviour, ServerTimer, Shape, TextComponent, Vector2 } from "src/app/game-engine";
+import { ColliderComponent, Color, GameObject, Mathf, MonoBehaviour, ServerTimer, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { IUser, UserData } from "src/app/interfaces/User";
 import { Bet } from "../bet";
 import { Tile, TileColors } from "../tile";
@@ -8,6 +8,7 @@ export class House extends MonoBehaviour
 {
 	public tileColliders: ColliderComponent[] = [];
 	private serverTimerText: TextComponent;
+	private differenceText: TextComponent;
 
 	private grid: GameObject;
 	private wheel: Wheel;
@@ -17,6 +18,8 @@ export class House extends MonoBehaviour
 
 	private tileSize: number = 65;
 	private betChild: Bet;
+
+	public BetLocked: boolean = false;
 
 	private _timer: ServerTimer;
 	public get Timer(): ServerTimer
@@ -83,6 +86,19 @@ export class House extends MonoBehaviour
 		this.serverTimerText.shadowOffset = new Vector2(2, 2);
 		this.gameObject.game.Instantiate(serverTimer);
 
+		let differenceDisplayShape = new Shape();
+		differenceDisplayShape.fillColor = new Color(205, 205, 205);
+
+		let differenceDisplay = new GameObject(`Difference Display`);
+		differenceDisplay.SetParent(this.gameObject);
+		differenceDisplay.transform.scale = new Vector2(200, 100);
+		differenceDisplay.transform.position = new Vector2(200, 500);
+		differenceDisplay.AddComponent(new ShapeRendererComponent(differenceDisplayShape));
+		differenceDisplay.AddComponent(new TextComponent());
+		this.differenceText = differenceDisplay.GetComponent(TextComponent);
+		this.differenceText.fontSize = 36;
+		this.gameObject.game.Instantiate(differenceDisplay);
+
 		this.gameObject.game.Input.OnMouseUp.subscribe((point) => this.Click(point));
 	}
 
@@ -104,7 +120,14 @@ export class House extends MonoBehaviour
 
 	public Update(deltaTime: number): void
 	{
-		
+		if (this.differenceText.text === " " || this.wheel.isSpinning)
+		{
+			this.differenceText.gameObject.isActive = false;
+		}
+		else if (!this.wheel.isSpinning)
+		{
+			this.differenceText.gameObject.isActive = true;
+		}
 	}
 
 	private Click(point: Vector2): void
@@ -116,6 +139,11 @@ export class House extends MonoBehaviour
 			{
 				let remaining = Mathf.Clamp(this.betChild.BetIncrement, 0, this.gameObject.game.balance.balance - this.betChild.totalBetted);
 				
+				if (this.BetLocked)
+				{
+					return;
+				}
+
 				tile.gameObject.GetComponent(Tile).AddAmount(remaining);
 				
 				this.betChild.totalBetted += remaining;
@@ -169,5 +197,33 @@ export class House extends MonoBehaviour
 		let parsedWinningNumber = JSON.parse(data);
 		this.wheel.SpinWheel(parsedWinningNumber);
 		console.log(parsedWinningNumber);
+	}
+
+	public Sync_BetLocked(data: string): void
+	{
+		let parsedBetLocked = JSON.parse(data);
+		this.BetLocked = parsedBetLocked;
+	}
+
+	public Show_Result(data: string): void
+	{
+		let parsedDifference = JSON.parse(data);
+		this.differenceText.text = " ";
+		if (parsedDifference > 0)
+		{
+			this.differenceText.text = "+"
+			this.differenceText.color = new Color(0, 150, 0);
+		}
+		else
+		{
+			this.differenceText.color = new Color(150, 0, 0);
+		}
+
+		this.differenceText.text += parsedDifference;
+	}
+
+	public Clear_Tiles(): void
+	{
+		this.betChild.ClearBets();
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using TEC_KasinoAPI.Data;
 using TEC_KasinoAPI.Helpers;
 using TEC_KasinoAPI.Hubs;
@@ -57,6 +58,8 @@ namespace TEC_KasinoAPI.Services
 
                 databaseContext.AccountBalances.Update(accountBalance);
 
+                Debug.WriteLine($"\nAdded {request.Amount} to {request.CustomerID}\n");
+
                 databaseContext.SaveChanges();
                 await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
             }
@@ -80,6 +83,8 @@ namespace TEC_KasinoAPI.Services
                 accountBalance.Balance -= request.Amount;
 
                 databaseContext.AccountBalances.Update(accountBalance);
+
+                Debug.WriteLine($"\nRemoved {request.Amount} from {request.CustomerID}\n");
 
                 databaseContext.SaveChanges();
                 await hubContext.Clients.Client(connectionID).SendAsync("Update_Balance");
