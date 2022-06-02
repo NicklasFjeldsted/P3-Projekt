@@ -1,62 +1,44 @@
 :host {
-  height: calc(100vh - var(--full-header));
   display: flex;
+  height: calc(100vh - var(--full-header));
   background-image: url("../../../assets/media/casino.jpg");
 }
 
-.form-control {
-  width: 35vw;
-  border: none;
-  height: auto !important;
-  margin: auto;
-}
-
-.main-container {
-  padding: 20px;
-  width: auto;
+form {
+  width: 100%;
+  height: auto;
+  border: 1px solid black;
 }
 
 .form-header {
-  justify-content: left;
-  padding: 20px;
-  margin: 0;
-  padding-bottom: 0;
+  background-color: red;
 }
 
-.form-header > h1 {
-  font: 400 32px / 32px "Montserrat", sans-serif !important;
+h1 {
+  padding: 20px 10%;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.form-input {
-  max-width: calc(100% - 20px);
-  margin-top: 0.5rem;
-  border: 1px solid #e3e3e3;
-  box-shadow: none;
-  outline: none;
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0 10%;
 }
 
-.input-section {
-  display: block;
-  text-align: left;
-  max-width: 100%;
+input[type="text"] {
   width: 100%;
-}
-
-.form-textarea {
-  max-height: 250px;
-  height: 100px;
-  resize: none;
-  padding: 10px;
-}
-
-.submit-button {
-  max-width: 150px;
-  max-height: 50px;
-  width: 100px;
-  height: 50px;
-}
-
-.form-row input:focus {
+  padding: 2% 2% 2% 2%;
   outline: none;
-  border: 1px solid #808080 !important;
+  border: 1px solid #e3e3e3;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #808080;
+}
+
+button[type="submit"] {
+  height: 32px;
 }

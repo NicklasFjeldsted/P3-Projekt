@@ -1,30 +1,24 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-control">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
 	<div class="form-header">
 		<h1>Kontakt os</h1>
 	</div>
-	<div class="main-container">
-		<div class="form-row form-down">
-			<div class="input-section">
-				<input class="form-input" id="name" placeholder="Navn *" formControlName="Fullname">
-			</div>
+	<div class="form-body">
+		<div class="input-group">
+			<label for="Fullname">Fullname</label>
+			<input type="text" id="Fullname" formControlName="Fullname">
 		</div>
-		<div class="form-row form-down">
-			<div class="input-section">
-				<input class="form-input" id="email" placeholder="E-mail adresse *" formControlName="Email">
-			</div>
+		<div class="input-group">
+			<label for="Email">E-mail</label>
+			<input type="text" id="Email" formControlName="Email">
 		</div>
-		<div class="form-row form-down">
-			<div class="input-section">
-				<input class="form-input" id="subject" placeholder="Emne *" maxlength="70" formControlName="Subject">
-			</div>
+		<div class="input-group">
+			<label for="Subject">Subject</label>
+			<input type="text" id="Subject" formControlName="Subject">
 		</div>
-		<div class="form-row form-down">
-			<div class="input-section" >
-				<textarea class="form-input form-textarea" id="message" placeholder="Besked *" maxlength="300" formControlName="Message"></textarea>
-			</div>
+		<div class="input-group">
+			<label for="Message">Message</label>
+			<input type="text" id="Message" formControlName="Message">
 		</div>
-		<div class="form-row form-down">
-			<button type="submit" class="submit-button" [disabled]="!form.valid" >Send besked</button>
-		</div>
+		<button>Indsend</button>
 	</div>
 </form>
