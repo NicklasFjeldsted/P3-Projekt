@@ -75,7 +75,7 @@ h4 {
 
 .button-wrapper {
   position: absolute;
-  right: max(40px, 1vw);
+  right: max(40px, 5vw);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -265,5 +265,9 @@ svg {
 @media (min-width: 1200px) {
   .game-wrapper {
     width: min(60%, 1050px);
+  }
+
+  .button-wrapper {
+    right: max(40px, 10vw);
   }
 }

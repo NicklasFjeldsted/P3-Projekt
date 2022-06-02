@@ -1,24 +1,25 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" id="form">
 	<div class="form-header">
 		<h1>Kontakt os</h1>
 	</div>
 	<div class="form-body">
+		<div class="is-invalid" *ngIf="form.touched && form.invalid">Venligst udfyld alle felter!</div>
 		<div class="input-group">
-			<label for="Fullname">Fullname</label>
+			<label for="Fullname">Full Name <span>*</span></label>
 			<input type="text" id="Fullname" formControlName="Fullname">
 		</div>
 		<div class="input-group">
-			<label for="Email">E-mail</label>
-			<input type="text" id="Email" formControlName="Email">
+			<label for="Email">E-mail <span>*</span></label>
+			<input type="text" id="Email" formControlName="Email" email="">
 		</div>
 		<div class="input-group">
-			<label for="Subject">Subject</label>
+			<label for="Subject">Subject <span>*</span></label>
 			<input type="text" id="Subject" formControlName="Subject">
 		</div>
 		<div class="input-group">
-			<label for="Message">Message</label>
-			<input type="text" id="Message" formControlName="Message">
+			<label for="Message">Message <span>*</span></label>
+			<textarea  id="Message" formControlName="Message"></textarea>
 		</div>
-		<button>Indsend</button>
+		<button type="submit" [disabled]="form.invalid">Indsend</button>
 	</div>
 </form>
