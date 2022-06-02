@@ -75,6 +75,7 @@ export class TilmeldComponent implements OnInit {
   // Registration of customer account
   signUp(): void {
     this.credentials.patchValue({ countryID: this.checkCountries()?.countryID });
+    this.credentials.controls["email"].value.toLowerCase();
     this.customer = Object.assign(this.customer, this.credentials.value, this.details.value);
     this.customerService.register(this.customer).subscribe({
       next: () => {

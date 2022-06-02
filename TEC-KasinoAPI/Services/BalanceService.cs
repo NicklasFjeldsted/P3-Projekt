@@ -109,6 +109,15 @@ namespace TEC_KasinoAPI.Services
             if (accountBalance == null)
                 return null;
 
+            // Find transactions with the customerID
+            Transaction transactionsCount = await _context.Transactions.FindAsync(model.CustomerID);
+
+            // Applies deposit bonus if requirements are met
+            if (transactionsCount == null && model.Amount <= 1000)
+			{
+                model.Amount = model.Amount * 2;
+			}
+
             // Add the amount from the model parameter to the account balance.
             accountBalance.Balance += model.Amount;
 

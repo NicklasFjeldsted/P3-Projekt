@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   public onSubmit(): void {
     this.authenticationService
-      .login(this.f["email"].value, this.f["password"].value)
+      .login(this.f["email"].value.toLowerCase(), this.f["password"].value)
       .pipe(first())
       .subscribe({
         next: () => {

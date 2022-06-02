@@ -59,7 +59,7 @@ export class IndbetalComponent implements OnInit, OnDestroy {
     // Gives form validators
     this.form = this.builder.group({
       cardName: ["Bo Nielsen", Validators.required],
-      cardNumber: ["5497-7453-2611-4515", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
+      cardNumber: ["5497-7453-2614-4515", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
       expDate: ["12/24", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
       cvv: [123, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       amount: [null, Validators.required],
@@ -81,6 +81,7 @@ export class IndbetalComponent implements OnInit, OnDestroy {
 
   // Submits the deposit request
   onSubmit(): void {
+    if (!this.isValid()) return;
     this.balanceService.addBalance(this.f["amount"]?.value).subscribe({
       next: (response) => {
         this.transaction.AddTransaction(response).subscribe(() => {
