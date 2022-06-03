@@ -1,5 +1,5 @@
-export interface ChangeBalance 
-{
-	customerID: number;
-	amount: number;
+export interface ChangeBalance {
+  customerID: number;
+  amount: number;
+  isInternal: boolean;
 }

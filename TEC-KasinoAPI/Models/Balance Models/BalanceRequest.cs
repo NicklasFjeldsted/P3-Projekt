@@ -6,10 +6,11 @@ namespace TEC_KasinoAPI.Models
     {
         public BalanceRequest() { }
 
-        public BalanceRequest(int customerID, double amount)
+        public BalanceRequest(int customerID, double amount, bool isInternal)
         {
             CustomerID = customerID;
             Amount = amount;
+            IsInternal = isInternal;
         }
 
         [Required]
@@ -17,5 +18,7 @@ namespace TEC_KasinoAPI.Models
         public int CustomerID { get; set; }
         [Required]
         public double Amount { get; set; }
+        [Required]
+        public bool IsInternal { get; set; }
     }
 }

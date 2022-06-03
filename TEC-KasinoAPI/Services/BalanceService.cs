@@ -21,14 +21,17 @@ namespace TEC_KasinoAPI.Services
         private readonly DatabaseContext _context;
         private readonly AppSettings _appSettings;
         private readonly IMapper _mapper;
+        private readonly ITransactionService _transactionService;
 
-        public BalanceService(DatabaseContext context, IOptions<AppSettings> appSettings, IMapper mapper)
+        public BalanceService(DatabaseContext context, IOptions<AppSettings> appSettings, IMapper mapper, ITransactionService transactioService)
         {
             _appSettings = appSettings.Value;
 
             _context = context;
 
             _mapper = mapper;
+
+            _transactionService = transactioService;
         }
 
         /// <summary>
@@ -127,11 +130,23 @@ namespace TEC_KasinoAPI.Services
             // Update the AccountBalance entity with the changes from the accountBalance object.
             await _context.AccountBalances.UpdateAsync(accountBalance);
 
+            // New object instance of BalanceResponse.
+            BalanceResponse response = new BalanceResponse(difference)
+            {
+                CustomerID = model.CustomerID,
+                Balance = accountBalance.Balance,
+                Difference = difference,
+                IsInternal = model.IsInternal,
+            };
+
+            // Call AddTransaction on the TransactionService.
+            await _transactionService.AddTransaction(response);
+
             // Save the changes to the database.
             await _context.SaveChangesAsync();
 
             // Map the accountBalance object to the BalanceResponse model and return it.
-            return _mapper.Map(accountBalance, new BalanceResponse(difference));
+            return _mapper.Map(accountBalance, response);
         }
 
         /// <summary>
@@ -161,11 +176,23 @@ namespace TEC_KasinoAPI.Services
             // Update the AccountBalance entity with the changes from the accountBalance object.
             await _context.AccountBalances.UpdateAsync(accountBalance);
 
+            // New object instance of BalanceResponse.
+            BalanceResponse response = new BalanceResponse(difference)
+            {
+                CustomerID = model.CustomerID,
+                Balance = accountBalance.Balance,
+                Difference = difference,
+                IsInternal = model.IsInternal,
+            };
+
+            // Call AddTransaction on the TransactionService.
+            await _transactionService.AddTransaction(response);
+
             // Save the changes to the database.
             await _context.SaveChangesAsync();
 
             // Map the accountBalance object to the BalanceResponse model and return it.
-            return _mapper.Map(accountBalance, new BalanceResponse(difference));
+            return _mapper.Map(accountBalance, response);
         }
 
         /// <summary>

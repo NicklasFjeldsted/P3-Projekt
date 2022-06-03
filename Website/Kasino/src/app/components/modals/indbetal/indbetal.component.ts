@@ -52,7 +52,6 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isOpen = true;
     this.getDepositLimit();
     document.body.classList.add("modalOpen");
 
@@ -83,11 +82,9 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     if (!this.isValid()) return;
     this.balanceService.addBalance(this.f["amount"]?.value).subscribe({
-      next: (response) => {
-        this.transaction.AddTransaction(response).subscribe(() => {
-          this.close();
-          this.balanceService.updateBalance();
-        });
+      next: () => {
+        this.close();
+        this.balanceService.updateBalance();
       },
       error: (error) => {
         console.log("Something went wrong! ", error);
@@ -95,6 +92,7 @@ export class IndbetalComponent implements OnInit, OnDestroy {
     });
   }
 
+  // Gets Deposit Limit
   getDepositLimit(): void {
     this.authenticationService.decodeToken().subscribe({
       next: (userBalance) => {
@@ -177,6 +175,7 @@ export class IndbetalComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
+  // Opens Deposit Limit
   openLimit(): void {
     if (this.router.url != "/konto") {
       this.router.navigate(["konto"]);

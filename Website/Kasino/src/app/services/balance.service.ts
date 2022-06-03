@@ -27,12 +27,12 @@ export class BalanceService {
   private id: number = -1;
 
   public addBalance(money: number): Observable<any> {
-    this.balance = { customerID: this.id, amount: money };
+    this.balance = { customerID: this.id, amount: money, isInternal: false };
     return this.http.put<any>(`${environment.apiURL}/balance/add-balance`, this.balance, { withCredentials: true });
   }
 
   public subtractBalance(money: number): Observable<any> {
-    this.balance = { customerID: this.id, amount: money };
+    this.balance = { customerID: this.id, amount: money, isInternal: false };
     return this.http.put<any>(`${environment.apiURL}/balance/subtract-balance`, this.balance, { withCredentials: true });
   }
 

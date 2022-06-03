@@ -41,18 +41,15 @@ export class UdbetalComponent implements OnInit {
   constructor(
     private dialogRef: DialogRef,
     @Inject(DIALOG_DATA) public data: string,
-    private router: Router,
     private builder: FormBuilder,
     private balance: BalanceService,
     private authenticationService: AuthenticationService,
-    private transaction: TransactionService,
     private balanceService: BalanceService
   ) {}
 
   ngOnInit(): void {
     Broadcast.Instance.onBalanceChange.subscribe((event) => this.getBalance());
     this.getBalance();
-    this.isOpen = true;
 
     // Gives form validators
     this.form = this.builder.group({
@@ -74,19 +71,17 @@ export class UdbetalComponent implements OnInit {
   // Submits the deposit request
   onSubmit() {
     this.balance.subtractBalance(this.f["amount"]?.value).subscribe({
-      next: (response) => {
-        this.transaction.AddTransaction(response).subscribe(() => {
-          this.close();
-          this.balanceService.updateBalance();
-        });
+      next: () => {
+        this.close();
+        this.balanceService.updateBalance();
       },
       error: (error) => {
         console.log("Something went wrong! ", error);
       },
     });
-    return;
   }
 
+  // Gets users CurrentBalance
   getBalance(): void {
     this.authenticationService.decodeToken().subscribe({
       next: (userBalance) => {
@@ -134,7 +129,7 @@ export class UdbetalComponent implements OnInit {
     return nCheck % 10 == 0;
   }
 
-  // Adds dashes in between every fourth digit
+  // Adds dashes between every fourth digit
   addDashes(): void {
     var ele = this.f["cardNumber"].value;
     if (ele === undefined) {
@@ -144,7 +139,7 @@ export class UdbetalComponent implements OnInit {
     this.form.patchValue({ cardNumber: ele.match(/.{1,4}/g)?.join("-") });
   }
 
-  // Add a slash in between month and year
+  // Add a slash between month and year
   addSlash(): void {
     var ele = this.f["expDate"]?.value;
     if (ele === undefined) {

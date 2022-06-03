@@ -6,6 +6,7 @@
         public double Balance { get; set; }
         public string Difference { get; set; }
         public int DepositLimit { get; set; }
+        public bool IsInternal { get; set; }
 
         public BalanceResponse(string difference)
         {

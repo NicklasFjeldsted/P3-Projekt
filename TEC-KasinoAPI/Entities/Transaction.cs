@@ -14,5 +14,6 @@ namespace TEC_KasinoAPI.Models
         public DateTime TransactionDate { get; set; }
         public string Amount { get; set; }
         public double CurrentBalance { get; set; }
+        public bool IsInternal { get; set; }
     }
 }
