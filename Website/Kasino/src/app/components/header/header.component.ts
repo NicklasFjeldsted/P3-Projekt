@@ -44,6 +44,7 @@ export class HeaderComponent implements OnInit {
     private customerService: CustomerService
   ) {}
 
+  // Event Emitters
   @Output() onSideNavToggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() onAccountPanelToggle: EventEmitter<void> = new EventEmitter<void>();
   @Output() onNotificationsToggle: EventEmitter<void> = new EventEmitter<void>();
@@ -65,11 +66,11 @@ export class HeaderComponent implements OnInit {
     this.balanceService.OnBalanceChanged.subscribe((balance) => (this.currentBalance = balance.balance?.toLocaleString("dk", { useGrouping: true })));
   }
 
-  emitSideNavToggle = () => this.onSideNavToggle.emit();
+  emitSideNavToggle = () => this.onSideNavToggle.emit(); // Toggles Sidenav
 
-  emitAccountPanelToggle = () => this.onAccountPanelToggle.emit();
+  emitAccountPanelToggle = () => this.onAccountPanelToggle.emit(); // Toggles Sidepanel
 
-  emitNotificationsToggle = () => this.onNotificationsToggle.emit();
+  emitNotificationsToggle = () => this.onNotificationsToggle.emit(); // Toggles Notification
 
   public getBalance(): void {
     this.balanceService.OnBalanceChanged.subscribe((balance) => {

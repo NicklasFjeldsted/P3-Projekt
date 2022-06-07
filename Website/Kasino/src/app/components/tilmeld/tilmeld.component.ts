@@ -23,7 +23,10 @@ export class TilmeldComponent implements OnInit {
     private router: Router,
     private authenticationService: AuthenticationService,
     private fb: FormBuilder
-  ) {
+  ) {}
+
+  // Initializes the form
+  ngOnInit(): void {
     this.countryArray = JSON.parse(localStorage.getItem("countries")!);
     this.countries = this.getAllCountries();
 
@@ -39,10 +42,6 @@ export class TilmeldComponent implements OnInit {
       genderID: 0,
       zipCodeID: 0,
     };
-  }
-
-  // Initializes the form
-  ngOnInit(): void {
     this.form = this.fb.group({
       credentials: this.fb.group({
         email: new FormControl("", [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),

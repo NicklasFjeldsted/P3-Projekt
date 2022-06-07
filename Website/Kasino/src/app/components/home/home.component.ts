@@ -14,10 +14,6 @@ export class HomeComponent {
 
   constructor() {}
 
-  ngOnInit()
-  {
-  }
-
   @HostListener("window:scroll", []) onWindowScroll() {
     // do some stuff here when the window is scrolled
     const verticalOffset = window.pageYOffset;
@@ -28,6 +24,7 @@ export class HomeComponent {
     }
   }
 
+  // Adds active class to element
   addActive(id: number): void {
     const nav = document.getElementById("navbar")!.children;
     this.category = id;
