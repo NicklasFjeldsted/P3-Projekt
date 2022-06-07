@@ -7,33 +7,37 @@ import { User } from "src/app/interfaces/User";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
 })
-export class HomeComponent {
+export class HomeComponent 
+{
   loading = false;
   users: User[];
   category: number = 0;
 
   constructor() {}
 
-  ngOnInit()
+  @HostListener("window:scroll", []) onWindowScroll() 
   {
-  }
-
-  @HostListener("window:scroll", []) onWindowScroll() {
     // do some stuff here when the window is scrolled
     const verticalOffset = window.pageYOffset;
-    if (verticalOffset >= 408) {
+    if (verticalOffset >= 408) 
+    {
       document.getElementById("navbar")?.classList.add("sticky-navbar");
-    } else {
+    } else 
+    {
       document.getElementById("navbar")?.classList.remove("sticky-navbar");
     }
   }
 
-  addActive(id: number): void {
+  // Adds active class to element
+  addActive(id: number): void 
+  {
     const nav = document.getElementById("navbar")!.children;
     this.category = id;
 
-    for (let i = 0; i < 3; i++) {
-      if (nav[i].classList.contains("active")) {
+    for (let i = 0; i < 3; i++) 
+    {
+      if (nav[i].classList.contains("active")) 
+      {
         nav[i].classList.remove("active");
       }
     }

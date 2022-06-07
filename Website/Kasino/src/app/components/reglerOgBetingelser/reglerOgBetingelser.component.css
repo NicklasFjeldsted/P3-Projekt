@@ -1,4 +1,5 @@
-:host {
+:host 
+{
   height: calc(100vh - var(--full-header));
   display: flex;
   background-image: url("../../../assets/casinoblur.jpg");

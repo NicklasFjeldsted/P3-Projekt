@@ -1,23 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
 
-:host {
+:host 
+{
   height: auto;
   display: inline-block;
 }
 
 h2,
 h3,
-h4 {
+h4 
+{
   margin: 0;
 }
 
-h3 {
+h3 
+{
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
 }
 
-h4 {
+h4 
+{
   color: #838383;
   font-size: 0.8125rem;
   font-weight: 500;
@@ -25,7 +29,8 @@ h4 {
   line-height: 1;
 }
 
-.back-drop {
+.back-drop 
+{
   display: none;
   z-index: 1000;
   height: 100%;
@@ -36,7 +41,8 @@ h4 {
   left: 0;
 }
 
-.sidenav {
+.sidenav 
+{
   z-index: 1001;
   width: 250px;
   height: 100vh;
@@ -45,18 +51,21 @@ h4 {
   top: 0;
 }
 
-.active {
+.active 
+{
   display: block !important;
 }
 
-.sidenav-content {
+.sidenav-content 
+{
   position: absolute;
   width: 100%;
   height: 100%;
   align-items: center;
 }
 
-.sidenav-list {
+.sidenav-list 
+{
   width: 100%;
   height: 50%;
   list-style: none;
@@ -64,11 +73,13 @@ h4 {
   margin: 0 auto;
 }
 
-p {
+p 
+{
   margin: 0;
 }
 
-.sidenav-item {
+.sidenav-item 
+{
   width: 100%;
   height: 50px;
   font-size: 1.1rem;
@@ -79,7 +90,8 @@ p {
   cursor: pointer;
 }
 
-.sidenav-item > a {
+.sidenav-item > a 
+{
   width: 100%;
   height: 100%;
   align-items: center;
@@ -87,15 +99,18 @@ p {
   font-family: "Montserrat", sans-serif;
 }
 
-.sidenav-item > span {
+.sidenav-item > span 
+{
   margin-left: 0.25rem;
 }
 
-.sidenav-item > a > i {
+.sidenav-item > a > i 
+{
   margin-right: 0.5rem;
 }
 
-.sidenav-info {
+.sidenav-info 
+{
   text-align: left;
   height: 30px;
   font-family: "Montserrat", sans-serif;
@@ -105,46 +120,55 @@ p {
   line-height: 1pc;
 }
 
-.sidenav-info > a > span {
+.sidenav-info > a > span 
+{
   padding-left: 1pc;
   padding-right: 3pc;
 }
 
-.sidenav-item > a > i {
+.sidenav-item > a > i 
+{
   width: 50px;
   color: green;
   font-size: 1.6rem;
 }
 
-.sidenav-item:hover {
+.sidenav-item:hover 
+{
   background-color: hsla(0, 0%, 82.7%, 0.5);
 }
 
-#help {
+#help 
+{
   border-top: 1px solid #808080;
 }
 
-.modal {
+.modal 
+{
   position: absolute;
   width: 100%;
   height: 100%;
   display: none;
 }
 
-.open {
+.open 
+{
   display: block !important;
 }
 
-.fill-row {
+.fill-row 
+{
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
 }
 
-.divider {
+.divider 
+{
   border-top: 1px solid hsla(0, 0%, 100%, 0.2);
   display: block;
 }
 
-#account-panel {
+#account-panel 
+{
   width: 340px;
   height: 100vh;
   background-color: #fff;
@@ -154,19 +178,22 @@ p {
   opacity: 0;
 }
 
-.top-panel {
+.top-panel 
+{
   background-color: #05372c;
   padding: 2pc 1pc 0;
 }
 
-.account-details {
+.account-details 
+{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2em;
   padding: 0.5pc 0;
 }
 
-#add-balance {
+#add-balance 
+{
   border-radius: 50px;
   background-color: #e78553;
   color: #313233;
@@ -184,11 +211,13 @@ p {
   float: right;
 }
 
-.balance-panel {
+.balance-panel 
+{
   padding: 0.5pc 0;
 }
 
-.balance-display {
+.balance-display 
+{
   background-color: #144d2c;
   height: 4pc;
   border-radius: 30px;
@@ -201,18 +230,21 @@ p {
   text-align: center;
 }
 
-.balance-display > span {
+.balance-display > span
+{
   width: 155px;
 }
 
-.account-list {
+.account-list 
+{
   list-style-type: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.account-item {
+.account-item 
+{
   width: 100%;
   padding: 0 1pc;
   height: 40px;
@@ -225,29 +257,34 @@ p {
   text-decoration: none;
 }
 
-.account-item:hover {
+.account-item:hover 
+{
   background-color: hsla(0, 0%, 82.7%, 0.5);
 }
 
-.account-item > span {
+.account-item > span 
+{
   float: left;
   font-size: 0.875rem;
   font-weight: 500;
   color: #222;
 }
 
-.account-item > i {
+.account-item > i
+{
   font-size: 18px;
   position: absolute;
   right: 1pc;
 }
 
-.list-divider {
+.list-divider 
+{
   border-top: 1px solid #ddd;
   width: 100%;
 }
 
-.notification-container {
+.notification-container 
+{
   width: 400px;
   background-color: #fff;
   position: fixed;
@@ -256,7 +293,8 @@ p {
   z-index: 1001;
 }
 
-#arrow-notification {
+#arrow-notification 
+{
   position: fixed;
   top: 61px;
   font-size: 32px;
@@ -265,7 +303,8 @@ p {
   color: #fff;
 }
 
-.notification-header {
+.notification-header 
+{
   padding: 14px 0 9px 1pc;
   border-bottom: 1px solid rgba(38, 38, 39, 0.2);
   display: flex;
@@ -273,7 +312,8 @@ p {
   align-items: center;
 }
 
-.notification-circle {
+.notification-circle 
+{
   width: 11px;
   height: 11px;
   border-radius: 50%;
@@ -281,20 +321,24 @@ p {
   background-color: #e78553;
 }
 
-.notification-header > p {
+.notification-header > p 
+{
   margin-left: 5px;
 }
 
-.notification-content {
+.notification-content 
+{
   width: 100%;
   height: auto;
 }
 
-.notification-footer {
+.notification-footer 
+{
   height: 25px;
 }
 
-.notification-item {
+.notification-item 
+{
   display: flex;
   cursor: pointer;
   flex-direction: row;
@@ -304,33 +348,39 @@ p {
   transition: all 0.3s ease-in-out;
 }
 
-.notification-item:hover {
+.notification-item:hover 
+{
   background-color: #f0f0f0;
 }
 
-.notification-image > img {
+.notification-image > img 
+{
   width: 70px;
   height: 70px;
 }
 
-.notification-text {
+.notification-text 
+{
   width: 90%;
 }
 
-.text-header {
+.text-header 
+{
   margin-bottom: 10px;
   line-height: 1.5;
   font-size: 1em;
   color: #262627;
 }
 
-.text-divider {
+.text-divider 
+{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.notification-play {
+.notification-play 
+{
   text-decoration: underline;
   font-size: 9pt;
   font-weight: 300;
@@ -338,18 +388,21 @@ p {
   color: #047c4c;
 }
 
-.notification-button {
+.notification-button 
+{
   font-size: 26px;
 }
 
-.notification-date {
+.notification-date 
+{
   color: #a8a8a8;
   font-size: 9pt;
   line-height: 1.75;
   font-weight: 500;
 }
 
-.back-drop-notifications {
+.back-drop-notifications 
+{
   background-color: transparent;
   display: block !important;
 }

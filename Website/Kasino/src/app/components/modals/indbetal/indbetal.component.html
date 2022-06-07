@@ -14,7 +14,6 @@
 
   <div class="padding">
     <div class="card-credentials">
-
       <div class="input-group">
         <div class="input-container">
           <input id="form-input" class="no-icon" formControlName="cardName" [ngClass]="{ 'is-invalid': f['cardName'].touched && f['cardName'].errors, 'is-valid': f['cardName'].touched && !f['cardName'].errors }" required=""/>
@@ -47,6 +46,7 @@
           </div>
         </div>
       </div>
+
       <div class="input-group">
         <div class="input-container">
           <input id="form-input" class="no-icon" formControlName="amount" [maxlength]="getMaxLength()" (keypress)="keyPressNumbers($event)" [ngClass]="{   'is-invalid': (f['amount'].touched && f['amount'].value < 100) || (f['amount'].touched && f['amount'].value > currentLimit!),   'is-valid': (f['amount'].touched && f['amount'].value >= 100) || (f['amount'].touched && f['amount'].value < currentLimit!) }"/>
@@ -67,26 +67,31 @@
           <p>100 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(150, 1)">
           <span class="left"></span>
           <p>150 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(250, 2)">
           <span class="left"></span>
           <p>250 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(500, 3)">
           <span class="left"></span>
           <p>500 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(1000, 4)">
           <span class="left"></span>
           <p>1000 kr</p>
           <span class="right"></span>
         </button>
+        
         <button type="button" class="grid-item" (click)="updateAmount(2500, 5)">
           <span class="left"></span>
           <p>2500 kr</p>

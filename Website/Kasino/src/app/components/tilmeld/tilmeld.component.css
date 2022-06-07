@@ -1,4 +1,5 @@
-:host {
+:host 
+{
   width: 100%;
   display: block;
   height: auto;
@@ -8,7 +9,8 @@
   gap: 50px;
 }
 
-.multi-step-form {
+.multi-step-form 
+{
   max-width: 45%;
   height: auto;
   margin: auto;
@@ -17,11 +19,13 @@
   box-shadow: black 0px 0px 100px 5px;
 }
 
-.form-wrapper {
+.form-wrapper 
+{
   padding: 20px;
 }
 
-.form-content {
+.form-content 
+{
   max-width: 100%;
   height: auto;
   display: flex;
@@ -29,23 +33,27 @@
   gap: 7.5%;
 }
 
-.form-content > * {
+.form-content > * 
+{
   flex-basis: 50%;
 }
 
-.form-input-container {
+.form-input-container 
+{
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
 
-.input-title {
+.input-title 
+{
   font-size: 1.5rem;
   font-weight: 100;
   line-height: 1.5;
 }
 
-.input-section {
+.input-section 
+{
   max-width: 100%;
   height: auto;
   display: flex;
@@ -53,7 +61,8 @@
   gap: 1em;
 }
 
-.input-group {
+.input-group 
+{
   width: 100%;
   display: flex;
   position: relative;
@@ -61,7 +70,8 @@
 }
 
 .input-group > input[type="text"],
-.input-group > input[type="password"] {
+.input-group > input[type="password"] 
+{
   width: 100%;
   padding: 4.5% 4.5% 4.5% 18%;
   outline: 0;
@@ -70,15 +80,18 @@
 }
 
 #input-section-2 > .input-group > input[type="text"],
-.location > input[type="text"] {
+.location > input[type="text"] 
+{
   padding-left: 1em;
 }
 
-.input-group > input:focus {
+.input-group > input:focus 
+{
   border: 1px solid #808080;
 }
 
-.input-group > i {
+.input-group > i 
+{
   position: absolute;
   font-size: 30px;
   top: 10px;
@@ -86,45 +99,54 @@
   color: #e0e0e0;
 }
 
-.login-text {
+.login-text 
+{
   text-align: center;
 }
 
-.login-text > a {
+.login-text > a 
+{
   color: #015536;
   text-decoration: underline;
 }
 
-.location {
+.location 
+{
   display: flex;
   flex-direction: row;
   gap: 1em;
 }
 
-.location > #address {
+.location > #address 
+{
   width: 75%;
 }
 
-.location > #zipcode {
+.location > #zipcode 
+{
   width: 25%;
 }
 
-.gender {
+.gender 
+{
   display: flex;
   flex-direction: row;
   gap: 1em;
 }
 
-.gender > * {
+.gender > * 
+{
   flex: 1;
 }
 
-.gender-button {
+.gender-button 
+{
   position: relative;
   width: 100%;
 }
 
-.gender-button > i {
+.gender-button > i 
+{
   font-size: 1em;
   position: absolute;
   margin: auto;
@@ -133,7 +155,8 @@
   transform: translate(-50%, -50%);
 }
 
-.gender-button > input {
+.gender-button > input 
+{
   width: inherit;
   padding: 12.5%;
   border: 1px solid #e3e3e3;
@@ -141,7 +164,8 @@
   outline: none;
 }
 
-.gender-button > span {
+.gender-button > span 
+{
   font-size: 1em;
   cursor: default;
   position: absolute;
@@ -150,20 +174,24 @@
   transform: translate(-50%, -50%);
 }
 
-.active[type="icon"] {
+.active[type="icon"] 
+{
   color: #249752 !important;
 }
 
-.active[type="button"] {
+.active[type="button"] 
+{
   border: 1px solid #7dc198 !important;
 }
 
-.active[type="span"] {
+.active[type="span"] 
+{
   color: #249752 !important;
 }
 
 .buttons > button,
-button[type="submit"] {
+button[type="submit"] 
+{
   width: 100%;
   font-size: 1em;
   padding: 4%;
@@ -175,7 +203,8 @@ button[type="submit"] {
   cursor: pointer;
 }
 
-.step-title {
+.step-title 
+{
   color: white;
   line-height: 1;
   text-align: center;
@@ -186,32 +215,38 @@ button[type="submit"] {
   border-top-right-radius: 7px;
 }
 
-.rights {
+.rights 
+{
   display: flex;
   flex-direction: row;
 }
 
-.checkbox-container {
+.checkbox-container 
+{
   width: 10%;
 }
 
-.checkbox-text {
+.checkbox-text 
+{
   width: 90%;
 }
 
-.invalid-feedback {
+.invalid-feedback 
+{
   color: red;
   font-size: 0.6rem;
   text-align: left;
 }
 
-.is-invalid {
+.is-invalid 
+{
   background-color: #ffeeeb;
   border: 1px solid #f00;
   color: #ff0000;
 }
 
-.information-picture {
+.information-picture 
+{
   background-image: url("../../../assets/media/casino.jpg");
   width: 100%;
   height: auto;
@@ -221,59 +256,74 @@ button[type="submit"] {
   background-size: contain;
 }
 
-.text-header {
+.text-header 
+{
   padding-top: 2.5%;
   font-size: 18px;
   font-weight: 500;
 }
 
-.text-content {
+.text-content 
+{
   font-size: 0.8125rem;
   font-weight: 300;
   line-height: 1.5;
   padding: 5% 0;
 }
 
-.offer {
+.offer 
+{
   font-weight: 700;
   font-size: 0.8125rem;
   line-height: 1.5;
 }
 
-.offer > ul {
+.offer > ul 
+{
   padding: 5%;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1600px) 
+{
   .input-group > input[type="text"],
-  .input-group > input[type="password"] {
+  .input-group > input[type="password"] 
+  {
     padding-left: 1em;
   }
-  .input-group > i {
+  .input-group > i
+  {
     font-size: 0px;
   }
 }
 
-@media (max-width: 1200px) {
-  .gender-button > i {
+@media (max-width: 1200px) 
+{
+  .gender-button > i 
+  {
     font-size: 0;
   }
-  .multi-step-form {
+  .multi-step-form 
+  {
     max-width: 55%;
   }
-  .form-content {
+  .form-content 
+  {
     gap: 3.75%;
   }
 }
 
-@media (max-width: 768px) {
-  .multi-step-form {
+@media (max-width: 768px) 
+{
+  .multi-step-form 
+  {
     max-width: 85%;
   }
 }
 
-@media (max-width: 480px) {
-  .multi-step-form {
+@media (max-width: 480px) 
+{
+  .multi-step-form 
+  {
     max-width: 100%;
   }
 }

@@ -4,7 +4,6 @@
       <svg id="closeButton" (click)="close()" xmlns="http://www.w3.org/2000/svg" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet">
         <path data-path="close" fill-rule="evenodd" d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"></path>
       </svg>
-
     </div>
 
     <div class="header-title">
@@ -14,7 +13,6 @@
 
   <div class="padding">
     <div class="card-credentials">
-
       <div class="input-group">
         <div class="input-container">
           <input id="form-input" class="no-icon" formControlName="cardName" [ngClass]="{ 'is-invalid': f['cardName'].touched && f['cardName'].errors, 'is-valid': f['cardName'].touched && !f['cardName'].errors }" required=""/>
@@ -47,6 +45,7 @@
           </div>
         </div>
       </div>
+
       <div class="input-group">
         <div class="input-container">
           <input id="form-input" class="no-icon" formControlName="amount" [maxlength]="6" (keypress)="keyPressNumbers($event)" [ngClass]="{   'is-invalid': (f['amount'].touched && f['amount'].value < 50),   'is-valid': (f['amount'].touched && f['amount'].value >= 50) }"/>
@@ -66,26 +65,31 @@
           <p>50 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(75, 1)" #focusBtn>
           <span class="left"></span>
           <p>75 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(100, 2)">
           <span class="left"></span>
           <p>100 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(250, 3)">
           <span class="left"></span>
           <p>250 kr</p>
           <span class="right"></span>
         </button>
+
         <button type="button" class="grid-item" (click)="updateAmount(1000, 4)">
           <span class="left"></span>
           <p>1000 kr</p>
           <span class="right"></span>
         </button>
+        
         <button type="button" class="grid-item" (click)="updateAmount(currentBalance!, 5)">
           <span class="left"></span>
           <p>Max</p>

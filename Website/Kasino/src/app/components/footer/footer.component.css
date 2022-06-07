@@ -1,15 +1,18 @@
-:host {
+:host 
+{
   width: 100vw;
   display: inline-block;
   box-sizing: border-box;
 }
 
 a,
-span {
+span 
+{
   color: #777;
 }
 
-.footer {
+.footer 
+{
   max-width: 100%;
   height: auto;
   box-shadow: 0 -0.25pc 1pc rgba(0, 0, 0, 0.4);
@@ -20,7 +23,8 @@ span {
   align-items: center;
 }
 
-.footer-icons {
+.footer-icons 
+{
   max-width: 25%;
   display: flex;
   align-items: center;
@@ -30,7 +34,8 @@ span {
   gap: 2.5em;
 }
 
-.footer-text {
+.footer-text 
+{
   max-width: 75%;
   color: gray;
   padding: 2.5em;
@@ -38,7 +43,8 @@ span {
   color: #444;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 850px) 
+{
   .footer-icons {
     flex-direction: column;
   }

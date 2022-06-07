@@ -76,41 +76,49 @@ export class AppComponent implements OnInit {
 
   hasVisited = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.sideNav = document.getElementById("sideNav")!;
     this.backDrop = document.getElementById("backdrop")!;
     this.accountPanel = document.getElementById("account-panel")!;
-    this.authenticationService.OnTokenChanged.subscribe((token) => {
+    this.authenticationService.OnTokenChanged.subscribe((token) => 
+    {
       let role = "";
-      if (token !== "") {
+      if (token !== "") 
+      {
         role = JwtDecodePlus.jwtDecode(token).role;
         this.accountName = JwtDecodePlus.jwtDecode(token).given_name;
         this.accountID = JwtDecodePlus.jwtDecode(token).nameid;
       }
       this.role = role;
     });
-    this.balanceService.OnBalanceChanged.subscribe((balance) => {
-      if (balance.customerID !== undefined) {
+    this.balanceService.OnBalanceChanged.subscribe((balance) => 
+    {
+      if (balance.customerID !== undefined) 
+      {
         this.accountBalance = balance.balance.toLocaleString("dk", { useGrouping: true });
       }
     });
   }
 
   closeSideNav(): void {
-    if (this.sideNav.classList.contains("active")) {
+    if (this.sideNav.classList.contains("active")) 
+    {
       this.isSidenavOpen = !this.isSidenavOpen;
       this.sideNav.classList.remove("active");
       this.backDrop.classList.remove("active");
     }
   }
 
-  openSideNav(): void {
+  openSideNav(): void 
+  {
     this.isSidenavOpen = !this.isSidenavOpen;
     this.sideNav.classList.add("active");
     this.backDrop.classList.add("active");
   }
 
-  closeAccountPanel(): void {
+  closeAccountPanel(): void 
+  {
     if (this.accountPanel.classList.contains("active")) {
       this.isAccountPanel = !this.isAccountPanel;
       this.backDrop.classList.remove("active");
@@ -118,35 +126,42 @@ export class AppComponent implements OnInit {
     }
   }
 
-  openAccountPanel(): void {
+  openAccountPanel(): void 
+  {
     this.isAccountPanel = !this.isAccountPanel;
     this.backDrop.classList.add("active");
     this.accountPanel.classList.add("active");
   }
 
-  openNotifications() {
+  openNotifications() 
+  {
     this.isNotificationsOpened = true;
     document.getElementById("backdrop")?.classList.add("back-drop-notifications");
   }
 
-  closeNotifications() {
+  closeNotifications() 
+  {
     this.isNotificationsOpened = false;
     document.getElementById("backdrop")?.classList.remove("back-drop-notifications");
   }
 
-  goToLink(site: string) {
+  goToLink(site: string) 
+  {
     this.router.navigate([site]);
   }
 
-  goToAccount(number: number): void {
+  goToAccount(number: number): void 
+  {
     this.closeAccountPanel();
-    if (this.router.url != "/konto") {
+    if (this.router.url != "/konto") 
+    {
       this.router.navigate(["konto"]);
     }
     this.balanceService.goToLimit(number);
   }
 
-  openLogout() {
+  openLogout() 
+  {
     this.closeAccountPanel();
     this.dialog.open(LogoutComponent);
   }

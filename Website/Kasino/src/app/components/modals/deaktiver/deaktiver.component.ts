@@ -8,11 +8,14 @@ import { DialogRef } from '../dialog-ref';
   templateUrl: './deaktiver.component.html',
   styleUrls: ['./deaktiver.component.css'],
   animations: [
-    trigger('openClose', [
-      state('open', style({
+    trigger('openClose', 
+    [
+      state('open', style
+      ({
         opacity: 1,
       })),
-      state('closed', style({
+      state('closed', style
+      ({
         opacity: 0
       })),
       transition('* => *', animate(400))

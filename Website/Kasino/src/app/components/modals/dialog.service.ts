@@ -19,12 +19,14 @@ export class DialogService {
   constructor(private overlay: Overlay, private injector: Injector) {}
 
   // Open modal
-  open<T>(component: ComponentType<T>, config?: DialogConfig): ComponentType<T> {
+  open<T>(component: ComponentType<T>, config?: DialogConfig): ComponentType<T> 
+  {
     // Globally centered position strategy
     const positionStrategy = this.overlay.position().global().centerHorizontally().centerVertically();
 
     // Create the overlay with customizable options
-    const overlayRef = this.overlay.create({
+    const overlayRef = this.overlay.create
+    ({
       width: "250px",
       positionStrategy,
       hasBackdrop: true,
@@ -35,9 +37,11 @@ export class DialogService {
     const dialogRef = new DialogRef(overlayRef);
 
     // Create injector to be able to reference the DialogRef from within the component
-    const injector = Injector.create({
+    const injector = Injector.create
+    ({
       parent: this.injector,
-      providers: [
+      providers: 
+      [
         { provide: DialogRef, useValue: dialogRef },
         { provide: DIALOG_DATA, useValue: config?.data },
       ],

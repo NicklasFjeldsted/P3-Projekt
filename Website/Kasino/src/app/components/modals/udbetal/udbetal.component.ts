@@ -31,7 +31,8 @@ import { DIALOG_DATA } from "../dialog-tokens";
     ]),
   ],
 })
-export class UdbetalComponent implements OnInit {
+export class UdbetalComponent implements OnInit 
+{
   isOpen: boolean = true;
   isCardValid: boolean = true;
   currentBalance: number | null;
@@ -47,65 +48,80 @@ export class UdbetalComponent implements OnInit {
     private balanceService: BalanceService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     Broadcast.Instance.onBalanceChange.subscribe((event) => this.getBalance());
     this.getBalance();
 
     // Gives form validators
-    this.form = this.builder.group({
+    this.form = this.builder.group
+    ({
       cardName: ["Nicklas", Validators.required],
       cardNumber: ["5497-7453-2614-4515", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
       expDate: ["12/24", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
       cvv: [null, [Validators.required, Validators.minLength(3), Validators.maxLength(3)]],
       amount: [null, Validators.required],
     });
+
     this.updateAmount(50, 0);
     this.f["amount"].markAsUntouched();
   }
 
   // Gets controls from form
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.form.controls;
   }
 
   // Submits the deposit request
-  onSubmit() {
-    this.balance.subtractBalance(this.f["amount"]?.value).subscribe({
-      next: () => {
+  onSubmit() 
+  {
+    this.balance.subtractBalance(this.f["amount"]?.value).subscribe
+    ({
+      next: () => 
+      {
         this.close();
         this.balanceService.updateBalance();
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! ", error);
       },
     });
   }
 
   // Gets users CurrentBalance
-  getBalance(): void {
-    this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+  getBalance(): void 
+  {
+    this.authenticationService.decodeToken().subscribe
+    ({
+      next: (userBalance) => 
+      {
         this.currentBalance = userBalance.balance;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! ", error);
       },
     });
   }
 
   // Updates the amount value to the specified buttons value
-  updateAmount(value: number, id: number): void {
+  updateAmount(value: number, id: number): void 
+  {
     this.f["amount"].markAsTouched();
     this.form.patchValue({ amount: value });
     const element = document.getElementById("button-grid")!.children;
-    for (let i = 0; i < element?.length!; i++) {
+    for (let i = 0; i < element?.length!; i++) 
+    {
       element[i].classList.remove("active");
     }
     element[id].classList.add("active");
   }
 
   // Checks if the card number is valid through the use of Luhn algorithm
-  isValid() {
+  isValid() 
+  {
     let digits: string = this.f["cardNumber"]?.value.split("-").join("");
     if (/[^0-9-\s]+/.test(digits)) return false;
 
@@ -115,11 +131,13 @@ export class UdbetalComponent implements OnInit {
       bEven = false;
     digits = digits.replace(/\D/g, "");
 
-    for (var n = digits.length - 1; n >= 0; n--) {
+    for (var n = digits.length - 1; n >= 0; n--) 
+    {
       var cDigit = digits.charAt(n),
         nDigit = parseInt(cDigit, 10);
 
-      if (bEven) {
+      if (bEven) 
+      {
         if ((nDigit *= 2) > 9) nDigit -= 9;
       }
 
@@ -130,9 +148,11 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Adds dashes between every fourth digit
-  addDashes(): void {
+  addDashes(): void 
+  {
     var ele = this.f["cardNumber"].value;
-    if (ele === undefined) {
+    if (ele === undefined) 
+    {
       return;
     }
     ele = ele.split("-").join("");
@@ -140,9 +160,11 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Add a slash between month and year
-  addSlash(): void {
+  addSlash(): void 
+  {
     var ele = this.f["expDate"]?.value;
-    if (ele === undefined) {
+    if (ele === undefined) 
+    {
       return;
     }
     ele = ele.split("/").join("");
@@ -150,16 +172,19 @@ export class UdbetalComponent implements OnInit {
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any): void {
+  keyPressNumbers(event: any): void 
+  {
     var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if (charCode < 48 || charCode > 57) {
+    if (charCode < 48 || charCode > 57) 
+    {
       event.preventDefault();
     }
   }
 
   // Closes dialog(modal)
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }

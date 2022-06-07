@@ -18,14 +18,16 @@ import { DIALOG_DATA } from "../../dialog-tokens";
     trigger("openClose", [
       state(
         "open",
-        style({
+        style
+        ({
           opacity: 1,
         })
       ),
 
       state(
         "closed",
-        style({
+        style
+        ({
           opacity: 0,
         })
       ),
@@ -33,7 +35,8 @@ import { DIALOG_DATA } from "../../dialog-tokens";
     ]),
   ],
 })
-export class EditBalanceComponent implements OnInit {
+export class EditBalanceComponent implements OnInit 
+{
   isOpen: boolean = true;
   customerID: number;
 
@@ -45,52 +48,65 @@ export class EditBalanceComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(
+  constructor
+  (
     private dialogRef: DialogRef,
     @Inject(DIALOG_DATA) public data: number,
     private balanceService: BalanceService,
     private transactionService: TransactionService
-  ) {
+  ) 
+  {
     this.customerID = data;
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
     this.getUserTransactions();
   }
 
   // Gets user balance from database
-  getUserBalance(): void {
-    this.balanceService.getUserBalance(this.customerID).subscribe({
-      next: (customer) => {
+  getUserBalance(): void 
+  {
+    this.balanceService.getUserBalance(this.customerID).subscribe
+    ({
+      next: (customer) => 
+      {
         this.customerBalance = customer;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! " + error);
       },
     });
   }
 
   // Gets all customer transactions from database
-  getUserTransactions(): void {
-    this.transactionService.getAllById(this.customerID).subscribe({
-      next: (transactions) => {
+  getUserTransactions(): void 
+  {
+    this.transactionService.getAllById(this.customerID).subscribe
+    ({
+      next: (transactions) => 
+      {
         this.dataSource = new MatTableDataSource<Transaction>(transactions);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! " + error);
       },
     });
   }
 
   // Changes timezone of date to CET
-  changeTimeZone(date: Date): string {
+  changeTimeZone(date: Date): string 
+  {
     return new Date(date).toLocaleString("en-GB", { timeZone: "CET" });
   }
 
   // Closes modal
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }
