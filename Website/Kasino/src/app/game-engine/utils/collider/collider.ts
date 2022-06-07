@@ -24,22 +24,12 @@ export class ColliderComponent implements IComponent
 
 	Start(): void
 	{
-		// console.groupCollapsed(this.gameObject.gameObjectName)
-		// console.log("Start:", this.rectTransform.start);
-		// console.log("End:", this.rectTransform.end);
-		// // console.log("size", this.rectTransform.size);
-		// // console.log("scale", this.gameObject.transform.scale);
-		// console.groupEnd();
+
 	}
 
 	Update(deltaTime: number): void
 	{
 
-	}
-
-	Dispose(): void
-	{
-		this.gameObject.RemoveComponent(ColliderComponent);
 	}
 
 	public Hit(point: Vector2): boolean
