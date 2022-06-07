@@ -1,22 +1,26 @@
-#infobar{
+#infobar
+{
 	background-color: rgb(32, 32, 32);
 	width: 960px;
 	height: 20px;
 }
 
-#infobar > #infobar-wrapper {
+#infobar > #infobar-wrapper 
+{
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 }
 
-#infobar > #infobar-wrapper > p {
+#infobar > #infobar-wrapper > p 
+{
 	display: inline;
 	text-align: center;
 	color: white;
 }
 
-#infobar > .infobar-error {
+#infobar > .infobar-error 
+{
 	color: red;
 	text-decoration: underline;
 	text-align: center;

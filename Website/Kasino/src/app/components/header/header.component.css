@@ -1,20 +1,24 @@
-:host {
+:host 
+{
   height: var(--full-header);
   display: block;
 }
 
-i {
+i 
+{
   cursor: pointer;
 }
 
-h4 {
+h4 
+{
   padding: 0;
   margin: 0;
   line-height: 1;
   font-size: clamp(10px, 2vmin, 1pc);
 }
 
-.header {
+.header 
+{
   width: 100%;
   height: var(--header-height);
   position: fixed;
@@ -24,7 +28,8 @@ h4 {
   background-color: var(--bg-green);
 }
 
-.header-wrapper {
+.header-wrapper 
+{
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -32,35 +37,41 @@ h4 {
 
 /* header flex elements */
 
-.flex {
+.flex 
+{
   position: relative;
   display: flex;
   align-items: center;
 }
 
-.sidenav-container {
+.sidenav-container 
+{
   flex: 0 1 auto;
   padding-left: 2%;
 }
 
-.logo-container {
+.logo-container 
+{
   flex: 0;
 }
 
-.button-container {
+.button-container 
+{
   flex: auto;
 }
 
 /* Sidenav */
 
-#sidenav {
+#sidenav 
+{
   font-size: 1.6em;
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
 }
 
 /* Logo */
 
-#logo {
+#logo 
+{
   display: none;
   max-width: 188px;
   position: absolute;
@@ -73,7 +84,8 @@ h4 {
 
 /* Buttons */
 
-.button-wrapper {
+.button-wrapper 
+{
   position: absolute;
   right: max(40px, 5vw);
   display: flex;
@@ -82,11 +94,13 @@ h4 {
   gap: 0.5em;
 }
 
-.unauthorized {
+.unauthorized 
+{
   gap: 1em;
 }
 
-button {
+button 
+{
   padding: 1pc;
   border-radius: 50px;
   font-size: 0.875rem;
@@ -95,24 +109,28 @@ button {
   cursor: pointer;
 }
 
-#signup {
+#signup 
+{
   background-color: #e78553;
   color: #313233;
   border: 1px solid transparent;
 }
 
-#login {
+#login 
+{
   border: 1px solid transparent;
   background-color: transparent;
   transition: all 0.3s ease 0s;
   color: #fff;
 }
 
-#login:hover {
+#login:hover
+{
   border-color: #fff;
 }
 
-#balance {
+#balance 
+{
   position: relative;
   padding: 9px 3pc 9px 1pc;
   background-color: #05372c;
@@ -123,7 +141,8 @@ button {
   white-space: nowrap;
 }
 
-#balance > i {
+#balance > i 
+{
   font-size: 34px;
   color: #f08000;
   position: absolute;
@@ -131,11 +150,13 @@ button {
   top: -2px;
 }
 
-#balance:hover {
+#balance:hover 
+{
   box-shadow: 0px 2px 5px -1px #000000;
 }
 
-#notification {
+#notification 
+{
   position: relative;
   padding: 10px;
   border-radius: 100%;
@@ -147,7 +168,8 @@ button {
   transition: all 0.1s ease;
 }
 
-#notification > i {
+#notification > i 
+{
   position: absolute;
   font-size: 26px;
   color: #ddd;
@@ -156,11 +178,13 @@ button {
   transform: translate(-50%, -50%);
 }
 
-#notification:hover {
+#notification:hover 
+{
   box-shadow: 0px 2px 5px -1px #000000;
 }
 
-#user {
+#user 
+{
   position: relative;
   padding: 10px;
   border-radius: 100%;
@@ -172,7 +196,8 @@ button {
   transition: all 0.1s ease;
 }
 
-#user > i {
+#user > i 
+{
   position: absolute;
   font-size: 24px;
   color: #ddd;
@@ -185,7 +210,8 @@ button {
   box-shadow: 0px 2px 5px -1px #000000;
 }
 
-.game-menu {
+.game-menu 
+{
   width: 100%;
   height: 7.5vh;
   position: absolute;
@@ -193,13 +219,15 @@ button {
   background-color: var(--bg-dark-green);
 }
 
-.game-wrapper {
+.game-wrapper 
+{
   width: min(100%, 600px);
   height: 100%;
   margin: auto;
 }
 
-.game-item {
+.game-item 
+{
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -207,7 +235,8 @@ button {
   color: #fff;
 }
 
-.game-item > a {
+.game-item > a 
+{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -219,7 +248,8 @@ button {
   box-sizing: border-box;
 }
 
-svg {
+svg 
+{
   width: auto;
   height: min(7.5vw, 35px);
   scale: 1;
@@ -227,12 +257,14 @@ svg {
   transition: all 0.15s ease;
 }
 
-.game-item > a:hover > svg {
+.game-item > a:hover > svg 
+{
   height: calc(35px * 1.1);
 }
 
 /* Small devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 768px) 
+{
   .game-wrapper {
     width: min(75%, 625px);
   }
@@ -255,14 +287,16 @@ svg {
 }
 
 /* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
+@media (min-width: 992px) 
+{
   .game-wrapper {
     width: min(65%, 750px);
   }
 }
 
 /* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
+@media (min-width: 1200px) 
+{
   .game-wrapper {
     width: min(60%, 1050px);
   }
