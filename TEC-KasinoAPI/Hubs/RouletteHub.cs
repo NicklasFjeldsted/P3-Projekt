@@ -74,7 +74,7 @@ namespace TEC_KasinoAPI.Hubs
             await Clients.Others.SendAsync("Player_Connected", JsonConvert.SerializeObject(_gameManager.ConnectedPlayers[ id ]));
         }
 
-        public void Update_Bet_Data(string tileData)
+        public void Update_Bet_Data(string betData)
         {
             if (_game.BetLocked)
             {
@@ -83,17 +83,22 @@ namespace TEC_KasinoAPI.Hubs
 
             string id = Context.ConnectionId;
 
-            var newTile = JsonConvert.DeserializeObject<BetData>(tileData);
+            var newTile = JsonConvert.DeserializeObject<BetData>(betData);
             if (_game.PlayerTileData.ContainsKey(id))
             {
-                foreach (var betData in _game.PlayerTileData[ id ])
+                foreach (var data in _game.PlayerTileData[ id ])
                 {
-                    if(betData.number != newTile.number)
+                    if(data.betType != BetType.Straight)
                     {
                         continue;
                     }
 
-                    betData.betAmount = newTile.betAmount;
+                    if(data.number != newTile.number)
+                    {
+                        continue;
+                    }
+
+                    data.betAmount = newTile.betAmount;
                     return;
                 }
                 _game.PlayerTileData[ id ].Add(newTile);

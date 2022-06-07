@@ -128,12 +128,17 @@ export class Canvas implements IAwake
 		this._context.quadraticCurveTo(start.x, start.y, start.x + localRadius.tl, start.y);
 		this._context.closePath();
 
-		if (shape.shadow)
+		if (shape.shadow == true)
 		{
 			this._context.shadowBlur = shape.blur;
 			this._context.shadowOffsetX = shape.shadowOffset.x;
 			this._context.shadowOffsetY = shape.shadowOffset.y;
 			this._context.shadowColor = shape.shadowColor.AsString();
+		}
+		else
+		{
+			this._context.shadowBlur = 0;
+			this._context.shadowColor = 'rgba(0,0,0,0)';
 		}
 
 		if (shape.fill)

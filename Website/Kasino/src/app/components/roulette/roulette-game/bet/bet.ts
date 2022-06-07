@@ -1,6 +1,7 @@
 import { Button, Color, GameObject, Mathf, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
 import { House } from "../house";
 import { Tile } from "../tile";
+import { Betable } from "./betable";
 
 export class Bet extends MonoBehaviour
 {
@@ -110,6 +111,10 @@ export class Bet extends MonoBehaviour
 		for (const tile of this.gameObject.parent.GetComponent(House).tileColliders)
 		{
 			tile.gameObject.GetComponent(Tile).Clear();
+		}
+		for (const betable of this.gameObject.parent.GetComponent(House).betables)
+		{
+			betable.GetComponent(Betable).Clear();
 		}
 		this.gameObject.game.GetFeature(NetworkingFeature).Send("Clear_Bet_Data");
 	}
