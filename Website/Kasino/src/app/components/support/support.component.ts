@@ -5,7 +5,8 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./support.component.html",
   styleUrls: ["./support.component.css"],
 })
-export class SupportComponent implements OnInit {
+export class SupportComponent implements OnInit 
+{
   helpSite: number = 0;
   elementHeight: number;
 
@@ -13,7 +14,8 @@ export class SupportComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  changeSite(site: number) {
+  changeSite(site: number) 
+  {
     this.helpSite = site;
   }
 }

@@ -22,7 +22,8 @@ export class DialogRef
   }
 
   /* An Observable that notifies when the overlay has closed */
-  public afterClosed(): Observable<any> {
+  public afterClosed(): Observable<any> 
+  {
     return this.afterClosedSubject.asObservable();
   }
 }

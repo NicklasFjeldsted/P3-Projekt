@@ -17,17 +17,22 @@ import { DialogService } from "../dialog.service";
   templateUrl: "./indbetal.component.html",
   styleUrls: ["./indbetal.component.css"],
   animations: [
-    trigger("openClose", [
-      state(
+    trigger("openClose", 
+    [
+      state
+      (
         "open",
-        style({
+        style
+        ({
           opacity: 1,
         })
       ),
 
-      state(
+      state
+      (
         "closed",
-        style({
+        style
+        ({
           opacity: 0,
         })
       ),
@@ -35,13 +40,15 @@ import { DialogService } from "../dialog.service";
     ]),
   ],
 })
-export class IndbetalComponent implements OnInit, OnDestroy {
+export class IndbetalComponent implements OnInit, OnDestroy 
+{
   isOpen: boolean = true;
   isCardValid: boolean = true;
   currentLimit: number | null;
   form: FormGroup;
 
-  constructor(
+  constructor
+  (
     private dialogRef: DialogRef,
     @Inject(DIALOG_DATA) public data: string,
     public authenticationService: AuthenticationService,
@@ -51,12 +58,14 @@ export class IndbetalComponent implements OnInit, OnDestroy {
     private transaction: TransactionService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.getDepositLimit();
     document.body.classList.add("modalOpen");
 
     // Gives form validators
-    this.form = this.builder.group({
+    this.form = this.builder.group
+    ({
       cardName: ["Bo Nielsen", Validators.required],
       cardNumber: ["5497-7453-2614-4515", [Validators.required, Validators.minLength(19), Validators.maxLength(19)]],
       expDate: ["12/24", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]],
@@ -74,49 +83,61 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   getMaxLength = () => this.currentLimit?.toString().length!;
 
   // Gets controls from form
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.form.controls;
   }
 
   // Submits the deposit request
-  onSubmit(): void {
+  onSubmit(): void 
+  {
     if (!this.isValid()) return;
-    this.balanceService.addBalance(this.f["amount"]?.value).subscribe({
-      next: () => {
+    this.balanceService.addBalance(this.f["amount"]?.value).subscribe
+    ({
+      next: () => 
+      {
         this.close();
         this.balanceService.updateBalance();
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! ", error);
       },
     });
   }
 
   // Gets Deposit Limit
-  getDepositLimit(): void {
-    this.authenticationService.decodeToken().subscribe({
-      next: (userBalance) => {
+  getDepositLimit(): void 
+  {
+    this.authenticationService.decodeToken().subscribe
+    ({
+      next: (userBalance) => 
+      {
         this.currentLimit = userBalance.depositLimit;
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Something went wrong! ", error);
       },
     });
   }
 
   // Updates the amount value to the specified buttons value
-  updateAmount(value: number, id: number): void {
+  updateAmount(value: number, id: number): void 
+  {
     this.f["amount"].markAsTouched();
     this.form.patchValue({ amount: value });
     const element = document.getElementById("button-grid")!.children;
-    for (let i = 0; i < element?.length!; i++) {
+    for (let i = 0; i < element?.length!; i++) 
+    {
       element[i].classList.remove("active");
     }
     element[id].classList.add("active");
   }
 
   // Checks if the card number is valid through the use of Luhn algorithm
-  isValid() {
+  isValid() 
+  {
     let digits: string = this.f["cardNumber"]?.value.split("-").join("");
     if (/[^0-9-\s]+/.test(digits)) return false;
 
@@ -126,11 +147,13 @@ export class IndbetalComponent implements OnInit, OnDestroy {
       bEven = false;
     digits = digits.replace(/\D/g, "");
 
-    for (var n = digits.length - 1; n >= 0; n--) {
+    for (var n = digits.length - 1; n >= 0; n--) 
+    {
       var cDigit = digits.charAt(n),
         nDigit = parseInt(cDigit, 10);
 
-      if (bEven) {
+      if (bEven) 
+      {
         if ((nDigit *= 2) > 9) nDigit -= 9;
       }
 
@@ -141,9 +164,11 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   }
 
   // Adds dashes in between every fourth digit
-  addDashes(): void {
+  addDashes(): void 
+  {
     var ele = this.f["cardNumber"].value;
-    if (ele === undefined) {
+    if (ele === undefined) 
+    {
       return;
     }
     ele = ele.split("-").join("");
@@ -151,9 +176,11 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   }
 
   // Add a slash in between month and year
-  addSlash(): void {
+  addSlash(): void 
+  {
     var ele = this.f["expDate"]?.value;
-    if (ele === undefined) {
+    if (ele === undefined) 
+    {
       return;
     }
     ele = ele.split("/").join("");
@@ -161,23 +188,28 @@ export class IndbetalComponent implements OnInit, OnDestroy {
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any): void {
+  keyPressNumbers(event: any): void 
+  {
     var charCode = event.which ? event.which : event.keyCode;
     // Only Numbers 0-9
-    if (charCode < 48 || charCode > 57) {
+    if (charCode < 48 || charCode > 57) 
+    {
       event.preventDefault();
     }
   }
 
   // Closes dialog(modal)
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }
 
   // Opens Deposit Limit
-  openLimit(): void {
-    if (this.router.url != "/konto") {
+  openLimit(): void 
+  {
+    if (this.router.url != "/konto") 
+    {
       this.router.navigate(["konto"]);
     }
     this.balanceService.goToLimit(3);
