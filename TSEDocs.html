@@ -218,6 +218,184 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="l2" id="Types">
+				<h3>Types</h3>
+				<div class="l3" id="color">
+					<h4>Color</h4>
+					<div class="l4" id="color-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>
+									Color contains 4 private member properties named, r, g, b, a.
+									<br> Each property has a public getter.
+								</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="color-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>IsValidChannel(value: number, isAlpha: boolean)</p>
+								<p>Takes in a value of type number, and isAlpha of type boolean.</p>
+								<p>Returns a boolean.</p>
+								<p>This method validates a given value to see if it a valid rgba value.</p>
+							</li>
+
+							<li>
+								<p>AsString()</p>
+								<p>Doesn't take anything.</p>
+								<p>Returns a string.</p>
+								<p>This method converts a color type to a CSS friendly rgba string.</p>
+							</li>
+
+							<li>
+								<p>FromString(stringColor: string)</p>
+								<p>Takes in a color string of type string.</p>
+								<p>Returns a color.</p>
+								<p>This method converts a CSS friendly rgba string to a color type.</p>
+							</li>
+
+							<li>
+								<p>Lerp(from: Color, to: Color, increment: number)</p>
+								<p><em>This needs a rework, as this isnt a true lerp function.</em></p>
+								<p>Takes in a from type of color, a to type of color, and an increment type of number.</p>
+								<p>Returns a color.</p>
+								<p>This method lerps from a color to another, incrementing with the increment parameter.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="l3" id="gameObject">
+					<h4>GameObject</h4>
+					<p>The class GameObject inherits from Entity.</p>
+					<p>All GameObjects have either a Transform or a RectTransform component attached to them.</p>
+					<div class="l4" id="gameObject-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"isActive" is a boolean that controls whether or not the GameObject is active.</p>
+							</li>
+							<li>
+								<p>"_awoken" is a private boolean that is true if the GameObject has run its awake method this runtime.</p>
+							</li>
+							<li>
+								<p>"_game" is a Game that is set when the GameObject is instantiated.</p>
+							</li>
+							<li>
+								<p>"_parent" is the parent GameObject of this GameObject.</p>
+							</li>
+							<li>
+								<p>"_children" is an array of GameObject that have their parent set to this GameObject.</p>
+							</li>
+							<li>
+								<p>"gameObjectName" is the name of this GameObject.</p>
+							</li>
+							<li>
+								<p>"_components" is a private array of all the components on this GameObject.</p>
+							</li>
+							<li>
+								<p>"transform" is a public getter that returns the Transform component on this GameObject.</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="gameObject-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>Child(index: number)</p>
+								<p>Takes in an index of type number.</p>
+								<p>Returns a GameObject</p>
+								<p>This method takes in the index of a child set to this "_children" array and returns the child at the given index.</p>
+							</li>
+
+							<li>
+								<p>SetParent(newParent: GameObject)</p>
+								<p>Takes in a new parent of type GameObject.</p>
+								<p>Doesn't return anything.</p>
+								<p>This methods sets this GameObject's parent to the given GameObject new parent parameter.</p>
+							</li>
+
+							<li>
+								<p>AddComponent(component: IComponent, index?: number)</p>
+								<p>Takes in a component that implements the IComponent interface, it also takes in an optional index of type number.</p>
+								<p>Returns a GameObject.</p>
+								<p>This method adds the given component to this GameObject, if the index parameter has a value, the component will replace the component at the given index in the "_components" array.</p>
+							</li>
+
+							<li>
+								<p>GetComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Returns a component of type C.</p>
+								<p>This method searches for the constructor type that was given and returns the component if it is on the GameObject.</p>
+							</li>
+
+							<li>
+								<p>RemoveComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Doesn't return anything.</p>
+								<p>This methods remove the type of C from this GameObject "_components" array.</p>
+							</li>
+
+							<li>
+								<p>HasComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Returns a boolean.</p>
+								<p>Checks if this GameObject has the type of C component in its "_components" array.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="l3" id="entity">
+					<h4>Entity</h4>
+					<p>Entities implements IAwake, IStart and IUpdate</p>
+					<div class="l4" id="entity-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"entityId" is a type of string, this is a global unique id.</p>
+							</li>
+							<li>
+								<p>"_features" is an array of classes that implements the IFeature interface.</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="entity-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>AddFeature(feature: IFeature)</p>
+								<p>Takes in a feature that is a class that implements the IFeature interface.</p>
+								<p>Returns an Entity.</p>
+								<p>This method adds the feature parameter to this entity's "_features" array.</p>
+							</li>
+
+							<li>
+								<p>GetFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Returns a feature of type C.</p>
+								<p>This method searches this entitys "_features" array for the given constructor and returns it.</p>
+							</li>
+
+							<li>
+								<p>RemoveFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method searches for the given constructor in this entitys "_features" array and removes it.</p>
+							</li>
+
+							<li>
+								<p>HasFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Returns a boolean.</p>
+								<p>This method checks this entitys "_features" array for the given constructor and returns whether or not it contains it.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</body>
 </html>
