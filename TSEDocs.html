@@ -9,19 +9,43 @@
 	<body style="font-family: Arial;">
 		<style>
 			.l1 {
-				margin-left: 20px;
+				margin: 20px 0px 60px 20px;
+				border-left: dashed grey;
+				padding-left: 10px;
 			}
 
 			.l2 {
-				margin-left: 40px;
+				margin: 20px 0px 60px 40px;
+				border-left: dashed grey;
+				padding-left: 10px;
 			}
 
 			.l3 {
-				margin-left: 60px;
+				margin: 20px 0px 60px 60px;
+				border-left: dashed grey;
+				padding-left: 10px;
+			}
+			
+			.l4 {
+				border-radius: 10px;
+				margin: 40px 0px 60px 80px;
+				padding: 10px;
+				box-shadow: 0px 0px 3px black;
 			}
 
-			.l4 {
-				margin-left: 80px;
+			li {
+				margin: 40px 0px 0px 0px;
+				border: lightgrey solid;
+				border-radius: 10px;
+			}
+
+			li > p {
+				padding: 20px;
+				margin: 0;
+			}
+
+			li > p:first-child {
+				background-color: lightgrey;
 			}
 		</style>
 
@@ -60,7 +84,7 @@
 
 						<ul>
 							<li>
-								<p>CalculateLocalPointFrom(globalPoint: Vector2)</p>
+								<p>CalculateLocalPointFrom(globalPoint: Vector2)</p#>
 								<p>Takes in a Vector2.</p>
 								<p>Returns either a Vector2 or null.</p>
 								<p>This method calculates the local canvas mouse position from the global DOM mouse position.</p>
@@ -219,7 +243,7 @@
 				</div>
 			</div>
 
-			<div class="l2" id="Types">
+			<div class="l2" id="types">
 				<h3>Types</h3>
 				<div class="l3" id="color">
 					<h4>Color</h4>
