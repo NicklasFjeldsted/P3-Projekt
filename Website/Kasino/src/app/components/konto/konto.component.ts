@@ -20,7 +20,8 @@ import { BehaviorSubject, Observable } from "rxjs";
   templateUrl: "./konto.component.html",
   styleUrls: ["./konto.component.css"],
 })
-export class KontoComponent implements OnInit, AfterViewInit {
+export class KontoComponent implements OnInit, AfterViewInit 
+{
   accountInfo: AccountInfo;
   balance: Balance = new Balance();
   depositLimit: FormControl;
@@ -36,8 +37,10 @@ export class KontoComponent implements OnInit, AfterViewInit {
     public balanceService: BalanceService,
     private dialog: DialogService,
     private formBuilder: FormBuilder
-  ) {
-    this.accountInfo = {
+  ) 
+  {
+    this.accountInfo = 
+    {
       email: "",
       phoneNumber: 0,
       firstName: "",
@@ -46,48 +49,58 @@ export class KontoComponent implements OnInit, AfterViewInit {
     };
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.kontoSite = 1;
     this.balanceService.OnIndbetalingChange.subscribe((value) => {
       this.kontoSite = value;
     });
     this.depositLimit = new FormControl(1000, [Validators.max(100000), Validators.min(1000)]);
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
-      if (balance.customerID !== undefined) {
+      if (balance.customerID !== undefined) 
+      {
         this.updateLocalBalance(balance);
       }
     });
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void 
+  {
     this.showAccountInfo();
   }
 
   // Gets userdata from API Call
-  private showAccountInfo(): void {
+  private showAccountInfo(): void 
+  {
     this.authenticationService.getAccount().subscribe({
-      next: (userInfo) => {
+      next: (userInfo) => 
+      {
         this.accountInfo = Object.assign(userInfo);
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log(error);
       },
     });
   }
 
   // Gets user information from token and decrypts the data
-  updateLocalBalance(newBalance: Balance): void {
+  updateLocalBalance(newBalance: Balance): void 
+  {
     this.balance = newBalance;
     this.depositLimit.patchValue(this.balance.depositLimit);
     this.updateLocalTransactions(newBalance.customerID);
   }
 
   // API call for transactions on a given id, which data response is put in a array
-  updateLocalTransactions(id: number): void {
+  updateLocalTransactions(id: number): void 
+  {
     this.transaction.getAllById(id).subscribe({
-      next: (transactions) => {
+      next: (transactions) => 
+      {
         this.transactionList = [];
-        transactions.forEach((element) => {
+        transactions.forEach((element) => 
+        {
           this.transactionList.push(element);
         });
       },
@@ -95,17 +108,21 @@ export class KontoComponent implements OnInit, AfterViewInit {
   }
 
   // Checks if user presses letters instead of digits
-  keyPressNumbers(event: any) {
+  keyPressNumbers(event: any) 
+  {
     var charCode = event.which ? event.which : event.keyCode;
 
-    if (this.depositLimit.value >= 100000) {
+    if (this.depositLimit.value >= 100000) 
+    {
       this.depositLimit.patchValue(100000);
     }
     // Only Numbers 0-9
-    if (charCode < 48 || charCode > 57) {
+    if (charCode < 48 || charCode > 57) 
+    {
       event.preventDefault();
       return false;
-    } else {
+    } else 
+    {
       return true;
     }
   }
@@ -115,47 +132,57 @@ export class KontoComponent implements OnInit, AfterViewInit {
   subAmount = () => this.depositLimit.patchValue(this.depositLimit.value - 25);
 
   // Updates users deposit limit
-  updateDepositLimit(): void {
+  updateDepositLimit(): void 
+  {
     this.balanceService.updateDeposit(this.depositLimit.value).subscribe({
-      next: (message) => {
+      next: (message) => 
+      {
         console.log(message);
         this.hasUpdateLimit = true;
-        if (this.balance.depositLimit == this.depositLimit.value) {
+        if (this.balance.depositLimit == this.depositLimit.value) 
+        {
           alert("Du har ikke ændret din indbetalingsgrænse");
-        } else {
+        } else 
+        {
           console.log(message);
           alert("Din indbetalingsgrænse er blevet opdateret");
           window.location.reload();
         }
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("error" + error);
       },
     });
   }
 
   // Onclick function which changes the site
-  changeSite(site: number) {
+  changeSite(site: number) 
+  {
     this.kontoSite = site;
   }
 
   // Onclick function which opens a component
-  openIndbetal() {
+  openIndbetal() 
+  {
     this.dialog.open(IndbetalComponent);
   }
 
   // Onclick function which opens a component
-  openUdbetal() {
+  openUdbetal() 
+  {
     this.dialog.open(UdbetalComponent);
   }
 
   // Onclick function which opens a component
-  openLogout() {
+  openLogout() 
+  {
     this.dialog.open(LogoutComponent);
   }
 
   // Onclick function which opens a component
-  openDeaktiver() {
+  openDeaktiver() 
+  {
     this.dialog.open(DeaktiverComponent);
   }
 }

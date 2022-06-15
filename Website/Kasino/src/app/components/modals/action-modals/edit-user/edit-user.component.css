@@ -1,4 +1,5 @@
-.main-container {
+.main-container 
+{
   width: 1000px;
   background-color: #f5f5f5;
   opacity: 0;
@@ -6,31 +7,37 @@
   position: absolute;
 }
 
-.v-center {
+.v-center 
+{
   position: absolute !important;
 }
 
-.h-center {
+.h-center 
+{
   text-align: unset;
 }
 
-.header-container {
+.header-container 
+{
   width: 100%;
   text-align: left;
 }
 
-#header {
+#header 
+{
   font-size: 2em;
   padding: 1em 0;
   color: #545454;
 }
 
-.content {
+.content 
+{
   width: 100%;
   height: auto;
 }
 
-.customer-information {
+.customer-information 
+{
   padding: 1em;
   display: flex;
   flex-direction: row;
@@ -39,46 +46,53 @@
 }
 
 .basic-information,
-.advanced-information {
+.advanced-information 
+{
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 1em;
 }
 
-.info-group {
+.info-group 
+{
   display: flex;
   flex-direction: column;
   justify-content: left;
 }
 
-.info-group > input {
+.info-group > input 
+{
   padding: 0.5em 0.5em;
   outline: none;
   border: 1px solid #9bcae4;
 }
 
-.info-group > select {
+.info-group > select 
+{
   padding: 0.5em 0.25em;
   outline: none;
   border: 1px solid #9bcae4;
 }
 
-.save-container {
+.save-container 
+{
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   padding: 0 1em;
 }
 
-.button-container {
+.button-container 
+{
   display: flex;
   flex-direction: row;
   gap: 1em;
   padding: 1em 0;
 }
 
-.button-container > button {
+.button-container > button 
+{
   width: 80px;
   padding: 0.75em 0em;
   border: 1px solid #9bcae4;
@@ -86,21 +100,25 @@
   border-radius: 5px;
 }
 
-#reset {
+#reset 
+{
   border: 1px solid transparent;
 }
 
-#cancel {
+#cancel 
+{
   background-color: #fff;
   color: #9bcae4;
 }
 
-#save {
+#save 
+{
   background-color: #1e88c3;
   color: #fff;
 }
 
-.noChange {
+.noChange 
+{
   background-color: rgba(239, 239, 239, 0.3);
   color: rgb(84, 84, 84);
   border: 1px solid rgba(118, 118, 118, 0.3) !important;

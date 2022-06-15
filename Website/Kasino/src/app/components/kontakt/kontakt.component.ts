@@ -8,13 +8,15 @@ import { ContactMail } from "src/app/interfaces/ContactMail";
   templateUrl: "./kontakt.component.html",
   styleUrls: ["./kontakt.component.css"],
 })
-export class KontaktComponent implements OnInit {
+export class KontaktComponent implements OnInit 
+{
   mail: ContactMail;
   form: FormGroup;
 
   constructor(private builder: FormBuilder, private customerService: CustomerService) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.form = this.builder.group({
       Fullname: new FormControl("", [Validators.required]),
       Email: new FormControl("", [Validators.required, Validators.email, Validators.pattern("^[A-Za-z-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]),
@@ -24,13 +26,16 @@ export class KontaktComponent implements OnInit {
     this.mail = { Fullname: "", Email: "", Subject: "", Message: "" };
   }
 
-  onSubmit() {
+  onSubmit() 
+  {
     this.mail = Object.assign(this.mail, this.form.value);
     this.customerService.sendMail(this.mail).subscribe({
-      next: () => {
+      next: () => 
+      {
         console.log("Success: Contact form has been sent!");
       },
-      error: (error) => {
+      error: (error) => 
+      {
         console.log("Failed: ", error);
       },
     });

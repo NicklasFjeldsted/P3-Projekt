@@ -128,12 +128,17 @@ export class Canvas implements IAwake
 		this._context.quadraticCurveTo(start.x, start.y, start.x + localRadius.tl, start.y);
 		this._context.closePath();
 
-		if (shape.shadow)
+		if (shape.shadow == true)
 		{
 			this._context.shadowBlur = shape.blur;
 			this._context.shadowOffsetX = shape.shadowOffset.x;
 			this._context.shadowOffsetY = shape.shadowOffset.y;
 			this._context.shadowColor = shape.shadowColor.AsString();
+		}
+		else
+		{
+			this._context.shadowBlur = 0;
+			this._context.shadowColor = 'rgba(0,0,0,0)';
 		}
 
 		if (shape.fill)
@@ -192,7 +197,7 @@ export class Canvas implements IAwake
 		this._context.clearRect(0, 0, this._element.width, this._element.height);
 	}
 
-	/** Draw text the canvas and return the width of it. */
+	/** Draw text the canvas. */
 	public DrawText(
 		text: string,
 		position: Vector2,
@@ -279,7 +284,7 @@ export class Canvas implements IAwake
 	}
 
 	/** Overlays a new color on the image. */
-	private RecolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color)
+	private RecolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color): void
 	{
 		// pull the entire image into an array of pixel data
 		var imageData = this._context.getImageData(position.x, position.y, width, height);

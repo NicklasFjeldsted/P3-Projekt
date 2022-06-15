@@ -9,7 +9,8 @@ import { AuthenticationService } from "src/app/services/authentication.service";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit 
+{
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
@@ -22,37 +23,43 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   show: boolean = false;
 
-  ngOnInit(): void {
+  ngOnInit(): void 
+  {
     this.form = this.formBuilder.group({
       email: ["", Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")],
       password: ["", Validators.required],
     });
     this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/";
-    this.authenticationService.OnTokenChanged.subscribe((token) => {
-      if (token !== "") {
+    this.authenticationService.OnTokenChanged.subscribe((token) => 
+    {
+      if (token !== "") 
+      {
         this.router.navigate([this.returnUrl]);
       }
     });
   }
 
-  get f() {
+  get f() 
+  {
     return this.form.controls;
   }
 
-  public onSubmit(): void {
+  public onSubmit(): void 
+  {
     this.authenticationService
       .login(this.f["email"].value.toLowerCase(), this.f["password"].value)
       .pipe(first())
       .subscribe({
-        next: () => {
+        next: () => 
+        {
           this.router.navigate([this.returnUrl]);
         },
-        error: () => {
+        error: () => 
+        {
           this.submitted = true;
           this.form.markAsUntouched();
         },
       });
   }
-
   togglePassword = () => (this.show = !this.show);
 }

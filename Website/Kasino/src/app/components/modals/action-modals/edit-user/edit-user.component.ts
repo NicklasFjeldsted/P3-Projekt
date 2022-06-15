@@ -20,17 +20,21 @@ import { DialogRef } from "../../dialog-ref";
   templateUrl: "./edit-user.component.html",
   styleUrls: ["./edit-user.component.css"],
   animations: [
-    trigger("openClose", [
+    trigger("openClose", 
+    [
       state(
         "open",
-        style({
+        style
+        ({
           opacity: 1,
         })
       ),
 
-      state(
+      state
+      (
         "closed",
-        style({
+        style
+        ({
           opacity: 0,
         })
       ),
@@ -38,7 +42,8 @@ import { DialogRef } from "../../dialog-ref";
     ]),
   ],
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent implements OnInit 
+{
   isOpen: boolean = true;
   hasSubmitted: boolean = false;
 
@@ -49,7 +54,8 @@ export class EditUserComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  customerForm: FormGroup = new FormGroup({
+  customerForm: FormGroup = new FormGroup
+  ({
     customerID: new FormControl(null, Validators.required),
     email: new FormControl("", [Validators.required, Validators.email, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     countryID: new FormControl("", Validators.required),
@@ -62,9 +68,11 @@ export class EditUserComponent implements OnInit {
     registerDate: new FormControl("", Validators.required),
   });
 
-  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: number, private customerService: CustomerService) {
+  constructor(private dialogRef: DialogRef, @Inject(DIALOG_DATA) public data: number, private customerService: CustomerService) 
+  {
     this.customerID = data;
-    this.customerAcc = {
+    this.customerAcc = 
+    {
       customerID: null,
       email: null,
       countryID: null,
@@ -78,20 +86,24 @@ export class EditUserComponent implements OnInit {
     };
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
     this.getUser();
   }
 
-  get f(): { [key: string]: AbstractControl } {
+  get f(): { [key: string]: AbstractControl } 
+  {
     return this.customerForm.controls;
   }
 
   // Submits modified form
-  onSubmit(): void {
+  onSubmit(): void 
+  {
     this.hasSubmitted = true;
     if (this.customerForm.invalid || !this.customerForm.dirty) return;
 
-    this.customerForm.patchValue({
+    this.customerForm.patchValue
+    ({
       // Converts the values back to their original type
       countryID: this.convertCountry(this.f["countryID"].value),
       phoneNumber: parseInt(this.f["phoneNumber"].value),
@@ -99,34 +111,43 @@ export class EditUserComponent implements OnInit {
       registerDate: this.customerAcc.registerDate,
     });
 
-    this.customerService.updateCustomer(this.customerForm.value).subscribe({
-      next: (response) => {
+    this.customerService.updateCustomer(this.customerForm.value).subscribe
+    ({
+      next: (response) =>
+      {
         alert(response.message);
         this.close();
       },
-      error: (msg: Error) => {
+      error: (msg: Error) => 
+      {
         console.log("Error updating customer: ", msg);
       },
     });
   }
 
   // Gets user from database
-  getUser(): void {
-    this.customerService.getCustomer(this.customerID).subscribe({
-      next: (customer) => {
+  getUser(): void 
+  {
+    this.customerService.getCustomer(this.customerID).subscribe
+    ({
+      next: (customer) => 
+      {
         this.customerAcc = customer;
         this.assignForm();
       },
-      error: () => {
+      error: () => 
+      {
         console.log(`Could not find customer! ${this.customerID}`);
       },
     });
   }
 
   // Converts countryName to CountryID and vice versa
-  convertCountry(inputVal: string | number): string | number {
+  convertCountry(inputVal: string | number): string | number 
+  {
     const countries: Country[] = JSON.parse(localStorage.getItem("countries")!);
-    if (_isNumberValue(inputVal)) {
+    if (_isNumberValue(inputVal)) 
+    {
       const country: Country | undefined = countries.find((country) => country.countryID == inputVal);
       return country!.countryName;
     }
@@ -138,13 +159,16 @@ export class EditUserComponent implements OnInit {
   convertGender = (inputVal: string | number) => (_isNumberValue(inputVal) ? (inputVal == 1 ? "Male" : "Female") : inputVal === "Male" ? 1 : 2);
 
   // Changes timezone of date to CET
-  changeTimeZone(date: Date): string {
+  changeTimeZone(date: Date): string 
+  {
     return new Date(date).toLocaleString("en-GB", { timeZone: "CET" });
   }
 
   // Assigns data to the form
-  assignForm(): void {
-    this.customerForm.setValue({
+  assignForm(): void 
+  {
+    this.customerForm.setValue
+    ({
       customerID: this.customerAcc.customerID,
       email: this.customerAcc.email,
       countryID: this.convertCountry(this.customerAcc.countryID!),
@@ -160,7 +184,8 @@ export class EditUserComponent implements OnInit {
   }
 
   // Closes modal
-  close(): void {
+  close(): void 
+  {
     this.isOpen = false;
     this.dialogRef.close();
   }

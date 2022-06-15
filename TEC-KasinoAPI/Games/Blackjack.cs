@@ -363,7 +363,7 @@ namespace TEC_KasinoAPI.Games
                     data.Value.Cards.Add(GenerateCard());
 
                     string id = Players.First(x => x.Value.CustomerID == data.Value.CustomerID).Key;
-                    BalanceRequest request = new(data.Value.CustomerID, _gameManager.Bets.First(x => x.Key == id).Value);
+                    BalanceRequest request = new(data.Value.CustomerID, _gameManager.Bets.First(x => x.Key == id).Value, true);
 
                     if (CalculateValue(Players[ id ].Cards) == 21 && Players[ id ].Cards.Count == 2)
                     {
@@ -457,7 +457,7 @@ namespace TEC_KasinoAPI.Games
                     continue;
 
                 string connectionID = Players.First(x => x.Value.CustomerID == player.CustomerID).Key;
-                BalanceRequest request = new(player.CustomerID, _gameManager.Bets.First(x => x.Key == connectionID).Value);
+                BalanceRequest request = new(player.CustomerID, _gameManager.Bets.First(x => x.Key == connectionID).Value, true);
 
                 _gameManager.Bets[ connectionID ] = 0;
 

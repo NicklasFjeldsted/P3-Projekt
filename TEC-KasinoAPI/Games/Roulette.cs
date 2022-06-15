@@ -116,9 +116,10 @@ namespace TEC_KasinoAPI.Games
 
                     foreach (var betData in pair.Value)
                     {
-                        if (betData.number == winningNumber)
+                        double outcome = GetOdds(betData, winningNumber);
+                        if(outcome > 0)
                         {
-                            winnings += betData.betAmount * betData.odds;
+                            winnings += outcome;
                         }
                         else
                         {
@@ -128,15 +129,15 @@ namespace TEC_KasinoAPI.Games
 
                     difference = winnings - loses;
 
-                    if(difference != 0)
-                    {
-                        await hubContext.Clients.Client(pair.Key).SendAsync("Show_Result", JsonConvert.SerializeObject(difference));
-                    }
+                    Debug.WriteLine($"\nWin: {winnings}\nLose: {loses}\nDiff: {difference}\n");
+
+                    await hubContext.Clients.Client(pair.Key).SendAsync("Show_Result", JsonConvert.SerializeObject(difference));
 
                     if(winnings > 0)
                     {
                         BalanceRequest request = new BalanceRequest();
                         request.CustomerID = Players[ pair.Key ].CustomerID;
+                        request.IsInternal = true;
 
                         request.Amount = winnings;
 
@@ -147,6 +148,7 @@ namespace TEC_KasinoAPI.Games
                     {
                         BalanceRequest request = new BalanceRequest();
                         request.CustomerID = Players[ pair.Key ].CustomerID;
+                        request.IsInternal = true;
 
                         request.Amount = loses;
 
@@ -158,15 +160,132 @@ namespace TEC_KasinoAPI.Games
                 }
             }
         }
-    }
 
-    public struct Odds
-    {
-        public const double Straight = 14;
-        public const double Green = 31;
-        public const double Row = 2;
-        public const double Column = 1.5;
-        public const double RedBlack = 1;
-        public const double OddEven = 1;
+        private double GetOdds(BetData data, int winningNumber)
+        {
+            double output = 0;
+            switch (data.betType)
+            {
+                case BetType.Row1:
+                for (int i = 3; i < 37; i += 3)
+                {
+                    if (winningNumber == i)
+                    {
+                        output += data.betAmount * Odds.Row;
+                        Debug.WriteLine("\nWin on Row1 - " + output);
+                    }
+                }
+                break;
+
+                case BetType.Row2:
+                for (int i = 2; i < 36; i += 3)
+                {
+                    if (winningNumber == i)
+                    {
+                        output += data.betAmount * Odds.Row;
+                        Debug.WriteLine("\nWin on Row2 - " + output);
+                    }
+                }
+                break;
+
+                case BetType.Row3:
+                for (int i = 1; i < 35; i += 3)
+                {
+                    if (winningNumber == i)
+                    {
+                        output += data.betAmount * Odds.Row;
+                        Debug.WriteLine("\nWin on Row3 - " + output);
+                    }
+                }
+                break;
+
+                case BetType.Column1:
+                if(winningNumber > 0 && winningNumber < 13)
+                {
+                    output += data.betAmount * Odds.Column;
+                    Debug.WriteLine("\nWin on Column1 - " + output);
+                }
+                break;
+
+                case BetType.Column2:
+                if (winningNumber > 12 && winningNumber < 25)
+                {
+                    output += data.betAmount * Odds.Column;
+                    Debug.WriteLine("\nWin on Column2 - " + output);
+                }
+                break;
+
+                case BetType.Column3:
+                if (winningNumber > 24 && winningNumber < 37)
+                {
+                    output += data.betAmount * Odds.Column;
+                    Debug.WriteLine("\nWin on Column3 - " + output);
+                }
+                break;
+
+                case BetType.Even:
+                if (winningNumber % 2 == 0)
+                {
+                    output += data.betAmount * Odds.OddEven;
+                    Debug.WriteLine("\nWin on Even - " + output);
+                }
+                break;
+
+                case BetType.Odd:
+                if(winningNumber % 2 == 1)
+                {
+                    output += data.betAmount * Odds.OddEven;
+                    Debug.WriteLine("\nWin on Odd - " + output);
+                }
+                break;
+
+                case BetType.Straight:
+                if(winningNumber == data.number)
+                {
+                    output += data.betAmount * Odds.Straight;
+                    Debug.WriteLine("\nWin on Straight - " + output);
+                }
+                break;
+
+                case BetType.High:
+                if(winningNumber > 18 && winningNumber < 37)
+                {
+                    output += data.betAmount * Odds.HighLow;
+                    Debug.WriteLine("\nWin on High - " + output);
+                }
+                break;
+
+                case BetType.Low:
+                if (winningNumber > 0 && winningNumber < 19)
+                {
+                    output += data.betAmount * Odds.HighLow;
+                    Debug.WriteLine("\nWin on Low - " + output);
+                }
+                break;
+
+                case BetType.Black:
+                if(winningNumber != 0)
+                {
+                    if(winningNumber % 2 == 0)
+                    {
+                        output += data.betAmount * Odds.RedBlack;
+                        Debug.WriteLine("\nWin on Black - " + output);
+                    }
+                }
+                break;       
+                
+                case BetType.Red:
+                if(winningNumber % 2 == 1)
+                {
+                    if(data.color == TileColors.Red)
+                    {
+                        output += data.betAmount * Odds.RedBlack;
+                        Debug.WriteLine("\nWin on Red - " + output);
+                    }
+                }
+                break;
+            }
+            return output;
+        }
     }
 }

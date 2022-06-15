@@ -5,20 +5,20 @@
   <div class="form-body">
     <div *ngIf="submitted && !form.touched" id="error">Indtast en gyldig e-mail og adgangskode</div>
     <div class="input-group">
-        <input type="email" email formControlName="email" placeholder="E-mail" [ngClass]="{'is-valid': !f['email'].errors && f['email'].touched}">
-        <i class="fa fa-envelope"></i>
+      <input type="email" email formControlName="email" placeholder="E-mail" [ngClass]="{'is-valid': !f['email'].errors && f['email'].touched}">
+      <i class="fa fa-envelope"></i>
     </div>
     <div class="input-group">
       <input [type]="show ? 'text' : 'password'" formControlName="password" placeholder="Adgangskode" [ngClass]="{'is-valid': !f['password'].errors && f['password'].touched}">
       <button type="button" id="show-pass" (click)="togglePassword()">Vis</button>
       <i class="fa fa-lock"></i>
     </div>
-  <div class="submit-container">
-    <button type="submit" [disabled]="form.invalid">Log ind</button>
-    <div class="form-links">
-      <a routerLink="/kontakt">Glemt adgangskode?</a>
-      <a routerLink="/tilmeld">Opret konto</a>
+    <div class="submit-container">
+      <button type="submit" [disabled]="form.invalid">Log ind</button>
+      <div class="form-links">
+        <a routerLink="/kontakt">Glemt adgangskode?</a>
+        <a routerLink="/tilmeld">Opret konto</a>
+      </div>
     </div>
   </div>
-</div>
 </form>

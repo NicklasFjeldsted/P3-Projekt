@@ -1,10 +1,12 @@
-.main-container {
+.main-container 
+{
   padding: 16px;
   background-color: #e8f4f8;
   min-height: calc(100vh - calc(100vh * 0.15));
 }
 
-.dashboard {
+.dashboard 
+{
   max-width: 100%;
   height: auto;
   background-color: #6e8292;
@@ -16,42 +18,49 @@
   border-bottom: none;
 }
 
-.dashboard-title {
+.dashboard-title 
+{
   font-size: 2em;
   padding: 1em 0.5em;
   color: #fff;
 }
 
-.dashboard-subtitle {
+.dashboard-subtitle 
+{
   color: #c7cccf;
   font-size: 1em;
 }
 
-.table-container {
+.table-container 
+{
   border: 1px solid #dfe5e9;
   border-collapse: collapse;
   padding: 1em;
   background-color: #fff;
 }
 
-.search-container {
+.search-container 
+{
   width: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.searchbar {
+.searchbar 
+{
   display: flex;
   align-items: center;
   position: relative;
 }
 
-.searchbar > input {
+.searchbar > input 
+{
   padding: 5% 5% 5% 20%;
   outline: none;
 }
 
-.searchbar > i {
+.searchbar > i 
+{
   position: absolute;
   left: 5%;
   font-size: 1.1em;
@@ -59,49 +68,58 @@
 }
 
 .header-id,
-.column-id {
+.column-id 
+{
   flex: 0.5;
 }
 
-.actions {
+.actions 
+{
   display: flex;
   flex-direction: row;
   gap: 0.5em;
   padding-left: 0.5em;
 }
 
-.actions > button {
+.actions > button 
+{
   padding: 0.5em;
   border-radius: 5px;
   outline: none;
   transition: all 0.05s;
 }
 
-.actions > button:hover {
+.actions > button:hover 
+{
   transform: scale(1.1);
   cursor: pointer;
 }
 
-.actions > button > i {
+.actions > button > i 
+{
   font-size: 1.5em;
 }
 
-.actions > button:nth-child(1) {
+.actions > button:nth-child(1) 
+{
   background-color: #84f289;
   border: 1px solid #84f289;
 }
 
-.actions > button:nth-child(2) {
+.actions > button:nth-child(2) 
+{
   background-color: #fe5722;
   border: 1px solid #fe5722;
 }
 
-.actions > button:nth-child(3) {
+.actions > button:nth-child(3) 
+{
   background-color: #f08080;
   border: 1px solid #f08080;
 }
 
-.actions > button:nth-child(4) {
+.actions > button:nth-child(4) 
+{
   background-color: #6495ed;
   border: 1px solid #6495ed;
 }

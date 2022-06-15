@@ -2,6 +2,7 @@
   <div class="header-container">
     <div id="header">Edit user account</div>
   </div>
+
   <div class="content" id="information">
     <div class="customer-information">
       <form class="basic-information" [formGroup]="customerForm">
@@ -9,6 +10,7 @@
           <label for="input">Customer ID</label>
           <input style="width: 5%; text-align: center" class="noChange" id="input" type="text" readonly formControlName="customerID" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['email'].errors" class="invalid-feedback">
             <div *ngIf="f['email'].errors">Email is not valid</div>
@@ -16,6 +18,7 @@
           <label for="input">E-mail</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['email'].dirty != true }" formControlName="email" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['firstName'].errors" class="invalid-feedback">
             <div *ngIf="f['firstName'].errors">First name is not valid</div>
@@ -23,6 +26,7 @@
           <label for="input">First Name</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['firstName'].dirty != true }" formControlName="firstName" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['lastName'].errors" class="invalid-feedback">
             <div *ngIf="f['lastName'].errors">Last name is not valid</div>
@@ -30,6 +34,7 @@
           <label for="input">Last Name</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['lastName'].dirty != true }" formControlName="lastName" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['phoneNumber'].errors" class="invalid-feedback">
             <div *ngIf="f['phoneNumber'].errors">Phonenumber is not valid</div>
@@ -38,6 +43,7 @@
           <input id="input" type="text" [ngClass]="{ noChange: f['phoneNumber'].dirty != true }" formControlName="phoneNumber" />
         </div>
       </form>
+
       <form class="advanced-information" [formGroup]="customerForm">
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['address'].errors" class="invalid-feedback">
@@ -46,6 +52,7 @@
           <label for="input">Address</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['address'].dirty != true }" formControlName="address" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['countryID'].errors" class="invalid-feedback">
             <div *ngIf="f['countryID'].errors">Country is not valid</div>
@@ -53,6 +60,7 @@
           <label for="input">Country</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['countryID'].dirty != true }" formControlName="countryID" />
         </div>
+
         <div class="info-group">
           <div *ngIf="hasSubmitted && f['zipCodeID'].errors" class="invalid-feedback">
             <div *ngIf="f['zipCodeID'].errors">Zipcode is not valid</div>
@@ -60,6 +68,7 @@
           <label for="input">Zipcode</label>
           <input id="input" type="text" [ngClass]="{ noChange: f['zipCodeID'].dirty != true }" formControlName="zipCodeID" />
         </div>
+
         <div class="info-group">
           <label for="input">Gender</label>
           <select [ngClass]="{ noChange: f['genderID'].dirty != true }" formControlName="genderID">
@@ -71,12 +80,14 @@
             <div *ngIf="f['genderID'].errors">Gender is not valid</div>
           </div>
         </div>
+
         <div class="info-group">
           <label for="input">Register Date</label>
           <input id="input" class="noChange" type="text" readonly formControlName="registerDate" />
         </div>
       </form>
     </div>
+    
     <div class="save-container">
       <div class="button-container">
         <button id="reset" [disabled]="!customerForm.dirty" (click)="assignForm()">Reset</button>

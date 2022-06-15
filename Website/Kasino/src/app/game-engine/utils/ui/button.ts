@@ -12,8 +12,8 @@ export class Button extends Rendering
 {
 	private m_collider: ColliderComponent;
 	private m_rectTransform: RectTransform;
-	private m_buttonShape: Shape;
 	private m_text: TextComponent;
+	public ButtonShape: Shape;
 	
 	public text: string;
 	public isPressed: boolean;
@@ -32,7 +32,7 @@ export class Button extends Rendering
 		super();
 		this.m_MouseDownSubject = new Subject<void>();
 		this.OnMouseDown = this.m_MouseDownSubject.asObservable();
-		this.m_buttonShape = new Shape();
+		this.ButtonShape = new Shape();
 	}
 
 	private _awoken: boolean = false;
@@ -55,9 +55,9 @@ export class Button extends Rendering
 		this.gameObject.transform.scale = this.m_initialScale;
 		this.gameObject.transform.Translate(this.m_initialPosition);
 
-		this.m_buttonShape.shadow = true;
-		this.m_buttonShape.blur = 5;
-		this.m_buttonShape.shadowOffset = new Vector2(0, 2);
+		this.ButtonShape.shadow = true;
+		this.ButtonShape.blur = 5;
+		this.ButtonShape.shadowOffset = new Vector2(0, 2);
 
 		this.gameObject.game.Input.OnMouseDown.subscribe((point: Vector2) => this.MouseDown(point));
 		this.gameObject.game.Input.OnMouseUp.subscribe((point: Vector2) => this.MouseUp(point));
@@ -73,12 +73,12 @@ export class Button extends Rendering
 		if (this.isPressed)
 		{
 			this.m_fillColor = Color.Lerp(this.m_fillColor, this.pressedColor, this.pressAnimationSpeed);
-			this.m_buttonShape.fillColor = this.m_fillColor;
+			this.ButtonShape.fillColor = this.m_fillColor;
 		}
 		else
 		{
 			this.m_fillColor = Color.Lerp(this.m_fillColor, this.color, this.pressAnimationSpeed);
-			this.m_buttonShape.fillColor = this.m_fillColor;
+			this.ButtonShape.fillColor = this.m_fillColor;
 		}
 
 		this.m_text.text = this.text;
@@ -105,19 +105,19 @@ export class Button extends Rendering
 			return;
 		}
 
-		CanvasLayer.GetLayer(this.layer).ExtendedRect(this.m_rectTransform.start, this.m_rectTransform.size, this.m_buttonShape);
+		CanvasLayer.GetLayer(this.layer).ExtendedRect(this.m_rectTransform.start, this.m_rectTransform.size, this.ButtonShape);
 	}
 
 	Clear(): void
 	{
 		let start = new Vector2(
-			this.m_rectTransform.start.x - this.m_buttonShape.shadowOffset.x - this.m_buttonShape.blur,
-			this.m_rectTransform.start.y - this.m_buttonShape.shadowOffset.y - this.m_buttonShape.blur
+			this.m_rectTransform.start.x - this.ButtonShape.shadowOffset.x - this.ButtonShape.blur,
+			this.m_rectTransform.start.y - this.ButtonShape.shadowOffset.y - this.ButtonShape.blur
 		);
 		
 		let size = new Vector2(
-			this.m_rectTransform.size.x + this.m_buttonShape.shadowOffset.x + this.m_buttonShape.blur * 3,
-			this.m_rectTransform.size.y + this.m_buttonShape.shadowOffset.y + this.m_buttonShape.blur * 3
+			this.m_rectTransform.size.x + this.ButtonShape.shadowOffset.x + this.ButtonShape.blur * 3,
+			this.m_rectTransform.size.y + this.ButtonShape.shadowOffset.y + this.ButtonShape.blur * 3
 		);
 
 		CanvasLayer.GetLayer(this.layer).ClearRect(start, size);

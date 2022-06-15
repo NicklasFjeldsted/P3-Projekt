@@ -1,4 +1,5 @@
 import { Color, GameObject, Mathf, MonoBehaviour, NetworkingFeature, Shape, ShapeRendererComponent, TextComponent, Vector2 } from "src/app/game-engine";
+import { BetData, BetType, TileColors, TileData } from "./tileData";
 
 export class Tile extends MonoBehaviour
 {
@@ -51,7 +52,7 @@ export class Tile extends MonoBehaviour
 				break;
 		}
 	}
-	
+
 	public Update(deltaTime: number): void
 	{
 		
@@ -69,14 +70,7 @@ export class Tile extends MonoBehaviour
 			this.tileShape.outline = true;
 			this.textComponent.shadow = false;
 			this.textComponent.color = this.betColor;
-			if (this.data.color == TileColors.Green)
-			{
-				this.gameObject.game.GetFeature(NetworkingFeature).SendData("Update_Bet_Data", JSON.stringify(new BetData(this.data, 31)));
-			}
-			else
-			{
-				this.gameObject.game.GetFeature(NetworkingFeature).SendData("Update_Bet_Data", JSON.stringify(new BetData(this.data, 14)));
-			}
+			this.gameObject.game.GetFeature(NetworkingFeature).SendData("Update_Bet_Data", JSON.stringify(new BetData(this.data, BetType.Straight)));
 		}
 		else
 		{
@@ -84,14 +78,7 @@ export class Tile extends MonoBehaviour
 			this.textComponent.color = new Color(255, 255, 255);
 			this.textComponent.shadow = true;
 			this.tileShape.outline = false;
-			if (this.data.color == TileColors.Green)
-			{
-				this.gameObject.game.GetFeature(NetworkingFeature).SendData("Remove_Bet_Data", JSON.stringify(new BetData(this.data, 31)));
-			}
-			else
-			{
-				this.gameObject.game.GetFeature(NetworkingFeature).SendData("Remove_Bet_Data", JSON.stringify(new BetData(this.data, 14)));
-			}
+			this.gameObject.game.GetFeature(NetworkingFeature).SendData("Remove_Bet_Data", JSON.stringify(new BetData(this.data, BetType.Straight)));
 		}
 	}
 	
@@ -102,35 +89,5 @@ export class Tile extends MonoBehaviour
 		this.textComponent.color = new Color(255, 255, 255);
 		this.textComponent.shadow = true;
 		this.tileShape.outline = false;
-	}
-}
-
-export class TileData
-{
-	public color: TileColors;
-	public number: number = -1;
-	public betAmount: number = 0;
-}
-
-export enum TileColors
-{
-	Red,
-	Black,
-	Green
-}
-
-export class BetData
-{
-	public color: TileColors;
-	public number: number = -1;
-	public betAmount: number = 0;
-	public odds: number = 0;
-
-	constructor(tileData: TileData, i_odds: number)
-	{
-		this.betAmount = tileData.betAmount;
-		this.number = tileData.number;
-		this.color = tileData.color;
-		this.odds = i_odds;
 	}
 }

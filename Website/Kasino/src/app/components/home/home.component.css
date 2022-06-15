@@ -1,14 +1,17 @@
-.active {
+.active 
+{
   color: #fff;
 }
 
-img {
+img 
+{
   max-width: 100%;
   height: auto;
   border-radius: 3px;
 }
 
-.announcer-container {
+.announcer-container 
+{
   width: 100%;
   aspect-ratio: 16 / 3;
   background-image: url("../../../assets/media/kasino-banner.png");
@@ -17,7 +20,8 @@ img {
   background-position: center;
 }
 
-.game-container {
+.game-container 
+{
   position: relative;
   max-width: 100%;
   overflow: hidden;
@@ -27,25 +31,29 @@ img {
 
 /* Navbar section */
 
-nav {
+nav 
+{
   max-width: 100%;
   height: auto;
   color: #bdbdbd;
 }
 
-.wrapper {
+.wrapper 
+{
   position: relative;
   max-width: 100%;
 }
 
-.nav-wrapper {
+.nav-wrapper 
+{
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden;
   margin-inline: auto;
 }
 
-ul {
+ul 
+{
   min-width: 100%;
   margin: 0;
   display: inline-block;
@@ -56,7 +64,8 @@ ul {
   background: #262627;
 }
 
-li {
+li 
+{
   position: relative;
   font-size: 0.875rem;
   display: inline-block;
@@ -65,7 +74,8 @@ li {
   transition: color 0.25s ease-in-out;
 }
 
-li.active::before {
+li.active::before 
+{
   position: absolute;
   bottom: 7px;
   left: 50%;
@@ -78,7 +88,8 @@ li.active::before {
   transform: translate(-50%);
 }
 
-li:hover {
+li:hover 
+{
   cursor: pointer;
   color: #fff;
 }
@@ -86,7 +97,8 @@ li:hover {
 /* Grid section */
 
 .featured-section,
-.casino-game-section {
+.casino-game-section 
+{
   max-width: 1600px;
   height: auto;
   margin: 0 auto;
@@ -100,26 +112,30 @@ li:hover {
   grid-gap: 1em;
 }
 
-.casino-game-grid {
+.casino-game-grid 
+{
   padding: 0 1em 1em 1em;
 }
 
 .casino-game,
-.featured-game {
+.featured-game 
+{
   display: flex;
   position: relative;
 }
 
 /* Promotion slider section*/
 
-.featured-game-grid > .promotion {
+.featured-game-grid > .promotion 
+{
   grid-column: span 3 / auto;
   grid-row: span 2 / auto;
   position: relative;
   overflow: hidden;
 }
 
-.promotion-text {
+.promotion-text 
+{
   position: absolute;
   bottom: 0;
   left: 0;
@@ -129,30 +145,35 @@ li:hover {
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 1%, rgba(0, 0, 0, 0.75) 15%, rgba(0, 0, 0, 0.4) 66%, transparent);
 }
 
-.promotion > img {
+.promotion > img 
+{
   height: 100%;
 }
 
-.promotion-text > .title {
+.promotion-text > .title 
+{
   font-size: 21px;
   font-weight: 500;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   line-height: 1.2;
 }
 
-.promotion-text > .subtitle {
+.promotion-text > .subtitle 
+{
   font-size: 16px;
   font-weight: 300;
   text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
   line-height: 1.2;
 }
 
-.promotion-text > .footer {
+.promotion-text > .footer 
+{
   display: flex;
   align-items: flex-end;
 }
 
-.footer-button {
+.footer-button 
+{
   margin-top: 8px;
   padding: 8px 1pc;
   font-size: 13px;
@@ -168,18 +189,21 @@ li:hover {
   transition: all 0.3s ease 0s;
 }
 
-.footer-button:hover {
+.footer-button:hover 
+{
   background-color: #eb9b72;
 }
 
-.footer-text {
+.footer-text 
+{
   font-size: 10px;
   padding-left: 8px;
 }
 
 /* Overlay section */
 
-.overlay {
+.overlay 
+{
   position: absolute;
   right: 0;
   top: 100%;
@@ -195,17 +219,20 @@ li:hover {
 }
 
 .featured-game:hover > .overlay,
-.casino-game:hover > .overlay {
+.casino-game:hover > .overlay 
+{
   top: 0;
   height: 100%;
   cursor: pointer;
 }
 
-.overlay > i {
+.overlay > i 
+{
   font-size: 4.5em;
 }
 
-.play-icon {
+.play-icon 
+{
   color: #dcdcdc;
   position: absolute;
   top: 50%;
@@ -214,7 +241,8 @@ li:hover {
   text-align: center;
 }
 
-.overlay > .play-icon:hover {
+.overlay > .play-icon:hover 
+{
   transform: translate(-50%, -50%) scale(1.1);
   color: #fff;
   transition: all ease-in;
@@ -222,26 +250,31 @@ li:hover {
 
 /* Not-released section */
 
-.not-released:hover > .overlay {
+.not-released:hover > .overlay 
+{
   cursor: not-allowed;
 }
 
-.not-released > .overlay > i:hover {
+.not-released > .overlay > i:hover 
+{
   transform: translate(-50%, -50%) scale(1);
   color: #dcdcdc;
 }
 
-.casino-game-grid > .not-released {
+.casino-game-grid > .not-released 
+{
   border: 1px solid black;
 }
 
-.overlay-text {
+.overlay-text 
+{
   color: white;
   font-size: 26px;
   font-weight: 500;
 }
 
-.sticky-navbar {
+.sticky-navbar 
+{
   position: fixed;
   top: 10vh;
   z-index: 1;
@@ -249,7 +282,8 @@ li:hover {
 
 /* Media queries */
 
-@media (max-width: 1200px) {
+@media (max-width: 1200px) 
+{
   .featured-game-grid,
   .casino-game-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -261,36 +295,45 @@ li:hover {
   }
 }
 
-@media (max-width: 960px) {
+@media (max-width: 960px) 
+{
   .featured-game-grid,
-  .casino-game-grid {
+  .casino-game-grid 
+  {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 768px) 
+{
   .featured-game-grid,
-  .casino-game-grid {
+  .casino-game-grid 
+  {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .featured-game-grid > .promotion {
+  .featured-game-grid > .promotion 
+  {
     grid-column: span 2;
     grid-row: span 2;
   }
 
-  .promotion-text > .title {
+  .promotion-text > .title 
+  {
     font-size: 16px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 480px) 
+{
   .featured-game-grid,
-  .casino-game-grid {
+  .casino-game-grid 
+  {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .featured-game-grid > .promotion {
+  .featured-game-grid > .promotion 
+  {
     grid-column: span 2;
     grid-row: span 1;
   }
@@ -299,20 +342,23 @@ li:hover {
 /* Slideshow --- */
 
 /* Style each of the sides with a fixed width and height */
-.slide {
+.slide 
+{
   float: left;
   width: 25%;
   position: relative;
 }
 
-.slide > div {
+.slide > div
+{
   position: absolute;
   left: 0;
   bottom: 0;
 }
 
 /* Add animation to the slides */
-.slide-wrapper {
+.slide-wrapper 
+{
   /* Calculate the total width on the basis of number of slides */
   width: calc(100% * 4);
 
@@ -321,38 +367,47 @@ li:hover {
 }
 
 /* Set the background color of each of the slides */
-.slide:nth-child(1) {
+.slide:nth-child(1) 
+{
   background: green;
 }
 
-.slide:nth-child(2) {
+.slide:nth-child(2) 
+{
   background: green;
 }
 
-.slide:nth-child(3) {
+.slide:nth-child(3) 
+{
   background: green;
 }
 
-.slide:nth-child(4) {
+.slide:nth-child(4) 
+{
   background: green;
 }
 
 /* Define the animation for the slideshow */
-@keyframes slide {
+@keyframes slide 
+{
   /* Calculate the margin-left for each of the slides */
-  20% {
+  20% 
+  {
     margin-left: 0px;
   }
 
-  40% {
+  40% 
+  {
     margin-left: calc(-100% * 1);
   }
 
-  60% {
+  60% 
+  {
     margin-left: calc(-100% * 2);
   }
 
-  80% {
+  80% 
+  {
     margin-left: calc(-100% * 3);
   }
 }
