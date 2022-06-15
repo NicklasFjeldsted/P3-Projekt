@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from "@angular/animations";
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, Inject, OnInit, ViewChild } from "@angular/core";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
@@ -37,25 +38,40 @@ export class EditBalanceComponent implements OnInit {
   isOpen: boolean = true;
   customerID: number;
 
-  customerBalance: Balance;
+  customerBalance: Balance | undefined;
+  form: FormGroup;
 
-  displayedColumns: string[] = ["transaction-id", "date", "amount", "balance"];
+  newBalance: number;
+
+  displayedColumns: string[] = ["transaction-id", "date", "amount", "current-balance", "isInternal"];
   dataSource: MatTableDataSource<Transaction>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private dialogRef: DialogRef,
     @Inject(DIALOG_DATA) public data: number,
     private balanceService: BalanceService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private fb: FormBuilder
   ) {
     this.customerID = data;
   }
 
   ngOnInit() {
     this.getUserTransactions();
+    this.getUserBalance();
+
+    this.form = this.fb.group({
+      balanceInput: new FormControl(null, Validators.required),
+    });
+    var height = document.getElementById("action-panel")!.offsetHeight;
+    document.getElementById("action-panel");
+  }
+
+  getNewBalance(): void {
+    this.newBalance = this.form.controls["balanceInput"].value + this.customerBalance?.balance;
   }
 
   // Gets user balance from database
@@ -63,6 +79,7 @@ export class EditBalanceComponent implements OnInit {
     this.balanceService.getUserBalance(this.customerID).subscribe({
       next: (customer) => {
         this.customerBalance = customer;
+        this.getNewBalance();
       },
       error: (error) => {
         console.log("Something went wrong! " + error);
@@ -75,6 +92,7 @@ export class EditBalanceComponent implements OnInit {
     this.transactionService.getAllById(this.customerID).subscribe({
       next: (transactions) => {
         this.dataSource = new MatTableDataSource<Transaction>(transactions);
+        this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },
@@ -93,5 +111,34 @@ export class EditBalanceComponent implements OnInit {
   close(): void {
     this.isOpen = false;
     this.dialogRef.close();
+  }
+
+  numberOnly(event: any): boolean {
+    const charCode = event.which ? event.which : event.keyCode;
+    if (charCode != 45 && charCode != 46 && charCode != 189 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+  }
+
+  onSubmit(): void {
+    var value = this.form.controls["balanceInput"].value.toString();
+    if (!value.includes("-")) {
+      this.balanceService.addBalance(parseInt(value), true).subscribe({
+        next: () => {
+          console.log("Added balance!");
+        },
+      });
+    } else {
+      value = value.split("-").join("");
+      this.balanceService.subtractBalance(parseInt(value), true).subscribe({
+        next: () => {
+          console.log("Removed balance!");
+        },
+      });
+    }
+    setTimeout(() => {
+      this.getUserTransactions();
+    }, 1000);
   }
 }

@@ -26,13 +26,13 @@ export class BalanceService {
 
   private id: number = -1;
 
-  public addBalance(money: number): Observable<any> {
-    this.balance = { customerID: this.id, amount: money, isInternal: false };
+  public addBalance(money: number, IsInternal?: boolean): Observable<any> {
+    this.balance = { customerID: this.id, amount: money, isInternal: IsInternal == null ? false : IsInternal };
     return this.http.put<any>(`${environment.apiURL}/balance/add-balance`, this.balance, { withCredentials: true });
   }
 
-  public subtractBalance(money: number): Observable<any> {
-    this.balance = { customerID: this.id, amount: money, isInternal: false };
+  public subtractBalance(money: number, IsInternal?: boolean): Observable<any> {
+    this.balance = { customerID: this.id, amount: money, isInternal: IsInternal == null ? false : IsInternal };
     return this.http.put<any>(`${environment.apiURL}/balance/subtract-balance`, this.balance, { withCredentials: true });
   }
 
