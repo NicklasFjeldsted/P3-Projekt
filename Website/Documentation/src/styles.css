@@ -1,0 +1,33 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+:root {
+  font-size: 12px;
+}
+
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
+body {
+  background-color: #303030;
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+}
+
+@media (min-width: 1200px) {
+  :root {
+    font-size: 16px;
+  }
+}

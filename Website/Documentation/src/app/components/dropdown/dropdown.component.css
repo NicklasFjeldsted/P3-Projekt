@@ -1,0 +1,46 @@
+:host {
+  transition: all 0.1s ease;
+  color: #fafafa;
+  background-color: transparent;
+}
+
+:host:hover {
+  color: #bae0ff;
+  text-shadow: 0 0 5px #0a1014;
+  background-color: #444;
+}
+
+.dropdown-button {
+  width: 100%;
+  background-color: inherit;
+  text-align: left;
+  font-size: 24px;
+  color: inherit;
+  display: block;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 0;
+}
+
+.dropdown-button > i {
+  float: right;
+  color: inherit;
+  transform: rotate(180deg);
+  padding-bottom: 5px;
+}
+
+.dropdown-button.expanded > i {
+  transform: rotate(-90deg);
+  padding-right: 5px;
+}
+
+.dropdown-container {
+  display: none;
+}
+
+.expanded {
+  display: block;
+  background-color: #444;
+  color: #bae0ff;
+  text-shadow: 0 0 5px #0a1014;
+}

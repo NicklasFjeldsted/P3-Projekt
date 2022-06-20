@@ -1,0 +1,103 @@
+.header-wrapper {
+  display: flex;
+  flex-direction: row;
+  background-color: #0d47a1;
+  align-items: center;
+  gap: 1rem;
+  color: #fff;
+}
+
+p {
+  font-size: 2rem;
+  text-align: center;
+  display: none;
+}
+
+img {
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg)
+    brightness(104%) contrast(104%);
+  max-width: 10rem;
+  padding-bottom: 1rem;
+}
+
+button {
+  background-color: transparent;
+  transition: all 0.1s ease;
+  border-radius: 0.33rem;
+  padding: 0.75rem;
+  color: #fff;
+  display: none;
+}
+
+button:hover {
+  background-color: #ffffff16;
+}
+
+button.sidebar-btn {
+  padding: 2rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 0;
+  display: block;
+}
+
+button.sidebar-btn > svg {
+  width: 24px;
+  height: 24px;
+  font-weight: 500;
+}
+
+svg > path {
+  fill: #fff;
+}
+
+input {
+  border-radius: 1rem;
+  outline: none;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  border: none;
+  color: rgb(68, 68, 68);
+  margin-left: auto;
+  margin-right: 1rem;
+}
+
+.navbar-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-bottom: 6px;
+}
+
+.sidebar {
+  background-color: #333;
+  border-bottom: 1px solid #444444;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar > button {
+  color: #fafafa;
+  display: block;
+  padding: 1rem;
+  font-size: 1.5rem;
+  border-radius: 0;
+}
+
+.sidebar > button:hover {
+  color: #bae0ff;
+  text-shadow: 0 0 5px #0a1014;
+}
+
+.expanded {
+  display: block;
+}
+
+.expanded > i {
+  transform: rotate(90deg);
+}
+
+.dropdown-container {
+  display: none;
+}

@@ -1,0 +1,6 @@
+<button class="dropdown-button" (click)="toggleDropdown()" [id]="this.elementID">{{title}} <i class="fa-solid fa-less-than" *ngIf="dropdownElements!.length != 0"></i></button>
+<div class="dropdown-container" [id]="this.elementID">
+	<div *ngIf="typeOf(dropdownElements) instanceof DropdownElement" >
+		<dropdown *ngFor="let dropdownElement of dropdownElements" [title]="dropdownElement.title" [dropdownElements]="dropdownElement.content"></dropdown>
+	</div>
+</div>

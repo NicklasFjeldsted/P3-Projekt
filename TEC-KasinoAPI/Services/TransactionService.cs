@@ -33,6 +33,7 @@ namespace TEC_KasinoAPI.Services
                 Amount = model.Difference,
                 CurrentBalance = model.Balance,
                 TransactionDate = DateTime.Now,
+                IsInternal = model.IsInternal,
             });
 
             // Save the changes to the database
