@@ -127,6 +127,7 @@ export class EditBalanceComponent implements OnInit {
       this.balanceService.addBalance(parseInt(value), true).subscribe({
         next: () => {
           console.log("Added balance!");
+          alert("Transaction completed!");
         },
       });
     } else {
@@ -134,6 +135,7 @@ export class EditBalanceComponent implements OnInit {
       this.balanceService.subtractBalance(parseInt(value), true).subscribe({
         next: () => {
           console.log("Removed balance!");
+          alert("Transaction completed!");
         },
       });
     }

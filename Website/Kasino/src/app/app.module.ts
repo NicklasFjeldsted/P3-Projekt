@@ -34,6 +34,7 @@ import { AdministrationComponent } from "./components/administration/administrat
 import { EditUserComponent } from "./components/modals/action-modals/edit-user/edit-user.component";
 import { EditBalanceComponent } from "./components/modals/action-modals/edit-balance/edit-balance.component";
 import { DeactivateUserComponent } from "./components/modals/action-modals/deactivate-user/deactivate-user.component";
+import { HashLocationStrategy, LocationStrategy } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -76,6 +77,7 @@ import { DeactivateUserComponent } from "./components/modals/action-modals/deact
   providers: [
     { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService, DataService] },
     { provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptorInterceptor, multi: true },
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
   ],
   bootstrap: [AppComponent],
 })
