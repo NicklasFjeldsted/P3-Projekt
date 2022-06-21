@@ -1,19 +1,19 @@
-.input-field {
+.input-fieldarea {
 	display: flex;
 	flex-direction: column;
 }
 
-.input-field > * {
+.input-fieldarea > * {
 	font-size: 1.5rem;
 }
 
-.input-field > label {
+.input-fieldarea > label {
 	color: #fff;
 	margin-left: 1.5rem;
 }
 
-.input-field > input {
-	border-radius: 2rem;
+.input-fieldarea > textarea {
+	border-radius: 1rem;
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;

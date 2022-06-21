@@ -10,6 +10,7 @@ import { ArticleComponent } from './components/article/article.component';
 import { CreateArticleComponent } from './components/create-article/create-article.component';
 import { ArticleContentComponent } from './components/article-content/article-content.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
+import { InputFieldareaComponent } from './components/input-fieldarea/input-fieldarea.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { InputFieldComponent } from './components/input-field/input-field.compon
     ArticleComponent,
     CreateArticleComponent,
     ArticleContentComponent,
-    InputFieldComponent
+    InputFieldComponent,
+    InputFieldareaComponent
   ],
   imports: [
     BrowserModule,

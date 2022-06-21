@@ -4,3 +4,44 @@
 	flex-direction: column;
 	padding: 1rem;
 }
+
+.add-field-btn > i {
+	cursor: pointer;
+	font-size: 6rem;
+	color: #fff;
+	margin: 1rem;
+	border-radius: 100%;
+}
+
+.add-field-content {
+	display: none;
+	z-index: 1;
+	flex-direction: column;
+	gap: 1rem;
+	background-color: #444;
+	position: absolute;
+	border-radius: 1rem;
+	padding: 0.5rem;
+	transform: translate(25%, -100%);
+	box-shadow: black 0px 2px 5px;
+}
+
+.add-field-content > * {
+	color: #fff;
+	font-size: 2rem;
+	background-color: #222;
+	border-radius: 0.5rem;
+	padding: 1rem;
+}
+
+.add-field-btn:focus ~ .add-field-content {
+	display: flex;
+}
+
+.add-field-btn:focus > i {
+	color: rgb(175, 175, 175);
+}
+
+.add-field-content:active {
+	display: flex;
+}
