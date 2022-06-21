@@ -9,6 +9,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { ArticleComponent } from './components/article/article.component';
 import { CreateArticleComponent } from './components/create-article/create-article.component';
 import { ArticleContentComponent } from './components/article-content/article-content.component';
+import { InputFieldComponent } from './components/input-field/input-field.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ArticleContentComponent } from './components/article-content/article-co
     DropdownComponent,
     ArticleComponent,
     CreateArticleComponent,
-    ArticleContentComponent
+    ArticleContentComponent,
+    InputFieldComponent
   ],
   imports: [
     BrowserModule,

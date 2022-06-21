@@ -1,28 +1,14 @@
 <form id="create-form" onsubmit="return false">
-	<div class="input-field">
-		<label for="title">Title:</label>
-		<input type="text" name="title" placeholder="Enter Title..">
-	</div>
 
-	<div class="input-field">
-		<label for="author">Author:</label>
-		<input type="text" name="author" placeholder="Enter Author..">
-	</div>
+	<input-field name="title" type="text" label="Title" placeholder="Enter Title.."></input-field>
 
-	<div class="input-field">
-		<label for="date">Date:</label>
-		<input type="date" name="date">
-	</div>
+	<input-field name="author" type="text" label="Author" placeholder="Enter Author.."></input-field>
 
-	<div class="input-field">
-		<label for="category">Category:</label>
-		<input type="text" name="category" placeholder="Enter Category..">
-	</div>
+	<input-field name="date" type="date" label="Date"></input-field>
 
-	<div class="input-field">
-		<label for="tags">Tags:</label>
-		<input type="text" name="tags" placeholder="Enter Tags..">
-	</div>
+	<input-field name="category" type="text" label="Category" placeholder="Enter Category.."></input-field>
+
+	<input-field name="tags" type="text" label="Tags" placeholder="Enter Tags.."></input-field>
 
 	<div *ngFor="let i of num">
 		<div class="input-field">
