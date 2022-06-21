@@ -1,42 +1,75 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-
-export class DropdownElement {
-  constructor() {}
-
-  public title!: string;
-  public content!: DropdownElement[] | string;
-}
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrls: ['./dropdown.component.css'],
+  styleUrls: ['./dropdown.component.css']
 })
-export class DropdownComponent implements AfterViewInit {
-  constructor() {}
+export class DropdownComponent implements OnInit {
 
-  @Input() title: string = 'title';
-  @Input() dropdownElements: DropdownElement[] | string = [];
+	constructor(private router: Router) {}
 
-  private element!: HTMLElement;
+	@Input() data!: object;
+	@Output() onNavigate: EventEmitter<void> = new EventEmitter<void>();
 
-  public get elementID(): string {
-    return this.title.toLowerCase().replace(' ', '-');
-  }
+	public content: Map<string, any> = new Map<string, any>();
 
-  ngAfterViewInit(): void {
-    this.element = document.getElementById(this.elementID)!;
-  }
+	ngOnInit(): void
+	{
+		for (const entry of Object.entries(this.data))
+		{
+			this.content.set(entry[ 0 ], entry[ 1 ]);
+		}
+	}
 
-  public toggleDropdown(): void {
-    if (this.element.classList.contains('expanded')) {
-      this.element.classList.remove('expanded');
-    } else {
-      this.element.classList.add('expanded');
-    }
-  }
+	/**
+	 * Takes a string and makes into an id.
+	 * @param value string
+	 * @returns string
+	 */
+	public get_id(value: string): string
+	{
+		return value.toLowerCase().replace(' ', '-');
+	}
 
-  typeOf(value: any) {
-    return typeof value;
-  }
+	/**
+	 * Expands a dropdown menu.
+	 * @param elementID string
+	 */
+	public expand_dropdown(elementID: string): void
+	{
+		let buttonElement = document.getElementById(elementID)!;
+		let elements = document.getElementsByTagName('dropdown');
+
+		buttonElement.classList.contains('expanded') ? buttonElement.classList.remove('expanded') : buttonElement.classList.add('expanded');
+
+		for (let i = 0; i < elements.length; i++)
+		{
+			if (elements.item(i)!.id !== elementID) continue;
+
+			elements.item(i)!.classList.contains('expanded') ? elements.item(i)!.classList.remove('expanded') : elements.item(i)!.classList.add('expanded');
+			let el = <HTMLElement>elements.item(i)!;
+			el.style.paddingLeft = "2rem";
+		}
+	}
+
+	public open_article(article_path: string): void
+	{
+		this.router.navigate([ `/article` ], { queryParams: { title: article_path } });
+		this.onNavigate.emit();
+	}
+
+	/**
+	 * Returns the type of the value.
+	 * @param value any
+	 * @returns type in string format
+	 */
+	public type_of(value: any): "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
+	{
+		return typeof value;
+	}
+
+	public return_zero = () => 0;
 }

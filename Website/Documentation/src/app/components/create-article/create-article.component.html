@@ -1,0 +1,35 @@
+<form id="create-form" onsubmit="return false">
+	<div class="input-field">
+		<label for="title">Title:</label>
+		<input type="text" name="title" placeholder="Enter Title..">
+	</div>
+
+	<div class="input-field">
+		<label for="author">Author:</label>
+		<input type="text" name="author" placeholder="Enter Author..">
+	</div>
+
+	<div class="input-field">
+		<label for="date">Date:</label>
+		<input type="date" name="date">
+	</div>
+
+	<div class="input-field">
+		<label for="category">Category:</label>
+		<input type="text" name="category" placeholder="Enter Category..">
+	</div>
+
+	<div class="input-field">
+		<label for="tags">Tags:</label>
+		<input type="text" name="tags" placeholder="Enter Tags..">
+	</div>
+
+	<div *ngFor="let i of num">
+		<div class="input-field">
+			<label for="codeblock">Codeblock:</label>
+			<textarea type="text" name="codeblock" placeholder="Enter Code.."></textarea>
+		</div>
+	</div>
+
+	<button style="background-color: #fff; height: 6rem;" (click)="add_field(1)"><i class="fa-solid fa-plus"></i></button>
+</form>

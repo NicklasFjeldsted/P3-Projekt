@@ -1,0 +1,11 @@
+.title {
+	font-size: 4rem;
+	margin: 0 auto;
+	text-align: center;
+	color: #fff;
+}
+
+.article-content {
+	margin-top: 2rem;
+	padding: 0 2rem;
+}

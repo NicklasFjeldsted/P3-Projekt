@@ -1,0 +1,16 @@
+<p *ngIf="articleContent.header.text !== ''" class="article-header" [id]="get_id(articleContent.header.text)"
+	[ngStyle]="{'font-size.px': 36 - articleContent.header.header_level}">
+	{{articleContent.header.text}}
+</p>
+
+<p *ngIf="articleContent.textarea.text !== ''" class="article-textarea"
+	[ngStyle]="{
+			'font-size.px': articleContent.textarea.font_size,
+			'color': articleContent.textarea.color
+		}">
+	{{articleContent.textarea.text}}
+</p>
+
+<pre *ngIf="articleContent.codeblock.text !== ''">
+	<code [class]="'hljs language-' + articleContent.codeblock.language">{{articleContent.codeblock.text}}</code>
+</pre>

@@ -1,6 +1,16 @@
-<button class="dropdown-button" (click)="toggleDropdown()" [id]="this.elementID">{{title}} <i class="fa-solid fa-less-than" *ngIf="dropdownElements!.length != 0"></i></button>
-<div class="dropdown-container" [id]="this.elementID">
-	<div *ngIf="typeOf(dropdownElements) instanceof DropdownElement" >
-		<dropdown *ngFor="let dropdownElement of dropdownElements" [title]="dropdownElement.title" [dropdownElements]="dropdownElement.content"></dropdown>
-	</div>
+<div *ngFor="let element of content | keyvalue : return_zero" class="dropdown-wrapper">
+
+	<!-- Endpoint -->
+	<button *ngIf="type_of(element.value) === 'string'" class="dropdown-btn" (click)="open_article(element.value)" #btn [id]="get_id(element.key)" >
+		{{element.key}}
+	</button>
+
+	<!-- Nested -->
+	<button *ngIf="type_of(element.value) === 'object'" class="dropdown-btn" (click)="expand_dropdown(dropdown_btn.id)" #dropdown_btn [id]="get_id(element.key)" >
+		{{element.key}}
+		<i class="fa fa-arrow-right"></i>
+	</button>
+
+	<dropdown *ngIf="type_of(element.value) === 'object'" [id]="get_id(element.key)" [data]="element.value" (onNavigate)="onNavigate.emit()"></dropdown>
+
 </div>
