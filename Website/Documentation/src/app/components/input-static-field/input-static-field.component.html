@@ -1,0 +1,5 @@
+<div class="input-static-field">
+	<label for="text">{{label}}:</label>
+	<input ngModel #indexRef (change)="index_changed(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-field-display' : ''">
+	<input ngModel [type]="type" name="text" [placeholder]="placeholder">
+</div>

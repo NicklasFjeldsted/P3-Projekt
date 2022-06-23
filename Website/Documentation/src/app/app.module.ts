@@ -11,9 +11,9 @@ import { CreateArticleComponent } from './components/create-article/create-artic
 import { ArticleContentComponent } from './components/article-content/article-content.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { InputFieldareaComponent } from './components/input-fieldarea/input-fieldarea.component';
-import { ArticleContentCreatorComponent } from './components/article-content-creator/article-content-creator.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { InputStaticFieldComponent } from './components/input-static-field/input-static-field.component';
 
 @NgModule({
   declarations: [
@@ -26,15 +26,10 @@ import { FormsModule } from '@angular/forms';
     ArticleContentComponent,
     InputFieldComponent,
     InputFieldareaComponent,
-    ArticleContentCreatorComponent
+    InputStaticFieldComponent,
   ],
-  imports: [
-    BrowserModule,
-	AppRoutingModule,
-	  ReactiveFormsModule,
-	  FormsModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

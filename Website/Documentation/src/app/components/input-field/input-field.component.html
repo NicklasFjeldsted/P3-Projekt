@@ -1,5 +1,5 @@
-<div class="input-field">
-	<label [for]="name">{{label}}:</label>
-	<input #indexRef (change)="index_changed(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-field-static' : ''">
-	<input [type]="type" [name]="name" [placeholder]="placeholder" #inputRef="ngModel" ngModel>
+<div class="input-field" [ngModelGroup]="name">
+	<label for="text">{{label}}:</label>
+	<input ngModel #indexRef (change)="index_changed(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-field-static' : ''">
+	<input ngModel [type]="type" name="text" [placeholder]="placeholder">
 </div>

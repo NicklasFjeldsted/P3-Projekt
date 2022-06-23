@@ -30,7 +30,6 @@ export class ArticleComponent implements OnInit {
 
 	public load_data(title: string): void
 	{
-		this.article = articlesData.filter(x => x.title = title)[0];
 	}
 }
 

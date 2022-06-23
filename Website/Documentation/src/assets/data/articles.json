@@ -12,25 +12,25 @@
 		"content": [
 			{
 				"index": 0,
-				"header": {
-					"index": 0,
-					"text": "Hello World!",
-					"header_level": 0
-				},
-				"textarea": {
-					"index": 1,
-					"text": "This is a simple test of the article JSON formatting!",
-					"font_size": 16,
-					"font_style": "",
-					"color": "rgba(150, 150, 150, 1)",
-					"link": ""
-				},
-				"codeblock": {
-					"index": 2,
-					"text": "public class Hello \n{ \n\tprivate string World; \n}",
-					"font_size": 16,
-					"language": "cs"
-				}
+				"type": "header",
+				"text": "Hello World!",
+				"header_level": 0
+			},
+			{
+				"index": 1,
+				"type": "textarea",
+				"text": "This is a simple test of the article JSON formatting!",
+				"font_size": 16,
+				"font_style": "",
+				"color": "rgba(150, 150, 150, 1)",
+				"link": ""
+			},
+			{
+				"index": 2,
+				"type": "codeblock",
+				"text": "public class Hello \n{ \n\tprivate string World; \n}",
+				"font_size": 16,
+				"language": "cs"
 			}
 		]
 	}
