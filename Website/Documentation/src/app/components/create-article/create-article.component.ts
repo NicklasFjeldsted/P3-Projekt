@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-article',
@@ -11,8 +12,8 @@ export class CreateArticleComponent implements OnInit {
 
 	ngOnInit(): void { }
 
-	public submit_article(): void
+	public submit_article(form: NgForm): void
 	{
-
+		console.log(form.controls);
 	}
 }

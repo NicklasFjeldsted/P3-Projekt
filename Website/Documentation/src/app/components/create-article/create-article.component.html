@@ -1,14 +1,16 @@
-<form id="create-form" onsubmit="return false">
+<form id="create-form" #form="ngForm" (ngSubmit)="submit_article(form)">
 
-	<input-field name="title" type="text" label="Title" placeholder="Enter Title.."></input-field>
+	<button type="submit">Submit</button>
 
-	<input-field name="author" type="text" label="Author" placeholder="Enter Author.."></input-field>
+	<input-field name="title" type="text" label="Title" placeholder="Enter Title.." ngModel ngDefaultControl></input-field>
+
+	<input-field name="author" type="text" label="Author" placeholder="Enter Author.." ngModel ngDefaultControl></input-field>
 
 	<input-field name="date" type="date" label="Date"></input-field>
 
-	<input-field name="category" type="text" label="Category" placeholder="Enter Category.."></input-field>
+	<input-field name="category" type="text" label="Category" placeholder="Enter Category.." ngModel ngDefaultControl></input-field>
 
-	<input-field name="tags" type="text" label="Tags" placeholder="Enter Tags.."></input-field>
+	<input-field name="tags" type="text" label="Tags" placeholder="Enter Tags.." ngModel ngDefaultControl></input-field>
 
 	<hr>
 

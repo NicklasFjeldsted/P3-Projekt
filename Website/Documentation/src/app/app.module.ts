@@ -12,6 +12,8 @@ import { ArticleContentComponent } from './components/article-content/article-co
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { InputFieldareaComponent } from './components/input-fieldarea/input-fieldarea.component';
 import { ArticleContentCreatorComponent } from './components/article-content-creator/article-content-creator.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { ArticleContentCreatorComponent } from './components/article-content-cre
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+	AppRoutingModule,
+	  ReactiveFormsModule,
+	  FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

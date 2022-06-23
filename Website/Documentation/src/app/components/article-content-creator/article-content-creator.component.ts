@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { InputFieldComponent } from '../input-field/input-field.component';
 import { InputFieldareaComponent } from '../input-fieldarea/input-fieldarea.component';
 
