@@ -1,4 +1,5 @@
 <div class="input-fieldarea">
 	<label [for]="name">{{label}}:</label>
+	<input #indexRef (change)="change_index(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-fieldarea-static' : ''">
 	<textarea [name]="name" [placeholder]="placeholder"></textarea>
 </div>

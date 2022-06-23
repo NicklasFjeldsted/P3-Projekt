@@ -45,3 +45,9 @@
 .add-field-content:active {
 	display: flex;
 }
+
+.article-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}

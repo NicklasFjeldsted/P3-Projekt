@@ -14,6 +14,7 @@ export class ArticleContentComponent implements OnInit {
 
 	ngOnInit(): void
 	{
+
 	}
 
 	public get_id(value: string): string

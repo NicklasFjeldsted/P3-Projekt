@@ -25,8 +25,8 @@ export class ArticleComponent implements OnInit {
 				this.load_data(params[ 'title' ]);
 		});
 		setTimeout(() => hljs.highlightAll(), 0);
-	}
 
+	}
 
 	public load_data(title: string): void
 	{
@@ -34,36 +34,45 @@ export class ArticleComponent implements OnInit {
 	}
 }
 
-export interface Article {
+export interface Article
+{
 	title: string
 	author: string
 	date: string
 	category: string
 	tags: string[]
 	content: Content[]
-  }
+}
 
-  export interface Content {
+export interface Content
+{
+	index: number;
 	header: Header
 	textarea: Textarea
 	codeblock: Codeblock
-  }
+}
 
-  export interface Header {
+export interface Header
+{
+	index: number;
 	text: string
 	header_level: number
-  }
+}
 
-  export interface Textarea {
+export interface Textarea
+{
+	index: number;
 	text: string
 	font_size: number
 	font_style: string
 	color: string
 	link: string
-  }
+}
 
-  export interface Codeblock {
+export interface Codeblock
+{
+	index: number;
 	text: string
 	font_size: number
 	language: string
-  }
+}

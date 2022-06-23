@@ -1,5 +1,5 @@
 <p class="title">{{article.title}}</p>
 <hr>
 <div class="article-content">
-	<article-content *ngFor="let content of article.content" [articleContent]="content"></article-content>
+	<article-content *ngFor="let content of article.content" [articleContent]="content" [style]="'order:' + content.index + ';'"></article-content>
 </div>

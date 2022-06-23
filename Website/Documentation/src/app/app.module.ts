@@ -11,6 +11,7 @@ import { CreateArticleComponent } from './components/create-article/create-artic
 import { ArticleContentComponent } from './components/article-content/article-content.component';
 import { InputFieldComponent } from './components/input-field/input-field.component';
 import { InputFieldareaComponent } from './components/input-fieldarea/input-fieldarea.component';
+import { ArticleContentCreatorComponent } from './components/article-content-creator/article-content-creator.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { InputFieldareaComponent } from './components/input-fieldarea/input-fiel
     CreateArticleComponent,
     ArticleContentComponent,
     InputFieldComponent,
-    InputFieldareaComponent
+    InputFieldareaComponent,
+    ArticleContentCreatorComponent
   ],
   imports: [
     BrowserModule,

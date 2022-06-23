@@ -1,6 +1,7 @@
 .input-fieldarea {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 .input-fieldarea > * {
@@ -13,8 +14,28 @@
 }
 
 .input-fieldarea > textarea {
-	border-radius: 1rem;
+	border-radius: 0.5rem;
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;
+	resize: vertical;
+	min-height: 5rem;
+}
+
+.input-fieldarea > input {
+	border-radius: 2rem;
+	border: none;
+	padding: 0.5rem 0.5rem 0.5rem 1rem;
+	outline: none;
+}
+
+.input-fieldarea > #index {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 4.5rem;
+}
+
+.input-fieldarea-static {
+	display: none;
 }

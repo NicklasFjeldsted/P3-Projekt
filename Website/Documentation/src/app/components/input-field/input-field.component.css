@@ -1,6 +1,7 @@
 .input-field {
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 .input-field > * {
@@ -17,4 +18,15 @@
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;
+}
+
+.input-field > #index {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 4.5rem;
+}
+
+.input-field-static {
+	display: none;
 }
