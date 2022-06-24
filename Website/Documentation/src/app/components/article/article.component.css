@@ -1,13 +1,22 @@
 .title {
-	font-size: 4rem;
+	font-size: 3rem;
 	margin: 0 auto;
-	text-align: center;
-	color: #fff;
+	text-align: left;
+	color: #fafafa;
+	padding: 1rem .5rem;
+}
+
+.divider {
+	width: auto;
+	margin: 0 .5rem;
+	background-color: #444;
+	height: 1px;
+
 }
 
 .article-content {
 	margin-top: 2rem;
-	padding: 0 2rem;
+	padding: 0 1rem;
 	display: flex;
 	flex-direction: column;
 }
