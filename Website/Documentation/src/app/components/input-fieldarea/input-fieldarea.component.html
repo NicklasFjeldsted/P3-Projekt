@@ -1,5 +1,16 @@
 <div class="input-fieldarea" [ngModelGroup]="name">
 	<label for="text">{{label}}:</label>
-	<input ngModel #indexRef (change)="index_changed(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-fieldarea-static' : ''" >
+	<input
+		ngModel
+		#indexRef
+		[value]="index"
+		[placeholder]="index"
+		(change)="index_changed(indexRef.value)"
+		id="index"
+		type="number"
+		name="index"
+		[ngClass]="static ? 'input-fieldarea-static' : ''"
+	>
+
 	<textarea ngModel name="text" [placeholder]="placeholder"></textarea>
 </div>

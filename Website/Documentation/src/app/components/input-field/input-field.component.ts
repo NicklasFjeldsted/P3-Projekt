@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FieldType } from '../create-article/create-article.component';
 
 @Component({
   selector: 'input-field',
@@ -20,6 +21,7 @@ export class InputFieldComponent
 	@Input() label: string = "Empty Label";
 	@Input() static: boolean = true;
 	@Input() index: number = 0;
+	@Input() fieldType!: FieldType;
 	@Output() output: EventEmitter<number> = new EventEmitter<number>();
 
 

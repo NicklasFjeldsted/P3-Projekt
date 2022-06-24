@@ -15,9 +15,38 @@
 	<hr>
 
 	<div class="article-content" ngModelGroup="content">
-		<input-fieldarea *ngFor="let textarea of textareaArray" label="Textarea" placeholder="Enter Text..." [name]="'textarea' + index" [static]="false" (output)="onIndexChanged($event, textarea)" [ngStyle]="{'order': textarea.index}"></input-fieldarea>
-		<input-fieldarea *ngFor="let codeblock of codeblockArray" label="Codeblock" placeholder="Enter Code..." [name]="'codeblock' + index" [static]="false" (output)="onIndexChanged($event, codeblock)" [ngStyle]="{'order': codeblock.index}"></input-fieldarea>
-		<input-field *ngFor="let header of headerArray" type="text" label="Header" placeholder="Enter Header..." [name]="'header' + index" [static]="false" (output)="onIndexChanged($event, header)" [ngStyle]="{'order': header.index}"></input-field>
+		<input-fieldarea *ngFor="let textarea of textareaArray"
+			[fieldType]="0"
+			label="Textarea"
+			placeholder="Enter Text..."
+			[index]="textarea.index"
+			[name]="'textarea' + index"
+			[static]="false"
+			(output)="update_index($event, textarea)"
+			[ngStyle]="{'order': textarea.index}">
+		</input-fieldarea>
+
+		<input-fieldarea *ngFor="let codeblock of codeblockArray"
+			[fieldType]="1" label="Codeblock"
+			placeholder="Enter Code..."
+			[index]="codeblock.index"
+			[name]="'codeblock' + index"
+			[static]="false"
+			(output)="update_index($event, codeblock)"
+			[ngStyle]="{'order': codeblock.index}">
+		</input-fieldarea>
+
+		<input-field *ngFor="let header of headerArray"
+			[fieldType]="2"
+			type="text"
+			label="Header"
+			placeholder="Enter Header..."
+			[index]="header.index"
+			[name]="'header' + index"
+			[static]="false"
+			(output)="update_index($event, header)"
+			[ngStyle]="{'order': header.index}">
+		</input-field>
 	</div>
 
 </form>

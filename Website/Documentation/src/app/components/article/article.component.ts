@@ -30,48 +30,42 @@ export class ArticleComponent implements OnInit {
 
 	public load_data(title: string): void
 	{
+		this.article = articlesData.filter(x => x.title == title)[0];
 	}
 }
 
 export interface Article
 {
-	title: string
-	author: string
-	date: string
-	category: string
-	tags: string[]
-	content: Content[]
+	title: string;
+	author: string;
+	date: string;
+	category: string;
+	tags: string[];
+	content: Content[];
+}
+
+export interface Header extends Content
+{
+	header_level: number;
+}
+
+export interface Textarea extends Content
+{
+	font_size: number;
+	font_style: string;
+	color: string;
+	link: string;
+}
+
+export interface Codeblock extends Content
+{
+	font_size: number;
+	language: string;
 }
 
 export interface Content
 {
 	index: number;
-	header: Header
-	textarea: Textarea
-	codeblock: Codeblock
-}
-
-export interface Header
-{
-	index: number;
-	text: string
-	header_level: number
-}
-
-export interface Textarea
-{
-	index: number;
-	text: string
-	font_size: number
-	font_style: string
-	color: string
-	link: string
-}
-
-export interface Codeblock
-{
-	index: number;
-	text: string
-	font_size: number
-	language: string
+	type: number;
+	text: string;
 }

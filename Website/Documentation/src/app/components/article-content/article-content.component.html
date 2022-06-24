@@ -1,19 +1,20 @@
-<div id="content-container">
-	<p *ngIf="articleContent.header.text !== ''" class="article-header" [id]="get_id(articleContent.header.text)"
-	[ngStyle]="{'font-size.px': 36 - articleContent.header.header_level, 'order': articleContent.header.index}">
-	{{articleContent.header.text}}
+<div [ngSwitch]="articleContent.type" id="content-container">
+
+	<p *ngSwitchCase="2" class="article-header" [id]="get_id(get_header.text)"
+	[ngStyle]="{'font-size.px': 36 - get_header.header_level, 'order': get_header.index}">
+	{{get_header.text}}
 	</p>
 
-	<p *ngIf="articleContent.textarea.text !== ''" class="article-textarea"
+	<p *ngSwitchCase="0" class="article-textarea"
 		[ngStyle]="{
-				'font-size.px': articleContent.textarea.font_size,
-				'color': articleContent.textarea.color,
-				'order': articleContent.textarea.index
+				'font-size.px': get_textarea.font_size,
+				'color': get_textarea.color,
+				'order': get_textarea.index
 			}">
-		{{articleContent.textarea.text}}
+		{{get_textarea.text}}
 	</p>
 
-	<pre *ngIf="articleContent.codeblock.text !== ''" [ngStyle]="{'order': articleContent.codeblock.index}">
-		<code [class]="'hljs language-' + articleContent.codeblock.language">{{articleContent.codeblock.text}}</code>
+	<pre *ngSwitchCase="1" [ngStyle]="{'order': get_codeblock.index}">
+		<code [class]="'hljs language-' + get_codeblock.language">{{get_codeblock.text}}</code>
 	</pre>
 </div>

@@ -1,20 +1,30 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Content } from '../article/article.component';
+import { Codeblock, Content, Header, Textarea } from '../article/article.component';
 
 @Component({
   selector: 'article-content',
   templateUrl: './article-content.component.html',
   styleUrls: ['./article-content.component.css']
 })
-export class ArticleContentComponent implements OnInit {
-
+export class ArticleContentComponent
+{
 	constructor() { }
 
 	@Input() articleContent!: Content;
 
-	ngOnInit(): void
+	public get get_header(): Header
 	{
+		return <Header>this.articleContent;
+	}
 
+	public get get_codeblock(): Codeblock
+	{
+		return <Codeblock>this.articleContent;
+	}
+
+	public get get_textarea(): Textarea
+	{
+		return <Textarea>this.articleContent;
 	}
 
 	public get_id(value: string): string

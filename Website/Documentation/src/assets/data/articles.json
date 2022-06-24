@@ -12,13 +12,13 @@
 		"content": [
 			{
 				"index": 0,
-				"type": "header",
+				"type": 2,
 				"text": "Hello World!",
 				"header_level": 0
 			},
 			{
 				"index": 1,
-				"type": "textarea",
+				"type": 0,
 				"text": "This is a simple test of the article JSON formatting!",
 				"font_size": 16,
 				"font_style": "",
@@ -27,7 +27,7 @@
 			},
 			{
 				"index": 2,
-				"type": "codeblock",
+				"type": 1,
 				"text": "public class Hello \n{ \n\tprivate string World; \n}",
 				"font_size": 16,
 				"language": "cs"
