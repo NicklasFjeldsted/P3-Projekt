@@ -1,17 +1,31 @@
 <div class="header">
   <div class="header-wrapper">
-    <button id="sidebar-btn" (click)="toggle_sidebar()" >
-      <svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg%22%3E">
-        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
-      </svg>
+    <!-- Sidebar button -->
+    <button id="sidebar-btn" (click)="toggle_sidebar()">
+      <i class="fa-solid fa-bars fa-fw"></i>
     </button>
-    <img src="../../../assets/media/tec-logo.png" id="logo" style="cursor: pointer;" alt="logo" routerLink="/">
-    <div class="navbar-wrapper">
-      <p>Dokumentation</p>
-      <button>Create</button>
-      <button>Docs</button>
+
+    <!-- Logo -->
+    <img src="../../../assets/tec.png" id="logo" style="cursor: pointer;" alt="logo" routerLink="/">
+
+    <nav>
+      <ul>
+        <li><a routerLink="rapport">rapport</a></li>
+        <li><a routerLink="documentation">documentation</a></li>
+        <li><a routerLink="create">create</a></li>
+      </ul>
+    </nav>
+
+    <!-- Searchbar container -->
+    <div class="searchbar-container">
+      <input type="text" id="search-input" placeholder="Search">
     </div>
-    <input type="text" id="search-input" placeholder="Search">
+
+    <div class="external-icon">
+      <i class="fa-solid fa-sun fa-fw"></i>
+      <div class="divider"></div>
+      <i class="fa-brands fa-github fa-fw"></i>
+    </div>
   </div>
 </div>
 

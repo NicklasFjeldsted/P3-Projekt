@@ -1,55 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Serif:opsz,wght@8..144,500&display=swap');
 .header-wrapper {
   display: flex;
   flex-direction: row;
   background-color: #0d47a1;
-  align-items: center;
-  gap: 1rem;
   color: #fff;
+  justify-content: space-between;
+  height: 56px;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0 1rem;
 }
 
-p {
-  display: none;
+i {
+  font-size: 1.75rem;
+  cursor: pointer;
+  color: #fff;
 }
 
 #logo {
   filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg)
     brightness(104%) contrast(104%);
-  max-width: 8rem;
-  padding-bottom: 1rem;
+  width: 7rem;
+  margin-bottom: .33rem;
+  margin-left: 1rem;
 }
 
 #sidebar-btn {
-  padding: 2rem;
   cursor: pointer;
-  border: 1px solid transparent;
   border-radius: 0;
   display: block;
 }
 
-#sidebar-btn > svg {
-  width: 24px;
-  height: 24px;
-  font-weight: 500;
+button > i {
+  margin-top: .33rem;
 }
 
-svg > path {
-  fill: #fff;
+.searchbar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  min-width: 150px;
+  height: 100%;
+  margin-right: 16px;
+  position: relative;
 }
 
-#search-input {
-  border-radius: 1rem;
-  outline: none;
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+.searchbar-container > input[type="text"] {
+  height: 50%;
+  max-width: 240px;
+  width: min(90%, 15rem);
+  line-height: normal;
+  padding: 5px 3rem 5px 16px;
+  border-radius: 100px;
   border: none;
-  color: rgb(68, 68, 68);
-  margin-left: auto;
-  margin-right: 1rem;
+  color: #6e6e6e;
+  font-size: 1rem;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
 }
 
-.navbar-wrapper {
+nav {
+  display: none;
+  padding-left: 1rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: inline-block;
+  border-radius: 5px;
+}
+
+a {
+  display: block;
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+  padding: .25rem .5rem;
+  font-family: 'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', 'Helvetica', sans-serif;
+  text-transform: uppercase;
+}
+
+li:hover {
+  background-color: #1f58ad;
+}
+
+.navbar-wrapper > button {
+
+}
+
+.external-icon {
   display: flex;
   flex-direction: row;
-  width: 100%;
-  padding-bottom: 6px;
-  display: none;
+  gap: .5rem;
+  align-items: center;
+}
+
+.divider {
+  width: 1px;
+  background-color: #fff;
+  height: 30px;
+}
+
+
+@media (min-width: 1200px) {
+  nav {
+    display: block;
+  }
 }

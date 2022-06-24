@@ -1,16 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+#header {
+	font-size: 2.5rem;
+	color: #fff;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 600;
+}
+
 #create-form {
 	gap: 2rem;
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
+	padding: 2rem 1rem;
+}
+
+.divider {
+	background-color: #fff;
 }
 
 .add-field-btn > i {
 	cursor: pointer;
-	font-size: 6rem;
+	font-size: 4rem;
 	color: #fff;
 	margin: 1rem;
 	border-radius: 100%;
+	float: left;
 }
 
 .add-field-content {
@@ -50,4 +64,20 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
+}
+
+.submit-container {
+	width: 100%;
+	height: auto;
+}
+
+.submit-container > button[type="submit"] {
+	width: calc(100% - 1rem);
+	display: block;
+	margin: auto;
+	background-color: #326abe;
+	padding: 1rem 1rem 1rem 1rem;
+	border-radius: 25px;
+	font-size: 1.5rem;
+	color: #fff;
 }

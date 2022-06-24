@@ -1,6 +1,6 @@
 <form id="create-form" #form="ngForm" (ngSubmit)="submit_article(form)">
 
-	<button type="submit">Submit</button>
+	<div id="header">Create Article</div>
 
 	<input-static-field name="title" type="text" label="Title" placeholder="Enter Title.." ngModel ngDefaultControl></input-static-field>
 
@@ -55,4 +55,7 @@
 	<button (click)="add_field(0)">Add Textarea</button>
 	<button (click)="add_field(1)">Add Codeblock</button>
 	<button (click)="add_field(2)">Add Header</button>
+</div>
+<div id="submit-container" class="submit-container">
+	<button type="submit" id="submit-button" (window:resize)="getWidth()">{{width}}</button>
 </div>

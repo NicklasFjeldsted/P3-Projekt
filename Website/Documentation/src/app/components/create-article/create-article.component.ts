@@ -72,6 +72,11 @@ export class CreateArticleComponent implements OnInit
 	{
 		content.index = newIndex;
 	}
+
+	width: number = 0;
+	public getWidth(): void {
+		this.width = document.getElementById('submit-button')!.offsetWidth;
+	}
 }
 
 export enum FieldType
