@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ControlContainer, FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'input-static-field',
   templateUrl: './input-static-field.component.html',
-  styleUrls: ['./input-static-field.component.css']
+  styleUrls: ['./input-static-field.component.css'],
+  viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
 export class InputStaticFieldComponent {
 
@@ -13,13 +15,4 @@ export class InputStaticFieldComponent {
 	@Input() type: string = "text";
 	@Input() placeholder: string = "";
 	@Input() label: string = "Empty Label";
-	@Input() static: boolean = true;
-	@Input() index: number = 0;
-	@Output() output: EventEmitter<number> = new EventEmitter<number>();
-
-
-	public index_changed(value: any): void
-	{
-		this.output.emit(value);
-	}
 }

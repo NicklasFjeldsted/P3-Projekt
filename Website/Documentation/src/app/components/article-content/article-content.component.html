@@ -1,7 +1,7 @@
 <div [ngSwitch]="articleContent.type" id="content-container">
 
 	<p *ngSwitchCase="2" class="article-header" [id]="get_id(get_header.text)"
-	[ngStyle]="{'font-size.px': 36 - get_header.header_level, 'order': get_header.index}">
+	[ngStyle]="{'font-size.px': 36 - get_header.header_level!, 'order': get_header.index}">
 	{{get_header.text}}
 	</p>
 

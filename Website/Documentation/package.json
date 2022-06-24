@@ -23,6 +23,7 @@
     "fs": "^0.0.1-security",
     "highlight.js": "^11.5.1",
     "hljs": "^6.2.3",
+    "httpclient": "^0.1.0",
     "imurmurhash": "^0.1.4",
     "is-plain-obj": "^4.1.0",
     "rxjs": "~7.5.0",

@@ -1,7 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ControlContainer, NgForm, NgModelGroup } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FieldType } from '../create-article/create-article.component';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ControlContainer, FormGroup, NgModelGroup } from '@angular/forms';
 
 @Component({
   selector: 'input-field',
@@ -14,19 +12,18 @@ export class InputFieldComponent
 {
 	constructor() { }
 
+	@Input() group!: FormGroup;
 
 	@Input() name: string = "Empty Name..";
 	@Input() type: string = "text";
 	@Input() placeholder: string = "";
 	@Input() label: string = "Empty Label";
-	@Input() static: boolean = true;
 	@Input() index: number = 0;
-	@Input() fieldType!: FieldType;
 	@Output() output: EventEmitter<number> = new EventEmitter<number>();
 
 
 	public index_changed(value: any): void
 	{
-		this.output.emit(value);
+		this.output.emit(Number(value));
 	}
 }

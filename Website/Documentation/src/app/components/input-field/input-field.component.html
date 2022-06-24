@@ -1,5 +1,5 @@
-<div class="input-field" [ngModelGroup]="name">
+<div class="input-field" [formGroup]="group">
 	<label for="text">{{label}}:</label>
-	<input ngModel #indexRef (change)="index_changed(indexRef.value)" id="index" type="number" name="index" [value]="index" [ngClass]="static ? 'input-field-static' : ''">
-	<input ngModel [type]="type" name="text" [placeholder]="placeholder">
+	<input #indexRef formControlName="index" id="index" type="number" (change)="index_changed(indexRef.value)" name="index" [value]="group.value.index">
+	<input formControlName="text" autocomplete="off" [type]="type" name="text" [placeholder]="placeholder">
 </div>

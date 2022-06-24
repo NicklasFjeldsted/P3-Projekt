@@ -1,37 +1,37 @@
 [
-	{
-		"title": "Home Component",
-		"author": "Alexander V. Eriksen",
-		"date": "21-06-2022",
-		"category": "Components",
-		"tags": [
-			"Components",
-			"Home Component",
-			"Alexander"
-		],
-		"content": [
-			{
-				"index": 0,
-				"type": 2,
-				"text": "Hello World!",
-				"header_level": 0
-			},
-			{
-				"index": 1,
-				"type": 0,
-				"text": "This is a simple test of the article JSON formatting!",
-				"font_size": 16,
-				"font_style": "",
-				"color": "rgba(150, 150, 150, 1)",
-				"link": ""
-			},
-			{
-				"index": 2,
-				"type": 1,
-				"text": "public class Hello \n{ \n\tprivate string World; \n}",
-				"font_size": 16,
-				"language": "cs"
-			}
-		]
-	}
+  {
+    "title": "Home Component",
+    "author": "Alexander V. Eriksen",
+    "date": "21-06-2022",
+    "category": "Components",
+    "tags": [
+      "Components",
+      "Home Component",
+      "Alexander"
+    ],
+    "content": [
+      {
+        "index": 0,
+        "type": 2,
+        "text": "Hello World!",
+        "header_level": 0
+      },
+      {
+        "index": 1,
+        "type": 0,
+        "text": "This is a simple test of the article JSON formatting!",
+        "font_size": 16,
+        "font_style": "",
+        "color": "rgba(150, 150, 150, 1)",
+        "link": ""
+      },
+      {
+        "index": 2,
+        "type": 1,
+        "text": "public class Hello \n{ \n\tprivate string World; \n}",
+        "font_size": 16,
+        "language": "cs"
+      }
+    ]
+  }
 ]

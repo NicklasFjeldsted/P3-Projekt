@@ -1,51 +1,46 @@
-<form id="create-form" #form="ngForm" (ngSubmit)="submit_article(form)">
+<form id="create-form" [formGroup]="articleControl" onsubmit="return false">
 
 	<div id="header">Create Article</div>
 
-	<input-static-field name="title" type="text" label="Title" placeholder="Enter Title.." ngModel ngDefaultControl></input-static-field>
+	<input-static-field name="title" type="text" label="Title" placeholder="Enter Title.."></input-static-field>
 
-	<input-static-field name="author" type="text" label="Author" placeholder="Enter Author.." ngModel ngDefaultControl></input-static-field>
+	<input-static-field name="author" type="text" label="Author" placeholder="Enter Author.."></input-static-field>
 
-	<input-static-field name="date" type="date" label="Date" ngModel ngDefaultControl></input-static-field>
+	<input-static-field name="date" type="date" label="Date"></input-static-field>
 
-	<input-static-field name="category" type="text" label="Category" placeholder="Enter Category.." ngModel ngDefaultControl></input-static-field>
+	<input-static-field name="category" type="text" label="Category" placeholder="Enter Category.."></input-static-field>
 
-	<input-static-field name="tags" type="text" label="Tags" placeholder="Enter Tags.." ngModel ngDefaultControl></input-static-field>
+	<!-- <input-static-field name="tags" type="text" label="Tags" placeholder="Enter Tags.."></input-static-field> -->
 
 	<hr>
 
-	<div class="article-content" ngModelGroup="content">
+	<div class="article-content">
 		<input-fieldarea *ngFor="let textarea of textareaArray"
-			[fieldType]="0"
 			label="Textarea"
 			placeholder="Enter Text..."
-			[index]="textarea.index"
-			[name]="'textarea' + index"
-			[static]="false"
+			[index]="textarea.value.index"
+			[group]="textarea"
 			(output)="update_index($event, textarea)"
-			[ngStyle]="{'order': textarea.index}">
+			[ngStyle]="{'order': textarea.value.index}">
 		</input-fieldarea>
 
 		<input-fieldarea *ngFor="let codeblock of codeblockArray"
-			[fieldType]="1" label="Codeblock"
+			label="Codeblock"
 			placeholder="Enter Code..."
-			[index]="codeblock.index"
-			[name]="'codeblock' + index"
-			[static]="false"
+			[index]="codeblock.value.index"
+			[group]="codeblock"
 			(output)="update_index($event, codeblock)"
-			[ngStyle]="{'order': codeblock.index}">
+			[ngStyle]="{'order': codeblock.value.index}">
 		</input-fieldarea>
 
 		<input-field *ngFor="let header of headerArray"
-			[fieldType]="2"
 			type="text"
 			label="Header"
 			placeholder="Enter Header..."
-			[index]="header.index"
-			[name]="'header' + index"
-			[static]="false"
+			[index]="header.value.index"
+			[group]="header"
 			(output)="update_index($event, header)"
-			[ngStyle]="{'order': header.index}">
+			[ngStyle]="{'order': header.value.index}">
 		</input-field>
 	</div>
 
@@ -57,5 +52,5 @@
 	<button (click)="add_field(2)">Add Header</button>
 </div>
 <div id="submit-container" class="submit-container">
-	<button type="submit" id="submit-button" (window:resize)="getWidth()">{{width}}</button>
+	<button type="submit" id="submit-button" (click)="submit_article()">Submit</button>
 </div>

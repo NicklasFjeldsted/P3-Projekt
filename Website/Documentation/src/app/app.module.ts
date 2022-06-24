@@ -14,6 +14,7 @@ import { InputFieldareaComponent } from './components/input-fieldarea/input-fiel
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { InputStaticFieldComponent } from './components/input-static-field/input-static-field.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { InputStaticFieldComponent } from './components/input-static-field/input
     InputFieldareaComponent,
     InputStaticFieldComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

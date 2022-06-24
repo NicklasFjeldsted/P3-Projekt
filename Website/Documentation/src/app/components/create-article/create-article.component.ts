@@ -1,7 +1,8 @@
-import { Component, ElementRef, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
-import { ControlContainer, FormArray, FormControl, FormGroup, NgForm, NgModelGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AbstractControl, FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Codeblock, Header, Textarea } from '../article/article.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-article',
@@ -10,72 +11,120 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class CreateArticleComponent implements OnInit
 {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {}
 
-  	codeblockArray: Codeblock[] = [];
-  	textareaArray: Textarea[] = [];
-  	headerArray: Header[] = [];
+  	codeblockArray: CodeblockControl[] = [];
+  	textareaArray: TextareaControl[] = [];
+  	headerArray: HeaderControl[] = [];
 
-  	public index: number = 0;
+	public index: number = 0;
+
+	public articleControl: FormGroup = new FormGroup({
+		title: new FormControl(''),
+		author: new FormControl(''),
+		date: new FormControl(''),
+		category: new FormControl(''),
+		tags: new FormArray([]),
+		content: new FormArray([])
+	});
 
 	add_field(fieldType: FieldType): void
 	{
 		let num: number = this.index++;
+		let content = this.articleControl.get('content') as FormArray;
 		switch (fieldType)
 		{
 			case FieldType.Textarea:
-				this.textareaArray.push({index: num, type: 0, text: '', font_size: 16, font_style: '', color: 'rgba(255, 255, 255, 1)', link: ''});
+				let textareaGroup = new FormGroup({
+					index: new FormControl(Number(num)),
+					type: new FormControl(0),
+					text: new FormControl(''),
+					font_size: new FormControl(16),
+					font_style: new FormControl(''),
+					color: new FormControl('rgba(255, 255, 255, 1)'),
+					link: new FormControl('')
+				});
+				this.textareaArray.push(textareaGroup as TextareaControl);
+				content.push(textareaGroup);
 				break;
 
 			case FieldType.Codeblock:
-				this.codeblockArray.push({index: num, type: 1, text: '', font_size: 16, language: 'cs' });
+				let codeblockControl = new FormGroup({
+					index: new FormControl(Number(num)),
+					type: new FormControl(1),
+					text: new FormControl(''),
+					font_size: new FormControl(16),
+					language: new FormControl('cs')
+				});
+				this.codeblockArray.push(codeblockControl as CodeblockControl);
+				content.push(codeblockControl);
 				break;
 
 			case FieldType.Header:
-				this.headerArray.push({index: num, type: 2, text: '', header_level: 0 });
+				let headerControl = new FormGroup({
+					index: new FormControl(Number(num)),
+					type: new FormControl(2),
+					text: new FormControl('Empty'),
+					header_level: new FormControl(0)
+				});
+				this.headerArray.push(headerControl as HeaderControl);
+				content.push(headerControl);
 				break;
 		}
 	}
 
-	public submit_article(form: NgForm): void
+	public submit_article(): void
 	{
-		let output: FormGroup = new FormGroup({
-			title: new FormControl(form.controls['title'].value),
-			author: new FormControl(form.controls['author'].value),
-			date: new FormControl(form.controls['date'].value),
-			category: new FormControl(form.controls['category'].value),
-			tags: new FormControl(form.controls['tags'].value),
-			content: new FormArray([])
-		});
+		let jsonString: string = JSON.stringify(this.articleControl.value);
 
-		let contentArray = output.get('content') as FormArray;
-
-		for(const originalContentObject of Object.entries(form.controls['content'].value))
-		{
-			let fieldObject = new FormGroup({});
-			let castContentObject: any = originalContentObject[ 1 ];
-
-			for(const property in castContentObject)
-			{
-				fieldObject.addControl(property, new FormControl(castContentObject[property]));
-			}
-
-			contentArray.push(fieldObject);
-		}
-
-		console.log(output.value);
+		this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
 	}
 
 	public update_index(newIndex: number, content: any): void
 	{
-		content.index = newIndex;
+		content.value.index = Number(newIndex);
 	}
+}
 
-	width: number = 0;
-	public getWidth(): void {
-		this.width = document.getElementById('submit-button')!.offsetWidth;
+export interface HeaderControl extends FormGroup
+{
+	value: Header;
+
+	controls: {
+		index: AbstractControl;
+		type: AbstractControl;
+		text: AbstractControl;
+		header_level: AbstractControl;
+	}
+}
+
+export interface CodeblockControl extends FormGroup
+{
+	value: Codeblock;
+
+	controls: {
+		index: AbstractControl;
+		text: AbstractControl;
+		type: AbstractControl;
+		font_size: AbstractControl;
+		language: AbstractControl;
+	}
+}
+
+export interface TextareaControl extends FormGroup
+{
+	value: Textarea;
+
+	controls: {
+		index: AbstractControl;
+		text: AbstractControl;
+		type: AbstractControl;
+		font_size: AbstractControl;
+		font_style: AbstractControl;
+		color: AbstractControl;
+		link: AbstractControl;
 	}
 }
 
