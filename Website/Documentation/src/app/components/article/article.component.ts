@@ -25,7 +25,6 @@ export class ArticleComponent implements OnInit {
 				this.load_data(params[ 'title' ]);
 		});
 		setTimeout(() => hljs.highlightAll(), 0);
-
 	}
 
 	public load_data(title: string): void

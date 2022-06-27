@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DocumentationAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 
 namespace DocumentationAPI.Controllers
@@ -14,28 +16,31 @@ namespace DocumentationAPI.Controllers
         [ HttpPost("save") ]
         public IActionResult Save( string jsonString )
         {
-            Debug.WriteLine( "\nCalled Save\n" );
-            string jsonData = ReadJson( path );
-            if (!string.IsNullOrEmpty( jsonData ))
-            {
-                jsonData = jsonData.Remove( jsonData.Length - 3 );
+            string articleJsonData = ReadJson( path );
+            string sidebarJsonData = ReadJson( sidebar );
 
-                jsonData += "," + jsonString + "]";
-            }
-            else
-            {
-                jsonData = "[" + jsonString + "]";
-            }
+            var sidebarObject = JObject.Parse( sidebarJsonData );
 
-            var output = JsonConvert.DeserializeObject( jsonData );
+            var articleObject = JArray.Parse( articleJsonData );
+            var newArticle = JObject.Parse( jsonString );
+
+            articleObject.Add( newArticle );
+
+            var toExtend = (JObject) sidebarObject.SelectToken( (string) newArticle[ "category" ] );
+            toExtend.Add( new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] ) );
 
             TextWriter writer;
-            using(writer = new StreamWriter(path, append: false ))
+            using (writer = new StreamWriter( path, append: false ))
             {
-                writer.WriteLine( output );
+                writer.WriteLine( articleObject );
             }
 
-            return Ok( jsonData );
+            using (writer = new StreamWriter(sidebar, append: false ))
+            {
+                writer.WriteLine( sidebarObject );
+            }
+
+            return Ok( "Success" );
         }
 
         [HttpGet("read")]

@@ -251,11 +251,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ave\\source\\repos\\DocumentationAPI\\DocumentationAPI.csproj",
+      "projectUniqueName": "C:\\Users\\ave\\Documents\\GitHub\\P3-Projekt\\DocumentationAPI\\DocumentationAPI.csproj",
       "projectName": "DocumentationAPI",
-      "projectPath": "C:\\Users\\ave\\source\\repos\\DocumentationAPI\\DocumentationAPI.csproj",
+      "projectPath": "C:\\Users\\ave\\Documents\\GitHub\\P3-Projekt\\DocumentationAPI\\DocumentationAPI.csproj",
       "packagesPath": "C:\\Users\\ave\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ave\\source\\repos\\DocumentationAPI\\obj\\",
+      "outputPath": "C:\\Users\\ave\\Documents\\GitHub\\P3-Projekt\\DocumentationAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
