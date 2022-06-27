@@ -1,20 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Serif:opsz,wght@8..144,500&display=swap');
 
+
+
+.header-filler {
+  height: 56px;
+}
+
 .header {
   box-shadow: 0 2px 5px #0000004d;
   z-index: 10;
+  position: fixed;
+  width: 100%;
 }
 
 .header-wrapper {
   display: flex;
   flex-direction: row;
-  background-color: #1976d2;
+  background-color: var(--header-color);
   color: #fff;
   justify-content: space-between;
   height: 56px;
   align-items: center;
   white-space: nowrap;
   padding: 0 1rem;
+  position: relative;
 }
 
 i {

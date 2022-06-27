@@ -17,6 +17,7 @@ export class InputFieldareaComponent
 	@Input() placeholder: string = "";
 	@Input() label: string = "Empty Label";
 	@Input() index: number = 0;
+	@Input() isCodeblock!: boolean;
 	@Output() output: EventEmitter<number> = new EventEmitter<number>();
 
 

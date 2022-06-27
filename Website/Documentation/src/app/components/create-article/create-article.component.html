@@ -27,6 +27,7 @@
 		<input-fieldarea *ngFor="let codeblock of codeblockArray"
 			label="Codeblock"
 			placeholder="Enter Code..."
+			[isCodeblock]="true"
 			[index]="codeblock.value.index"
 			[group]="codeblock"
 			(output)="update_index($event, codeblock)"

@@ -9,13 +9,14 @@
 }
 
 .input-static-field > label {
-	color: #fff;
+	color: var(--text-color);
 	margin-left: 1.5rem;
 }
 
 .input-static-field > input {
 	border-radius: 2rem;
 	border: none;
+	background-color: var(--input-background-color);
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;
 }

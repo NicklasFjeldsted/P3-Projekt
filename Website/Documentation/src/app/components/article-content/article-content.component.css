@@ -1,5 +1,5 @@
 .article-header {
-	color: #fff;
+	color: var(--text-color);
 }
 
 #content-container {

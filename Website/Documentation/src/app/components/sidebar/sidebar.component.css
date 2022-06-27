@@ -1,16 +1,24 @@
 .sidebar {
-  background-color: #333;
-  border-bottom: 1px solid #444444;
-  position: absolute;
-  z-index: 999;
-  width: 100%;
+	background-color: var(--sidebar-background);
+	border-bottom: 1px solid #444444;
+	position: absolute;
+	z-index: 999;
+	width: 100%;
+	box-shadow: 2px 0px 4px -2px black;
 }
 
 .sidebar-nav {
-	color: #fafafa;
+	color: var(--sidebar-color);
 	display: block;
 	padding: 1rem;
 	font-size: 1.5rem;
 	border-radius: 0;
 	text-align: left;
+}
+
+@media screen and (min-width: 769px) {
+	.sidebar {
+		width: 22.5rem;
+		height: 100vh;
+	}
 }

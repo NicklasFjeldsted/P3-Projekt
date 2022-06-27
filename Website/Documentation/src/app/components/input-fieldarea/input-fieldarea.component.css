@@ -9,12 +9,13 @@
 }
 
 .input-fieldarea > label {
-	color: #fff;
+	color: var(--text-color);
 	margin-left: 1.5rem;
 }
 
 .input-fieldarea > textarea {
 	border-radius: 0.5rem;
+	background-color: var(--input-background-color);
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;
@@ -31,6 +32,7 @@
 
 .input-fieldarea > #index {
 	position: absolute;
+	background-color: transparent;
 	right: 0;
 	bottom: 0;
 	width: 4.5rem;
@@ -38,4 +40,13 @@
 
 .input-fieldarea-static {
 	display: none;
+}
+
+select {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 1.75rem;
+	font-size: 1rem!important;
+	line-height: 1;
 }

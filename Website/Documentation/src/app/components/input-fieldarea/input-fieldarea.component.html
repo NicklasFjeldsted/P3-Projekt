@@ -2,4 +2,12 @@
 	<label for="text">{{label}}:</label>
 	<input #indexRef [value]="group.value.index" (change)="index_changed(indexRef.value)" id="index" type="number" name="index" formControlName="index">
 	<textarea formControlName="text" autocomplete="off" name="text" [placeholder]="placeholder"></textarea>
+	<select *ngIf="isCodeblock" formControlName="language">
+		<option value="cs">C#</option>
+		<option value="html">HTML</option>
+		<option value="css">CSS</option>
+		<option value="js">JS</option>
+		<option value="ts">TS</option>
+		<option value="json">JSON</option>
+	</select>
 </div>
