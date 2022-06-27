@@ -6,13 +6,12 @@
   box-sizing: border-box;
   font-size: 1rem;
   font-family: 'Open Sans', sans-serif;
+
 }
 
 html {
   font-size: 12px;
 }
-
-
 button {
   outline: none;
   border: none;
@@ -21,7 +20,17 @@ button {
 }
 
 body {
-  background-color: #303030;
+  background-color: #ffffff
+}
+
+/* dark mode */
+
+body.dark-mode {
+  background-color: #303030!important;
+}
+
+.header-wrapper.dark-mode {
+  background-color: #0d47a1!important;
 }
 
 @media (min-width: 768px) {

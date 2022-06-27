@@ -1,5 +1,5 @@
 <div class="header">
-  <div class="header-wrapper">
+  <div class="header-wrapper" id="header-wrapper">
     <!-- Sidebar button -->
     <button id="sidebar-btn" (click)="toggle_sidebar()">
       <i class="fa-solid fa-bars fa-fw"></i>
@@ -22,7 +22,7 @@
     </div>
 
     <div class="external-icon">
-      <i class="fa-solid fa-sun fa-fw"></i>
+      <i class="fa-solid fa-sun fa-fw" (click)="toggle_theme()"></i>
       <div class="divider"></div>
       <i class="fa-brands fa-github fa-fw"></i>
     </div>

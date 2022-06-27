@@ -10,6 +10,7 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.toggle_theme();
   }
 
   public active: boolean = false;
@@ -17,6 +18,11 @@ export class HeaderComponent implements OnInit {
   public toggle_sidebar(): void
   {
     this.active = !this.active;
+  }
+
+  public toggle_theme() {
+    var body = document.body?.classList.toggle('dark-mode')!;
+    var header = document.getElementById('header-wrapper')?.classList.toggle('dark-mode')!;
   }
 
 }
