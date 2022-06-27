@@ -10,7 +10,7 @@ namespace DocumentationAPI.Controllers
     [ApiController]
     public class JsonSaver : ControllerBase
     {
-        private const string path = @"C:\Users\Nicklas\Desktop\P3-Projekt\Website\Documentation\src\assets\data\articles.json";
+        private const string path = @"C:\Users\ave\Documents\GitHub\P3-Projekt\Website\Documentation\src\assets\data\articles.json";
         private const string sidebar = @"C:\Users\ave\Documents\GitHub\P3-Projekt\Website\Documentation\src\assets\data\sidebar-content.json";
 
         [ HttpPost("save") ]
