@@ -33,35 +33,5 @@
         "language": "cs"
       }
     ]
-  },
-  {
-    "title": "Test Article 1",
-    "author": "Alexander",
-    "date": "2022-06-27",
-    "category": "Components",
-    "tags": [],
-    "content": [
-      {
-        "index": 0,
-        "type": 2,
-        "text": "Hello World",
-        "header_level": 0
-      },
-      {
-        "index": 1,
-        "type": 2,
-        "text": "Second Header",
-        "header_level": 0
-      },
-      {
-        "index": 2,
-        "type": 0,
-        "text": "Test Text goes here!",
-        "font_size": 16,
-        "font_style": "",
-        "color": "rgba(255, 255, 255, 1)",
-        "link": ""
-      }
-    ]
   }
 ]

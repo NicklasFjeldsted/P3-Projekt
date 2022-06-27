@@ -26,8 +26,18 @@ namespace DocumentationAPI.Controllers
 
             articleObject.Add( newArticle );
 
-            var toExtend = (JObject) sidebarObject.SelectToken( (string) newArticle[ "category" ] );
-            toExtend.Add( new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] ) );
+            if (!sidebarObject.ContainsKey( (string) newArticle["category"] ))
+            {
+                var obj = new JObject();
+                var content = new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] );
+                obj.Add( content );
+                sidebarObject.Add((string) newArticle["category"], obj );
+            }
+            else
+            {
+                var toExtend = (JObject) sidebarObject.SelectToken( (string) newArticle[ "title" ] );
+                toExtend.Add( new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] ) );
+            }
 
             TextWriter writer;
             using (writer = new StreamWriter( path, append: false ))
