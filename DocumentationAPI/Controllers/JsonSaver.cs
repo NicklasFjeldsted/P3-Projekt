@@ -1,5 +1,7 @@
-﻿using DocumentationAPI.Models;
+﻿using DocumentationAPI.Helpers;
+using DocumentationAPI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Diagnostics;
@@ -10,14 +12,18 @@ namespace DocumentationAPI.Controllers
     [ApiController]
     public class JsonSaver : ControllerBase
     {
-        private const string path = @"C:\Users\Nicklas\Desktop\P3-Projekt\Website\Documentation\src\assets\data\articles.json";
-        private const string sidebar = @"C:\Users\ave\Documents\GitHub\P3-Projekt\Website\Documentation\src\assets\data\sidebar-content.json";
+        private readonly AppSettings _appSettings;
+
+        public JsonSaver(IOptions<AppSettings> appSettings )
+        {
+            _appSettings = appSettings.Value;
+        }
 
         [ HttpPost("save") ]
         public IActionResult Save( string jsonString )
         {
-            string articleJsonData = ReadJson( path );
-            string sidebarJsonData = ReadJson( sidebar );
+            string articleJsonData = ReadJson( _appSettings.ArticlePath );
+            string sidebarJsonData = ReadJson( _appSettings.SidebarPath );
 
             var sidebarObject = JObject.Parse( sidebarJsonData );
 
@@ -40,24 +46,17 @@ namespace DocumentationAPI.Controllers
             }
 
             TextWriter writer;
-            using (writer = new StreamWriter( path, append: false ))
+            using (writer = new StreamWriter( _appSettings.ArticlePath, append: false ))
             {
                 writer.WriteLine( articleObject );
             }
 
-            using (writer = new StreamWriter(sidebar, append: false ))
+            using (writer = new StreamWriter( _appSettings.SidebarPath, append: false ))
             {
                 writer.WriteLine( sidebarObject );
             }
 
             return Ok( "Success" );
-        }
-
-        [HttpGet("read")]
-        public IActionResult Read()
-        {
-            string jsonString = System.IO.File.ReadAllText( path );
-            return Ok( jsonString );
         }
 
         private string ReadJson( string path )
