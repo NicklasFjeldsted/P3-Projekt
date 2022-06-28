@@ -15,8 +15,8 @@ export class CreateArticleComponent implements OnInit
 
   ngOnInit(): void {}
 
-  	codeblockArray: CodeblockControl[] = [];
-  	textareaArray: TextareaControl[] = [];
+  codeblockArray: CodeblockControl[] = [];
+  textareaArray: TextareaControl[] = [];
   	headerArray: HeaderControl[] = [];
 
 	public index: number = 0;
