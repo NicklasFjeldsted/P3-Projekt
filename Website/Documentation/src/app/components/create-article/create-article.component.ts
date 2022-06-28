@@ -80,10 +80,16 @@ export class CreateArticleComponent implements OnInit
 
 	public submit_article(): void
 	{
-		let jsonString: string = JSON.stringify(this.articleControl.value);
-		console.log(jsonString);
+		if (!this.articleControl.valid)
+		{
+			console.error("Not Valid!");
+			return;
+		}
 
-		//this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
+		console.log(this.articleControl.value);
+		let jsonString: string = JSON.stringify(this.articleControl.value);
+
+		this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
 	}
 
 	public update_index(newIndex: number, content: any): void

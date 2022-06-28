@@ -1,0 +1,100 @@
+:host {
+	--field-min-width: 40%;
+	position: relative;
+}
+
+.input-fieldmenu {
+	width: 100%;
+	font-size: 1.5rem;
+}
+
+.input-fieldmenu-wrapper {
+	position: absolute;
+	display: flex;
+	z-index: 1;
+	flex-direction: column;
+	gap: 1rem;
+	padding: 0.5rem;
+	background-color: #444;
+	width: var(--field-min-width);
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+}
+
+#new-category-input {
+	flex-direction: row;
+	position: relative;
+	height: 3.5rem;
+}
+
+#new-category-input > button > i {
+	cursor: pointer;
+	position: absolute;
+	left: -0.25rem;
+	top: 50%;
+	transform: translate(0, -50%);
+	font-size: 3rem;
+	color: rgb(0, 132, 255);
+	border-radius: 100%;
+	z-index: 1;
+}
+
+#new-category-input > input {
+	position: absolute;
+	right: 0;
+	top: 50%;
+	transform: translate(0, -50%);
+	width: 100%;
+	z-index: 0;
+	padding-left: 3.5rem;
+}
+
+.input-fieldmenu-wrapper > button {
+	border-radius: 0.25rem;
+	border: none;
+	outline: none;
+	user-select: none;
+	padding: 0.25rem;
+	background-color: var(--input-background-color);
+}
+
+.input-fieldmenu-btn {
+	background-color: #1976d2;
+	color: white;
+	padding: 0.5rem;
+	border-top-left-radius: 0.5rem;
+	border-top-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	width: var(--field-min-width);
+	position: relative;
+	box-shadow: black 2px 0px 4px -2px;
+}
+
+input {
+	outline: none;
+	user-select: none;
+	border: none;
+	background-color: var(--input-background-color);
+	border-radius: 0.5rem;
+	padding: 0.4rem;
+}
+
+#selection {
+	padding-left: 10%;
+	position: absolute;
+	z-index: -1;
+	top: 50%;
+	left: 35%;
+	width: 65%;
+	transform: translate(0, -50%);
+}
+
+.expanded > .input-fieldmenu-btn > i {
+	transform: rotate(90deg);
+}
+
+.expanded .input-fieldmenu-btn {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}

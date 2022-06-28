@@ -14,7 +14,6 @@ export class InputFieldComponent
 
 	@Input() group!: FormGroup;
 
-	@Input() name: string = "Empty Name..";
 	@Input() type: string = "text";
 	@Input() placeholder: string = "";
 	@Input() label: string = "Empty Label";

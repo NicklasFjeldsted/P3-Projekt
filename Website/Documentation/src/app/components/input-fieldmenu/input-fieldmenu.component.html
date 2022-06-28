@@ -1,0 +1,14 @@
+<div id="input-fieldmenu">
+	<button class="input-fieldmenu-btn" (click)="toggle()">{{label}} <i class="fa fa-arrow-right"></i></button>
+
+	<input [name]="name" [placeholder]="placeholder" id="selection" type="text" [value]="selected" readonly>
+
+	<div class="input-fieldmenu-wrapper" *ngIf="isActive">
+		<button (click)="set_selected(category)" class="value" *ngFor="let category of categories" [value]="category">{{category}}</button>
+		<hr>
+		<div id="new-category-input">
+			<button (click)="add_new_category(newCategory.value)"><i class="fa-solid fa-circle-plus"></i></button>
+			<input #newCategory placeholder="Add new {{name}}">
+		</div>
+	</div>
+</div>
