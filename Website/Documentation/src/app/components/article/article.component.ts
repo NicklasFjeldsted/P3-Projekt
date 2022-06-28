@@ -1,6 +1,7 @@
 import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import hljs from 'highlight.js';
+import { Article } from '../../interfaces';
 import articlesData from '../../../assets/data/articles.json';
 
 @Component({
@@ -33,38 +34,3 @@ export class ArticleComponent implements OnInit {
 	}
 }
 
-export interface Article
-{
-	title: string;
-	author: string;
-	date: string;
-	category: string;
-	tags: string[];
-	content: Content[];
-}
-
-export interface Header extends Content
-{
-	header_level?: number;
-}
-
-export interface Textarea extends Content
-{
-	font_size?: number;
-	font_style?: string;
-	color?: string;
-	link?: string;
-}
-
-export interface Codeblock extends Content
-{
-	font_size?: number;
-	language?: string;
-}
-
-export interface Content
-{
-	index: number;
-	type: number;
-	text: string;
-}

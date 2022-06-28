@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Codeblock, Content, Header, Textarea } from '../article/article.component';
+import { Content, Header, Codeblock, Textarea } from '../../interfaces';
 
 @Component({
   selector: 'article-content',

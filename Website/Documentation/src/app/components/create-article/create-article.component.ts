@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, NgForm } from '@angular/forms';
-import { Codeblock, Header, Textarea } from '../article/article.component';
+import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { CodeblockControl, TextareaControl, HeaderControl, FieldType } from '../../interfaces';
 
 @Component({
   selector: 'app-create-article',
@@ -39,10 +39,10 @@ export class CreateArticleComponent implements OnInit
 			case FieldType.Textarea:
 				let textareaGroup = new FormGroup({
 					index: new FormControl(Number(num)),
-					type: new FormControl(0),
+					type: new FormControl(FieldType.Textarea),
 					text: new FormControl(''),
 					font_size: new FormControl(16),
-					font_style: new FormControl(''),
+					font_style: new FormControl('r'),
 					color: new FormControl('rgba(255, 255, 255, 1)'),
 					link: new FormControl('')
 				});
@@ -53,7 +53,7 @@ export class CreateArticleComponent implements OnInit
 			case FieldType.Codeblock:
 				let codeblockControl = new FormGroup({
 					index: new FormControl(Number(num)),
-					type: new FormControl(1),
+					type: new FormControl(FieldType.Codeblock),
 					text: new FormControl(''),
 					font_size: new FormControl(16),
 					language: new FormControl('cs')
@@ -65,8 +65,8 @@ export class CreateArticleComponent implements OnInit
 			case FieldType.Header:
 				let headerControl = new FormGroup({
 					index: new FormControl(Number(num)),
-					type: new FormControl(2),
-					text: new FormControl('Empty'),
+					type: new FormControl(FieldType.Header),
+					text: new FormControl(''),
 					header_level: new FormControl(0)
 				});
 				this.headerArray.push(headerControl as HeaderControl);
@@ -86,51 +86,4 @@ export class CreateArticleComponent implements OnInit
 	{
 		content.value.index = Number(newIndex);
 	}
-}
-
-export interface HeaderControl extends FormGroup
-{
-	value: Header;
-
-	controls: {
-		index: AbstractControl;
-		type: AbstractControl;
-		text: AbstractControl;
-		header_level: AbstractControl;
-	}
-}
-
-export interface CodeblockControl extends FormGroup
-{
-	value: Codeblock;
-
-	controls: {
-		index: AbstractControl;
-		text: AbstractControl;
-		type: AbstractControl;
-		font_size: AbstractControl;
-		language: AbstractControl;
-	}
-}
-
-export interface TextareaControl extends FormGroup
-{
-	value: Textarea;
-
-	controls: {
-		index: AbstractControl;
-		text: AbstractControl;
-		type: AbstractControl;
-		font_size: AbstractControl;
-		font_style: AbstractControl;
-		color: AbstractControl;
-		link: AbstractControl;
-	}
-}
-
-export enum FieldType
-{
-  	Textarea,
-  	Codeblock,
-	Header
 }

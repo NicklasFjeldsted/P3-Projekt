@@ -49,4 +49,13 @@ select {
 	height: 1.75rem;
 	font-size: 1rem!important;
 	line-height: 1;
+	width: 5rem;
+}
+
+.second-selected {
+	right: 6rem;
+}
+
+#font-style {
+	width: 8rem;
 }
