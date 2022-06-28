@@ -8,6 +8,6 @@
 }
 
 .article-textarea-link > a {
-	color: rgba(14, 72, 158, 1);
+	color: var(--link-color);
 	text-decoration: underline;
 }
