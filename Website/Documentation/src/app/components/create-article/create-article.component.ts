@@ -43,7 +43,7 @@ export class CreateArticleComponent implements OnInit
 					text: new FormControl(''),
 					font_size: new FormControl(16),
 					font_style: new FormControl('r'),
-					color: new FormControl('rgba(255, 255, 255, 1)'),
+					color: new FormControl('#000'),
 					link: new FormControl('')
 				});
 				this.textareaArray.push(textareaGroup as TextareaControl);
@@ -78,8 +78,9 @@ export class CreateArticleComponent implements OnInit
 	public submit_article(): void
 	{
 		let jsonString: string = JSON.stringify(this.articleControl.value);
+		console.log(jsonString);
 
-		this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
+		//this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
 	}
 
 	public update_index(newIndex: number, content: any): void

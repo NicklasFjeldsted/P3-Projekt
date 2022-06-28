@@ -38,12 +38,10 @@
 	width: 4.5rem;
 }
 
-.input-fieldarea-static {
-	display: none;
-}
-
-select {
+.second-input {
 	position: absolute;
+	border: none;
+	border-radius: 0.5rem;
 	top: 0;
 	right: 0;
 	height: 1.75rem;
@@ -58,4 +56,29 @@ select {
 
 #font-style {
 	width: 8rem;
+}
+
+#color {
+	right: 15rem;
+	border-radius: 0.5rem;
+	padding: 0;
+}
+
+#link {
+	right: 21rem;
+	border-radius: 0.5rem;
+	position: absolute;
+	bottom: 2rem;
+	right: 0;
+	font-size: 1rem;
+	width: 5rem;
+	color: rgba(0, 0, 0, 0.6);
+	background-color: transparent;
+}
+
+#link:focus {
+	color: #0d47a1;
+	margin: 0 1rem 1rem 0;
+	width: 22rem;
+	background-color: var(--nested-input-background-color);
 }

@@ -1,9 +1,14 @@
 <div class="input-fieldarea" [formGroup]="group">
 	<label for="text">{{label}}:</label>
+
 	<input #indexRef [value]="group.value.index" (change)="index_changed(indexRef.value)" id="index" type="number" name="index" formControlName="index">
 	<textarea formControlName="text" autocomplete="off" name="text" [placeholder]="placeholder"></textarea>
 
-	<select formControlName="font_size">
+	<input *ngIf="Type == 0" type="color" class="second-input" id="color" formControlName="color">
+
+	<input *ngIf="Type == 0" type="text" formControlName="link" id="link" placeholder="Link">
+
+	<select class="second-input" formControlName="font_size">
 		<option value="8">8px</option>
 		<option value="12">12px</option>
 		<option value="16">16px</option>
@@ -12,14 +17,14 @@
 		<option value="28">28px</option>
 	</select>
 
-	<select class="second-selected" id="font-style" *ngIf="Type == 0" formControlName="font_style">
+	<select class="second-input second-selected" id="font-style" *ngIf="Type == 0" formControlName="font_style">
 		<option value="b">Bold</option>
 		<option value="i">Italic</option>
 		<option value="r">Regular</option>
 		<option value="bi">Bold & Italic</option>
 	</select>
 
-	<select class="second-selected" *ngIf="Type == 1" formControlName="language">
+	<select class="second-input second-selected" *ngIf="Type == 1" formControlName="language">
 		<option value="cs">C#</option>
 		<option value="html">HTML</option>
 		<option value="css">CSS</option>

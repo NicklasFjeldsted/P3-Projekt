@@ -29,6 +29,7 @@ body {
   --sidebar-text-shadow: 0 0 5px #FFFFFF;
   --sidebar-outline: #1E88E5 auto 2px;
   --input-background-color: rgb(235, 235, 235);
+  --nested-input-background-color: rgb(216, 216, 216);
   background-color: var(--background-color);
 }
 
@@ -43,6 +44,7 @@ body.dark-mode {
   --sidebar-text-shadow: 0 0 5px #0a1014;
   --sidebar-outline: #1E88E5 auto 2px;
   --input-background-color: #fff;
+  --nested-input-background-color: rgb(235, 235, 235);
   background-color: var(--background-color);
 }
 
