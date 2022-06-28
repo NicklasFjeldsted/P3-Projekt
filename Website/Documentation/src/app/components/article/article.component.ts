@@ -25,12 +25,12 @@ export class ArticleComponent implements OnInit {
 				}
 				this.load_data(params[ 'title' ]);
 		});
-		setTimeout(() => hljs.highlightAll(), 0);
 	}
 
 	public load_data(title: string): void
 	{
-		this.article = articlesData.filter(x => x.title == title)[0];
+		this.article = articlesData.filter(x => x.title == title)[ 0 ];
+		setTimeout(() => hljs.highlightAll(), 10);
 	}
 }
 
