@@ -21,10 +21,8 @@
 	</select>
 
 	<select class="second-input second-selected" id="font-style" *ngIf="Type == 0" formControlName="font_style">
-		<option value="b">Bold</option>
-		<option value="i">Italic</option>
-		<option value="r">Regular</option>
-		<option value="bi">Bold & Italic</option>
+		<option value="italic">Italic</option>
+		<option value="normal">Regular</option>
 	</select>
 
 	<select class="second-input second-selected" *ngIf="Type == 1" formControlName="language">
