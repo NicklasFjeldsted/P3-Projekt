@@ -1,4 +1,8 @@
-<h1 class="title">{{article.title}}</h1>
+<div class="article-header">
+	<h1 id="title">{{article.title}}</h1>
+	<p id="author">{{article.author}}</p>
+	<p id="date">{{get_date()}}</p>
+</div>
 <div class="divider"></div>
 <div class="article-content">
 	<article-content *ngFor="let content of article.content" [articleContent]="content" [style]="'order:' + content.index + ';'"></article-content>

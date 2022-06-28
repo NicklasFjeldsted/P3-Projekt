@@ -1,9 +1,16 @@
-.title {
+.article-header {
+	padding: 1rem .5rem;
+	text-align: left;
+}
+
+.article-header > p {
+	color: var(--sub-text-color);
+}
+
+#title {
 	font-size: 3rem;
 	margin: 0 auto;
-	text-align: left;
 	color: var(--text-color);
-	padding: 1rem .5rem;
 }
 
 .divider {
@@ -11,7 +18,6 @@
 	margin: 0 .5rem;
 	background-color: #444;
 	height: 1px;
-
 }
 
 .article-content {

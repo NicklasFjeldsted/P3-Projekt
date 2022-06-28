@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import hljs from 'highlight.js';
 import { Article } from '../../interfaces';
@@ -31,6 +31,11 @@ export class ArticleComponent implements OnInit {
 	{
 		this.article = articlesData.filter(x => x.title == title)[ 0 ];
 		setTimeout(() => hljs.highlightAll(), 10);
+	}
+
+	public get_date(): string
+	{
+		return this.article.date.replace('-', '/');
 	}
 }
 

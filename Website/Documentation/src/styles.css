@@ -21,6 +21,7 @@ button {
 body {
   --background-color: #ffffff;
   --text-color: #444;
+  --sub-text-color: #666;
   --header-color: #1976d2;
   --sidebar-background: #f2f2f2;
   --sidebar-color: #444;
@@ -37,6 +38,7 @@ body {
 body.dark-mode {
   --background-color: #303030;
   --text-color: #fafafa;
+  --sub-text-color: #777;
   --header-color: #0d47a1;
   --sidebar-background: #333;
   --sidebar-color: #fafafa;
