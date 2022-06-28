@@ -1,7 +1,7 @@
 <div [ngSwitch]="articleContent.type" id="content-container">
 
 	<p *ngSwitchCase="2" class="article-header" [id]="get_id(get_header.text)"
-	[ngStyle]="{'font-size.px': 36 - get_header.header_level!, 'order': get_header.index}">
+	[ngStyle]="{'font-size.px': 36 - (get_header.header_level! * 2), 'order': get_header.index}">
 	{{get_header.text}}
 	</p>
 
@@ -13,6 +13,7 @@
 			}">
 		{{get_textarea.text}}
 	</p>
+	<p *ngSwitchCase="0" class="article-textarea-link" [ngStyle]="{'order': get_textarea.index}"><a [routerLink]="get_textarea.link.url">{{get_textarea.link.text}}</a></p>
 
 	<pre *ngSwitchCase="1" [ngStyle]="{'order': get_codeblock.index}">
 		<code [class]="'hljs language-' + get_codeblock.language">{{get_codeblock.text}}</code>

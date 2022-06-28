@@ -20,10 +20,10 @@
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
 	outline: none;
 	resize: vertical;
-	min-height: 5rem;
+	min-height: 6.5rem;
 }
 
-.input-fieldarea > input {
+.input-fieldarea input {
 	border-radius: 2rem;
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
@@ -64,7 +64,7 @@
 	padding: 0;
 }
 
-#link {
+.link-control {
 	right: 21rem;
 	border-radius: 0.5rem;
 	position: absolute;
@@ -73,12 +73,17 @@
 	font-size: 1rem;
 	width: 5rem;
 	color: rgba(0, 0, 0, 0.6);
+	height: 2rem;
 	background-color: transparent;
 }
 
-#link:focus {
+#link-text {
+	bottom: 4rem;
+}
+
+.link-control:focus {
 	color: #0d47a1;
-	margin: 0 1rem 1rem 0;
 	width: 22rem;
+	margin: 0 0.25rem 0.25rem 0;
 	background-color: var(--nested-input-background-color);
 }

@@ -44,7 +44,10 @@ export class CreateArticleComponent implements OnInit
 					font_size: new FormControl(16),
 					font_style: new FormControl('r'),
 					color: new FormControl('#000'),
-					link: new FormControl('')
+					link: new FormGroup({
+						text: new FormControl(''),
+						url: new FormControl('')
+					})
 				});
 				this.textareaArray.push(textareaGroup as TextareaControl);
 				content.push(textareaGroup);

@@ -6,3 +6,8 @@
 	display: flex;
 	flex-direction: column;
 }
+
+.article-textarea-link > a {
+	color: rgba(14, 72, 158, 1);
+	text-decoration: underline;
+}

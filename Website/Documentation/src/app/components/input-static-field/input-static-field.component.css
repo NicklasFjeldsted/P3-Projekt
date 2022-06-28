@@ -14,7 +14,7 @@
 }
 
 .input-static-field > input {
-	border-radius: 2rem;
+	border-radius: 0.5rem;
 	border: none;
 	background-color: var(--input-background-color);
 	padding: 0.5rem 0.5rem 0.5rem 1rem;

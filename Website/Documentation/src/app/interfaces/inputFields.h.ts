@@ -17,21 +17,27 @@ export interface Article
 
 export interface Header extends Content
 {
-	header_level?: number;
+	header_level: number;
 }
 
 export interface Textarea extends Content
 {
-	font_size?: number;
-	font_style?: string;
-	color?: string;
-	link?: string;
+	font_size: number;
+	font_style: string;
+	color: string;
+	link: Link;
 }
 
 export interface Codeblock extends Content
 {
-	font_size?: number;
-	language?: string;
+	font_size: number;
+	language: string;
+}
+
+export interface Link
+{
+	text: string;
+	url: string;
 }
 
 export interface Content

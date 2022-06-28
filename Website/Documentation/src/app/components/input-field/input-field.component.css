@@ -14,7 +14,7 @@
 }
 
 .input-field > input {
-	border-radius: 2rem;
+	border-radius: 0.5rem;
 	background-color: var(--input-background-color);
 	border: none;
 	padding: 0.5rem 0.5rem 0.5rem 1rem;
@@ -30,6 +30,14 @@
 	width: 4.5rem;
 }
 
-.input-field-static {
-	display: none;
+.second-input {
+	position: absolute;
+	border: none;
+	border-radius: 0.5rem;
+	top: 0;
+	right: 0;
+	height: 1.75rem;
+	font-size: 1rem!important;
+	line-height: 1;
+	width: 5rem;
 }
