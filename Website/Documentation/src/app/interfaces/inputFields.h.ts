@@ -22,7 +22,7 @@ export interface Header extends Content
 
 export interface Textarea extends Content
 {
-	font_size: number;
+	font_size: string;
 	font_style: string;
 	color: string;
 	link: Link;

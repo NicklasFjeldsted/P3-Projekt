@@ -1,7 +1,7 @@
 <div class="article-header">
 	<h1 id="title">{{article.title}}</h1>
 	<p id="author">{{article.author}}</p>
-	<p id="date">{{get_date()}}</p>
+	<p id="date">{{ article.date | date: 'dd/MM - yyyy'}}</p>
 </div>
 <div class="divider"></div>
 <div class="article-content">

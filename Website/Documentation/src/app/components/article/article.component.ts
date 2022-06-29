@@ -33,9 +33,9 @@ export class ArticleComponent implements OnInit {
 		setTimeout(() => hljs.highlightAll(), 10);
 	}
 
-	public get_date(): string
+	public get_date(): Date
 	{
-		return this.article.date.replace('-', '/');
+		return new Date(this.article.date);
 	}
 }
 

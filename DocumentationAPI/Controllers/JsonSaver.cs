@@ -20,29 +20,28 @@ namespace DocumentationAPI.Controllers
         }
 
         [ HttpPost("save") ]
-        public IActionResult Save( string jsonString )
+        public IActionResult Save( [FromBody] object model )
         {
             string articleJsonData = ReadJson( _appSettings.ArticlePath );
             string sidebarJsonData = ReadJson( _appSettings.SidebarPath );
 
             var sidebarObject = JObject.Parse( sidebarJsonData );
-
+            var newArticleObject = JsonWorker.Work( model );
             var articleObject = JArray.Parse( articleJsonData );
-            var newArticle = JObject.Parse( jsonString );
 
-            articleObject.Add( newArticle );
+            articleObject.Add( newArticleObject );
 
-            if (!sidebarObject.ContainsKey( (string) newArticle["category"] ))
+            if (!sidebarObject.ContainsKey( newArticleObject[ "category" ].Value<string>() ))
             {
                 var obj = new JObject();
-                var content = new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] );
+                var content = new JProperty( newArticleObject[ "title" ].Value<string>(), newArticleObject[ "title" ].Value<string>() );
                 obj.Add( content );
-                sidebarObject.Add((string) newArticle["category"], obj );
+                sidebarObject.Add( newArticleObject[ "category" ].Value<string>(), obj );
             }
             else
             {
-                var toExtend = (JObject) sidebarObject.SelectToken( (string) newArticle[ "title" ] );
-                toExtend.Add( new JProperty( (string) newArticle[ "title" ], (string) newArticle[ "title" ] ) );
+                var toExtend = (JObject) sidebarObject.SelectToken( newArticleObject[ "title" ].Value<string>() );
+                toExtend.Add( new JProperty( newArticleObject[ "title" ].Value<string>(), newArticleObject[ "title" ].Value<string>() ) );
             }
 
             TextWriter writer;

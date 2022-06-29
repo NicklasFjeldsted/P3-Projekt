@@ -11,12 +11,12 @@ import { CodeblockControl, TextareaControl, HeaderControl, FieldType } from '../
 })
 export class CreateArticleComponent implements OnInit
 {
-  constructor(private http: HttpClient) {}
+  	constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  	ngOnInit(): void {}
 
-  codeblockArray: CodeblockControl[] = [];
-  textareaArray: TextareaControl[] = [];
+  	codeblockArray: CodeblockControl[] = [];
+  	textareaArray: TextareaControl[] = [];
   	headerArray: HeaderControl[] = [];
 
 	public index: number = 0;
@@ -85,23 +85,23 @@ export class CreateArticleComponent implements OnInit
 			console.error("Not Valid!");
 			return;
 		}
-		let content = this.articleControl.get('content') as FormArray;
-		for (const field of content.controls)
-		{
-			if (field.get('type')?.value != 0)
-			{
-				continue;
-			}
+
+		// let content = this.articleControl.get('content') as FormArray;
+		// for (const field of content.controls)
+		// {
+		// 	if (field.get('type')?.value != 0)
+		// 	{
+		// 		continue;
+		// 	}
 
 
-			field.get('color')?.setValue((<string>field.get('color')?.value).replace('#', ''));
-		}
+		// 	field.get('color')?.setValue((<string>field.get('color')?.value).replace('#', ''));
+		// }
 
 		let jsonString: string = JSON.stringify(this.articleControl.value);
-		console.log(jsonString);
+		console.log(this.articleControl.value);
 
-
-		this.http.post(`https://localhost:7094/api/JsonSaver/save?jsonString=${jsonString}`, null).subscribe((res) => console.log(res));
+		this.http.post(`https://localhost:7094/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
 	}
 
 	public update_index(newIndex: number, content: any): void
