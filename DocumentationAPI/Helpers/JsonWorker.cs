@@ -33,7 +33,8 @@ namespace DocumentationAPI.Helpers
                         {
                             if(contentObj_prop.Value.ValueKind == JsonValueKind.Object)
                             {
-                                array.Add( Work( contentObj_prop.Value.GetValue() ) );
+                                JProperty objectProperty = new JProperty( contentObj_prop.Name, Work( contentObj_prop.Value.GetValue() ) );
+                                content_object.Add( objectProperty );
                                 continue;
                             }
 
