@@ -40,7 +40,7 @@ namespace DocumentationAPI.Controllers
             }
             else
             {
-                var toExtend = (JObject) sidebarObject.SelectToken( newArticleObject[ "title" ].Value<string>() );
+                var toExtend = sidebarObject[ newArticleObject[ "category" ].Value<string>() ].Value<JObject>();
                 toExtend.Add( new JProperty( newArticleObject[ "title" ].Value<string>(), newArticleObject[ "title" ].Value<string>() ) );
             }
 
