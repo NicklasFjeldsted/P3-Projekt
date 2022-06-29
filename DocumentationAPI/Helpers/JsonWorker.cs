@@ -13,37 +13,38 @@ namespace DocumentationAPI.Helpers
 
             var local_content = (JsonElement) content;
 
-            foreach (var prop in local_content.EnumerateObject())
+            foreach (var content_property in local_content.EnumerateObject())
             {
-                if(prop.Value.ValueKind == JsonValueKind.String)
+                if(content_property.Value.ValueKind == JsonValueKind.String)
                 {
-                    JProperty property = new JProperty( prop.Name, prop.Value.GetValue() );
-                    product.Add( property );
+                    JProperty property_wString_value = new JProperty( content_property.Name, content_property.Value.GetValue() );
+                    product.Add( property_wString_value );
                     continue;
                 }
 
-                if(prop.Value.ValueKind == JsonValueKind.Array)
+                if(content_property.Value.ValueKind == JsonValueKind.Array)
                 {
-                    JArray array = new JArray();
-                    JProperty arrayProperty = new JProperty(prop.Name, array);
-                    foreach(var contentObj in prop.Value.EnumerateArray())
+                    JArray array_value = new JArray();
+                    foreach(var content_array in content_property.Value.EnumerateArray())
                     {
-                        JObject content_object = new JObject();
-                        foreach(var contentObj_prop in contentObj.EnumerateObject())
+                        JObject object_value = new JObject();
+                        foreach(var contentObj_prop in content_array.EnumerateObject())
                         {
                             if(contentObj_prop.Value.ValueKind == JsonValueKind.Object)
                             {
-                                JProperty objectProperty = new JProperty( contentObj_prop.Name, Work( contentObj_prop.Value.GetValue() ) );
-                                content_object.Add( objectProperty );
+                                JProperty property_wObject_value = new JProperty( contentObj_prop.Name, Work( contentObj_prop.Value.GetValue() ) );
+                                object_value.Add( property_wObject_value );
                                 continue;
                             }
 
                             JProperty property = new JProperty( contentObj_prop.Name, contentObj_prop.Value.GetValue() );
-                            content_object.Add( property );
+                            object_value.Add( property );
                         }
-                        array.Add( content_object );
+                        array_value.Add( object_value );
                     }
-                    product.Add( arrayProperty );
+
+                    JProperty property_wArray_value = new JProperty(content_property.Name, array_value);
+                    product.Add( property_wArray_value );
                 }
             }
 
