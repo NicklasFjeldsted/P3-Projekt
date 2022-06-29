@@ -31,6 +31,12 @@ namespace DocumentationAPI.Helpers
                         JObject content_object = new JObject();
                         foreach(var contentObj_prop in contentObj.EnumerateObject())
                         {
+                            if(contentObj_prop.Value.ValueKind == JsonValueKind.Object)
+                            {
+                                array.Add( Work( contentObj_prop.Value.GetValue() ) );
+                                continue;
+                            }
+
                             JProperty property = new JProperty( contentObj_prop.Name, contentObj_prop.Value.GetValue() );
                             content_object.Add( property );
                         }
@@ -53,6 +59,9 @@ namespace DocumentationAPI.Helpers
 
                 case JsonValueKind.Number:
                 return element.GetInt32();
+
+                case JsonValueKind.Object:
+                return element;
 
                 default:
                 throw new Exception( $"JsonWorker::GetValue() - Couldn't match JsonValueKind: {element.ValueKind}" );

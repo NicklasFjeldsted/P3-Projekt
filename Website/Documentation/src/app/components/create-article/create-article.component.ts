@@ -11,12 +11,12 @@ import { CodeblockControl, TextareaControl, HeaderControl, FieldType } from '../
 })
 export class CreateArticleComponent implements OnInit
 {
-  constructor(private http: HttpClient) {}
+  	constructor(private http: HttpClient) {}
 
-  ngOnInit(): void {}
+  	ngOnInit(): void {}
 
-  codeblockArray: CodeblockControl[] = [];
-  textareaArray: TextareaControl[] = [];
+  	codeblockArray: CodeblockControl[] = [];
+  	textareaArray: TextareaControl[] = [];
   	headerArray: HeaderControl[] = [];
 
 	public index: number = 0;
@@ -99,7 +99,7 @@ export class CreateArticleComponent implements OnInit
 		// }
 
 		let jsonString: string = JSON.stringify(this.articleControl.value);
-		console.log(jsonString);
+		console.log(this.articleControl.value);
 
 		this.http.post(`https://localhost:7094/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
 	}
