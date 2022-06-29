@@ -26,36 +26,33 @@ namespace DocumentationAPI.Controllers
             string sidebarJsonData = ReadJson( _appSettings.SidebarPath );
 
             var sidebarObject = JObject.Parse( sidebarJsonData );
-            var newArticleObject = JsonWorker.Work( model );
+            var newArticleObject = JsonWorker.Work_Object( model );
             var articleObject = JArray.Parse( articleJsonData );
 
             articleObject.Add( newArticleObject );
 
-            if (!sidebarObject.ContainsKey( newArticleObject[ "category" ].Value<string>() ))
+            if (!sidebarObject.ContainsKey( newArticleObject[ "category" ]!.Value<string>()! ))
             {
-                var obj = new JObject();
-                var content = new JProperty( newArticleObject[ "title" ].Value<string>(), newArticleObject[ "title" ].Value<string>() );
-                obj.Add( content );
-                sidebarObject.Add( newArticleObject[ "category" ].Value<string>(), obj );
+                sidebarObject = JsonWorker.Work_AddRecursively( newArticleObject[ "category" ]! );
             }
             else
             {
-                var toExtend = sidebarObject[ newArticleObject[ "category" ].Value<string>() ].Value<JObject>();
-                toExtend.Add( new JProperty( newArticleObject[ "title" ].Value<string>(), newArticleObject[ "title" ].Value<string>() ) );
+                var toExtend = sidebarObject[ newArticleObject[ "category" ]!.Value<string>()! ]!.Value<JObject>();
+                toExtend.Add( new JProperty( newArticleObject[ "title" ]!.Value<string>()!, newArticleObject[ "title" ]!.Value<string>() ) );
             }
 
-            TextWriter writer;
-            using (writer = new StreamWriter( _appSettings.ArticlePath, append: false ))
-            {
-                writer.WriteLine( articleObject );
-            }
+            //TextWriter writer;
+            //using (writer = new StreamWriter( _appSettings.ArticlePath, append: false ))
+            //{
+            //    writer.WriteLine( articleObject );
+            //}
 
-            using (writer = new StreamWriter( _appSettings.SidebarPath, append: false ))
-            {
-                writer.WriteLine( sidebarObject );
-            }
+            //using (writer = new StreamWriter( _appSettings.SidebarPath, append: false ))
+            //{
+            //    writer.WriteLine( sidebarObject );
+            //}
 
-            return Ok( "Success" );
+            return Ok( sidebarObject );
         }
 
         private string ReadJson( string path )
