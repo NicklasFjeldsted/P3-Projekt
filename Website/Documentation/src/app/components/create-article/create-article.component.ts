@@ -43,7 +43,6 @@ export class CreateArticleComponent implements OnInit
 					text: new FormControl(''),
 					font_size: new FormControl(16),
 					font_style: new FormControl('normal'),
-					color: new FormControl('000'),
 					link: new FormGroup({
 						text: new FormControl(''),
 						url: new FormControl('')
@@ -85,18 +84,6 @@ export class CreateArticleComponent implements OnInit
 			console.error("Not Valid!");
 			return;
 		}
-
-		// let content = this.articleControl.get('content') as FormArray;
-		// for (const field of content.controls)
-		// {
-		// 	if (field.get('type')?.value != 0)
-		// 	{
-		// 		continue;
-		// 	}
-
-
-		// 	field.get('color')?.setValue((<string>field.get('color')?.value).replace('#', ''));
-		// }
 
 		let jsonString: string = JSON.stringify(this.articleControl.value);
 		console.log(this.articleControl.value);

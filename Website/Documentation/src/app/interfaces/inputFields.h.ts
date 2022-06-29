@@ -24,7 +24,6 @@ export interface Textarea extends Content
 {
 	font_size: string;
 	font_style: string;
-	color: string;
 	link: Link;
 }
 

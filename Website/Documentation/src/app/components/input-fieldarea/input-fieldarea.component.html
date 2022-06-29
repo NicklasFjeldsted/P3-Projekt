@@ -4,8 +4,6 @@
 	<input #indexRef [value]="group.value.index" (change)="index_changed(indexRef.value)" id="index" type="number" name="index" formControlName="index">
 	<textarea formControlName="text" autocomplete="off" name="text" [placeholder]="placeholder"></textarea>
 
-	<input *ngIf="Type == 0" type="color" class="second-input" id="color" formControlName="color">
-
 	<div *ngIf="Type == 0" type="text" formGroupName="link">
 		<input formControlName="text" class="link-control" id="link-text" placeholder="Text...">
 		<input formControlName="url" class="link-control" id="link-url" placeholder="URL/Navigation">
