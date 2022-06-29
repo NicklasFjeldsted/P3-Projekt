@@ -8,7 +8,9 @@
 	<!-- Nested -->
 	<button *ngIf="type_of(element.value) === 'object'" class="dropdown-btn" (click)="expand_dropdown(dropdown_btn.id)" #dropdown_btn [id]="get_id(element.key)" >
 		{{element.key}}
-		<i class="fa fa-arrow-right"></i>
+		<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+		  </svg>
 	</button>
 
 	<dropdown *ngIf="type_of(element.value) === 'object'" [id]="get_id(element.key)" [data]="element.value" (onNavigate)="onNavigate.emit()"></dropdown>

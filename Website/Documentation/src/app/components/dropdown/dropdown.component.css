@@ -17,8 +17,13 @@
   background-color: var(--sidebar-background-hover);
 }
 
-.dropdown-btn > i {
-	float: right;
+.dropdown-btn > svg {
+  float: right;
+  width: 2rem;
+}
+
+svg > path {
+  fill: #fff;
 }
 
 .dropdown-btn:hover {
@@ -39,7 +44,7 @@ dropdown {
 	background-color:  var(--sidebar-background-hover);
 }
 
-.expanded > i {
+.expanded > svg {
   transform: rotate(90deg);
 }
 

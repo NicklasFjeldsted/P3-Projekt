@@ -28,11 +28,22 @@
 }
 
 .navigate {
+	margin-top: 2rem;
 	width: 100%;
 	display: flex;
 	flex-direction: row;
 	padding: 0 1rem;
-	justify-content: space-between;
+	position: relative;
+}
+
+#back {
+	position: absolute;
+	left: 1rem;
+}
+
+#next {
+	position: absolute;
+	right: 1rem;
 }
 
 .navigate > a {
