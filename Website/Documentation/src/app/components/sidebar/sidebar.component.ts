@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import data from '../../../assets/data/sidebar-content.json';
 
 @Component({
@@ -11,6 +11,8 @@ export class SidebarComponent implements OnInit {
 	constructor() { }
 
 	public data: object = data;
+
+	@Input() open!: boolean;
 
 	@Output() output: EventEmitter<void> = new EventEmitter<void>();
 

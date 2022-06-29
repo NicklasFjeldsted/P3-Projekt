@@ -10,7 +10,7 @@ namespace DocumentationAPI.Controllers
 {
     [Route( "api/[controller]" )]
     [ApiController]
-    public class JsonSaver : ControllerBase
+    public class JsonSaver : ControllerBase 
     {
         private readonly AppSettings _appSettings;
 

@@ -1,8 +1,8 @@
 .sidebar {
 	background-color: var(--sidebar-background);
 	border-bottom: 1px solid #444444;
-	position: absolute;
-	z-index: 999;
+	position: fixed;
+	z-index: 2;
 	width: 100%;
 	box-shadow: 2px 0px 4px -2px black;
 }
@@ -15,6 +15,7 @@
 	border-radius: 0;
 	text-align: left;
 }
+
 
 @media screen and (min-width: 769px) {
 	.sidebar {

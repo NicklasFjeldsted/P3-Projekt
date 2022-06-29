@@ -1,2 +1,10 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header (sidebarToggle)="toggle_sidebar()"></app-header>
+
+<div [ngClass]="active ? 'expanded' : ''">
+	<div id="sidebar">
+	   <sidebar #sidebar *ngIf="active"></sidebar>
+	</div>
+	<div id="content">
+	   <router-outlet ></router-outlet>
+	</div>
+ </div>
