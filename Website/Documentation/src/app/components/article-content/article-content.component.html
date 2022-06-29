@@ -5,7 +5,7 @@
 	{{get_header.text}}
 	</p>
 
-	<p *ngSwitchCase="0" class="article-textarea"
+	<p *ngSwitchCase="0" style="white-space: pre-line;" class="article-textarea"
 		[ngStyle]="{
 				'font-size.px': get_textarea.font_size,
 				'color': get_textarea.color,
@@ -13,7 +13,7 @@
 				'font-style': get_textarea.font_style
 			}">
 		{{get_textarea.text}}
-	</p>
+	</p >
 	<p *ngSwitchCase="0" class="article-textarea-link" [ngStyle]="{'order': get_textarea.index}"><a [routerLink]="get_textarea.link.url">{{get_textarea.link.text}}</a></p>
 
 	<pre *ngSwitchCase="1" [ngStyle]="{'order': get_codeblock.index}">

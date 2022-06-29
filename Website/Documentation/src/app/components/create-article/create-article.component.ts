@@ -42,7 +42,7 @@ export class CreateArticleComponent implements OnInit
 					type: new FormControl(FieldType.Textarea),
 					text: new FormControl(''),
 					font_size: new FormControl(16),
-					font_style: new FormControl('r'),
+					font_style: new FormControl('normal'),
 					color: new FormControl('000'),
 					link: new FormGroup({
 						text: new FormControl(''),
