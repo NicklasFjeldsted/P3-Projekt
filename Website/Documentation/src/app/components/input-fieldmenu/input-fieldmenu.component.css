@@ -21,41 +21,87 @@
 	border-bottom-right-radius: 0.5rem;
 }
 
-#new-category-input {
-	flex-direction: row;
+#new-category {
 	position: relative;
-	height: 3.5rem;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
 }
 
-#new-category-input > button > i {
+#new-category-input {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+}
+
+.add-category-input > * {
+	width: 100%;
+	border-radius: 0.25rem;
+	display: none;
+}
+
+.add-category-input > button {
+	background-color: rgb(0, 132, 255);
+	color: #fff;
+	border-start-end-radius: 0;
+	border-start-start-radius: 0;
+	padding: 0.25rem;
+}
+
+.add-category-input > input {
+	border-end-start-radius: 0;
+	border-end-end-radius: 0;
+}
+
+#fieldmenu-option.expanded > .add-category-input > * {
+	display: block;
+}
+
+#fieldmenu-option.expanded > #fieldmenu-new-category-button {
+	display: none;
+}
+
+#fieldmenu-option.expanded > #fieldmenu-expand-button {
+	display: none;
+}
+
+#fieldmenu-option.expanded {
+	flex-direction: column;
+}
+
+#new-category-button > i {
 	cursor: pointer;
-	position: absolute;
-	left: -0.25rem;
-	top: 50%;
-	transform: translate(0, -50%);
 	font-size: 3rem;
 	color: rgb(0, 132, 255);
-	border-radius: 100%;
 	z-index: 1;
 }
 
-#new-category-input > input {
-	position: absolute;
-	right: 0;
-	top: 50%;
-	transform: translate(0, -50%);
-	width: 100%;
-	z-index: 0;
-	padding-left: 3.5rem;
+#new-category-button {
+	align-self: flex-start;
 }
 
-.input-fieldmenu-wrapper > button {
+#fieldmenu-new-category-button > i {
+	cursor: pointer;
+	font-size: 1.5rem;
+	color: rgb(0, 132, 255);
+	z-index: 1;
+}
+
+#fieldmenu-option {
+	display: flex;
+	flex-direction: row;
+	gap: 0.25rem;
+}
+
+.input-fieldmenu-wrapper > #fieldmenu-option > #fieldmenu-button {
 	border-radius: 0.25rem;
 	border: none;
 	outline: none;
 	user-select: none;
 	padding: 0.25rem;
 	background-color: var(--input-background-color);
+	flex: auto;
 }
 
 .input-fieldmenu-btn {
@@ -69,6 +115,9 @@
 	width: var(--field-min-width);
 	position: relative;
 	box-shadow: black 2px 0px 4px -2px;
+	display: flex;
+	align-items: center;
+	justify-content: center
 }
 
 input {
@@ -90,7 +139,15 @@ input {
 	transform: translate(0, -50%);
 }
 
-.expanded > .input-fieldmenu-btn > i {
+svg {
+	width: 2rem;
+}
+
+svg > path {
+	fill: #fff;
+}
+
+.expanded > .input-fieldmenu-btn > svg {
 	transform: rotate(90deg);
 }
 

@@ -21,6 +21,8 @@ export class InputFieldmenuComponent implements OnInit
 
 	public categories: string[] = [];
 
+	public newCategoryActive: boolean = false;
+
 	public isActive: boolean = false;
 
 	ngOnInit(): void
@@ -38,6 +40,23 @@ export class InputFieldmenuComponent implements OnInit
 		this.toggle();
 	}
 
+	public open_new_category(): void
+	{
+		this.newCategoryActive = !this.newCategoryActive;
+	}
+
+	public open_sub(element: any): void
+	{
+		if (element?.classList.contains('expanded'))
+		{
+			element.classList.remove('expanded');
+		}
+		else
+		{
+			element?.classList.add('expanded');
+		}
+	}
+
 	public add_new_category(value: string): void
 	{
 		if (value === '')
@@ -45,6 +64,7 @@ export class InputFieldmenuComponent implements OnInit
 			return;
 		}
 
+		this.categories.push(value);
 		this.set_selected(value);
 	}
 
@@ -55,6 +75,7 @@ export class InputFieldmenuComponent implements OnInit
 		{
 			element.classList.remove('expanded');
 			this.isActive = false;
+			this.newCategoryActive = false;
 		}
 		else
 		{

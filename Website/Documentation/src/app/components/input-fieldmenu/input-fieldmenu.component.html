@@ -1,14 +1,32 @@
 <div id="input-fieldmenu">
-	<button class="input-fieldmenu-btn" (click)="toggle()">{{label}} <i class="fa fa-arrow-right"></i></button>
+	<button class="input-fieldmenu-btn" (click)="toggle()">
+		{{label}}
+		<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+	  	</svg>
+	</button>
 
 	<input [name]="name" [placeholder]="placeholder" id="selection" type="text" [value]="selected" readonly>
 
 	<div class="input-fieldmenu-wrapper" *ngIf="isActive">
-		<button (click)="set_selected(category)" class="value" *ngFor="let category of categories" [value]="category">{{category}}</button>
-		<hr>
-		<div id="new-category-input">
-			<button (click)="add_new_category(newCategory.value)"><i class="fa-solid fa-circle-plus"></i></button>
-			<input #newCategory placeholder="Add new {{name}}">
+		<div #sub_category_input id="fieldmenu-option" *ngFor="let category of categories">
+			<button id="fieldmenu-button" (click)="set_selected(category)" class="value" [value]="category">{{category}}</button>
+			<button id="fieldmenu-expand-button">
+				<svg focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+					<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+			  	</svg>
+			</button>
+			<button id="fieldmenu-new-category-button" (click)="open_sub(sub_category_input)"><i class="fa-solid fa-circle-plus"></i></button>
+			<div class="sub-category-input add-category-input">
+				<input id="sub-category-input-value" placeholder="Enter New Category...">
+				<button>Add</button>
+			</div>
 		</div>
+		<div id="new-category-input" class="add-category-input" *ngIf="newCategoryActive" >
+			<input #input (keydown.enter)="add_new_category(input.value)" placeholder="Enter New Category...">
+			<button>Add</button>
+		</div>
+		<hr>
+		<button id="new-category-button" (click)="open_new_category()"><i class="fa-solid fa-circle-plus"></i></button>
 	</div>
 </div>
