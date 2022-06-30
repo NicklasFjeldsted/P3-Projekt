@@ -31,28 +31,21 @@ namespace DocumentationAPI.Controllers
 
             articleObject.Add( newArticleObject );
 
-            if (!sidebarObject.ContainsKey( newArticleObject[ "category" ]!.Value<string>()! ))
+            sidebarObject.Work_AddRecursively( newArticleObject[ "category" ]!, newArticleObject[ "title" ]!.Value<string>()! );
+
+            TextWriter writer;
+            using (writer = new StreamWriter( _appSettings.ArticlePath, append: false ))
             {
-                sidebarObject = JsonWorker.Work_AddRecursively( newArticleObject[ "category" ]! );
-            }
-            else
-            {
-                var toExtend = sidebarObject[ newArticleObject[ "category" ]!.Value<string>()! ]!.Value<JObject>();
-                toExtend.Add( new JProperty( newArticleObject[ "title" ]!.Value<string>()!, newArticleObject[ "title" ]!.Value<string>() ) );
+                writer.WriteLine( articleObject );
             }
 
-            //TextWriter writer;
-            //using (writer = new StreamWriter( _appSettings.ArticlePath, append: false ))
-            //{
-            //    writer.WriteLine( articleObject );
-            //}
+            using (writer = new StreamWriter( _appSettings.SidebarPath, append: false ))
+            {
+                writer.WriteLine( sidebarObject );
+            }
 
-            //using (writer = new StreamWriter( _appSettings.SidebarPath, append: false ))
-            //{
-            //    writer.WriteLine( sidebarObject );
-            //}
-
-            return Ok( sidebarObject );
+            //return Ok( JsonConvert.SerializeObject( sidebarObject ) );
+            return Ok( "Success" );
         }
 
         private string ReadJson( string path )
