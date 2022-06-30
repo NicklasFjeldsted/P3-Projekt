@@ -43,6 +43,7 @@ export class DropdownComponent implements OnInit {
 		let buttonElement = document.getElementById(elementID)!;
 		let elements = document.getElementsByTagName('dropdown');
 
+
 		buttonElement.classList.contains('expanded') ? buttonElement.classList.remove('expanded') : buttonElement.classList.add('expanded');
 
 		for (let i = 0; i < elements.length; i++)
@@ -51,7 +52,10 @@ export class DropdownComponent implements OnInit {
 
 			elements.item(i)!.classList.contains('expanded') ? elements.item(i)!.classList.remove('expanded') : elements.item(i)!.classList.add('expanded');
 			let el = <HTMLElement>elements.item(i)!;
-			el.style.paddingLeft = "2rem";
+			for(let i = 0; i < el.children.length; i++) {
+				let child = <HTMLElement>el.children.item(i)!;
+				child.style.paddingLeft = "2rem";
+			}
 		}
 	}
 

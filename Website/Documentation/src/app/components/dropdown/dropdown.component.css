@@ -2,18 +2,23 @@
 	width: inherit;
 	display: flex;
 	flex-direction: column;
+  position: relative;
 }
 
 .dropdown-btn {
   color: var(--sidebar-color);
   display: block;
-  padding: 1rem;
   font-size: 1.5rem;
+  padding: 1rem;
   border-radius: 0;
   text-align: left;
 }
 
-.expanded:hover {
+:host > .dropdown-wrapper :not(dropdown.expanded):hover{
+  background-color: var(--sidebar-background-hover);
+}
+
+.expanded > *:hover {
   background-color: var(--sidebar-background-hover);
 }
 
@@ -26,7 +31,7 @@ svg > path {
   fill: #fff;
 }
 
-.dropdown-btn:hover {
+.dropdown-wrapper {
   color: var(--sidebar-color-hover);
   text-shadow: var(--sidebar-text-shadow)
 }

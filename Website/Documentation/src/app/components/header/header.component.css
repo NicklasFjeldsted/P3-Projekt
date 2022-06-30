@@ -89,7 +89,7 @@ li {
   border-radius: 5px;
 }
 
-a {
+li > a {
   display: block;
   color: #fff;
   font-size: 1.1rem;

@@ -11,12 +11,17 @@ export class HeaderComponent implements OnInit {
 
   @Output() sidebarToggle = new EventEmitter<void>();
 
+  darkmodeActive: boolean = true;
+
   ngOnInit(): void {
     this.toggle_theme();
   }
 
+
+
   public toggle_theme() {
     var body = document.body.classList.toggle('dark-mode');
+    this.darkmodeActive = !this.darkmodeActive;
   }
 
   public emit(): void {
