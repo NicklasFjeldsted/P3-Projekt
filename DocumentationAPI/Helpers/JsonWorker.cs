@@ -7,13 +7,15 @@ namespace DocumentationAPI.Helpers
 {
     public static class JsonWorker
     {
+        public static string TemporaryPropertyName = "Temporary_Property_Here_43";
+
         public static JObject Work_Object( object content )
         {
             JObject product = new JObject();
 
-            var local_content = (JsonElement) content;
+            JsonElement local_content = (JsonElement) content;
 
-            foreach (var content_property in local_content.EnumerateObject())
+            foreach (JsonProperty content_property in local_content.EnumerateObject())
             {
                 if(content_property.Value.ValueKind == JsonValueKind.String)
                 {
@@ -25,19 +27,19 @@ namespace DocumentationAPI.Helpers
                 if(content_property.Value.ValueKind == JsonValueKind.Array)
                 {
                     JArray array_value = new JArray();
-                    foreach(var content_array in content_property.Value.EnumerateArray())
+                    foreach(JsonElement content_array_property in content_property.Value.EnumerateArray())
                     {
                         JObject object_value = new JObject();
-                        foreach(var contentObj_prop in content_array.EnumerateObject())
+                        foreach(JsonProperty array_object_property in content_array_property.EnumerateObject())
                         {
-                            if(contentObj_prop.Value.ValueKind == JsonValueKind.Object)
+                            if(array_object_property.Value.ValueKind == JsonValueKind.Object)
                             {
-                                JProperty property_wObject_value = new JProperty( contentObj_prop.Name, Work_Object( contentObj_prop.Value.GetValue() ) );
+                                JProperty property_wObject_value = new JProperty( array_object_property.Name, Work_Object( array_object_property.Value.GetValue() ) );
                                 object_value.Add( property_wObject_value );
                                 continue;
                             }
 
-                            JProperty property = new JProperty( contentObj_prop.Name, contentObj_prop.Value.GetValue() );
+                            JProperty property = new JProperty( array_object_property.Name, array_object_property.Value.GetValue() );
                             object_value.Add( property );
                         }
                         array_value.Add( object_value );
@@ -45,6 +47,30 @@ namespace DocumentationAPI.Helpers
 
                     JProperty property_wArray_value = new JProperty(content_property.Name, array_value);
                     product.Add( property_wArray_value );
+                }
+
+                if(content_property.Value.ValueKind == JsonValueKind.Object)
+                {
+                    JObject object_value = new JObject();
+                    foreach(JsonProperty content_object_property in content_property.Value.EnumerateObject())
+                    {
+                        if(content_object_property.Value.ValueKind == JsonValueKind.Object)
+                        {
+                            JProperty property_wObject_value = new JProperty( content_object_property.Name, Work_Object( content_object_property.Value.GetValue() ) );
+                            object_value.Add( property_wObject_value );
+                            continue;
+                        }
+
+                        if(content_object_property.Value.ValueKind == JsonValueKind.String)
+                        {
+                            JProperty property_wString_value = new JProperty( content_object_property.Name, content_object_property.Value.GetValue() );
+                            object_value.Add(property_wString_value );
+                            continue;
+                        }
+                    }
+
+                    JProperty property = new JProperty( content_property.Name, object_value );
+                    product.Add( property );
                 }
             }
 
@@ -70,23 +96,49 @@ namespace DocumentationAPI.Helpers
             }
         }
 
-        public static JObject Work_AddRecursively( JToken other )
+        public static JObject Work_AddRecursively(this JObject self, object content, string endpoint )
         {
-            JObject product = new JObject();
-
-            if(other.Type == JTokenType.Property)
+            if (content.GetType() == typeof( JValue ))
             {
-                JProperty cast_other = (JProperty) other;
+                JValue cast_content = (JValue) content;
+                JObject object_value = new JObject();
 
-                product = Work_AddRecursively( cast_other );
+                JProperty endpoint_property = new JProperty( endpoint, endpoint );
+                object_value.Add( endpoint_property );
+
+                JProperty property_wString_value = new JProperty( (string) cast_content.Value!, object_value );
+                self.Add( property_wString_value );
+                return self;
             }
 
-            if(other.Type == JTokenType.String)
+            if (content.GetType() == typeof( JObject ))
             {
-                product.Add( other );
-            }
+                JObject cast_content = (JObject) content;
+                foreach(JProperty content_property in cast_content.Properties())
+                {
+                    if (self.ContainsKey( content_property.Name ))
+                    {
+                        if (self[content_property.Name].GetType() == typeof( JObject ))
+                        {
+                            self[ content_property.Name ]!.Value<JObject>()!.Work_AddRecursively( content_property.Value, endpoint );
+                        }
+                    }
+                    else
+                    {
+                        if (content_property.Value.GetType() == typeof( JObject ))
+                        {
+                            self.Value<JObject>()!.Work_AddRecursively( content_property.Value, endpoint );
+                        }
 
-            return product;
+                        if (content_property.Value.GetType() == typeof( string ))
+                        {
+                            self.Add( content_property );
+                        }
+                    }
+                }
+                return self;
+            }
+            return self;
         }
     }
 }

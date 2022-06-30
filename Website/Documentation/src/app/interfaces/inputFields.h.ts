@@ -10,7 +10,7 @@ export interface Article
 	title: string;
 	author: string;
 	date: string;
-	category: string;
+	category: string | object;
 	tags: string[];
 	content: Content[];
 }
