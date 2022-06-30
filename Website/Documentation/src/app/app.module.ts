@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { InputStaticFieldComponent } from './components/input-static-field/input-static-field.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InputFieldmenuComponent } from './components/input-fieldmenu/input-fieldmenu.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { InputFieldmenuComponent } from './components/input-fieldmenu/input-fiel
     InputFieldareaComponent,
     InputStaticFieldComponent,
     InputFieldmenuComponent,
+    HomeComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule],
   providers: [],

@@ -21,6 +21,7 @@ button {
 body {
   --background-color: #ffffff;
   --text-color: #444;
+  --text-header-color: #7fc9ff;
   --paragraph-color: #000;
   --sub-text-color: #666;
   --header-color: #1976d2;
@@ -33,6 +34,7 @@ body {
   --input-background-color: rgb(235, 235, 235);
   --nested-input-background-color: rgb(216, 216, 216);
   --link-color: #0d47a1;
+  --logo-color: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
   background-color: var(--background-color);
 }
 
