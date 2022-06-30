@@ -7,7 +7,7 @@ namespace DocumentationAPI.Helpers
 {
     public static class JsonWorker
     {
-        public static JObject Work( object content )
+        public static JObject Work_Object( object content )
         {
             JObject product = new JObject();
 
@@ -32,7 +32,7 @@ namespace DocumentationAPI.Helpers
                         {
                             if(contentObj_prop.Value.ValueKind == JsonValueKind.Object)
                             {
-                                JProperty property_wObject_value = new JProperty( contentObj_prop.Name, Work( contentObj_prop.Value.GetValue() ) );
+                                JProperty property_wObject_value = new JProperty( contentObj_prop.Name, Work_Object( contentObj_prop.Value.GetValue() ) );
                                 object_value.Add( property_wObject_value );
                                 continue;
                             }
@@ -52,7 +52,7 @@ namespace DocumentationAPI.Helpers
             return product;
         }
 
-        public static object GetValue(this JsonElement element)
+        private static object GetValue(this JsonElement element)
         {
             switch (element.ValueKind)
             {
@@ -68,6 +68,25 @@ namespace DocumentationAPI.Helpers
                 default:
                 throw new Exception( $"JsonWorker::GetValue() - Couldn't match JsonValueKind: {element.ValueKind}" );
             }
+        }
+
+        public static JObject Work_AddRecursively( JToken other )
+        {
+            JObject product = new JObject();
+
+            if(other.Type == JTokenType.Property)
+            {
+                JProperty cast_other = (JProperty) other;
+
+                product = Work_AddRecursively( cast_other );
+            }
+
+            if(other.Type == JTokenType.String)
+            {
+                product.Add( other );
+            }
+
+            return product;
         }
     }
 }

@@ -36,7 +36,6 @@ export interface TextareaControl extends FormGroup
 		type: AbstractControl;
 		font_size: AbstractControl;
 		font_style: AbstractControl;
-		color: AbstractControl;
 		link: AbstractControl;
 	}
 }
