@@ -1,0 +1,28 @@
+.expanded > menu-item {
+	display: inline;
+}
+
+:host:not(.expanded) > menu-item {
+	display: none;
+}
+
+#select-btn {
+	background-color: var(--input-background-color);
+	border-radius: 0.25rem;
+	padding: 0.5rem;
+	margin-top: 1rem;
+	font-size: 1.5rem;
+}
+
+#menu-btn > svg {
+	width: 2rem;
+	transform: rotate(180deg);
+}
+
+#menu-btn > svg > path {
+	fill: #fff;
+}
+
+:host:not(:not(.expanded)) > button > svg {
+	transform: rotate(0deg);
+}

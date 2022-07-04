@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 import { IterableObject } from '../input-fieldmenu.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { IterableObject } from '../input-fieldmenu.component';
 })
 export class MenuItemComponent
 {
-  	constructor() { }
+  	constructor(private elementRef: ElementRef) { }
 
 	@Input() item!: IterableObject;
 	@Output() onPassValueUp: EventEmitter<IterableObject> = new EventEmitter<IterableObject>();
@@ -23,5 +23,10 @@ export class MenuItemComponent
 		{
 			this.onPassValueUp.emit(this.item);
 		}
+	}
+
+	public openMenu(): void
+	{
+		this.elementRef.nativeElement.classList.contains('expanded') ? this.elementRef.nativeElement.classList.remove('expanded') : this.elementRef.nativeElement.classList.add('expanded');
 	}
 }
