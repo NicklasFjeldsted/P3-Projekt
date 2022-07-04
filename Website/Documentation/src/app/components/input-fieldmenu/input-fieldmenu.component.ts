@@ -19,68 +19,65 @@ export class InputFieldmenuComponent implements OnInit
 
 	public selected: string = "";
 
-	public categories: string[] = [];
-
-	public newCategoryActive: boolean = false;
-
-	public isActive: boolean = false;
+	public categories: IterableObject[] = [];
 
 	ngOnInit(): void
 	{
-		for (const category of Object.keys(data))
+		for (const property of Object.entries(data))
 		{
-			this.categories.push(category);
+			if (typeof property[ 1 ] === 'string')
+			{
+				continue;
+			}
+
+			this.categories.push(this.setMenu({ key: property[ 0 ], value: property[ 1 ] }));
 		}
 	}
 
-	public set_selected(value: string): void
+	private setMenu(obj: JsonObject): IterableObject
 	{
-		this.selected = value;
-		this.group.get(this.name)?.setValue(this.selected);
-		this.toggle();
+		let output: IterableObject = { name: obj.key, children: [] };
+
+		if (typeof obj.value === 'object')
+		{
+			for (const property of Object.entries(obj.value))
+			{
+				if (typeof property[ 1 ] === 'string')
+				{
+					continue;
+				}
+
+				output.children.push(this.setMenu({ key: property[ 0 ], value: property[ 1 ] }));
+			}
+		}
+
+		return output;
 	}
 
-	public open_new_category(): void
+	public receiveValue(value: IterableObject): void
 	{
-		this.newCategoryActive = !this.newCategoryActive;
+		let convertedValue: { [ key: string ]: any; } = {};
+		convertedValue[ value.name ] = this.convertIterableObject(value);
+		console.log(convertedValue);
 	}
 
-	public open_sub(element: any): void
+	private convertIterableObject(value: IterableObject): { [ key: string ]: any; }
 	{
-		if (element?.classList.contains('expanded'))
-		{
-			element.classList.remove('expanded');
-		}
-		else
-		{
-			element?.classList.add('expanded');
-		}
-	}
+		let output: { [ key: string ]: any; } = {};
 
-	public add_new_category(value: string): void
-	{
-		if (value === '')
+		for (const child of value.children)
 		{
-			return;
+			if (child.children.length <= 0)
+			{
+				output[ child.name ] = child.name;
+				continue;
+			}
+			output[ child.name ] = this.convertIterableObject(child);
 		}
 
-		this.categories.push(value);
-		this.set_selected(value);
-	}
-
-	public toggle(): void
-	{
-		const element = document.getElementById('input-fieldmenu');
-		if (element?.classList.contains('expanded'))
-		{
-			element.classList.remove('expanded');
-			this.isActive = false;
-			this.newCategoryActive = false;
-		}
-		else
-		{
-			element?.classList.add('expanded');
-			this.isActive = true;
-		}
+		return output;
 	}
 }
+
+export type JsonObject = { key: string, value: object | string; };
+export type IterableObject = { name: string; children: IterableObject[]; };

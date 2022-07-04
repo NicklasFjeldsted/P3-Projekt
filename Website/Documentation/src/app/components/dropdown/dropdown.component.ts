@@ -43,7 +43,6 @@ export class DropdownComponent implements OnInit {
 		let buttonElement = document.getElementById(elementID)!;
 		let elements = document.getElementsByTagName('dropdown');
 
-
 		buttonElement.classList.contains('expanded') ? buttonElement.classList.remove('expanded') : buttonElement.classList.add('expanded');
 
 		for (let i = 0; i < elements.length; i++)

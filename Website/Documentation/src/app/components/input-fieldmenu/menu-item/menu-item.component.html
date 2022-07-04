@@ -1,0 +1,3 @@
+<button (click)="passValueUp(item)">{{item.name}}</button>
+
+<menu-item *ngFor="let child of item.children" [item]="child" (onPassValueUp)="passValueUp($event)"></menu-item>
