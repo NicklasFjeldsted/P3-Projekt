@@ -56,9 +56,16 @@ export class InputFieldmenuComponent implements OnInit
 
 	public receiveValue(value: IterableObject): void
 	{
-		let convertedValue: { [ key: string ]: any; } = {};
-		convertedValue[ value.name ] = this.convertIterableObject(value);
-		console.log(convertedValue);
+		let convertedValue: { [ key: string ]: any; } | string = {};
+		if (value.children.length > 0)
+		{
+			convertedValue[ value.name ] = this.convertIterableObject(value);
+		}
+		else
+		{
+			convertedValue = value.name;
+		}
+		this.group.get('category')?.setValue(convertedValue);
 	}
 
 	private convertIterableObject(value: IterableObject): { [ key: string ]: any; }
