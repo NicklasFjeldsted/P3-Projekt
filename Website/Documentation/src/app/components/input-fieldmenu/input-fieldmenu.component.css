@@ -1,5 +1,68 @@
+.menu-wrapper {
+	display: flex;
+	flex-direction: row;
+}
+
+.button-wrapper {
+	position: relative;
+	flex: 0.25;
+}
+
+#menu-btn {
+	color: #fff;
+	background-color: #1976d2;
+	padding: 0.5rem;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	border-top-left-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+}
+
+#menu-btn > svg {
+	width: 2rem;
+}
+
+#menu-btn > span {
+	font-size: 1.5rem;
+}
+
+#menu-selection {
+	user-select: none;
+	outline: none;
+	border: none;
+	padding: 0.5rem;
+	flex: 0.75;
+	border-top-right-radius: 0.5rem;
+	border-bottom-right-radius: 0.5rem;
+	background-color: var(--input-background-color);
+}
+
+svg > path {
+	fill: #fff;
+}
+
 .menu-items {
+	position: absolute;
+	padding: 0.5rem;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-start;
+	gap: 1rem;
+	background-color: #444;
+	border-bottom-right-radius: 0.5rem;
+	border-bottom-left-radius: 0.5rem;
+	top: 100%;
+	right: 0;
+	left: 0;
+}
+
+.rotated {
+	transform: rotate(90deg);
+}
+
+.open {
+	border-bottom-left-radius: 0!important;
 }
