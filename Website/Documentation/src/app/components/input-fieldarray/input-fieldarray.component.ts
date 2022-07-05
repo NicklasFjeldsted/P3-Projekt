@@ -26,11 +26,12 @@ export class InputFieldarrayComponent implements OnInit
 		this.array.clear();
 		for (const element of elements)
 		{
-			if (element === '')
+			const trimmedElement = element.trim();
+			if (trimmedElement === '')
 			{
 				continue;
 			}
-			this.array.push(new FormControl(element));
+			this.array.push(new FormControl(trimmedElement));
 		}
 	}
 
