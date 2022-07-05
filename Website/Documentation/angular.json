@@ -10,14 +10,14 @@
           "strict": true
         }
       },
-      "root": "",
+      "root": "http://10.0.6.2/",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/documentation",
+            "outputPath": "//10.0.6.2/dokumentationIIS",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -36,13 +36,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 }
               ],
               "fileReplacements": [
@@ -54,6 +54,8 @@
               "outputHashing": "all"
             },
             "development": {
+              "assets": ["src/favicon.ico", "src/assets", "src/web.config"],
+              "outputPath": "dist",
               "buildOptimizer": false,
               "optimization": false,
               "vendorChunk": true,

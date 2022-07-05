@@ -25,6 +25,12 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// Enables the use of static files for the current directory path.
+app.UseStaticFiles();
+
+// Enables routing from within the backend.
+app.UseRouting();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
