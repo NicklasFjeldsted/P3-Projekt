@@ -19,6 +19,7 @@ import { InputFieldmenuComponent } from './components/input-fieldmenu/input-fiel
 import { HomeComponent } from './components/home/home.component';
 import { MenuItemComponent } from './components/input-fieldmenu/menu-item/menu-item.component';
 import { InputFieldarrayComponent } from './components/input-fieldarray/input-fieldarray.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { InputFieldarrayComponent } from './components/input-fieldarray/input-fi
     InputFieldmenuComponent,
     HomeComponent,
     MenuItemComponent,
-    InputFieldarrayComponent
+    InputFieldarrayComponent,
+    AboutComponent
   ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule],
   providers: [],

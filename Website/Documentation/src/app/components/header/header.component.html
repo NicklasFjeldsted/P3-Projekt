@@ -1,35 +1,32 @@
 <div class="header">
-  <div class="header-wrapper" id="header-wrapper">
-    <!-- Sidebar button -->
-    <button id="sidebar-btn" (click)="emit()">
-      <i class="fa-solid fa-bars fa-fw"></i>
-    </button>
+	<div class="header-wrapper" id="header-wrapper">
+		<!-- Sidebar button -->
+		<button id="sidebar-btn" (click)="emit()">
+			<i class="fa-solid fa-bars fa-fw"></i>
+		</button>
 
-    <!-- Logo -->
-    <img src="../../../assets/tec.png" id="logo" style="cursor: pointer;" alt="logo" routerLink="/">
+		<!-- Logo -->
+		<img src="../../../assets/tec.png" id="logo" style="cursor: pointer;" alt="logo" routerLink="/">
 
-    <nav>
-      <ul>
-        <li><a routerLink="rapport">rapport</a></li>
-        <li><a routerLink="documentation">documentation</a></li>
-        <li><a routerLink="create">create</a></li>
-      </ul>
-    </nav>
+		<nav>
+			<ul>
+				<li><a routerLink="rapport">rapport</a></li>
+				<li><a routerLink="documentation">documentation</a></li>
+				<li><a routerLink="create">create</a></li>
+			</ul>
+		</nav>
 
-    <!-- Searchbar container -->
-    <div class="searchbar-container">
-      <input type="text" id="search-input" placeholder="Search">
-    </div>
-
-    <div class="external-icon">
-      <i class="fa-solid fa-sun fa-fw" *ngIf="!darkmodeActive" (click)="toggle_theme()"></i>
-      <i class="fa-solid fa-moon fa-fw" *ngIf="darkmodeActive" (click)="toggle_theme()"></i>
-      <div class="divider"></div>
-      <a href="https://github.com/NicklasFjeldsted/P3-Projekt/tree/Not_Finished" target="_blank">
-        <i class="fa-brands fa-github fa-fw"></i>
-      </a>
-    </div>
-  </div>
+		<div class="external-icon">
+			<i class="fa-solid fa-sun fa-fw" *ngIf="!darkmodeActive" (click)="toggle_theme()"></i>
+			<i class="fa-solid fa-moon fa-fw" *ngIf="darkmodeActive" (click)="toggle_theme()"></i>
+			<div class="divider"></div>
+			<a href="https://github.com/NicklasFjeldsted/P3-Projekt/tree/Not_Finished" target="_blank">
+				<i class="fa-brands fa-github fa-fw"></i>
+			</a>
+			<div class="divider"></div>
+			<a routerLink="about"><i class="fa-solid fa-users"></i></a>
+		</div>
+	</div>
 </div>
 
 <div class="header-filler">

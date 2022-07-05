@@ -21,10 +21,11 @@ button {
 body {
   --background-color: #ffffff;
   --text-color: #444;
-  --text-header-color: #7fc9ff;
+  --text-header-color: #28a3fc;
   --paragraph-color: #000;
   --sub-text-color: #666;
-  --header-color: #1976d2;
+  --header-color: #1d86ee;
+  --sub-header-color: #1c7ee0;
   --sidebar-background: #f2f2f2;
   --dropdown-background: #aaa;
   --sidebar-color: #444;
@@ -36,15 +37,24 @@ body {
   --nested-input-background-color: rgb(216, 216, 216);
   --link-color: #0d47a1;
   --logo-color: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+
+  --card-background: #dbdbdb;
+  --card-section-background: #bbb;
+  --card-header: #666;
+
+  --divider-background: #919191;
+
   background-color: var(--background-color);
 }
 
 body.dark-mode {
   --background-color: #303030;
   --text-color: #fafafa;
+  --text-header-color: #7fc9ff;
   --paragraph-color: #bdbdbd;
   --sub-text-color: #777;
-  --header-color: #0d47a1;
+  --header-color: #1976d2;
+  --sub-header-color: #1863d4;
   --sidebar-background: #333;
   --sidebar-color: #fafafa;
   --sidebar-background-hover: #444;
@@ -55,6 +65,13 @@ body.dark-mode {
   --input-background-color: #fff;
   --nested-input-background-color: rgb(235, 235, 235);
   --link-color: #1976d2;
+
+  --card-background: #444;
+  --card-section-background: #555;
+  --card-header: #999;
+
+  --divider-background: #b8b8b8;
+
   background-color: var(--background-color);
 }
 
