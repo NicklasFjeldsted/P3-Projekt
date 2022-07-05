@@ -29,20 +29,28 @@ namespace DocumentationAPI.Helpers
                     JArray array_value = new JArray();
                     foreach(JsonElement content_array_property in content_property.Value.EnumerateArray())
                     {
-                        JObject object_value = new JObject();
-                        foreach(JsonProperty array_object_property in content_array_property.EnumerateObject())
+                        if(content_array_property.ValueKind == JsonValueKind.Object)
                         {
-                            if(array_object_property.Value.ValueKind == JsonValueKind.Object)
+                            JObject object_value = new JObject();
+                            foreach(JsonProperty array_object_property in content_array_property.EnumerateObject())
                             {
-                                JProperty property_wObject_value = new JProperty( array_object_property.Name, Work_Object( array_object_property.Value.GetValue() ) );
-                                object_value.Add( property_wObject_value );
-                                continue;
-                            }
+                                if(array_object_property.Value.ValueKind == JsonValueKind.Object)
+                                {
+                                    JProperty property_wObject_value = new JProperty( array_object_property.Name, Work_Object( array_object_property.Value.GetValue() ) );
+                                    object_value.Add( property_wObject_value );
+                                    continue;
+                                }
 
-                            JProperty property = new JProperty( array_object_property.Name, array_object_property.Value.GetValue() );
-                            object_value.Add( property );
+                                JProperty property = new JProperty( array_object_property.Name, array_object_property.Value.GetValue() );
+                                object_value.Add( property );
+                            }
+                            array_value.Add( object_value );
                         }
-                        array_value.Add( object_value );
+
+                        if(content_array_property.ValueKind == JsonValueKind.String)
+                        {
+                            array_value.Add( content_array_property.GetValue() );
+                        }
                     }
 
                     JProperty property_wArray_value = new JProperty(content_property.Name, array_value);
@@ -107,7 +115,7 @@ namespace DocumentationAPI.Helpers
                 object_value.Add( endpoint_property );
 
                 JProperty property_wString_value = new JProperty( (string) cast_content.Value!, object_value );
-                self.Add( property_wString_value );
+                self.Add( endpoint_property );
                 return self;
             }
 

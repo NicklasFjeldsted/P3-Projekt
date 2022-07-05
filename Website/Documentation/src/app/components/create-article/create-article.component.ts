@@ -88,7 +88,7 @@ export class CreateArticleComponent implements OnInit
 		let jsonString: string = JSON.stringify(this.articleControl.value);
 		console.log(this.articleControl.value);
 
-		//this.http.post(`https://localhost:7094/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
+		this.http.post(`https://localhost:7094/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
 	}
 
 	public update_index(newIndex: number, content: any): void
