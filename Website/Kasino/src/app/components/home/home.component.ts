@@ -17,7 +17,7 @@ export class HomeComponent
 
   @HostListener("window:scroll", []) onWindowScroll() 
   {
-    // do some stuff here when the window is scrolled
+    // applies fixed position depending on Y offset value
     const verticalOffset = window.pageYOffset;
     if (verticalOffset >= 408) 
     {

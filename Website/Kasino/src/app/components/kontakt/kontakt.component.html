@@ -1,8 +1,10 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form">
+	<!-- Header -->
 	<div class="form-header">
 		<h1>Kontakt os</h1>
 	</div>
 	<div class="form-body">
+		<!-- Kontakt input section -->
 		<div class="is-invalid" *ngIf="form.touched && form.invalid">Venligst udfyld alle felter!</div>
 		<div class="input-group">
 			<label for="Fullname">Full Name <span>*</span></label>

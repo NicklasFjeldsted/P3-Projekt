@@ -6,12 +6,15 @@
     <div class="logo-container flex">
       <img routerLink="" id="logo" src="../../../assets/media/tec-logo.png" />
     </div>
+    <!-- Switchcase  -->
     <div class="button-container flex" [ngSwitch]="isLoggedIn">
+      <!-- Not logged in buttons -->
       <div class="button-wrapper unauthorized" *ngSwitchCase="false">
         <button routerLink="tilmeld" id="signup">Tilmeld dig</button>
         <button routerLink="login" id="login">Log ind</button>
       </div>
       <div class="button-wrapper" *ngSwitchCase="true">
+        <!-- Logged in buttons -->
         <button (click)="openDeposit()" id="balance">{{ currentBalance }} kr.<i class="fa-solid fa-circle-plus"></i></button>
         <button (click)="emitNotificationsToggle()" id="notification"><i class="fa-solid fa-bell"></i></button>
         <button (click)="emitAccountPanelToggle()" id="user"><i class="fa-solid fa-user"></i></button>
@@ -20,6 +23,7 @@
   </div>
 </div>
 <div class="game-menu">
+  <!-- Game selection container -->
   <div class="game-wrapper flex">
     <div class="game-item">
       <a routerLink="blackjack">

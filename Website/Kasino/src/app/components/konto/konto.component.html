@@ -2,6 +2,7 @@
   <div class="sidenav">
     <i [ngStyle]="{ top: kontoSite == 1 ? '138px' : kontoSite == 2 ? '173px' : '208px' }" class="fa-solid fa-caret-left"></i>
     <ul class="sidenav-content">
+      <!-- Sidenav section -->
       <a (click)="changeSite(1)"><li [ngClass]="{ 'is-selected': kontoSite == 1 }">Konto</li></a>
       <a (click)="changeSite(2)"><li [ngClass]="{ 'is-selected': kontoSite == 2 }">Transaktionshistorik</li></a>
       <a (click)="changeSite(3)"><li [ngClass]="{ 'is-selected': kontoSite == 3 }">Indbetalingsgrænse</li></a>
@@ -15,12 +16,14 @@
       <h1>Min Konto</h1>
     </div>
     <div class="form-body">
-      <div class="customer-title">
+      <div class="customer-title">'
+        <!-- Name and ID  -->
         <h2>{{ this.accountInfo.firstName + " " + this.accountInfo.lastName }}</h2>
         <p>Konto-id: {{ this.balance.customerID }}</p>
       </div>
     </div>
     <div class="grid-buttons">
+      <!-- Konto action buttons -->
       <button (click)="openIndbetal()" class="grid-button" id="indbetal">Indbetal</button>
       <button (click)="openUdbetal()" class="grid-button" id="udbetal">Udbetal</button>
       <button (click)="openLogout()" class="grid-button" id="logud">Log ud</button>
@@ -30,8 +33,10 @@
       <div class="balance-circle">
         <div class="circle"><span>=</span></div>
       </div>
+      <!-- Balance displayer -->
       <div class="balance">{{ this.balance.balance }} kr</div>
     </div>
+    <!-- Personal information -->
     <div class="konto-title">Dine kontaktoplysninger</div>
     <div class="konto-oplysninger">
       <div class="form-row flow-down">
@@ -88,6 +93,8 @@
   </div>
 </form>
 
+<!-- Transaction history -->
+
 <form id="transaktion" method="get" class="form-control h-center noselect" *ngIf="kontoSite == 2">
   <div class="column flow-down main">
     <div class="form-header">
@@ -101,6 +108,7 @@
     </div>
     <div class="transaction-container">
       <div class="transaction-list">
+        <!-- table with transactions -->
         <table>
           <thead>
             <tr>
@@ -128,6 +136,7 @@
   </div>
 </form>
 
+<!-- Deposit Limit -->
 <form id="deposit" method="get" class="form-control h-center noselect" *ngIf="kontoSite == 3">
   <div class="column flow-down main">
     <div class="form-header">
@@ -146,6 +155,7 @@
         </h3>
         <div class="divider"></div>
       </div>
+      <!-- + and - buttons and input -->
       <div class="set-limit">
         <div class="minus">
           <button (click)="subAmount()" [disabled]="depositLimit.value <= 1000"><i class="fa-solid fa-minus"></i></button>

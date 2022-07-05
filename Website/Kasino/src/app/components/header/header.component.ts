@@ -72,17 +72,18 @@ export class HeaderComponent implements OnInit {
 
   emitNotificationsToggle = () => this.onNotificationsToggle.emit(); // Toggles Notification
 
+  // Gets balance from associated customer ID
   public getBalance(): void {
     this.balanceService.OnBalanceChanged.subscribe((balance) => {
       this.currentBalance = balance.balance.toLocaleString("dk", { useGrouping: true });
     });
   }
 
-  openDeposit = () => this.dialog.open(IndbetalComponent);
+  openDeposit = () => this.dialog.open(IndbetalComponent); // Opens deposit modal
 
-  openLogout = () => this.dialog.open(LogoutComponent);
+  openLogout = () => this.dialog.open(LogoutComponent); // Opens logout modal
 
-  openNotifications = () => (this.isNotificationsOpened = true);
+  openNotifications = () => (this.isNotificationsOpened = true); // Opens notifications modal
 
-  closeNotifications = () => (this.isNotificationsOpened = false);
+  closeNotifications = () => (this.isNotificationsOpened = false); // closes deposit modal
 }

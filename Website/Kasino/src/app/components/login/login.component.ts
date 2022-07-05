@@ -39,11 +39,13 @@ export class LoginComponent implements OnInit
     });
   }
 
+  // Gets form controls
   get f() 
   {
     return this.form.controls;
   }
 
+  // Submits form and logs in user
   public onSubmit(): void 
   {
     this.authenticationService
@@ -61,5 +63,5 @@ export class LoginComponent implements OnInit
         },
       });
   }
-  togglePassword = () => (this.show = !this.show);
+  togglePassword = () => (this.show = !this.show); // Toggles password visiblity
 }

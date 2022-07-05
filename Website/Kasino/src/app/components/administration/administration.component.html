@@ -1,5 +1,6 @@
 <div class="main-container">
   <div class="dashboard">
+    <!-- Title -->
     <div class="dashboard-title">User management</div>
     <div class="dashboard-subtitle">Edit user accounts</div>
   </div>
@@ -7,6 +8,7 @@
   <div class="table-container">
     <div class="search-container">
       <div class="searchbar">
+        <!-- Searchbar -->
         <input type="text" (keyup)="applyFilter($event)" placeholder="Filter" /><i class="fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
@@ -45,13 +47,14 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
         <mat-cell *matCellDef="let row" class="actions">
-          <button (click)="openAction(row.customerID, 1)"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button (click)="openAction(row.customerID, 2)"><i class="fa-solid fa-wallet"></i></button>
-          <button (click)="openAction(row.customerID, 3)"><i class="fa-solid fa-user-slash"></i></button>
-          <button (click)="openAction(row.customerID, 4)"><i class="fa-solid fa-unlock"></i></button>
+          <button (click)="openAction(row.customerID, 1)"><i class="fa-solid fa-pen-to-square"></i></button> <!-- Edit Action -->
+          <button (click)="openAction(row.customerID, 2)"><i class="fa-solid fa-wallet"></i></button> <!-- Balance Action -->
+          <button (click)="openAction(row.customerID, 3)"><i class="fa-solid fa-user-slash"></i></button> <!-- Suspend Action -->
+          <button (click)="openAction(row.customerID, 4)"><i class="fa-solid fa-unlock"></i></button>  <!-- Reset Password Action -->
         </mat-cell>
       </ng-container>
 
+      <!-- Table paginator -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
     </mat-table>

@@ -17,6 +17,7 @@ export class KontaktComponent implements OnInit
 
   ngOnInit(): void 
   {
+    // Form group
     this.form = this.builder.group({
       Fullname: new FormControl("", [Validators.required]),
       Email: new FormControl("", [Validators.required, Validators.email, Validators.pattern("^[A-Za-z-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$")]),
@@ -26,6 +27,7 @@ export class KontaktComponent implements OnInit
     this.mail = { Fullname: "", Email: "", Subject: "", Message: "" };
   }
 
+  // Submits the form and sends email
   onSubmit() 
   {
     this.mail = Object.assign(this.mail, this.form.value);

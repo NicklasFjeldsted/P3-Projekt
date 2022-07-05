@@ -28,9 +28,9 @@ export class AdministrationComponent {
 
   ngAfterViewInit() {
     this.authenticationService.OnTokenChanged.subscribe((token) => {
-      if (token !== "") {
+      if (token !== "") { // Checks if logged in
         this.customerService.getAll().subscribe((customers) => {
-          this.dataSource = new MatTableDataSource<User>(customers);
+          this.dataSource = new MatTableDataSource<User>(customers); // new Datasource instance
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         });

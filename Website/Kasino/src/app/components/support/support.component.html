@@ -4,12 +4,14 @@
     <i *ngIf="helpSite != 0" (click)="changeSite(0)" class="fa-solid fa-arrow-left"></i>
 		<div class="searchbar">
       <h1>Hvordan kan vi hjælpe?</h1>
+      <!-- Searchbar -->
 			<input class="input-searchbar" placeholder="Søg">
 		</div>
 	</div>
   
 	<div class="category-container" *ngSwitchCase="'0'">
     <section class="grid-container">
+      <!-- grid section -->
       <a (click)="changeSite(1)" ><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
       <a (click)="changeSite(2)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
 			<a (click)="changeSite(3)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Udbetaling</div></a>

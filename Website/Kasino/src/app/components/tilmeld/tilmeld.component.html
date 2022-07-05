@@ -7,6 +7,7 @@
       <div class="form-input-container">
         <div class="input-title">Udfyld dine oplysninger nedenfor</div>
         <section class="input-section" *ngSwitchCase="'1'">
+          <!-- Inputs with validators -->
           <div class="input-group" formGroupName="credentials">
             <i class="fa fa-envelope"></i>
             <input
@@ -163,6 +164,7 @@
             </div>
           </div>
 
+          <!-- Gender button selection -->
           <div class="input-group">
             <div *ngIf="checkGender() && form.controls['acceptTerms'].touched" class="invalid-feedback">
               <span>Vælg køn</span>
@@ -201,6 +203,7 @@
         </section>
       </div>
 
+      <!-- Promotional section -->
       <div class="form-information-container">
         <div class="information-picture"></div>
         <div class="information-text">

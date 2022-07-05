@@ -28,7 +28,7 @@ export class TilmeldComponent implements OnInit {
   // Initializes the form
   ngOnInit(): void 
   {
-    this.countryArray = JSON.parse(localStorage.getItem("countries")!);
+    this.countryArray = JSON.parse(localStorage.getItem("countries")!); // Gets countries from localStorage
     this.countries = this.getAllCountries();
 
     this.customer = 
@@ -44,6 +44,8 @@ export class TilmeldComponent implements OnInit {
       genderID: 0,
       zipCodeID: 0,
     };
+
+    // Builds form
     this.form = this.fb.group
     ({
       credentials: this.fb.group
@@ -83,7 +85,7 @@ export class TilmeldComponent implements OnInit {
   {
     this.credentials.patchValue({ countryID: this.checkCountries()?.countryID });
     this.credentials.controls["email"].value.toLowerCase();
-    this.customer = Object.assign(this.customer, this.credentials.value, this.details.value);
+    this.customer = Object.assign(this.customer, this.credentials.value, this.details.value); // Assign values to object
     this.customerService.register(this.customer).subscribe({
       next: () => 
       {

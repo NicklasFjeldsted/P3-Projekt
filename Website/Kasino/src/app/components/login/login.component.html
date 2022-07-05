@@ -3,6 +3,7 @@
     <h1>Log ind</h1>
   </div>
   <div class="form-body">
+    <!-- Form inputs -->
     <div *ngIf="submitted && !form.touched" id="error">Indtast en gyldig e-mail og adgangskode</div>
     <div class="input-group">
       <input type="email" email formControlName="email" placeholder="E-mail" [ngClass]="{'is-valid': !f['email'].errors && f['email'].touched}">
@@ -10,12 +11,13 @@
     </div>
     <div class="input-group">
       <input [type]="show ? 'text' : 'password'" formControlName="password" placeholder="Adgangskode" [ngClass]="{'is-valid': !f['password'].errors && f['password'].touched}">
-      <button type="button" id="show-pass" (click)="togglePassword()">Vis</button>
+      <button type="button" id="show-pass" (click)="togglePassword()">Vis</button> <!-- Toggle password visibility -->
       <i class="fa fa-lock"></i>
     </div>
     <div class="submit-container">
       <button type="submit" [disabled]="form.invalid">Log ind</button>
       <div class="form-links">
+        <!-- Sign up & forgot password -->
         <a routerLink="/kontakt">Glemt adgangskode?</a>
         <a routerLink="/tilmeld">Opret konto</a>
       </div>

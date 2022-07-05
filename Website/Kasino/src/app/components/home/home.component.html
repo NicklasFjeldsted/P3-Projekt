@@ -4,6 +4,7 @@
     <div class="wrapper">
       <div class="nav-wrapper">
         <ul class="navbar" id="navbar">
+          <!-- navbar section -->
           <li class="active" (click)="addActive(0)">Udvalgte</li>
           <li (click)="addActive(1)">Klassisk Casino</li>
           <li (click)="addActive(2)">Spilleautomater</li>
@@ -17,13 +18,11 @@
   <div class="featured-category" *ngSwitchCase="'0'">
     <div class="featured-section">
       <div class="featured-game-grid">
-
+        <!-- Promotional slider section -->
         <div class="promotion">
-
-          <!-- Define the slideshow container -->
           <div class="slide-wrapper">
             
-            <!-- Define each of the slides and write the content -->
+            <!-- Promotion slides -->
             <div class="slide">
               <img src="../../../assets/media/promotion1.png">
               
@@ -82,7 +81,7 @@
             </div>
           </div>
         </div>
-
+        <!-- Games section -->
         <div class="featured-game">
           <img src="../../../assets/media/blackjack.jpg"/>
           <div class="overlay">

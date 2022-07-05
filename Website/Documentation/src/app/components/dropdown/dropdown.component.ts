@@ -53,7 +53,7 @@ export class DropdownComponent implements OnInit {
 			elements.item(i)!.classList.contains('expanded') ? elements.item(i)!.classList.remove('expanded') : elements.item(i)!.classList.add('expanded');
 			let el = <HTMLElement>elements.item(i)!;
 			for(let i = 0; i < el.children.length; i++) {
-				let child = <HTMLElement>el.children.item(i)!;
+				let child = <HTMLElement>el.children.item(i)?.children.item(i)?.children.item(i)!;
 				child.style.paddingLeft = "2rem";
 			}
 		}
