@@ -1,10 +1,11 @@
 .menu-wrapper {
 	display: flex;
 	flex-direction: row;
+	position: relative;
 }
 
 .button-wrapper {
-	position: relative;
+	position: unset;
 	flex: 0.25;
 }
 
@@ -57,12 +58,27 @@ svg > path {
 	top: 100%;
 	right: 0;
 	left: 0;
+	z-index: 20;
 }
 
 .rotated {
 	transform: rotate(90deg);
 }
 
-.open {
+button.open {
 	border-bottom-left-radius: 0!important;
+}
+
+@media (max-width: 768px)
+{
+	input.open {
+		border-bottom-right-radius: 0!important;
+	}
+}
+
+@media (min-width: 768px)
+{
+	.button-wrapper {
+		position: relative;
+	}
 }

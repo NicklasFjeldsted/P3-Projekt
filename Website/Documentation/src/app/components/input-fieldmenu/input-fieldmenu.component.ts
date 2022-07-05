@@ -19,6 +19,7 @@ export class InputFieldmenuComponent implements OnInit
 
 	@ViewChild('arrow') arrowElement!: ElementRef;
 	@ViewChild('menuBtn') menuButtonElement!: ElementRef;
+	@ViewChild('selectionInput') selectionInputElement!: ElementRef;
 
 	public isActive: boolean = false;
 
@@ -93,6 +94,7 @@ export class InputFieldmenuComponent implements OnInit
 
 	public receiveValue(value: IterableObject): void
 	{
+		this.setState(false);
 		let convertedValue: { [ key: string ]: any; } | string = {};
 		if (value.children.length > 0)
 		{
@@ -125,11 +127,12 @@ export class InputFieldmenuComponent implements OnInit
 		return output;
 	}
 
-	public open(): void
+	public setState(state: boolean): void
 	{
-		this.isActive = !this.isActive;
+		this.isActive = state;
 		this.isActive ? this.arrowElement.nativeElement.classList.add('rotated') : this.arrowElement.nativeElement.classList.remove('rotated');
 		this.isActive ? this.menuButtonElement.nativeElement.classList.add('open') : this.menuButtonElement.nativeElement.classList.remove('open');
+		this.isActive ? this.selectionInputElement.nativeElement.classList.add('open') : this.selectionInputElement.nativeElement.classList.remove('open');
 	}
 }
 

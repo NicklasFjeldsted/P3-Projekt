@@ -1,6 +1,6 @@
 <div class="menu-wrapper">
 	<div class="button-wrapper">
-		<button #menuBtn id="menu-btn" (click)="open()">
+		<button #menuBtn id="menu-btn" (click)="setState(!isActive)">
 			<span>{{label}}</span>
 			<svg #arrow focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 				<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
@@ -11,8 +11,5 @@
 		</div>
 	</div>
 
-	<input id="menu-selection" [value]="get_component_path(group.get('category')!.value)" readonly [placeholder]="placeholder">
+	<input #selectionInput id="menu-selection" [value]="get_component_path(group.get('category')!.value)" readonly [placeholder]="placeholder">
 </div>
-
-
-

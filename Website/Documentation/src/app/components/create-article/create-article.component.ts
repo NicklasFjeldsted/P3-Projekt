@@ -95,4 +95,9 @@ export class CreateArticleComponent implements OnInit
 	{
 		content.value.index = Number(newIndex);
 	}
+
+	public get tags(): FormArray
+	{
+		return this.articleControl.controls[ 'tags' ] as FormArray;
+	}
 }
