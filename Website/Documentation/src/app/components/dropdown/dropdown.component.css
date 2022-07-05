@@ -2,16 +2,16 @@
 	width: inherit;
 	display: flex;
 	flex-direction: column;
-  position: relative;
+  	position: relative;
 }
 
 .dropdown-btn {
-  color: var(--sidebar-color);
-  display: block;
-  font-size: 1.5rem;
-  padding: 1rem;
-  border-radius: 0;
-  text-align: left;
+	color: var(--sidebar-color);
+	display: block;
+	font-size: 1.5rem;
+	padding: 1rem;
+	border-radius: 0;
+	text-align: left;
 }
 
 :host dropdown button span {
@@ -31,17 +31,17 @@ button:hover {
 }
 
 .dropdown-btn > svg {
-  float: right;
-  width: 2rem;
+  	float: right;
+  	width: 2rem;
 }
 
 svg > path {
-  fill: #fff;
+  	fill: #fff;
 }
 
 .dropdown-wrapper {
-  color: var(--sidebar-color-hover);
-  text-shadow: var(--sidebar-text-shadow)
+	color: var(--sidebar-color-hover);
+	text-shadow: var(--sidebar-text-shadow)
 }
 
 dropdown {
@@ -49,7 +49,7 @@ dropdown {
 }
 
 .expanded {
-  display: block;
+  	display: block;
 }
 
 .dropdown-btn.expanded {
@@ -58,10 +58,10 @@ dropdown {
 }
 
 .expanded > svg {
-  transform: rotate(90deg);
+  	transform: rotate(90deg);
 }
 
 .dropdown-container {
-  display: none;
+  	display: none;
 }
 

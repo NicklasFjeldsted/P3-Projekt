@@ -13,6 +13,7 @@
 		  </svg>
 	</button>
 
+	<!-- Nested -->
 	<dropdown *ngIf="type_of(element.value) === 'object'" [id]="get_id(element.key)" [data]="element.value" (onNavigate)="onNavigate.emit()"></dropdown>
 
 </div>

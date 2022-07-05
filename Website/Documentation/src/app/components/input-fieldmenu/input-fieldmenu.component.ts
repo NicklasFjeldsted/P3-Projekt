@@ -19,68 +19,72 @@ export class InputFieldmenuComponent implements OnInit
 
 	public selected: string = "";
 
-	public categories: string[] = [];
-
-	public newCategoryActive: boolean = false;
-
-	public isActive: boolean = false;
+	public categories: IterableObject[] = [];
 
 	ngOnInit(): void
 	{
-		for (const category of Object.keys(data))
+		for (const property of Object.entries(data))
 		{
-			this.categories.push(category);
+			if (typeof property[ 1 ] === 'string')
+			{
+				continue;
+			}
+
+			this.categories.push(this.setMenu({ key: property[ 0 ], value: property[ 1 ] }));
 		}
 	}
 
-	public set_selected(value: string): void
+	private setMenu(obj: JsonObject): IterableObject
 	{
-		this.selected = value;
-		this.group.get(this.name)?.setValue(this.selected);
-		this.toggle();
-	}
+		let output: IterableObject = { name: obj.key, children: [] };
 
-	public open_new_category(): void
-	{
-		this.newCategoryActive = !this.newCategoryActive;
-	}
-
-	public open_sub(element: any): void
-	{
-		if (element?.classList.contains('expanded'))
+		if (typeof obj.value === 'object')
 		{
-			element.classList.remove('expanded');
+			for (const property of Object.entries(obj.value))
+			{
+				if (typeof property[ 1 ] === 'string')
+				{
+					continue;
+				}
+
+				output.children.push(this.setMenu({ key: property[ 0 ], value: property[ 1 ] }));
+			}
+		}
+
+		return output;
+	}
+
+	public receiveValue(value: IterableObject): void
+	{
+		let convertedValue: { [ key: string ]: any; } | string = {};
+		if (value.children.length > 0)
+		{
+			convertedValue[ value.name ] = this.convertIterableObject(value);
 		}
 		else
 		{
-			element?.classList.add('expanded');
+			convertedValue = value.name;
 		}
+		this.group.get('category')?.setValue(convertedValue);
 	}
 
-	public add_new_category(value: string): void
+	private convertIterableObject(value: IterableObject): { [ key: string ]: any; }
 	{
-		if (value === '')
+		let output: { [ key: string ]: any; } = {};
+
+		for (const child of value.children)
 		{
-			return;
+			if (child.children.length <= 0)
+			{
+				output[ child.name ] = child.name;
+				continue;
+			}
+			output[ child.name ] = this.convertIterableObject(child);
 		}
 
-		this.categories.push(value);
-		this.set_selected(value);
-	}
-
-	public toggle(): void
-	{
-		const element = document.getElementById('input-fieldmenu');
-		if (element?.classList.contains('expanded'))
-		{
-			element.classList.remove('expanded');
-			this.isActive = false;
-			this.newCategoryActive = false;
-		}
-		else
-		{
-			element?.classList.add('expanded');
-			this.isActive = true;
-		}
+		return output;
 	}
 }
+
+export type JsonObject = { key: string, value: object | string; };
+export type IterableObject = { name: string; children: IterableObject[]; };
