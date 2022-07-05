@@ -10,7 +10,7 @@
 }
 
 #select-btn {
-	background-color: var(--input-background-color);
+	background-color: #fff;
 	border-radius: 0.25rem;
 	padding: 0.5rem;
 	flex: 0.7;
@@ -29,7 +29,7 @@
 }
 
 #menu-btn > svg > path {
-	fill: #fff;
+	fill: var(--text-color);
 }
 
 #add-option-btn {
@@ -83,7 +83,7 @@
 }
 
 .nested-menu-items {
-	background-color: #333;
+	background-color: var(--dropdown-background);
 	padding: 1rem;
 	border-radius: 0.25rem;
 	display: flex;
