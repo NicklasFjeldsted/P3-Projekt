@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, InjectionToken, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import hljs from 'highlight.js';
 import { Article } from '../../interfaces';
-import articlesData from '../../../assets/data/articles.json';
-import sidebarContent from '../../../assets/data/sidebar-content.json';
+import { collection, collectionData, connectFirestoreEmulator, doc, Firestore, getDoc, getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-article',
@@ -12,7 +11,7 @@ import sidebarContent from '../../../assets/data/sidebar-content.json';
 })
 export class ArticleComponent implements OnInit {
 
-	constructor(private route: ActivatedRoute, private router: Router) { }
+	constructor(private route: ActivatedRoute, private router: Router, private firestore: Firestore) { }
 
 	public article!: Article;
 	public categoryArticles: any[] = [];
@@ -31,16 +30,48 @@ export class ArticleComponent implements OnInit {
 
 	public load_data(title: string): void
 	{
-		this.article = articlesData.filter(x => x.title == title)[ 0 ];
-
-		this.categoryArticles = [];
-
-		for (const pair of Object.entries(sidebarContent))
+		this.loadArticle(title).then((articleData) =>
 		{
-			this.set_navigation({key: pair[0], value: pair[1]});
-		}
-		this.currentArticleIndex = this.categoryArticles.indexOf(this.article.title);
-		setTimeout(() => hljs.highlightAll(), 10);
+			this.article = articleData;
+
+			this.categoryArticles = [];
+
+			this.loadSidebar();
+
+			// for (const pair of Object.entries(sidebarContent))
+			// {
+			// 	this.set_navigation({ key: pair[ 0 ], value: pair[ 1 ] });
+			// }
+			// this.currentArticleIndex = this.categoryArticles.indexOf(this.article.title);
+			setTimeout(() => hljs.highlightAll(), 10);
+		}).catch((reason) => console.error(reason));
+	}
+
+	private async loadArticle(title: string): Promise<Article>
+	{
+		return await new Promise<Article>(async(resolve, reject) =>
+		{
+			const docRef = doc(this.firestore, 'articles', title);
+			const docSnap = await getDoc(docRef);
+
+			if (docSnap.exists())
+			{
+				resolve(<Article>docSnap.data());
+			}
+			else
+			{
+				reject("Article.component::loadArticle() - No such document!");
+			}
+		});
+	}
+
+	private async loadSidebar(): Promise<object>
+	{
+		return await new Promise<object>(async (resolve, reject) =>
+		{
+			const collectionRef = collection(this.firestore, 'sidebar-content');
+			const collectionSnap = collectionData(collectionRef);
+		});
 	}
 
 	public get_date(): Date

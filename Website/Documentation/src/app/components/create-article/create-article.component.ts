@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CodeblockControl, TextareaControl, HeaderControl, FieldType } from '../../interfaces';
+import { Firestore, doc, getDoc, connectFirestoreEmulator, setDoc, EmulatorMockTokenOptions } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-create-article',
@@ -11,9 +12,12 @@ import { CodeblockControl, TextareaControl, HeaderControl, FieldType } from '../
 })
 export class CreateArticleComponent implements OnInit
 {
-  	constructor(private http: HttpClient) {}
+  	constructor(private http: HttpClient, private firestore: Firestore) {}
 
-  	ngOnInit(): void {}
+	ngOnInit(): void
+	{
+
+	}
 
   	codeblockArray: CodeblockControl[] = [];
   	textareaArray: TextareaControl[] = [];
@@ -22,7 +26,7 @@ export class CreateArticleComponent implements OnInit
 	public index: number = 0;
 
 	public articleControl: FormGroup = new FormGroup({
-		title: new FormControl(''),
+		title: new FormControl('', Validators.required),
 		author: new FormControl(''),
 		date: new FormControl(''),
 		category: new FormControl(''),
@@ -85,10 +89,59 @@ export class CreateArticleComponent implements OnInit
 			return;
 		}
 
-		let jsonString: string = JSON.stringify(this.articleControl.value);
-		console.log(this.articleControl.value);
 
-		this.http.post(`http://10.0.6.2:444/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
+		this.uploadArticle();
+
+		// let jsonString: string = JSON.stringify(this.articleControl.value);
+		// this.http.post(`http://10.0.6.2:444/api/JsonSaver/save`, this.articleControl.value).subscribe((res) => console.log(res));
+	}
+
+	private async uploadArticle(): Promise<void>
+	{
+		const docRef = doc(this.firestore, 'articles', this.articleControl.get('title')?.value);
+		return await setDoc(docRef, this.articleControl.value).then(async() =>
+		{
+			return await this.uploadCategory();
+		});
+	}
+
+	private async uploadCategory(): Promise<void>
+	{
+		if (typeof this.articleControl.get('category')?.value === 'string')
+		{
+			const sidebarRef = doc(this.firestore, 'sidebar-content', this.articleControl.get('category')?.value);
+			let categoryObj: { [ key: string ]: any; } = {};
+			categoryObj[ this.articleControl.get('title')?.value ] = this.articleControl.get('title')?.value;
+			return await setDoc(sidebarRef, categoryObj);
+		}
+		else
+		{
+			let categoryObj: { [ key: string ]: any; } = this.buildCategoryObject(Object.entries(this.articleControl.get('category')?.value)[0][1], this.articleControl.get('title')?.value);
+			const sidebarRef = doc(this.firestore, 'sidebar-content', Object.keys(this.articleControl.get('category')?.value)[0]);
+			return await setDoc(sidebarRef, categoryObj);
+		}
+	}
+
+	private buildCategoryObject(inputValue: any, endpoint: string): object
+	{
+		let output: { [ key: string ]: any; } = {};
+
+		if (typeof inputValue === 'string')
+		{
+			let endpointObj: { [ key: string ]: any; } = {};
+			endpointObj[ endpoint ] = endpoint;
+			output[ inputValue ] = endpointObj;
+		}
+
+		if (typeof inputValue === 'object')
+		{
+			for (const property of Object.entries(inputValue))
+			{
+				output[ property[ 0 ] ] = this.buildCategoryObject(property[ 1 ], endpoint);
+			}
+		}
+
+		return output;
 	}
 
 	public update_index(newIndex: number, content: any): void

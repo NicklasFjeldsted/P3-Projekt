@@ -20,27 +20,30 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuItemComponent } from './components/input-fieldmenu/menu-item/menu-item.component';
 import { InputFieldarrayComponent } from './components/input-fieldarray/input-fieldarray.component';
 import { AboutComponent } from './components/about/about.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SidebarComponent,
-    DropdownComponent,
-    ArticleComponent,
-    CreateArticleComponent,
-    ArticleContentComponent,
-    InputFieldComponent,
-    InputFieldareaComponent,
-    InputStaticFieldComponent,
-    InputFieldmenuComponent,
-    HomeComponent,
-    MenuItemComponent,
-    InputFieldarrayComponent,
-    AboutComponent
-  ],
-  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule],
-  providers: [],
-  bootstrap: [AppComponent],
+  	declarations: [
+  	 	AppComponent,
+  	 	HeaderComponent,
+  	 	SidebarComponent,
+  	 	DropdownComponent,
+  	 	ArticleComponent,
+  	 	CreateArticleComponent,
+  	 	ArticleContentComponent,
+  	 	InputFieldComponent,
+  	 	InputFieldareaComponent,
+  	 	InputStaticFieldComponent,
+  	 	InputFieldmenuComponent,
+  	 	HomeComponent,
+  	 	MenuItemComponent,
+  	 	InputFieldarrayComponent,
+  	 	AboutComponent
+  	],
+  	imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule, FormsModule, HttpClientModule, provideFirebaseApp(() => initializeApp(environment.firebase)), provideFirestore(() => getFirestore())],
+	providers: [],
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

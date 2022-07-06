@@ -42,3 +42,8 @@ testem.log
 Thumbs.db
 
 src/assets/data
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json
