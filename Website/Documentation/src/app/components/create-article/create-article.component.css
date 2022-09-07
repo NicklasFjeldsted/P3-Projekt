@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+:host {
+	display: block;
+	width: 100%;
+}
+
+#header {
+	font-size: 2.5rem;
+	color: var(--text-color);
+	font-family: 'Roboto', sans-serif;
+	font-weight: 600;
+}
+
+#create-form {
+	gap: 2rem;
+	display: flex;
+	flex-direction: column;
+	padding: 2rem 1rem;
+	position: relative;
+}
+
+.add-field-btn > i {
+	cursor: pointer;
+	font-size: 4rem;
+	color: rgb(114, 114, 114);
+	margin: 1rem;
+	border-radius: 100%;
+	float: left;
+}
+
+.add-field-content {
+	display: none;
+	z-index: 1;
+	flex-direction: column;
+	gap: 1rem;
+	background-color: #444;
+	position: absolute;
+	border-radius: 1rem;
+	padding: 0.5rem;
+	transform: translate(25%, -100%);
+	box-shadow: black 0px 2px 5px;
+}
+
+.add-field-content > * {
+	color: #fff;
+	font-size: 2rem;
+	background-color: #222;
+	border-radius: 0.5rem;
+	padding: 1rem;
+}
+
+.add-field-btn:focus ~ .add-field-content {
+	display: flex;
+}
+
+.add-field-btn:focus > i {
+	color: rgb(175, 175, 175);
+}
+
+.add-field-content:active {
+	display: flex;
+}
+
+.article-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.submit-container {
+	width: 100%;
+	height: auto;
+}
+
+.submit-container > button[type="submit"] {
+	width: calc(100% - 1rem);
+	display: block;
+	margin: auto;
+	background-color: #326abe;
+	padding: 1rem 1rem 1rem 1rem;
+	border-radius: 25px;
+	font-size: 1.5rem;
+	color: #fff;
+}
+
+select {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+@media (min-width: 768px)
+{
+	:host {
+		max-width: 50%;
+		margin: 0 auto;
+	}
+}

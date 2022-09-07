@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 1rem;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html {
+  font-size: 12px;
+}
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+body {
+  --background-color: #ffffff;
+  --text-color: #444;
+  --text-header-color: #28a3fc;
+  --paragraph-color: #000;
+  --sub-text-color: #666;
+  --header-color: #1d86ee;
+  --sub-header-color: #1c7ee0;
+  --sidebar-background: #f2f2f2;
+  --dropdown-background: #aaa;
+  --sidebar-color: #444;
+  --sidebar-background-hover: #dbdbdb;
+  --sidebar-color-hover: #1976d2;
+  --sidebar-text-shadow: 0 0 5px #FFFFFF;
+  --sidebar-outline: #1E88E5 auto 2px;
+  --input-background-color: rgb(235, 235, 235);
+  --nested-input-background-color: rgb(216, 216, 216);
+  --link-color: #0d47a1;
+  --logo-color: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+
+  --card-background: #dbdbdb;
+  --card-section-background: #bbb;
+  --card-header: #666;
+
+  --divider-background: #919191;
+
+  background-color: var(--background-color);
+}
+
+body.dark-mode {
+  --background-color: #303030;
+  --text-color: #fafafa;
+  --text-header-color: #7fc9ff;
+  --paragraph-color: #bdbdbd;
+  --sub-text-color: #777;
+  --header-color: #1976d2;
+  --sub-header-color: #1863d4;
+  --sidebar-background: #333;
+  --sidebar-color: #fafafa;
+  --sidebar-background-hover: #444;
+  --dropdown-background: #333;
+  --sidebar-color-hover: #bae0ff;
+  --sidebar-text-shadow: 0 0 5px #0a1014;
+  --sidebar-outline: #1E88E5 auto 2px;
+  --input-background-color: #fff;
+  --nested-input-background-color: rgb(235, 235, 235);
+  --link-color: #1976d2;
+
+  --card-background: #444;
+  --card-section-background: #555;
+  --card-header: #999;
+
+  --divider-background: #b8b8b8;
+
+  background-color: var(--background-color);
+}
+
+/* dark mode */
+
+/* body.dark-mode {
+  background-color: #303030!important;
+}
+
+body.dark-mode .header-wrapper {
+  background-color: #0d47a1!important;
+}
+
+body.dark-mode .sidebar {
+  background-color: #333!important;
+}
+
+body.dark-mode .sidebar-nav {
+  color: #fafafa!important;
+} */
+
+@media (min-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 992px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    font-size: 16px;
+  }
+}

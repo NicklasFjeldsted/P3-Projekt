@@ -1,0 +1,96 @@
+.body{
+  background-color: lightgreen;
+}
+
+/* Container for columns and the top "toolbar" */
+.row{
+  text-align: center;
+}
+
+.column {
+  float: left; 
+}
+
+.Tilmed{
+  position: fixed;
+  top: 5%;
+  left: 38%;
+  background-color: rgb(70, 91, 105);
+  border: 2px solid black;
+  padding: 50px;
+  margin: 20px;
+  width: 325px;  
+  height: 600px;
+}
+
+h1{
+  text-align: center;
+  margin-top: 10px;
+}
+
+p{
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+#Box{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 10px;
+}
+
+#Indbetal{
+  width: 100px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px;
+  background-color: rgb(218, 129, 14);
+}
+
+#Udbetal{
+  width: 100px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px;
+  background-color: white;
+  color: green;
+  border-color: green;
+}
+
+#LogUd{
+  width: 100px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px;
+  background-color: green;
+}
+
+#LogUd1{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 40px;
+  background-color: green;
+
+}
+
+#Deaktiver{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 20px;
+  background-color: rgb(240, 133, 12);
+}

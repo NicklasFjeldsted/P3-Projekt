@@ -1,0 +1,119 @@
+:host 
+{
+  display: flex;
+  height: calc(100vh - var(--full-header));
+  background-image: url("../../../assets/media/casino.jpg");
+}
+
+#form 
+{
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+
+.form-header 
+{
+  background-color: var(--bg-green);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+h1 
+{
+  padding: 1em 0.5em;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+}
+
+span 
+{
+  color: red;
+}
+
+.form-body 
+{
+  padding: 5% 10%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  gap: 1em;
+}
+
+.input-group 
+{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+textarea 
+{
+  height: 100px;
+}
+
+input[type="text"],
+textarea 
+{
+  padding: 2% 2% 2% 2%;
+  resize: none;
+}
+
+input[type="text"]:focus,
+textarea:focus 
+{
+  outline: none;
+}
+
+button[type="submit"] 
+{
+  height: 54px;
+  width: 125px;
+  background-color: #0d6efd;
+  border-radius: 3px;
+  border: transparent;
+  cursor: pointer;
+  color: white;
+}
+
+.is-invalid 
+{
+  padding: 10px;
+}
+
+@media (min-width: 768px) 
+{
+  #form {
+    width: 80%;
+  }
+}
+
+@media (min-width: 992px) 
+{
+  #form 
+  {
+    width: 50%;
+  }
+
+  h1 
+  {
+    padding: 1em 1.5em;
+  }
+
+  .form-body 
+  {
+    padding: 5% 5%;
+  }
+
+  input[type="text"],
+  textarea 
+  {
+    padding: 1% 1% 1% 1%;
+    resize: none;
+  }
+}

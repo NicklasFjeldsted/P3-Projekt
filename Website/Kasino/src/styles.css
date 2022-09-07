@@ -1,0 +1,531 @@
+/* You can add global styles to this file, and also import other style files */
+* 
+{
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+/* Define variables here */
+:root 
+{
+  --header-height: 10vh; /* fixed top-header height */
+  --games-height: 7.5vh; /* fixed games height */
+  --full-header: calc(var(--header-height) + var(--games-height)); /* fixed complete header height */
+  --footer-height: 16vh; /* fixed footer height */
+  --full-height: calc(100vh - calc(var(--full-header))); /* Makes component have full height without seeing the footer */
+
+  --bg-orange: #e78553;
+  --bg-green: #015536;
+  --bg-dark-green: #05372c;
+}
+
+.position-center 
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Game elements wrapper. */
+#game 
+{
+  width: 100vw;
+  min-height: var(--full-height);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Canvas wrapper. */
+#game > #canvas-screen 
+{
+  position: relative;
+  height: 600px;
+  width: 960px;
+}
+
+/* Canvas styling. */
+#game > #canvas-screen > canvas 
+{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Makes the body equal to the device's screen width and height. */
+body 
+{
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+.container-body 
+{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* A wrapper for everything on a page. */
+.container 
+{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Creates a row along the entire screen. */
+.row 
+{
+  position: relative;
+  border-bottom: 2px solid lightgray;
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+
+.test-row 
+{
+  position: relative;
+  display: flex;
+}
+
+.fit 
+{
+  height: fit-content;
+  width: fit-content;
+  padding: 10px 0px;
+}
+
+/* Create a row in the center of the screen. */
+.center-row 
+{
+  position: relative;
+  display: flex;
+  width: 50%;
+  margin: 0 auto;
+}
+
+/* A row that has the size of its parent's remaining height. */
+.fill-row 
+{
+  position: relative;
+  height: 100%;
+  display: flex;
+}
+
+/* Creates a column that scales with the number of other columns in its row. */
+.column 
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  text-align: center;
+  border: 2px transparent;
+}
+
+/* Makes the content of the element flow down instead of sideways. */
+.flow-down 
+{
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+/* Makes the content of the element flow up instead of sideways. */
+.flow-up 
+{
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+/* Makes the content of the element start from the center. */
+.center 
+{
+  justify-content: center;
+}
+
+.self-left 
+{
+  align-self: flex-start;
+}
+
+.self-right 
+{
+  align-self: flex-end;
+}
+
+.self-center 
+{
+  align-self: center;
+}
+
+/* Makes the content of the element start from the right. */
+.right 
+{
+  justify-content: flex-end;
+}
+
+/* Makes the content of the element start from the left. */
+.left 
+{
+  justify-content: flex-start;
+}
+
+/* Centers an element vertically within its parent. */
+.v-center 
+{
+  position: relative !important;
+  top: 50%;
+  transform: translateY(-50%) !important;
+}
+
+/* Centers an element horizontally within its parent. */
+.h-center 
+{
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+/* Defines the behaviour of all a elements. */
+a 
+{
+  color: black;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Standard button style. */
+.btn {
+  color: white;
+  height: 100%;
+  max-width: 310px;
+  max-height: 40px;
+  border: none;
+  border-radius: 17px;
+  font-size: 16px;
+  font-style: bold;
+  margin: 0 0.5em;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  background-color: #05372c;
+}
+
+.btn:hover 
+{
+  box-shadow: 0px 0px 10px green;
+}
+
+.btn-secondary 
+{
+  border: solid black 2px;
+  background-color: transparent;
+}
+
+.btn-solid 
+{
+  background-color: black;
+}
+
+.btn-solid a 
+{
+  color: white;
+}
+
+/* Defines the behaviour of a form. */
+.form-control 
+{
+  width: 75%;
+  height: 75%;
+  overflow: hidden;
+  border-radius: 5px;
+  border: 3px solid black;
+  text-align: center;
+  background-color: lightgrey;
+}
+
+/* Defines the behaviour of form inputs. */
+.form-input 
+{
+  width: 90%;
+  height: 30px;
+  max-width: 300px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: black 0px 0px 3px;
+  padding: 2px 8px;
+  margin-bottom: 10px;
+}
+
+.form-input:focus 
+{
+  outline: none;
+}
+
+.form-row 
+{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.form-row .form-input 
+{
+  align-self: center;
+  width: 100vw;
+}
+
+.form-row label 
+{
+  align-self: flex-start;
+}
+
+/* Defines the behaviour of form submits. */
+.form-submit 
+{
+  width: 90%;
+  border: none;
+  border-radius: 17px;
+  font-size: large;
+  font-size: bold;
+  cursor: pointer;
+}
+
+/* Defines the behaviour of all form's a elements. */
+form a 
+{
+  margin-bottom: 10px;
+}
+
+.cdk-overlay-backdrop 
+{
+  z-index: 400;
+  animation: fade-in 0.4s;
+}
+
+.animateOut 
+{
+  animation: fade-out 0.4s !important;
+}
+
+@keyframes fade-in
+ {
+  from 
+  {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to 
+  {
+    background-color: rgba(0, 0, 0, 0.32);
+  }
+}
+@keyframes fade-out 
+{
+  from 
+  {
+    background-color: rgba(0, 0, 0, 0.32);
+  }
+  to 
+  {
+    background-color: rgba(0, 0, 0, 0);
+  }
+}
+
+@media only screen and (max-width: 600px) 
+{
+  .form-control 
+  {
+    border: none;
+    border-radius: 0px;
+    width: 100%;
+    height: 100%;
+    max-width: 100% !important;
+    max-height: 100% !important;
+  }
+}
+
+.is-valid 
+{
+  background-color: #ebf6ef;
+  border: 1px solid #7dc198 !important;
+  color: black !important;
+}
+.is-invalid 
+{
+  background-color: #ffeeeb;
+  border: 1px solid #f00 !important;
+  color: #ff0000;
+  box-shadow: #ff0000 0px 0px 1px !important;
+}
+
+.invalid-feedback 
+{
+  color: red;
+  font-size: 0.6rem;
+  text-align: left;
+}
+
+.noselect 
+{
+  /* Disable text higligte */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+  supported by Chrome, Opera and Firefox */
+}
+
+html,
+body 
+{
+  min-height: 100%;
+  width: 100%;
+}
+body 
+{
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.backdropBackground 
+{
+  background-color: rgba(0, 0, 0, 0.8);
+  overflow: hidden !important;
+  display: block;
+}
+
+.modalOpen 
+{
+  overflow: hidden !important;
+}
+
+[class*="form-col-"] 
+{
+  width: 100%;
+}
+
+@media only screen and (min-width: 600px) 
+{
+  /* For tablets: */
+  .form-col-s-1 
+  {
+    width: 8.33%;
+  }
+  .form-col-s-2
+  {
+    width: 16.66%;
+  }
+  .form-col-s-3 
+  {
+    width: 25%;
+  }
+  .form-col-s-4 
+  {
+    width: 33.33%;
+  }
+  .form-col-s-5 
+  {
+    width: 41.66%;
+  }
+  .form-col-s-6 
+  {
+    width: 50%;
+  }
+  .form-col-s-7 
+  {
+    width: 58.33%;
+  }
+  .form-col-s-8 
+  {
+    width: 66.66%;
+  }
+  .form-col-s-9 
+  {
+    width: 75%;
+  }
+  .form-col-s-10 
+  {
+    width: 83.33%;
+  }
+  .form-col-s-11 
+  {
+    width: 91.66%;
+  }
+  .form-col-s-12 
+  {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 768px) 
+{
+  /* For desktop: */
+  .form-col-1 
+  {
+    width: 8.33%;
+  }
+  .form-col-2 
+  {
+    width: 16.66%;
+  }
+  .form-col-3 
+  {
+    width: 25%;
+  }
+  .form-col-4 
+  {
+    width: 33.33%;
+  }
+  .form-col-5
+  {
+    width: 41.66%;
+  }
+  .form-col-6 
+  {
+    width: 50%;
+  }
+  .form-col-7 
+  {
+    width: 58.33%;
+  }
+  .form-col-8 
+  {
+    width: 66.66%;
+  }
+  .form-col-9 
+  {
+    width: 75%;
+  }
+  .form-col-10 
+  {
+    width: 83.33%;
+  }
+  .form-col-11 
+  {
+    width: 91.66%;
+  }
+  .form-col-12 
+  {
+    width: 100%;
+  }
+}

@@ -1,0 +1,64 @@
+<div class="main-container" [@openClose]="isOpen ? 'open' : 'close'">
+  <div class="header-container">
+    <div id="header">Edit user balance</div>
+  </div>
+  <div class="content-container">
+    <div class="transaction-container">
+      <table id="table" mat-table [dataSource]="dataSource" matSort>
+        <!-- TransactionID Column -->
+        <ng-container matColumnDef="transaction-id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction ID </th>
+          <td mat-cell *matCellDef="let row"> {{ row.transactionID }} </td>
+        </ng-container>
+
+        <!-- TransactionDate Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Date </th>
+          <td mat-cell *matCellDef="let row"> {{ changeTimeZone(row.transactionDate) }} </td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+          <td mat-cell *matCellDef="let row"> {{ row.amount }} </td>
+        </ng-container>
+
+        <!-- CurrentBalance Column -->
+        <ng-container matColumnDef="current-balance">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Current Balance </th>
+          <td mat-cell *matCellDef="let row"> {{ row.currentBalance }} </td>
+        </ng-container>
+
+        <!-- IsInternal Column -->
+        <ng-container matColumnDef="isInternal">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> IsInternal </th>
+          <td mat-cell *matCellDef="let row"> {{ row.isInternal }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+      <div class="bottom-table">
+        <div class="button-container">
+          <button (click)="close()">Cancel</button>
+        </div>
+        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+      </div>
+    </div>
+    <div id="action-panel" class="action-panel">
+      <h2>Add/Remove </h2>
+      <div class="wrapper">
+
+        <div class="display-balance">
+          <div>Old Bal: {{customerBalance?.balance}}</div>
+          <div>New Bal: {{newBalance}}</div>
+        </div>
+        <form [formGroup]="form" (submit)="onSubmit()" class="edit-balance">
+          <input formControlName="balanceInput" type="number" (keyup)="getNewBalance()" (keypress)="numberOnly($event)">
+          <button type="submit" [disabled]="form.invalid">Make transaction</button>
+        </form>
+      </div>
+      </div>
+  </div>
+</div>
+

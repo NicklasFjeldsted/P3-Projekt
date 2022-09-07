@@ -1,0 +1,6 @@
+<div class="input-field" [formGroup]="group">
+	<label for="text">{{label}}:</label>
+	<input formControlName="header_level" type="number" class="second-input">
+	<input #indexRef formControlName="index" id="index" type="number" (change)="index_changed(indexRef.value)" name="index" [value]="group.value.index">
+	<input formControlName="text" autocomplete="off" [type]="type" name="text" [placeholder]="placeholder">
+</div>

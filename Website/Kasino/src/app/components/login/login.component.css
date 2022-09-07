@@ -1,0 +1,221 @@
+/* Gets the angular component element in the DOM and defines the behaviour of it. */
+:host 
+{
+  display: flex;
+  height: calc(100vh - var(--full-header));
+  background-image: url("../../../assets/casinoblur.jpg");
+}
+
+form 
+{
+  margin: auto;
+  z-index: 1;
+}
+
+.form-header 
+{
+  background-color: #015536;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.form-header > h1 
+{
+  padding: 0.5em 0;
+  color: #fff;
+  font-weight: 500;
+  margin: 0;
+}
+
+.form-body 
+{
+  padding: 5% 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #f9f9f9;
+}
+
+.input-group 
+{
+  position: relative;
+}
+
+.input-group > input 
+{
+  width: 100%;
+  font-size: 16px;
+  padding: 4% 2% 4% 12.5%;
+  border: 1px solid #dedede;
+  border-radius: 3px;
+  background-color: hsla(0, 0%, 100%, 0.1);
+  color: #919191;
+}
+
+.input-group > button 
+{
+  position: absolute;
+  height: 100%;
+  width: 30%;
+  right: 0;
+}
+
+.input-group > i
+{
+  width: 12.5%;
+  font-size: 5vw;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
+  color: #dcdcdc;
+}
+
+.input-group > input:focus 
+{
+  outline: 0;
+  color: #444;
+  background: none;
+  border: 1px solid #969696 !important;
+}
+
+.input-group > .is-valid 
+{
+  background-color: #ebf6ef;
+  border: 1px solid #7dc198 !important;
+  color: #919191;
+}
+
+.input-group > input:focus ~ #show-pass 
+{
+  border: none;
+  border-left: 1px solid #969696;
+}
+
+#show-pass 
+{
+  border-radius: 0;
+  border: 1px solid #dedede;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 0 3px 3px 0;
+  color: #249752;
+}
+
+.fa-envelope 
+{
+  font-size: 5vw;
+}
+
+.fa-lock 
+{
+  font-size: 5vw;
+}
+
+.submit-container 
+{
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.submit-container > button 
+{
+  width: 100%;
+  padding: 1pc 0;
+  border: 0;
+  font-size: 1pc;
+  font-weight: 500;
+  line-height: 24px;
+  border-radius: 50px;
+  background-color: var(--bg-orange);
+  color: #313233;
+  cursor: pointer;
+}
+
+.submit-container > button:disabled 
+{
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.form-links 
+{
+  width: 100%;
+  padding: 0 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.form-links a 
+{
+  color: #015536;
+  border: none;
+  background: none;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+  text-decoration: underline;
+}
+
+#error 
+{
+  width: 100%;
+  padding: 1pc;
+  font-size: 1pc;
+  background-color: #fccbc7;
+  border: 1px solid #f99d97;
+  border-radius: 2px;
+  color: #ea1c0d;
+  display: block;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) 
+{
+  .input-group > i 
+  {
+    font-size: 3.4vw;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) 
+{
+  .input-group > input 
+  {
+    padding: 3.5% 2% 3.5% 12.5%;
+  }
+
+  .input-group > i 
+  {
+    font-size: 2.5vw;
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) 
+{
+  .input-group > input 
+  {
+    padding: 3% 2% 3% 10%;
+  }
+
+  .input-group > i 
+  {
+    width: 10%;
+    font-size: 2vw;
+  }
+}
+
+@media (min-width: 1600px) 
+{
+  .input-group > i 
+  {
+    font-size: 1.5vw;
+  }
+}

@@ -1,0 +1,413 @@
+.active 
+{
+  color: #fff;
+}
+
+img 
+{
+  max-width: 100%;
+  height: auto;
+  border-radius: 3px;
+}
+
+.announcer-container 
+{
+  width: 100%;
+  aspect-ratio: 16 / 3;
+  background-image: url("../../../assets/media/kasino-banner.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.game-container 
+{
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+  height: auto;
+  margin-bottom: 25px;
+}
+
+/* Navbar section */
+
+nav 
+{
+  max-width: 100%;
+  height: auto;
+  color: #bdbdbd;
+}
+
+.wrapper 
+{
+  position: relative;
+  max-width: 100%;
+}
+
+.nav-wrapper 
+{
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  margin-inline: auto;
+}
+
+ul 
+{
+  min-width: 100%;
+  margin: 0;
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+  min-height: 56px;
+  text-align: center;
+  background: #262627;
+}
+
+li 
+{
+  position: relative;
+  font-size: 0.875rem;
+  display: inline-block;
+  vertical-align: bottom;
+  padding: 18px 9pt;
+  transition: color 0.25s ease-in-out;
+}
+
+li.active::before 
+{
+  position: absolute;
+  bottom: 7px;
+  left: 50%;
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: #e78553;
+  border-radius: 6px;
+  transform: translate(-50%);
+}
+
+li:hover 
+{
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Grid section */
+
+.featured-section,
+.casino-game-section 
+{
+  max-width: 1600px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.featured-game-grid,
+.casino-game-grid {
+  display: grid;
+  padding: 1em;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 1em;
+}
+
+.casino-game-grid 
+{
+  padding: 0 1em 1em 1em;
+}
+
+.casino-game,
+.featured-game 
+{
+  display: flex;
+  position: relative;
+}
+
+/* Promotion slider section*/
+
+.featured-game-grid > .promotion 
+{
+  grid-column: span 3 / auto;
+  grid-row: span 2 / auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.promotion-text 
+{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #fff;
+  padding: 8px;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.75) 1%, rgba(0, 0, 0, 0.75) 15%, rgba(0, 0, 0, 0.4) 66%, transparent);
+}
+
+.promotion > img 
+{
+  height: 100%;
+}
+
+.promotion-text > .title 
+{
+  font-size: 21px;
+  font-weight: 500;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+
+.promotion-text > .subtitle 
+{
+  font-size: 16px;
+  font-weight: 300;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+
+.promotion-text > .footer 
+{
+  display: flex;
+  align-items: flex-end;
+}
+
+.footer-button 
+{
+  margin-top: 8px;
+  padding: 8px 1pc;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 50px;
+  background-color: #e78553;
+  color: #313233;
+  cursor: pointer;
+  display: inline-block;
+  line-height: 24px;
+  text-align: center;
+  white-space: nowrap;
+  transition: all 0.3s ease 0s;
+}
+
+.footer-button:hover 
+{
+  background-color: #eb9b72;
+}
+
+.footer-text 
+{
+  font-size: 10px;
+  padding-left: 8px;
+}
+
+/* Overlay section */
+
+.overlay 
+{
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: linear-gradient(180deg, transparent 0, rgba(0, 0, 0, 0.4) 0, rgba(0, 0, 0, 0.4));
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  transition: 0.15s linear;
+  border-radius: 3px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+.featured-game:hover > .overlay,
+.casino-game:hover > .overlay 
+{
+  top: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.overlay > i 
+{
+  font-size: 4.5em;
+}
+
+.play-icon 
+{
+  color: #dcdcdc;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.overlay > .play-icon:hover 
+{
+  transform: translate(-50%, -50%) scale(1.1);
+  color: #fff;
+  transition: all ease-in;
+}
+
+/* Not-released section */
+
+.not-released:hover > .overlay 
+{
+  cursor: not-allowed;
+}
+
+.not-released > .overlay > i:hover 
+{
+  transform: translate(-50%, -50%) scale(1);
+  color: #dcdcdc;
+}
+
+.casino-game-grid > .not-released 
+{
+  border: 1px solid black;
+}
+
+.overlay-text 
+{
+  color: white;
+  font-size: 26px;
+  font-weight: 500;
+}
+
+.sticky-navbar 
+{
+  position: fixed;
+  top: 10vh;
+  z-index: 1;
+}
+
+/* Media queries */
+
+@media (max-width: 1200px) 
+{
+  .featured-game-grid,
+  .casino-game-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .featured-game-grid > .promotion {
+    grid-column: span 3;
+    grid-row: span 2;
+  }
+}
+
+@media (max-width: 960px) 
+{
+  .featured-game-grid,
+  .casino-game-grid 
+  {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) 
+{
+  .featured-game-grid,
+  .casino-game-grid 
+  {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .featured-game-grid > .promotion 
+  {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .promotion-text > .title 
+  {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) 
+{
+  .featured-game-grid,
+  .casino-game-grid 
+  {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .featured-game-grid > .promotion 
+  {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
+/* Slideshow --- */
+
+/* Style each of the sides with a fixed width and height */
+.slide 
+{
+  float: left;
+  width: 25%;
+  position: relative;
+}
+
+.slide > div
+{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+/* Add animation to the slides */
+.slide-wrapper 
+{
+  /* Calculate the total width on the basis of number of slides */
+  width: calc(100% * 4);
+
+  /* Specify the animation with the duration and speed */
+  animation: slide 25s ease-in-out 10s alternate forwards;
+}
+
+/* Set the background color of each of the slides */
+.slide:nth-child(1) 
+{
+  background: green;
+}
+
+.slide:nth-child(2) 
+{
+  background: green;
+}
+
+.slide:nth-child(3) 
+{
+  background: green;
+}
+
+.slide:nth-child(4) 
+{
+  background: green;
+}
+
+/* Define the animation for the slideshow */
+@keyframes slide 
+{
+  /* Calculate the margin-left for each of the slides */
+  20% 
+  {
+    margin-left: 0px;
+  }
+
+  40% 
+  {
+    margin-left: calc(-100% * 1);
+  }
+
+  60% 
+  {
+    margin-left: calc(-100% * 2);
+  }
+
+  80% 
+  {
+    margin-left: calc(-100% * 3);
+  }
+}

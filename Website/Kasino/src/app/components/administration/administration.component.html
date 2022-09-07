@@ -1,0 +1,63 @@
+<div class="main-container">
+  <div class="dashboard">
+    <!-- Title -->
+    <div class="dashboard-title">User management</div>
+    <div class="dashboard-subtitle">Edit user accounts</div>
+  </div>
+
+  <div class="table-container">
+    <div class="search-container">
+      <div class="searchbar">
+        <!-- Searchbar -->
+        <input type="text" (keyup)="applyFilter($event)" placeholder="Filter" /><i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+    <mat-table [dataSource]="dataSource" matSort>
+      <!-- ID Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="header-id"> Customer ID </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="column-id"> {{ row.customerID }} </mat-cell>
+      </ng-container>
+
+      <!-- Email Column -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> E-mail </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+      </ng-container>
+
+      <!-- First Name Column -->
+      <ng-container matColumnDef="firstname">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> First Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.firstName }} </mat-cell>
+      </ng-container>
+
+      <!-- Last Name Column -->
+      <ng-container matColumnDef="lastname">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.lastName }} </mat-cell>
+      </ng-container>
+
+      <!-- Role Column -->
+      <ng-container matColumnDef="role">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Role </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.role }} </mat-cell>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Actions </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="actions">
+          <button (click)="openAction(row.customerID, 1)"><i class="fa-solid fa-pen-to-square"></i></button> <!-- Edit Action -->
+          <button (click)="openAction(row.customerID, 2)"><i class="fa-solid fa-wallet"></i></button> <!-- Balance Action -->
+          <button (click)="openAction(row.customerID, 3)"><i class="fa-solid fa-user-slash"></i></button> <!-- Suspend Action -->
+          <button (click)="openAction(row.customerID, 4)"><i class="fa-solid fa-unlock"></i></button>  <!-- Reset Password Action -->
+        </mat-cell>
+      </ng-container>
+
+      <!-- Table paginator -->
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+</div>

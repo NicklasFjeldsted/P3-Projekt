@@ -1,0 +1,6 @@
+<div class="sidebar" id="sidebar">
+	<button class="sidebar-nav" id="sidenav-bar" (click)="Emit()" routerLink="/article/create">Create</button>
+	<dropdown [data]="data" (onNavigate)="Emit()"></dropdown>
+</div>
+
+<div id="sidebar-fill"></div>

@@ -1,0 +1,65 @@
+.article-header {
+	padding: 1rem .5rem;
+	text-align: left;
+}
+
+.article-header > p {
+	color: var(--sub-text-color);
+}
+
+#title {
+	font-size: 3rem;
+	margin: 0 auto;
+	color: var(--text-color);
+}
+
+.divider {
+	width: auto;
+	margin: 0 .5rem;
+	background-color: #444;
+	height: 1px;
+}
+
+.article-content {
+	margin-top: 2rem;
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: column;
+}
+
+.navigate {
+	margin-top: 2rem;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	padding: 0 1rem;
+	position: relative;
+}
+
+#back {
+	position: absolute;
+	left: 1rem;
+}
+
+#next {
+	position: absolute;
+	right: 1rem;
+}
+
+.navigate > a {
+	padding: 1rem 2rem;
+	background-color: var(--header-color);
+	color: #fff;
+	text-decoration: none;
+	border-radius: 5px;
+	transition: all .1s ease;
+}
+
+.navigate > a:hover {
+	scale: 1.025;
+}
+
+@media screen and (min-width: 768px) {
+
+}
+

@@ -1,0 +1,219 @@
+.container
+{
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  width: 100%;
+  height: 100%
+}
+
+/* Container for columns */
+.row
+{
+  position: relative;
+  border-bottom: 2px solid lightgray;
+  height: 50px;
+  display: flex;
+  width: 100%;
+}
+
+.fill-row
+{
+  position: relative;
+  height: 100%;
+  display: flexbox;
+}
+
+.column
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.right
+{
+  justify-content: end;
+}
+
+.left
+{
+  justify-content: start;
+}
+
+.flow-down
+{
+  flex-direction: column;
+}
+
+.center
+{
+  position: relative!important;
+  top: 50%!important;
+  transform: translateY(-50%)!important;
+}
+
+.middle
+{
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+}
+
+.icons
+{
+  font-size: 25px;
+  line-height: 5%;
+}
+
+.fa
+{
+  text-align: center;
+}
+
+.login
+{
+  width: 75%;
+  height: 50%;
+  max-width: 312px;
+  max-height: 275px;
+  overflow: hidden;
+  padding: 30px;
+  border-radius: 5px ;
+  border: 3px solid black;
+  text-align: center;
+  background-color: lightgrey;
+}
+
+/* border-radius has used to give shape of box */
+
+.form-input
+{
+  width: 100%;
+  height: 30px!important;
+  max-width: 300px;
+  border: none;
+  border-radius: 3px;
+  box-shadow: black 0px 0px 3px;
+  padding: 2px 8px;
+  margin-bottom: 10px;
+}
+
+.form-submit
+{
+  width: 100%;
+  height: 100%;
+  max-width: 310px;
+  max-height: 40px;
+  border: none;
+  border-radius: 17px;
+  color: black;
+  font-size: large;
+  font-size: bold;
+  background-color: green;
+}
+
+/*
+body{
+  text-align: center;
+  box-sizing: content-box;  
+  width: 400px;
+  height: 600px;
+  padding: 0px;  
+  border: 2px solid black;
+  position: fixed;
+  top: 15%;
+  left: 35%;
+}
+
+h1{
+  font-size: 30px;
+  margin-top: 0px;
+  font: bold;
+  background-color: green;
+}
+
+p{
+  color: black;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
+#kort{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 0px;
+}
+
+#kt{
+  width: 141px;
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
+}
+
+span{
+  content: "\0024";
+}
+
+#amount{
+  width: 150px;
+  height: 60px;
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 20px;
+}
+
+.num{
+  border-radius: 900px;
+  width: 100%;
+  height: 20;
+  display:inline-block;
+  box-sizing: border-box;
+  border:1px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 30px;
+}
+
+#numbersBn{
+  width: 80px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 30px;  
+  padding-left: 8px;
+  margin-top: 10px; 
+  border-color: green;
+}
+
+#IndbetalBn{
+  color: brown;
+  background-color: rgb(228, 116, 11);
+  border-radius: 80px;
+  width: 250px;
+  height: 35px;
+  margin-top: 50px;
+}
+
+#BeløbsGrænseBn{
+  color: brown;
+  background-color: white;
+  border-color: green;
+  border-radius: 80px;
+  width: 250px;
+  height: 35px;
+  margin-top: 20px;
+}
+*/

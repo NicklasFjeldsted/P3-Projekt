@@ -1,0 +1,17 @@
+.article-header {
+	color: var(--text-color);
+}
+
+#content-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.article-textarea-link > a {
+	color: var(--link-color);
+	text-decoration: underline;
+}
+
+p {
+	color: var(--paragraph-color);
+}

@@ -1,0 +1,33 @@
+.input-static-field {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.input-static-field > * {
+	font-size: 1.5rem;
+}
+
+.input-static-field > label {
+	color: var(--text-color);
+	margin-left: 1.5rem;
+}
+
+.input-static-field > input {
+	border-radius: 0.5rem;
+	border: none;
+	background-color: var(--input-background-color);
+	padding: 0.5rem 0.5rem 0.5rem 1rem;
+	outline: none;
+}
+
+.input-static-field > #index {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	width: 4.5rem;
+}
+
+.input-field-display {
+	display: none;
+}

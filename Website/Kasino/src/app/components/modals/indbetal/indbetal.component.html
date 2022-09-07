@@ -1,0 +1,111 @@
+<form [formGroup]="form" [@openClose]="isOpen ? 'open' : 'close'" id="indbetalForm" method="post" class="form-control h-center v-center noselect">
+  <div class="header">
+    <div class="header-button">
+      <svg id="closeButton" (click)="close()" xmlns="http://www.w3.org/2000/svg" size="system" viewBox="0 0 48 48" preserveAspectRatio="xMinYMin meet">
+        <path data-path="close" fill-rule="evenodd" d="M38,12.8 L35.2,10 L24,21.2 L12.8,10 L10,12.8 L21.2,24 L10,35.2 L12.8,38 L24,26.8 L35.2,38 L38,35.2 L26.8,24 L38,12.8 Z"></path>
+      </svg>
+
+    </div>
+
+    <div class="header-title">
+      <div>Indbetaling</div>
+    </div>
+  </div>
+
+  <div class="padding">
+    <div class="card-credentials">
+      <div class="input-group">
+        <div class="input-container">
+          <input id="form-input" class="no-icon" formControlName="cardName" [ngClass]="{ 'is-invalid': f['cardName'].touched && f['cardName'].errors, 'is-valid': f['cardName'].touched && !f['cardName'].errors }" required=""/>
+          <span class="input-label no-icon-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">Kortholders navn</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-container">
+          <span class="icon" id="cardNumber"></span>
+          <input id="form-input" (keyup)="addDashes()" (keypress)="keyPressNumbers($event)" (focusout)="this.isCardValid = isValid()" formControlName="cardNumber"  maxlength="19" [ngClass]="{ 'is-invalid': (f['cardNumber'].touched && f['cardNumber'].errors) || !isCardValid, 'is-valid': f['cardNumber'].touched && !f['cardNumber'].errors && isCardValid}" required=""/>
+          <span class="input-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">Kreditkortnummer</span>
+        </div>
+      </div>
+
+      <div class="card-wrapper">
+        <div class="input-group">
+          <div class="input-container">
+            <span class="icon" id="expDate"></span>
+            <input id="form-input" (keyup)="addSlash()" formControlName="expDate" minlength="5" maxlength="5" [ngClass]="{ 'is-invalid': f['expDate'].touched && f['expDate'].errors, 'is-valid': f['expDate'].touched && !f['expDate'].errors }" required=""/>
+            <span class="input-label" [ngClass]="{ 'label-error': f['cardName'].touched && f['cardName'].errors }">•• / ••</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="input-container">
+            <span class="icon" id="cvc"></span>
+            <input id="form-input" formControlName="cvv" [ngClass]="{ 'is-invalid': f['cvv'].touched && f['cvv'].errors, 'is-valid': f['cvv'].touched && !f['cvv'].errors }" required=""/>
+            <span class="input-label" [ngClass]="{ 'label-error': f['cvv'].touched && f['cvv'].errors }">CVC</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="input-container">
+          <input id="form-input" class="no-icon" formControlName="amount" [maxlength]="getMaxLength()" (keypress)="keyPressNumbers($event)" [ngClass]="{   'is-invalid': (f['amount'].touched && f['amount'].value < 100) || (f['amount'].touched && f['amount'].value > currentLimit!),   'is-valid': (f['amount'].touched && f['amount'].value >= 100) || (f['amount'].touched && f['amount'].value < currentLimit!) }"/>
+          <span class="input-label no-icon-label" [ngClass]="{ 'label-error': f['amount'].touched && f['amount'].errors }">Beløb (100 kr. - 100.000 kr.)</span>
+        </div>
+
+        <div *ngIf="f['amount'].value < 100 || f['amount'].value > currentLimit!" class="invalid-feedback">
+          <div *ngIf="f['amount'].value < 100">Du kan mindst indbetale 100 kr.</div>
+          <div *ngIf="f['amount'].value > currentLimit!">Du overstiger din indbetalingsgrænse på {{ currentLimit }} kr!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amount button selection -->
+    <div class="amount-selection">
+      <div class="amount-grid" id="button-grid">
+        <button type="button" class="grid-item" (click)="updateAmount(100, 0)">
+          <span class="left"></span>
+          <p>100 kr</p>
+          <span class="right"></span>
+        </button>
+
+        <button type="button" class="grid-item" (click)="updateAmount(150, 1)">
+          <span class="left"></span>
+          <p>150 kr</p>
+          <span class="right"></span>
+        </button>
+
+        <button type="button" class="grid-item" (click)="updateAmount(250, 2)">
+          <span class="left"></span>
+          <p>250 kr</p>
+          <span class="right"></span>
+        </button>
+
+        <button type="button" class="grid-item" (click)="updateAmount(500, 3)">
+          <span class="left"></span>
+          <p>500 kr</p>
+          <span class="right"></span>
+        </button>
+
+        <button type="button" class="grid-item" (click)="updateAmount(1000, 4)">
+          <span class="left"></span>
+          <p>1000 kr</p>
+          <span class="right"></span>
+        </button>
+        
+        <button type="button" class="grid-item" (click)="updateAmount(2500, 5)">
+          <span class="left"></span>
+          <p>2500 kr</p>
+          <span class="right"></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="submit-form">
+      <button type="submit" id="submit" (click)="onSubmit()" [disabled]="form.invalid || f['amount'].value < 100 || f['amount'].value > currentLimit! || !isCardValid">
+        Indbetal {{ f["amount"].value }} kr på min konto
+      </button>
+      <button type="button" id="change" (click)="openLimit()">Indstil Indbetalingsgrænse</button>
+    </div>
+  </div>
+</form>

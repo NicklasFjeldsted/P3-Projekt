@@ -1,0 +1,17 @@
+<div class="navigation">
+	<button id="select-btn" (click)="passValueUp(item)">{{item.name}}</button>
+	<button id="menu-btn" *ngIf="item.children.length > 0" (click)="openMenu()">
+		<svg #arrow focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"></path>
+		</svg>
+	</button>
+	<button id="add-option-btn" [ngStyle]="isAddActive ? { 'color': '#50a8ff' } : {}" (click)="openAddOption()"><i class="fa-solid fa-circle-plus"></i></button>
+</div>
+<div *ngIf="isAddActive"  class="add-option-wrapper">
+	<input #newOptionInput id="add-option-input" placeholder="New category name." (keydown.enter)="confirm()" (keydown.escape)="cancel()">
+	<button id="confirm-btn" (click)="confirm()"><i class="fa-solid fa-circle-check"></i></button>
+	<button id="cancel-btn" (click)="cancel()"><i class="fa-solid fa-circle-xmark"></i></button>
+</div>
+<div *ngIf="isActive" class="nested-menu-items">
+	<menu-item *ngFor="let child of item.children" [item]="child" (onPassValueUp)="passValueUp($event)"></menu-item>
+</div>

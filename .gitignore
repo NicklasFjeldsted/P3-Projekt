@@ -1,0 +1,10 @@
+*.cache
+*.sentinel
+*.suo
+*.props
+*.editorconfig
+*.pdb
+Website/Kasino/.vscode/settings.json
+Website/.vscode/settings.json
+TEC-KasinAPI/.vs/
+*.meta

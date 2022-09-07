@@ -1,0 +1,307 @@
+:host 
+{
+  height: var(--full-header);
+  display: block;
+}
+
+i 
+{
+  cursor: pointer;
+}
+
+h4 
+{
+  padding: 0;
+  margin: 0;
+  line-height: 1;
+  font-size: clamp(10px, 2vmin, 1pc);
+}
+
+.header 
+{
+  width: 100%;
+  height: var(--header-height);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 0 1pc rgba(0, 0, 0, 0.4);
+  background-color: var(--bg-green);
+}
+
+.header-wrapper 
+{
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+/* header flex elements */
+
+.flex 
+{
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.sidenav-container 
+{
+  flex: 0 1 auto;
+  padding-left: 2%;
+}
+
+.logo-container 
+{
+  flex: 0;
+}
+
+.button-container 
+{
+  flex: auto;
+}
+
+/* Sidenav */
+
+#sidenav 
+{
+  font-size: 1.6em;
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+}
+
+/* Logo */
+
+#logo 
+{
+  display: none;
+  max-width: 188px;
+  position: absolute;
+  left: 47%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+  cursor: pointer;
+}
+
+/* Buttons */
+
+.button-wrapper 
+{
+  position: absolute;
+  right: max(40px, 5vw);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.unauthorized 
+{
+  gap: 1em;
+}
+
+button 
+{
+  padding: 1pc;
+  border-radius: 50px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 9pt;
+  cursor: pointer;
+}
+
+#signup 
+{
+  background-color: #e78553;
+  color: #313233;
+  border: 1px solid transparent;
+}
+
+#login 
+{
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: all 0.3s ease 0s;
+  color: #fff;
+}
+
+#login:hover
+{
+  border-color: #fff;
+}
+
+#balance 
+{
+  position: relative;
+  padding: 9px 3pc 9px 1pc;
+  background-color: #05372c;
+  border: 7px solid #05372c;
+  color: #fff;
+  font-size: 1pc;
+  transition: all 0.1s ease;
+  white-space: nowrap;
+}
+
+#balance > i 
+{
+  font-size: 34px;
+  color: #f08000;
+  position: absolute;
+  right: -2px;
+  top: -2px;
+}
+
+#balance:hover 
+{
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+#notification 
+{
+  position: relative;
+  padding: 10px;
+  border-radius: 100%;
+  font-size: 1pc;
+  background-color: #05372c;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #05372c;
+  transition: all 0.1s ease;
+}
+
+#notification > i 
+{
+  position: absolute;
+  font-size: 26px;
+  color: #ddd;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#notification:hover 
+{
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+#user 
+{
+  position: relative;
+  padding: 10px;
+  border-radius: 100%;
+  font-size: 1pc;
+  background-color: #05372c;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #05372c;
+  transition: all 0.1s ease;
+}
+
+#user > i 
+{
+  position: absolute;
+  font-size: 24px;
+  color: #ddd;
+  left: 50%;
+  top: 49%;
+  transform: translate(-50%, -50%);
+}
+
+#user:hover {
+  box-shadow: 0px 2px 5px -1px #000000;
+}
+
+.game-menu 
+{
+  width: 100%;
+  height: 7.5vh;
+  position: absolute;
+  top: var(--header-height);
+  background-color: var(--bg-dark-green);
+}
+
+.game-wrapper 
+{
+  width: min(100%, 600px);
+  height: 100%;
+  margin: auto;
+}
+
+.game-item 
+{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff;
+}
+
+.game-item > a 
+{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.1s ease;
+  margin: auto;
+  box-sizing: border-box;
+}
+
+svg 
+{
+  width: auto;
+  height: min(7.5vw, 35px);
+  scale: 1;
+  filter: invert(95%) sepia(97%) saturate(14%) hue-rotate(213deg) brightness(104%) contrast(104%);
+  transition: all 0.15s ease;
+}
+
+.game-item > a:hover > svg 
+{
+  height: calc(35px * 1.1);
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) 
+{
+  .game-wrapper {
+    width: min(75%, 625px);
+  }
+
+  .sidenav-container {
+    flex: 1;
+  }
+
+  .logo-container {
+    flex: 1;
+  }
+
+  .button-container {
+    flex: 1;
+  }
+
+  #logo {
+    display: unset;
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) 
+{
+  .game-wrapper {
+    width: min(65%, 750px);
+  }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) 
+{
+  .game-wrapper {
+    width: min(60%, 1050px);
+  }
+
+  .button-wrapper {
+    right: max(40px, 10vw);
+  }
+}

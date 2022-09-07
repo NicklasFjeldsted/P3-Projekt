@@ -1,0 +1,100 @@
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap");
+</style>
+<div class="back-drop" id="backdrop" (click)="closeSideNav(); closeAccountPanel(); closeNotifications()"></div>
+<div class="sidenav noselect" id="sideNav" [@openSidenav]="isSidenavOpen ? 'open' : 'closed'">
+  <div class="sidenav-content">
+    <ul class="sidenav-list">
+      <li class="sidenav-item">
+        <a routerLink=""><i class="fa fa-house"></i><span>Forside</span></a>
+      </li>
+      <li class="sidenav-item" *ngIf="role != ''">
+        <a routerLink="konto"><i class="fa fa-user"></i><span>Konto</span></a>
+      </li>
+      <li class="sidenav-item">
+        <a routerLink="/indstillinger"><i class="fa fa-gear"></i><span>Indstillinger</span></a>
+      </li>
+      <li class="sidenav-item sidenav-info" id="help">
+        <a routerLink="support"><span>Help Center</span></a>
+      </li>
+      <li class="sidenav-item sidenav-info">
+        <a routerLink="kontakt"><span>Kontakt os</span></a>
+      </li>
+      <li class="sidenav-item sidenav-info">
+        <a routerLink="om-os"><span>Om os</span></a>
+      </li>
+      <li class="sidenav-item sidenav-info">
+        <a routerLink="/reglerOgBetingelser"><span>Regler og Betingelser</span></a>
+      </li>
+      <li *ngIf="role == 'Admin'" class="sidenav-item sidenav-info">
+        <a routerLink="/administration"><span>Administration</span></a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="account-panel" [@openAccountPanel]="isAccountPanel">
+  <div class="top-panel">
+    <h3>{{ accountName }}</h3>
+    <div class="account-details">
+      <div class="details">
+        <h4>Konto-id:</h4>
+        <h4>{{ accountID }}</h4>
+      </div>
+      <div class="add-balance">
+        <button id="add-balance">Indbetal</button>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="balance-panel">
+      <div class="balance-display">
+        <span>Din nuværende saldo</span>
+        <span>{{ accountBalance }} kr</span>
+      </div>
+    </div>
+  </div>
+  <div class="bot-panel">
+    <ul class="account-list">
+      <li class="account-item"><span>Udbetal</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item" (click)="goToAccount(2)"><span>Transaktionshistorik</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item" (click)="goToAccount(1)"><span>Min Konto</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item" (click)="goToAccount(3)"><span>Indbetalingsgrænse</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="account-item"><span>Udeluk dig selv</span><i class="fa-solid fa-angle-right"></i></li>
+      <li class="list-divider"></li>
+      <li class="account-item" (click)="openLogout()"><span>Log ud</span><i class="fa-solid fa-angle-right"></i></li>
+    </ul>
+  </div>
+</div>
+
+<i class="fa-solid fa-caret-up" id="arrow-notification" *ngIf="isNotificationsOpened"></i>
+<div class="notification-container" *ngIf="isNotificationsOpened">
+  <div class="notification-header">
+    <div class="notification-circle"></div>
+    <span>0</span>
+    <p>Ulæste notifikationer</p>
+  </div>
+  <div class="notification-content">
+    <ul class="notification-list">
+      <li class="notification-item">
+        <div class="notification-image"><img src="../../../assets/media/notification-image.jpg" /></div>
+        <div class="notification-text">
+          <h3 class="text-header">Du kan få 100% bonus på din første indbetaling!</h3>
+          <div class="text-divider">
+            <div class="notification-play">Spil nu!</div>
+            <div class="notification-date">16-05-2022</div>
+          </div>
+        </div>
+        <div class="notification-button">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="notification-footer"></div>
+</div>
+
+<app-header (onSideNavToggle)="openSideNav()" (onAccountPanelToggle)="openAccountPanel()" (onNotificationsToggle)="openNotifications()"></app-header>
+<router-outlet></router-outlet>
+<app-footer></app-footer>

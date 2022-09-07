@@ -1,0 +1,92 @@
+:host {
+	width: 100%;
+}
+
+.navigation {
+	display: flex;
+	flex-direction: row;
+	gap: 0.25rem;
+	width: 100%;
+}
+
+#select-btn {
+	background-color: #fff;
+	border-radius: 0.25rem;
+	padding: 0.5rem;
+	flex: 0.7;
+}
+
+#menu-btn {
+	flex: 0.15;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#menu-btn > svg {
+	width: 2rem;
+	align-self: center;
+}
+
+#menu-btn > svg > path {
+	fill: var(--text-color);
+}
+
+#add-option-btn {
+	color: #1976d2;
+	display: flex;
+	flex: 0.15;
+	justify-content: center;
+	align-items: center;
+}
+
+#add-option-btn > i {
+	font-size: 1.5rem;
+}
+
+.add-option-wrapper {
+	margin-top: 0.25rem;
+	display: flex;
+	flex-direction: row;
+	gap: 0.25rem;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+}
+
+#add-option-input {
+	outline: none;
+	padding: 0.5rem;
+	border: none;
+	border-radius: 0.25rem;
+	flex: 0.7;
+}
+
+#cancel-btn, #confirm-btn {
+	flex: 0.15;
+}
+
+#cancel-btn > i, #confirm-btn > i {
+	font-size: 1.5rem;
+}
+
+#cancel-btn {
+	color: rgb(221, 0, 0);
+}
+
+#confirm-btn {
+	color: rgb(0, 180, 0);
+}
+
+.rotated {
+	transform: rotate(90deg);
+}
+
+.nested-menu-items {
+	background-color: var(--dropdown-background);
+	padding: 1rem;
+	border-radius: 0.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}

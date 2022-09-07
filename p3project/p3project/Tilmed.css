@@ -1,0 +1,108 @@
+.Header {
+  text-align: center;
+}
+
+.dot {
+  margin-top: 4px;
+  height: 12px;
+  width: 12px;
+  border-radius: 50%;
+  display: inline-block;
+    
+}
+.Tilmed{
+  position: fixed;
+  top: 10%;
+  left: 38.1%;
+}
+
+.Box{
+  background-color: rgb(148, 56, 56);
+  border: 2px solid black;
+  padding: 50px;
+  margin: 20px;
+  width: 312px;  
+  height: 300px;
+}
+
+#TextBox{
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 10px;
+}
+
+#Ck{
+  margin-top: 20px;
+}
+
+#sub
+{
+  margin-top: 20px;
+  display:inline-block;
+  color:white;
+  padding: 5px;
+  height: 30px;  
+  /* we can use margin distance like  margin: 3px 0; */
+  border: none;
+  cursor: pointer;
+  border-radius: 30px;
+  background-color: rgb(241, 118, 3);
+}
+
+#sub{
+  text-align: center;
+  width: 50%
+}
+
+p{
+  font-size: 15px;
+  padding: 5px;
+}
+
+#Mand{
+  width: 142px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 10px;  
+}
+
+#Dame{
+  width: 142px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 10px;  
+}
+
+#log{
+  background-color: rgb(199, 78, 22);
+  width: 300px;  
+  height: 30px;  
+  border-width: 1px;  
+  border-radius: 3px;  
+  padding-left: 8px;
+  margin-top: 30px;
+  border-radius: 30px;  
+}
+
+.NæsteTilmed{
+  position: fixed;
+  top: 10%;
+  left: 38.1%;
+}
+
+.Næste{
+  background-color: rgb(148, 56, 56);
+  width: 300px;
+  border: 2px solid black;
+  padding: 40px;
+  margin: 20px;
+  width: 312px;  
+  height: 500px;
+}

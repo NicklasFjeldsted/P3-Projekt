@@ -1,0 +1,33 @@
+<div class="featured-sites noselect" [ngSwitch]="helpSite">
+
+  <div class="container" id="something">
+    <i *ngIf="helpSite != 0" (click)="changeSite(0)" class="fa-solid fa-arrow-left"></i>
+		<div class="searchbar">
+      <h1>Hvordan kan vi hjælpe?</h1>
+      <!-- Searchbar -->
+			<input class="input-searchbar" placeholder="Søg">
+		</div>
+	</div>
+  
+	<div class="category-container" *ngSwitchCase="'0'">
+    <section class="grid-container">
+      <!-- grid section -->
+      <a (click)="changeSite(1)" ><div class="grid-item"><i class="fa-regular fa-circle-question"></i>Generalt</div></a>
+      <a (click)="changeSite(2)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Indbetaling</div></a>
+			<a (click)="changeSite(3)"><div class="grid-item"><i class="fa-regular fa-credit-card"></i>Udbetaling</div></a>
+			<a (click)="changeSite(4)"><div class="grid-item"><i class="fa-regular fa-id-card"></i>Registrering og log ind</div></a>
+			<a routerLink="/reglerOgBetingelser"><div class="grid-item"><i class="fa-solid fa-scroll"></i>Spilleregler</div></a>
+			<a (click)="changeSite(5)"><div class="grid-item"><i class="fa-regular fa-gem"></i>Velkomstbonusser</div></a>
+		</section>
+	</div>
+  
+  <div class="item-container" [ngSwitch]="helpSite">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="1" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="2" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="3" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="4" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="5" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+    <embed class="form-col-9 form-col-s-12 pdf" *ngSwitchCase="6" src="../../../assets/media/Lorum.pdf#toolbar=0&navpanes=0&scrollbar=0">
+  </div>
+</div>
+  

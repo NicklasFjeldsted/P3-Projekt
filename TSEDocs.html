@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Document</title>
+	</head>
+	<body style="font-family: Arial;">
+		<style>
+			.l1 {
+				margin: 20px 0px 60px 20px;
+				border-left: dashed grey;
+				padding-left: 10px;
+			}
+
+			.l2 {
+				margin: 20px 0px 60px 40px;
+				border-left: dashed grey;
+				padding-left: 10px;
+			}
+
+			.l3 {
+				margin: 20px 0px 60px 60px;
+				border-left: dashed grey;
+				padding-left: 10px;
+			}
+			
+			.l4 {
+				border-radius: 10px;
+				margin: 40px 0px 60px 80px;
+				padding: 10px;
+				box-shadow: 0px 0px 3px black;
+			}
+
+			li {
+				margin: 40px 0px 0px 0px;
+				border: lightgrey solid;
+				border-radius: 10px;
+			}
+
+			li > p {
+				padding: 20px;
+				margin: 0;
+			}
+
+			li > p:first-child {
+				background-color: lightgrey;
+			}
+		</style>
+
+		<h1>TypeScript Engine Documentation</h1>
+
+		<div class="l1" id="utils">
+
+			<h2>Utils</h2>
+
+			<div class="l2" id="rendering">
+
+				<h3>Rendering</h3>
+
+				<div class="l3" id="canvas">
+
+					<h4>Canvas</h4>
+
+					<div class="l4" id="canvas-prop">
+
+						<h5>Properties</h5>
+
+						<ul>
+							<li>
+								<p>"_context" is a private member of each canvas instance. The CanvasRendering2DContext allows us to manipulate the canvas.</p>
+							</li>
+
+							<li>
+								<p>"_element" is a private member of each canvas instance. This referes to the HTML element that the canvas is within the DOM.</p>
+							</li>
+						</ul>
+
+					</div>
+
+					<div class="l4" id="canvas-met">
+						<h5>Methods</h5>
+
+						<ul>
+							<li>
+								<p>CalculateLocalPointFrom(globalPoint: Vector2)</p#>
+								<p>Takes in a Vector2.</p>
+								<p>Returns either a Vector2 or null.</p>
+								<p>This method calculates the local canvas mouse position from the global DOM mouse position.</p>
+							</li>
+
+							<li>
+								<p>SetStyle(style: Partial)</p>
+								<p>Takes in a Partial of type CSSStyleDeclarion.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method takes a TypeScript type that contains some CSS properties and converts them to actual CSS and then applies it to the canvas.</p>
+							</li>
+
+							<li>
+								<p>FillRect(start: Vector2, size: Vector2, color: Color)</p>
+								<p>Takes in a start position of type Vector2, a size of type Vector2, and an optional color of type Color.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method draws a rect on the canvas.</p>
+							</li>
+
+							<li>
+								<p>ExtendedRect(start: Vector2, size: Vector2, shape: Shape)</p>
+								<p>Takes in a start position of type Vector2, a size of type Vector2, and a shape of type Shape.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method is a better version of the FillRect method, as this one can draw custom shapes.</p>
+							</li>
+
+							<li>
+								<p>StrokeRect(start: Vector2, size: Vector2, color: Color)</p>
+								<p>Takes in a start position of type Vector2, a size of type Vector2, and an optional color of type Color.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method draws a stroke rect.</p>
+							</li>
+							
+							<li>
+								<p>FillCircle(center: Vector2, radius: number, color: Color)</p>
+								<p>Takes in a center position of type Vector2, a radius of type Number, and a color of type Color.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method is for drawing a circle to the canvas.</p>
+							</li>
+
+							<li>
+								<p>ClearRect(start: Vector2, size: Vector2)</p>
+								<p>Takes in a start position of type Vector2, and a size of type Vector2.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method clears a specific area of the canvas.</p>
+							</li>
+
+							<li>
+								<p>ClearCanvas()</p>
+								<p>Doesn't take anything.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method clears the entire canvas.</p>
+							</li>
+							
+							<li>
+								<p>DrawText(text: string, position: Vector2, fontSize: number, maxWidth?: number, fit: boolean, color?: Color, shadow: boolean, blur: number, shadowColor: Color, shadowOffset: Vector2)</p>
+								<p>Takes in a text of type String, a position of type Vector2, a font size of type Number, a max width of type Number, a fit of type boolean, a blur of type Number, a shadow color of type Color, and a shadow offset of type Vector2</p>
+								<p>Doesn't return anything.</p>
+								<p>This method draws text to the canvas.</p>
+							</li>
+
+							<li>
+								<p>MeasureText(text: string)</p>
+								<p>Takes in a text of type String.</p>
+								<p>Returns a number.</p>
+								<p>This method measures a text of type string and returns the width in pixels.</p>
+							</li>
+
+							<li>
+								<p>DrawImage(source: string, start: Vector2, size: Vector2, color?: Color)</p>
+								<p>Takes in a source/path of type string, a start position of type Vector2, a size of type Vector2, and an optional color of type Color.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method draws an image to the canvas.</p>
+							</li>
+
+							<li>
+								<p>RecolorImage(image: HTMLImageElement, width: number, height: number, position: Vector2, newColor: Color)</p>
+								<p>Takes in an image of type HTMLImageElement, a width of type number, a height of type number, a position of type Vector2, and a new color of type Color.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method takes an image and recolors it, going through each pixel in the image and applying a new color over it.</p>
+							</li>
+
+							<li>
+								<p>IsInverted(width: number, height: number)</p>
+								<p>Takes in a width of type number, and a height of type number.</p>
+								<p>Returns a boolean.</p>
+								<p>This method check if a rendered image is inverted, I.E. it folds over itself.</p>
+							</li>
+						</ul>
+
+					</div>
+
+				</div>
+				<div class="l3" id="canvas-layer">
+					<h4>Canvas Layer</h4>
+					<p>Canvas Layer is a static class that creates and retrieves canvas' to create a feel of depth.</p>
+					<div class="l4" id="canvas-layer-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"_layers" is an array of canvas' that have been created.</p>
+							</li>
+							<li>
+								<p>"Layers" is a public getter for "_layers".</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="canvas-layer-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>GetLayer(index: number)</p>
+								<p>Takes in an index of type number.</p>
+								<p>Returns a canvas.</p>
+								<p>This method gets the canvas that has the index of the input parameter.</p>
+							</li>
+
+							<li>
+								<p>InitCanvas(style: Partial)</p>
+								<p>Takes in a Partial type of CSSStyleDeclarion.</p>
+								<p>Returns a canvas.</p>
+								<p>This method creates a new canvas and sets its starting CSS styling.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="l2" id="physics">
+				<h3>Physics</h3>
+				<div class="l3" id="collider">
+					<h4>Collider</h4>
+					<div class="l4" id="collider-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"gameObject" is of type GameObject.</p>
+							</li>
+							
+							<li>
+								<p>"rectTransform" is of type RectTransform.</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="collider-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>Hit(point: Vector2)</p>
+								<p>Takes in a point of type Vector2.</p>
+								<p>Returns a boolean.</p>
+								<p>This method checks if the point hit this collider.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="l2" id="types">
+				<h3>Types</h3>
+				<div class="l3" id="color">
+					<h4>Color</h4>
+					<div class="l4" id="color-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>
+									Color contains 4 private member properties named, r, g, b, a.
+									<br> Each property has a public getter.
+								</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="color-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>IsValidChannel(value: number, isAlpha: boolean)</p>
+								<p>Takes in a value of type number, and isAlpha of type boolean.</p>
+								<p>Returns a boolean.</p>
+								<p>This method validates a given value to see if it a valid rgba value.</p>
+							</li>
+
+							<li>
+								<p>AsString()</p>
+								<p>Doesn't take anything.</p>
+								<p>Returns a string.</p>
+								<p>This method converts a color type to a CSS friendly rgba string.</p>
+							</li>
+
+							<li>
+								<p>FromString(stringColor: string)</p>
+								<p>Takes in a color string of type string.</p>
+								<p>Returns a color.</p>
+								<p>This method converts a CSS friendly rgba string to a color type.</p>
+							</li>
+
+							<li>
+								<p>Lerp(from: Color, to: Color, increment: number)</p>
+								<p><em>This needs a rework, as this isnt a true lerp function.</em></p>
+								<p>Takes in a from type of color, a to type of color, and an increment type of number.</p>
+								<p>Returns a color.</p>
+								<p>This method lerps from a color to another, incrementing with the increment parameter.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="l3" id="gameObject">
+					<h4>GameObject</h4>
+					<p>The class GameObject inherits from Entity.</p>
+					<p>All GameObjects have either a Transform or a RectTransform component attached to them.</p>
+					<div class="l4" id="gameObject-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"isActive" is a boolean that controls whether or not the GameObject is active.</p>
+							</li>
+							<li>
+								<p>"_awoken" is a private boolean that is true if the GameObject has run its awake method this runtime.</p>
+							</li>
+							<li>
+								<p>"_game" is a Game that is set when the GameObject is instantiated.</p>
+							</li>
+							<li>
+								<p>"_parent" is the parent GameObject of this GameObject.</p>
+							</li>
+							<li>
+								<p>"_children" is an array of GameObject that have their parent set to this GameObject.</p>
+							</li>
+							<li>
+								<p>"gameObjectName" is the name of this GameObject.</p>
+							</li>
+							<li>
+								<p>"_components" is a private array of all the components on this GameObject.</p>
+							</li>
+							<li>
+								<p>"transform" is a public getter that returns the Transform component on this GameObject.</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="gameObject-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>Child(index: number)</p>
+								<p>Takes in an index of type number.</p>
+								<p>Returns a GameObject</p>
+								<p>This method takes in the index of a child set to this "_children" array and returns the child at the given index.</p>
+							</li>
+
+							<li>
+								<p>SetParent(newParent: GameObject)</p>
+								<p>Takes in a new parent of type GameObject.</p>
+								<p>Doesn't return anything.</p>
+								<p>This methods sets this GameObject's parent to the given GameObject new parent parameter.</p>
+							</li>
+
+							<li>
+								<p>AddComponent(component: IComponent, index?: number)</p>
+								<p>Takes in a component that implements the IComponent interface, it also takes in an optional index of type number.</p>
+								<p>Returns a GameObject.</p>
+								<p>This method adds the given component to this GameObject, if the index parameter has a value, the component will replace the component at the given index in the "_components" array.</p>
+							</li>
+
+							<li>
+								<p>GetComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Returns a component of type C.</p>
+								<p>This method searches for the constructor type that was given and returns the component if it is on the GameObject.</p>
+							</li>
+
+							<li>
+								<p>RemoveComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Doesn't return anything.</p>
+								<p>This methods remove the type of C from this GameObject "_components" array.</p>
+							</li>
+
+							<li>
+								<p>HasComponent< C extends IComponent >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IComponent.</p>
+								<p>Returns a boolean.</p>
+								<p>Checks if this GameObject has the type of C component in its "_components" array.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="l3" id="entity">
+					<h4>Entity</h4>
+					<p>Entities implements IAwake, IStart and IUpdate</p>
+					<div class="l4" id="entity-prop">
+						<h5>Properties</h5>
+						<ul>
+							<li>
+								<p>"entityId" is a type of string, this is a global unique id.</p>
+							</li>
+							<li>
+								<p>"_features" is an array of classes that implements the IFeature interface.</p>
+							</li>
+						</ul>
+					</div>
+					<div class="l4" id="entity-met">
+						<h5>Methods</h5>
+						<ul>
+							<li>
+								<p>AddFeature(feature: IFeature)</p>
+								<p>Takes in a feature that is a class that implements the IFeature interface.</p>
+								<p>Returns an Entity.</p>
+								<p>This method adds the feature parameter to this entity's "_features" array.</p>
+							</li>
+
+							<li>
+								<p>GetFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Returns a feature of type C.</p>
+								<p>This method searches this entitys "_features" array for the given constructor and returns it.</p>
+							</li>
+
+							<li>
+								<p>RemoveFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Doesn't return anything.</p>
+								<p>This method searches for the given constructor in this entitys "_features" array and removes it.</p>
+							</li>
+
+							<li>
+								<p>HasFeature< C extends IFeature >(constr: constr< C >)</p>
+								<p>Takes in a constructor of type C which is an abstract constructor that implements the IFeature.</p>
+								<p>Returns a boolean.</p>
+								<p>This method checks this entitys "_features" array for the given constructor and returns whether or not it contains it.</p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
